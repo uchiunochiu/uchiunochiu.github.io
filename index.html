@@ -220,7 +220,58 @@
             </summary>
             <div class="accordion-body">
               <div class="flow-meta">version: v1 / updated: 2026-03-09</div>
-              <iframe class="flow-frame" src="/dashboard-operation-flow.html"></iframe>
+              <div id="flowInline" style="border:1px solid var(--border);border-radius:10px;padding:10px;max-height:760px;overflow:auto"><h1>Dashboard運用フロー（GitHub連携版 / 正本）</h1>
+  <div class="wrap">
+    <div class="box">
+      <div class="phase">凡例（前提）</div>
+      <div class="step"><b>役割分離:</b> Dashboard=指示/状態管理、GitHub=実装証跡（branch/commit/PR）</div>
+      <div class="mini"><b>ロール:</b> 少佐=承認/最終Done、タチコマ=設計・指揮・一次レビュー、フチコマ=実装</div>
+      <div class="mini"><b>ステータス:</b> Backlog / Todo / In Progress / Review / Blocked / Done</div>
+    </div>
+
+    <div class="box"><div class="phase">0. 起票</div><div class="step">Backlogにチケット作成（少佐 or タチコマ）</div></div>
+    <div class="arrow">↓</div>
+    <div class="box"><div class="phase">1. 着手トリガー</div><div class="step">少佐がチケットを <b>Todo</b> に変更</div></div>
+    <div class="arrow">↓</div>
+
+    <div class="box"><div class="phase">2. タチコマ理解・設計</div><div class="step">チケット内容を理解し、<b>設計</b> 欄を記載（処理フロー/データ扱い）</div></div>
+    <div class="arrow">↓</div>
+
+    <div class="box"><div class="phase">3. DM承認依頼</div><div class="step">Discord DMで設計要約を少佐へ提示し承認依頼</div><div class="mini">承認後、承認要約をチケットコメントへ転記（証跡化）</div></div>
+    <div class="arrow">↓</div>
+
+    <div class="branch">
+      <div class="box ng"><div class="phase">3-A. 承認NG</div><div class="step">少佐コメントを反映して設計修正</div><div class="mini">2へ戻る</div></div>
+      <div class="box ok"><div class="phase">3-B. 承認OK</div><div class="step">仕様確定へ進行</div></div>
+    </div>
+
+    <div class="arrow">↓</div>
+    <div class="box"><div class="phase">4. 仕様確定</div><div class="step"><b>仕様</b> 欄を記載。あわせて Git 情報を固定（repo/default branch/working branch命名）</div></div>
+    <div class="arrow">↓</div>
+
+    <div class="box"><div class="phase">5. 実装委任</div><div class="step">タチコマがフチコマへ実装依頼（対象branchを明示）</div><div class="mini">フチコマが着手可能確認できるまで In Progress へ変更しない</div></div>
+    <div class="arrow">↓</div>
+
+    <div class="branch">
+      <div class="box ng"><div class="phase">5-A. 着手不可</div><div class="step">タチコマが <b>Blocked</b> に変更し、理由を少佐へDM報告</div><div class="mini">原因解消後、5へ戻る</div></div>
+      <div class="box ok"><div class="phase">5-B. 着手可能</div><div class="step">チケットを <b>In Progress</b> に変更して実装開始</div></div>
+    </div>
+
+    <div class="arrow">↓</div>
+    <div class="box"><div class="phase">6. フチコマ実装</div><div class="step">branch上で実装し、commit/push。必要ならPR作成（`working_branch`/`pr_url` を更新）</div></div>
+    <div class="arrow">↓</div>
+
+    <div class="box"><div class="phase">7. タチコマ一次レビュー</div><div class="step">設計/仕様一致を確認（差分・動作チェック）</div></div>
+    <div class="arrow">↓</div>
+
+    <div class="branch">
+      <div class="box ng"><div class="phase">7-A. 問題あり</div><div class="step">タチコマが修正依頼し In Progress 継続</div><div class="mini">修正後、5-Bへ戻る（活動ログでループ回数管理）</div></div>
+      <div class="box ok"><div class="phase">7-B. 問題なし</div><div class="step">Reviewへ変更し、DMで少佐にレビュー依頼（PR/commit URL付き）</div></div>
+    </div>
+
+    <div class="arrow">↓</div>
+    <div class="box"><div class="phase">8. 最終判定（少佐）</div><div class="step">問題なければ少佐が <b>Done</b> に変更してクローズ</div><div class="mini">Done条件: main反映済み（PR mergeまたは同等証跡）</div></div>
+  </div></div>
             </div>
           </details>
         </article>
