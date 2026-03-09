@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>New Ticket | Tachikoma Dashboard</title>
+    <style>
+      :root { --bg:#0a0a0a; --card:#111; --muted:#1c1c1c; --border:#2a2a2a; --text:#fafafa; --subtle:#a1a1aa; --radius:12px; }
+      *{box-sizing:border-box}
+      body{margin:0;font-family:Inter,system-ui;background:var(--bg);color:var(--text)}
+      .app{min-height:100vh;display:grid;grid-template-columns:260px 1fr}
+      .sidebar{border-right:1px solid var(--border);padding:20px 14px}
+      .brand{padding:10px 12px;border:1px solid var(--border);border-radius:var(--radius);background:var(--card);margin-bottom:18px;font-weight:700}
+      .menu{display:grid;gap:6px}
+      .menu a{color:var(--text);text-decoration:none;padding:10px 12px;border-radius:10px;font-size:14px;display:flex;align-items:center;gap:8px;white-space:nowrap}
+      .menu a.active{background:var(--card);border:1px solid var(--border)}
+      .main{padding:24px}
+      .head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+      .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px}
+      .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+      label{display:block;font-size:12px;color:var(--subtle)}
+      input,select,textarea{width:100%;margin-top:6px;background:#0f0f0f;color:var(--text);border:1px solid var(--border);border-radius:8px;padding:10px;font:inherit}
+      textarea{min-height:120px}
+      .full{grid-column:1/-1}
+      .btn{background:#fafafa;color:#111;padding:9px 12px;border-radius:10px;border:0;font-weight:700;cursor:pointer}
+      .muted{font-size:12px;color:var(--subtle)}
+      .actions{display:flex;gap:10px;align-items:center;margin-top:12px}
+      @media(max-width:980px){.app{grid-template-columns:1fr}.sidebar{border-right:none;border-bottom:1px solid var(--border)}.grid{grid-template-columns:1fr}.main{padding:12px}}
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <aside class="sidebar">
+        <div class="brand">dashboard</div>
+        <nav class="menu">
+          <a href="/">🏠 Dashboard</a>
+          <a href="/projects.html">📁 Projects</a>
+          <a class="active" href="/tickets.html">🎫 Tickets</a>
+          <a href="/board.html">🧩 Board</a>
+          <a href="#">🗓️ Calendar</a>
+          <a href="#">⚙️ Settings</a>
+        </nav>
+      </aside>
+
+      <main class="main">
+        <div class="head">
+          <div>
+            <h1 style="margin:0">+ New Ticket</h1>
+            <div class="muted">チケット新規作成</div>
+          </div>
+          <a href="/tickets.html" class="muted">← Back</a>
+        </div>
+
+        <section class="card">
+          <div class="grid">
+            <label>Project
+              <select id="project_id"></select>
+            </label>
+
+            <label>Ticket No（Auto）
+              <input id="ticket_no_preview" placeholder="AUTO" disabled />
+            </label>
+
+            <label>Title
+              <input id="title" placeholder="ticket title" />
+            </label>
+
+            <label>Parent Ticket
+              <input id="parent_ticket_preview" placeholder="(none)" disabled />
+            </label>
+
+            <label>Assignee
+              <select id="assignee_id"></select>
+            </label>
+
+            <label>Status
+              <select id="status">
+                <option value="backlog">backlog</option>
+                <option value="todo">todo</option>
+                <option value="in_progress">in_progress</option>
+                <option value="review">review</option>
+                <option value="blocked">blocked</option>
+                <option value="qa_blocked">qa_blocked</option>
+                <option value="done">done</option>
+              </select>
+            </label>
+
+            <label>Due Date
+              <input id="due_date" type="date" />
+            </label>
+
+            <label class="full">チケット概要
+              <textarea id="description" placeholder="チケット概要"></textarea>
+            </label>
+
+            <label class="full">完了条件
+              <textarea id="completion_criteria" placeholder="このチケットが完了と判断できる条件"></textarea>
+            </label>
+
+            <label class="full">設計
+              <textarea id="design" placeholder="処理フロー・データの扱いなど、設計の概要"></textarea>
+            </label>
+
+            <label class="full">仕様
+              <textarea id="specification" placeholder="確定した仕様（実装要件）"></textarea>
+            </label>
+
+            <label>Working Branch
+              <input id="working_branch" placeholder="feature/dsb-0015-..." />
+            </label>
+
+            <label>PR URL
+              <input id="pr_url" placeholder="https://github.com/owner/repo/pull/123" />
+            </label>
+
+            <label class="full">ファイル添付
+              <input id="ticket_files" type="file" multiple accept=".png,.jpg,.jpeg,.webp,.pdf,.md,.doc,.docx,.txt" />
+            </label>
+          </div>
+
+          <div class="actions">
+            <button id="createBtn" class="btn">Create Ticket</button>
+            <span id="state" class="muted">state: loading...</span>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="/assets/dashboard-db.js"></script>
+    <script>
+      const state = document.getElementById('state');
+      let _projects = [];
+
+      function nextTicketNo(projectId, tickets) {
+        const p = _projects.find(x => x.id === projectId);
+        const key = (p?.project_key || 'PRJ').replace(/\s+/g,'').toUpperCase();
+        const nums = tickets
+          .filter(t => t.project_id === projectId && typeof t.ticket_no === 'string' && t.ticket_no.startsWith(key + '-'))
+          .map(t => Number((t.ticket_no.split('-').pop() || '').replace(/^0+/, '')))
+          .filter(n => Number.isFinite(n) && n > 0);
+        const next = (nums.length ? Math.max(...nums) : 0) + 1;
+        return `${key}-${String(next).padStart(4, '0')}`;
+      }
+
+      async function refreshTicketNoPreview() {
+        const projectId = document.getElementById('project_id').value;
+        const tickets = await window.DashboardDB.fetchTickets({ limit: 2000 });
+        const no = nextTicketNo(projectId, tickets);
+        document.getElementById('ticket_no_preview').value = no;
+        return no;
+      }
+
+      async function init(){
+        const qp = new URLSearchParams(location.search);
+        const pinnedProjectId = qp.get('project_id') || '';
+        const parentTicketId = qp.get('parent_ticket_id') || '';
+        const [projects, users] = await Promise.all([
+          window.DashboardDB.fetchProjects(500),
+          window.DashboardDB.fetchUsers()
+        ]);
+        _projects = projects;
+
+        const ps = document.getElementById('project_id');
+        ps.innerHTML = projects.map(p => `<option value="${p.id}">${p.project_key || p.id.slice(0,8)} - ${p.title}</option>`).join('');
+        if (pinnedProjectId) {
+          ps.value = pinnedProjectId;
+          if (ps.value === pinnedProjectId) ps.disabled = true;
+        }
+        ps.addEventListener('change', () => refreshTicketNoPreview().catch(()=>{}));
+
+        const us = document.getElementById('assignee_id');
+        us.innerHTML = '<option value="">(none)</option>' + users.map(u => `<option value="${u.id}">${u.name}</option>`).join('');
+
+        const pt = document.getElementById('parent_ticket_preview');
+        if (parentTicketId) {
+          const allTickets = await window.DashboardDB.fetchTickets({ limit: 2000 });
+          const parent = allTickets.find(t => t.id === parentTicketId);
+          if (pt) pt.value = parent ? `${parent.ticket_no || parent.id.slice(0,8)} ${parent.title}` : parentTicketId;
+        } else if (pt) {
+          pt.value = '(none)';
+        }
+
+        await refreshTicketNoPreview();
+        state.textContent = 'state: ready';
+      }
+
+      init().catch(e => state.textContent = `state: init error / ${e.message}`);
+
+      document.getElementById('createBtn').onclick = async () => {
+        const projectId = document.getElementById('project_id').value;
+        const qp = new URLSearchParams(location.search);
+        const parentTicketId = qp.get('parent_ticket_id') || null;
+        const ticketNo = await refreshTicketNoPreview();
+        const title = document.getElementById('title').value.trim();
+        const dueDate = document.getElementById('due_date').value || null;
+        const assigneeId = document.getElementById('assignee_id').value || null;
+        const description = document.getElementById('description').value.trim() || null;
+        const completionCriteria = document.getElementById('completion_criteria').value.trim() || null;
+        const design = document.getElementById('design').value.trim() || null;
+        const specification = document.getElementById('specification').value.trim() || null;
+        const workingBranch = document.getElementById('working_branch').value.trim() || null;
+        const prUrl = document.getElementById('pr_url').value.trim() || null;
+        const files = [...(document.getElementById('ticket_files').files || [])];
+        const statusVal = document.getElementById('status').value || 'backlog';
+
+        if (!projectId || !title) { state.textContent = 'state: project/title required'; return; }
+        state.textContent = 'state: creating...';
+        try {
+          const t = await window.DashboardDB.createTicket({ projectId, ticketNo, parentTicketId, title, description, completionCriteria, design, specification, workingBranch, prUrl, status: statusVal, dueDate, assigneeId, createdBy: null });
+          if (t?.id && files.length) {
+            for (const f of files) {
+              const contentBase64 = await new Promise((resolve, reject) => {
+                const r = new FileReader();
+                r.onload = () => resolve(String(r.result || '').split(',')[1] || '');
+                r.onerror = () => reject(new Error('file read error'));
+                r.readAsDataURL(f);
+              });
+              await window.DashboardDB.insertTicketAttachment({ ticketId: t.id, fileName: f.name, mimeType: f.type || null, fileSize: f.size || null, contentBase64, createdBy: null });
+            }
+          }
+          if (t?.id) localStorage.setItem('LAST_TICKET_ID', t.id);
+          localStorage.setItem('LAST_PROJECT_ID', projectId);
+          location.href = '/tickets.html';
+        } catch (e) {
+          state.textContent = `state: error / ${e.message}`;
+        }
+      };
+    </script>
+  </body>
+</html>

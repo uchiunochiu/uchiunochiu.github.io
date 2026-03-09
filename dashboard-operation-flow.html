@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard運用フロー</title>
+  <style>
+    body{margin:0;font-family:Inter,system-ui;background:#0b1020;color:#e5e7eb;padding:24px}
+    h1{font-size:20px;margin:0 0 14px}
+    .wrap{display:grid;grid-template-columns:1fr;gap:10px;max-width:1100px}
+    .box{background:#121a33;border:1px solid #2a355f;border-radius:12px;padding:10px 12px}
+    .phase{font-size:12px;color:#93c5fd;margin-bottom:6px}
+    .step{font-size:14px;line-height:1.5}
+    .arrow{color:#7dd3fc;text-align:center;font-size:18px}
+    .branch{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .ok{border-color:#1f6f4a;background:#0f2a21}
+    .ng{border-color:#7f1d1d;background:#2a1212}
+    .mini{font-size:12px;color:#9ca3af}
+  </style>
+</head>
+<body>
+  <h1>Dashboard運用フロー（少佐定義）</h1>
+  <div class="wrap">
+    <div class="box">
+      <div class="phase">凡例（運用の前提）</div>
+      <div class="step"><b>目的:</b> 少佐の指示を、設計→実装→レビューまで一貫して安全・高速に回す。</div>
+      <div class="mini"><b>ロール責務:</b> 少佐=意思決定/承認・最終Done判定、タチコマ=理解/設計/指揮/一次レビュー、フチコマ=実装担当</div>
+      <div class="mini"><b>ステータス定義:</b> Backlog=起票, Todo=少佐着手指示, In Progress=実装中, Review=レビュー待ち, Blocked=要因待ち停止, Done=少佐クローズ</div>
+    </div>
+
+    <div class="box"><div class="phase">0. 起票</div><div class="step">Backlogにチケット作成（少佐 or タチコマ）</div></div>
+    <div class="arrow">↓</div>
+    <div class="box"><div class="phase">1. 着手トリガー</div><div class="step">少佐がチケットを <b>Todo</b> に変更（必須）</div></div>
+    <div class="arrow">↓</div>
+    <div class="box"><div class="phase">2. タチコマ設計</div><div class="step">Todo検知→チケット概要/完了条件を理解→処理フロー・データ扱いの設計を作成し「設計」に記載</div></div>
+    <div class="arrow">↓</div>
+    <div class="box"><div class="phase">3. DM共有</div><div class="step">タチコマがDiscord DMで、目的/ゴール理解と設計内容を少佐へ報告</div><div class="mini">承認はこのDMで実施。承認後、タチコマが承認要約をチケットコメントへ1行転記して証跡化</div></div>
+    <div class="arrow">↓</div>
+    <div class="box"><div class="phase">4. 設計レビュー（少佐）</div><div class="step">設計を確認</div></div>
+
+    <div class="branch">
+      <div class="box ng">
+        <div class="phase">4-A. 問題あり</div>
+        <div class="step">少佐がDiscordで問題点・修正依頼 → タチコマが設計修正</div>
+        <div class="mini">※修正後、4へ戻る</div>
+      </div>
+      <div class="box ok">
+        <div class="phase">4-B. 問題なし</div>
+        <div class="step">次フローへ進行</div>
+      </div>
+    </div>
+
+    <div class="arrow">↓</div>
+    <div class="box"><div class="phase">5. 仕様確定</div><div class="step">FIXした設計から「仕様」を作成しチケットに反映</div></div>
+    <div class="arrow">↓</div>
+    <div class="box"><div class="phase">6. 実装委任</div><div class="step">アサインをフチコマへ変更 → タチコマがフチコマへ実装依頼</div></div>
+    <div class="arrow">↓</div>
+    <div class="box"><div class="phase">7. 実装開始判定</div><div class="step">フチコマが理解し着手可能なら、タチコマがステータスを <b>In Progress</b> に変更</div></div>
+
+    <div class="branch">
+      <div class="box ng">
+        <div class="phase">7-A. 着手不可（不備/質問/エラー）</div>
+        <div class="step">タチコマ/フチコマがチケット内容の不足・疑問で着手不可なら <b>Q&A Blocked（qa_blocked）</b> に変更し、少佐へQ&A開始をDM報告（ボイスエージェントで解消）</div>
+        <div class="mini">※<b>Blocked</b> はサブエージェント呼び出し問題など実行系エラー時に限定。原因解消後、タチコマが再びフチコマへ実装依頼（6へ戻る）</div>
+      </div>
+      <div class="box ok">
+        <div class="phase">7-B. 着手可能</div>
+        <div class="step">そのまま実装を進行</div>
+      </div>
+    </div>
+
+    <div class="arrow">↓</div>
+    <div class="box"><div class="phase">8. 実装完了通知</div><div class="step">フチコマ完了 → タチコマへ通知</div></div>
+    <div class="arrow">↓</div>
+    <div class="box"><div class="phase">9. タチコマ一次レビュー</div><div class="step">設計通りに実装されているかテスト</div></div>
+
+    <div class="branch">
+      <div class="box ng">
+        <div class="phase">9-A. 問題あり</div>
+        <div class="step">タチコマがフチコマに修正依頼 → 少佐がコメントで解消提案を残し、<b>In Progress</b> に変更して再実装</div>
+        <div class="mini">修正後、7（実装開始判定）へ戻る。ループ回数はチケット活動履歴ログ（9-A発生回数）でカウント。</div>
+      </div>
+      <div class="box ok">
+        <div class="phase">9-B. 問題なし</div>
+        <div class="step">タチコマがチケットを <b>Review</b> に変更</div>
+      </div>
+    </div>
+
+    <div class="arrow">↓</div>
+    <div class="box"><div class="phase">10. 最終判断（少佐）</div><div class="step">問題なしなら少佐が <b>Done</b> に変更しクローズ</div></div>
+  </div>
+</body>
+</html>

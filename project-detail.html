@@ -1,0 +1,776 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Project Detail | Tachikoma Dashboard</title>
+    <style>
+      :root { --bg:#0a0a0a; --card:#111; --muted:#1c1c1c; --border:#2a2a2a; --text:#fafafa; --subtle:#a1a1aa; --radius:12px; --tachikoma:#007ED8; }
+      *{box-sizing:border-box}
+      body{margin:0;font-family:Inter,system-ui;background:var(--bg);color:var(--text)}
+      .app{min-height:100vh;display:grid;grid-template-columns:260px 1fr}
+      .sidebar{border-right:1px solid var(--border);padding:20px 14px}
+      .brand{padding:10px 12px;border:1px solid var(--border);border-radius:var(--radius);background:var(--card);margin-bottom:18px;font-weight:700}
+      .menu{display:grid;gap:6px}.menu a{color:var(--text);text-decoration:none;padding:10px 12px;border-radius:10px;font-size:14px;display:flex;align-items:center;gap:8px;white-space:nowrap}.menu a.active{background:var(--card);border:1px solid var(--border)}
+      .main{padding:24px}
+      .head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:14px}
+      .crumb{font-size:12px;color:var(--subtle);margin-bottom:4px}
+      .btn{background:#fafafa;color:#111;padding:8px 12px;border-radius:10px;border:0;font-weight:700}
+      .layout{display:grid;grid-template-columns:1.1fr .9fr;gap:14px}
+      .stack{display:grid;gap:14px}
+      .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px}
+      .title{font-size:13px;color:var(--subtle);margin-bottom:8px}
+      .desc{font-size:14px;line-height:1.6;color:#e4e4e7}
+      .item{padding:10px;border:1px solid var(--border);border-radius:10px;background:var(--muted);margin-bottom:8px}
+      .item b{display:block;font-size:13px;margin-bottom:4px}
+      .meta{font-size:12px;color:var(--subtle);white-space:pre-wrap;line-height:1.45}
+      .chip{display:inline-flex;padding:4px 8px;border:1px solid var(--border);border-radius:999px;font-size:11px;background:#1f2937}
+      .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+
+      .project-board{margin-top:14px}
+      .columns{display:grid;grid-template-columns:repeat(7,minmax(180px,1fr));gap:10px;overflow-x:auto}
+      .col{border:1px dashed var(--border);border-radius:12px;background:#0d0d0d;padding:10px;height:40vh;min-height:220px;max-height:500px;display:flex;flex-direction:column}
+      .col h4{margin:0 0 10px;font-size:12px;color:var(--subtle);position:sticky;top:0;background:#0d0d0d;padding-bottom:6px;z-index:1}
+      .col-body{flex:1;overflow-y:auto;overflow-x:hidden;padding-right:2px}
+      .ticket{background:var(--muted);border:1px solid var(--border);border-radius:10px;padding:10px;margin-bottom:8px;cursor:grab}
+      .ticket b{font-size:12px;display:block;margin-bottom:4px}
+      .ticket-link{display:block;color:inherit;text-decoration:none}
+      .assignee{display:flex;align-items:center;gap:6px;margin-top:4px}
+      .assignee img{width:18px;height:18px;border-radius:999px;object-fit:cover;border:1px solid var(--border)}
+      .ticket.dragging{opacity:.55}
+      .col.drop-over{outline:2px solid #2563eb;outline-offset:-2px}
+
+      .voice-card{padding:0;border:1px solid var(--border);overflow:hidden}
+      .voice-toppane{height:190px;background:var(--tachikoma);display:flex;align-items:center;justify-content:center}
+      .voice-avatar{display:flex;align-items:center;justify-content:center;cursor:pointer;background:var(--tachikoma);border:none;padding:0;line-height:0;appearance:none;-webkit-appearance:none}
+      .voice-avatar img{width:74px;height:74px;object-fit:contain;transition:transform .15s ease}
+      .voice-avatar:hover img{transform:scale(1.06)}
+      .voice-avatar.is-active img{animation:spin 1.2s linear infinite}
+      @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+      .voice-bottom{padding:12px;background:#161616;border-top:1px solid var(--border)}
+      .voice-bottom p{margin:0;color:#d4d4d8;font-size:12px;line-height:1.5}
+      .voice-state{margin-top:8px;font-size:11px;color:#93c5fd}
+
+      .log-link{display:block;color:#dbeafe;text-decoration:none}
+      .log-link:hover{text-decoration:underline}
+      .log-type{display:inline-flex;align-items:center;padding:2px 7px;border-radius:999px;font-size:11px;border:1px solid var(--border);margin-right:6px}
+      .mtg{background:#1e3a8a}.ticket-type{background:#4c1d95}.project-type{background:#14532d}.system-type{background:#3f3f46}
+      .qa-status{display:inline-flex;align-items:center;padding:2px 8px;border-radius:999px;font-size:11px;border:1px solid var(--border);margin-left:6px}
+      .qa-open{background:#7f1d1d;color:#ffe4e6;border-color:#ef4444}
+      .qa-talk{background:#1e3a8a;color:#dbeafe;border-color:#60a5fa}
+      .qa-resolved{background:#14532d;color:#dcfce7;border-color:#22c55e}
+      .qa-launch{color:#dbeafe;text-decoration:none;cursor:pointer}
+      .qa-launch:hover{text-decoration:underline}
+
+      .wb{border:1px dashed #3f3f46;border-radius:12px;background:linear-gradient(180deg,#121212,#0d0d0d);padding:12px;min-height:220px}
+      .wb-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+      .wb-canvas{height:180px;border:1px solid var(--border);border-radius:10px;background:linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px) 0 0/24px 24px,linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px) 0 0/24px 24px,#0f0f0f;display:flex;align-items:center;justify-content:center;color:var(--subtle);font-size:12px}
+      .actor{display:inline-flex;align-items:center;gap:6px;vertical-align:middle;line-height:1.2}
+      .actor img{width:16px;height:16px;border-radius:999px;object-fit:cover;border:1px solid var(--border);display:block}
+      .assignee-line{display:flex;align-items:center;gap:6px}
+      textarea.input{width:100%;min-height:90px;background:#0f0f0f;color:#fafafa;border:1px solid var(--border);border-radius:8px;padding:10px;font:inherit}
+      .status-line{margin-top:8px;font-size:12px;color:#93c5fd}
+
+      table{width:100%;border-collapse:collapse;font-size:13px} th,td{padding:10px 6px;border-bottom:1px solid var(--border);text-align:left} th{font-size:12px;color:var(--subtle)}
+      @media(max-width:980px){.col{height:36vh;min-height:180px;max-height:420px}}
+      @media(max-width:980px){.app{grid-template-columns:1fr}.sidebar{border-right:none;border-bottom:1px solid var(--border)}.menu{display:flex;overflow:auto;gap:6px}.menu a{font-size:13px;padding:8px 10px}.main{padding:0 0 12px}.card{padding:12px}.columns{grid-template-columns:repeat(7,minmax(150px,1fr))}.table-wrap{overflow:auto}.card{border-radius:0;border-left:none;border-right:none}.head,.toolbar,.top{padding:0 12px}.row,.layout,.grid{padding:0 0}.layout{grid-template-columns:1fr}.grid2{grid-template-columns:1fr}}
+    
+      /* mobile full-width unification */
+      @media (max-width: 980px) {
+        html, body, .app, .main, main { width: 100% !important; max-width: 100% !important; overflow-x: auto !important; }
+        .main { padding: 0 0 12px !important; }
+        .card { border-radius: 0 !important; border-left: none !important; border-right: none !important; margin-left: 0 !important; margin-right: 0 !important; }
+        .top, .toolbar, .head { padding: 0 12px !important; }
+        .row, .layout, .grid { gap: 10px !important; }
+        .columns { overflow-x: auto !important; -webkit-overflow-scrolling: touch; }
+        table { display: block; width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        .mobile-topbar{display:flex}
+        .sidebar{position:fixed;left:0;top:0;bottom:0;width:260px;transform:translateX(-105%);transition:transform .2s ease;z-index:50;background:var(--bg);border-right:1px solid var(--border)}
+        .sidebar.open{transform:translateX(0)}
+        .sidebar .menu{display:grid !important;grid-auto-flow:row !important;gap:6px !important;overflow:visible !important}
+        .sidebar .menu a{width:100% !important;justify-content:flex-start !important}
+      }
+
+    
+      .mobile-topbar{display:none;align-items:center;justify-content:space-between;padding:10px 12px;border-bottom:1px solid var(--border);background:var(--card);position:sticky;top:0;z-index:30}
+      .hamburger{background:transparent;border:1px solid var(--border);color:var(--text);border-radius:8px;padding:6px 10px;font-size:16px}
+      .drawer-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:40}
+      .drawer-backdrop.open{display:block}
+      .hamburger-fab{display:none;position:fixed;top:12px;left:12px;z-index:70;background:var(--card);border:1px solid var(--border);color:var(--text);border-radius:10px;padding:8px 10px;font-size:16px;line-height:1}
+      @media (max-width:980px){.hamburger-fab{display:block !important}.main{padding-top:56px !important}.mobile-topbar{display:none !important}}
+
+    </style>
+  </head>
+  <body>
+    <button id="hamburgerFab" class="hamburger-fab" aria-label="menu">☰</button>
+    <div class="app">
+      <aside class="sidebar">
+        <div class="brand">dashboard</div>
+        <nav class="menu">
+          <a href="/">🏠 Dashboard</a>
+          <a class="active" href="/projects.html">📁 Projects</a>
+          <a href="/tickets.html">🎫 Tickets</a>
+          <a href="/board.html">🧩 Board</a>
+          <a href="#">🗓️ Calendar</a>
+          <a href="#">⚙️ Settings</a>
+        </nav>
+      </aside>
+      <div class="drawer-backdrop" id="drawerBackdrop"></div>
+
+      <main class="main">
+        <div class="mobile-topbar"><strong>dashboard</strong><button id="hamburgerBtn" class="hamburger">☰</button></div>
+        <div class="head">
+          <div>
+            <div class="crumb" id="projectCrumb">Projects / -</div>
+            <h1 id="projectTitle" style="margin:0 0 6px">Project Detail</h1>
+            <span class="chip" id="projectStatusChip">-</span>
+            <div class="meta" id="projectMetaLine" style="margin-top:6px">project_id: -</div>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap"><a id="editProjectBtn" class="btn" href="/edit-project.html" style="text-decoration:none;display:inline-block">Edit Project</a><a id="newTicketFromProject" class="btn" href="/new-ticket.html" style="text-decoration:none;display:inline-block">+ New Ticket</a></div>
+        </div>
+
+        <article class="card project-board" style="margin-bottom:14px">
+          <div class="title">🧩 Project Kanban（このプロジェクトのチケットのみ）</div>
+          <div class="meta" style="margin-bottom:10px">Boardと同じ列定義（Backlog / Todo / In Progress / Review / Blocked / Q&A Blocked / Done）</div>
+          <div id="projectKanbanColumns" class="columns">
+            <section class="col"><h4>Backlog</h4><div class="col-body"><div class="meta">読み込み中...</div></div></section>
+            <section class="col"><h4>Todo</h4><div class="col-body"><div class="meta">読み込み中...</div></div></section>
+            <section class="col"><h4>In Progress</h4><div class="col-body"><div class="meta">読み込み中...</div></div></section>
+            <section class="col"><h4>Review</h4><div class="col-body"><div class="meta">読み込み中...</div></div></section>
+            <section class="col"><h4>Blocked</h4><div class="col-body"><div class="meta">読み込み中...</div></div></section>
+            <section class="col"><h4>Q&A Blocked</h4><div class="col-body"><div class="meta">読み込み中...</div></div></section>
+            <section class="col"><h4>Done</h4><div class="col-body"><div class="meta">読み込み中...</div></div></section>
+          </div>
+        </article>
+
+        <div class="layout">
+          <section class="stack">
+            <article class="card"><div class="title">目的（Goal）</div><div id="goalList"><div class="item"><div class="meta">-</div></div></div></article>
+            <article class="card"><div class="title">完了条件（Definition of Done）</div><div id="dodList"><div class="item"><div class="meta">-</div></div></div></article>
+            <article class="card"><div class="title">Repository</div><div id="repoMeta"><div class="item"><div class="meta">-</div></div></div></article>
+            <article class="card"><div class="title">制約（Constraints / Guardrails）</div><div id="constraintsList"><div class="item"><div class="meta">-</div></div></div></article>
+            <article class="card"><div class="title">参照リンク（カテゴリ管理）</div><div id="linksList"><div class="item"><div class="meta">-</div></div></div></article>
+          </section>
+
+          <aside class="stack">
+            <article class="card voice-card" aria-label="tachikoma-voice-agent">
+              <div class="voice-toppane">
+                <button class="voice-avatar" id="voiceLaunch" aria-label="Start Tachikoma Voice">
+                  <img src="/assets/tachikoma-face.png" alt="tachikoma face" />
+                </button>
+              </div>
+              <div class="voice-bottom">
+                <div class="voice-state" id="voiceState">state: idle</div>
+              </div>
+
+              <div class="voice-bottom" style="border-top:1px solid var(--border)">
+                <div class="title" style="margin-bottom:10px">❓ Open Questions（タチコマQ&A）</div>
+                <div id="openQuestionsList"></div>
+              </div>
+            </article>
+
+            <article class="card">
+              <div class="title">🕘 活動ログ（最新20件）</div>
+              <div id="activityLogList"></div>
+            </article>
+          </aside>
+      <div class="drawer-backdrop" id="drawerBackdrop"></div>
+        </div>
+
+        <article class="card" style="margin-top:14px">
+          <div class="title">💬 プロジェクトコメント（少佐↔タチコマ）</div>
+          <div id="projectCommentFeed">
+            <div class="item"><div class="meta">読み込み中...</div></div>
+          </div>
+          <div class="item">
+            <b>新規コメント追加</b>
+            <textarea id="projectCommentInput" class="input" placeholder="プロジェクト全体への質問・指示を入力"></textarea>
+            <button class="btn" id="projectCommentPost" style="margin-top:8px">Post Project Comment</button>
+            <div id="projectCommentStatus" class="status-line">state: idle</div>
+          </div>
+        </article>
+
+
+        <article class="card" style="margin-top:14px">
+          <div class="title">⏪ ロールバックポイント</div>
+          <table>
+            <thead><tr><th>Label</th><th>At (YYYY/MM/DD HH:mm)</th><th>Note</th></tr></thead>
+            <tbody id="rollbackRows"></tbody>
+          </table>
+        </article>
+      </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="/assets/dashboard-db.js"></script>
+    <script>
+      const qp = new URLSearchParams(location.search);
+      const PROJECT_ID = qp.get('project_id') || localStorage.getItem('LAST_PROJECT_ID') || '';
+      const MAJOR_USER_ID = localStorage.getItem('MAJOR_USER_ID') || null;
+
+      const voiceBtn = document.getElementById('voiceLaunch');
+      const voiceState = document.getElementById('voiceState');
+      const projectCrumb = document.getElementById('projectCrumb');
+      const projectTitle = document.getElementById('projectTitle');
+      const projectStatusChip = document.getElementById('projectStatusChip');
+      const projectMetaLine = document.getElementById('projectMetaLine');
+      const projectCommentInput = document.getElementById('projectCommentInput');
+      const projectCommentPost = document.getElementById('projectCommentPost');
+      const projectCommentFeed = document.getElementById('projectCommentFeed');
+      const projectCommentStatus = document.getElementById('projectCommentStatus');
+      const projectKanbanColumns = document.getElementById('projectKanbanColumns');
+      const goalList = document.getElementById('goalList');
+      const dodList = document.getElementById('dodList');
+      const repoMeta = document.getElementById('repoMeta');
+      const constraintsList = document.getElementById('constraintsList');
+      const linksList = document.getElementById('linksList');
+      const openQuestionsList = document.getElementById('openQuestionsList');
+      const activityLogList = document.getElementById('activityLogList');
+
+      const whiteboardKey = document.getElementById('whiteboardKey');
+      const whiteboardCanvas = document.getElementById('whiteboardCanvas');
+      const whiteboardMeta = document.getElementById('whiteboardMeta');
+      const rollbackRows = document.getElementById('rollbackRows');
+      let userMap = new Map();
+      let unsubscribeProjectTickets = null;
+
+      const KANBAN_COLS = ['backlog','todo','in_progress','review','blocked','qa_blocked','done'];
+      const KANBAN_LABEL = {backlog:'Backlog',todo:'Todo',in_progress:'In Progress',review:'Review',blocked:'Blocked',qa_blocked:'Q&A Blocked',done:'Done'};
+      const KANBAN_LEGACY_FALLBACK = [
+        { ticket_no:'DSH-16', title:'KPIカード再設計', status:'backlog' },
+        { ticket_no:'DSH-11', title:'Ticket詳細パネル', status:'todo' },
+        { ticket_no:'DSH-12', title:'Projects詳細モック', status:'in_progress' },
+        { ticket_no:'DSH-14', title:'Board UXチェック', status:'review' },
+        { ticket_no:'DSH-4', title:'API仕様待ち', status:'blocked' },
+        { ticket_no:'DSH-1', title:'左メニュー構成', status:'done' },
+      ];
+
+      function escapeHtml(s) {
+        return String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+      }
+      function nowJst() {
+        const d = new Date();
+        const p = (n) => String(n).padStart(2, '0');
+        return `${d.getFullYear()}/${p(d.getMonth()+1)}/${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}`;
+      }
+      function fmtTs(s) {
+        if (!s) return '-';
+        const d = new Date(s);
+        if (Number.isNaN(d.getTime())) return s;
+        return d.toLocaleString('ja-JP');
+      }
+
+      function ticketCardHtml(t, ctx = {}) {
+        const id = t.ticket_no || (t.id || '').slice(0, 8);
+        const title = t.title || '(no title)';
+        const href = `/ticket-detail.html?ticket_id=${encodeURIComponent(t.id)}`;
+        const sort = Number.isFinite(Number(t.sort_order)) ? Number(t.sort_order) : '';
+        const u = userMap.get(t.assignee_id) || null;
+        const assigneeName = u?.name || t.assignee_id || '-';
+        const assigneeIcon = u?.icon || '/assets/major-icon.png';
+
+        const isParent = (ctx.parentSet || new Set()).has(t.id);
+        const isChild = !!t.parent_ticket_id;
+        const prefix = isParent ? '🐓' : (isChild ? '🐥' : '');
+
+        const children = (ctx.childrenByParent?.get(t.id) || []);
+        const childListHtml = isParent && children.length
+          ? `<div class="meta" style="margin-top:4px">${children.map((c) => `・🐥${escapeHtml(c.ticket_no || String(c.id || '').slice(0,8))}`).join('<br/>')}</div>`
+          : '';
+
+        return `<div class="ticket" draggable="true" data-ticket-id="${escapeHtml(t.id)}" data-status="${escapeHtml(t.status || 'backlog')}" data-sort-order="${escapeHtml(sort)}"><a class="ticket-link" href="${href}"><b>${prefix ? `${prefix}` : ''}${escapeHtml(id)} ${escapeHtml(title)}</b><div class="meta">due: ${escapeHtml(t.due_date || '-')}</div><div class="meta assignee"><img src="${escapeHtml(assigneeIcon)}" alt="assignee"/><span>${escapeHtml(assigneeName)}</span></div>${childListHtml}</a></div>`;
+      }
+
+      async function renderProjectKanban() {
+        if (!projectKanbanColumns) return;
+        if (!PROJECT_ID) {
+          projectKanbanColumns.innerHTML = '<section class="col" style="grid-column:1/-1"><div class="meta">project_id が未指定です</div></section>';
+          return;
+        }
+        try {
+          const tickets = await window.DashboardDB.fetchTickets({ projectId: PROJECT_ID, limit: 500 });
+
+          const by = Object.fromEntries(KANBAN_COLS.map((c) => [c, []]));
+          tickets.forEach((t) => { const s = t.status || 'backlog'; (by[s] ||= []).push(t); });
+
+          const childrenByParent = new Map();
+          tickets.forEach((t) => {
+            if (!t.parent_ticket_id) return;
+            const arr = childrenByParent.get(t.parent_ticket_id) || [];
+            arr.push(t);
+            childrenByParent.set(t.parent_ticket_id, arr);
+          });
+          const parentSet = new Set([...childrenByParent.keys()]);
+          KANBAN_COLS.forEach((c) => {
+            by[c].sort((a, b) => {
+              const ao = Number.isFinite(Number(a.sort_order)) ? Number(a.sort_order) : Number.MAX_SAFE_INTEGER;
+              const bo = Number.isFinite(Number(b.sort_order)) ? Number(b.sort_order) : Number.MAX_SAFE_INTEGER;
+              if (ao !== bo) return ao - bo;
+              return String(b.created_at || '').localeCompare(String(a.created_at || ''));
+            });
+          });
+          projectKanbanColumns.innerHTML = KANBAN_COLS.map((c) => {
+            const body = (by[c] || []).map((t) => ticketCardHtml(t, { childrenByParent, parentSet })).join('');
+            return `<section class="col" data-status="${c}"><h4>${KANBAN_LABEL[c]}</h4><div class="col-body">${body || '<div class="meta">-</div>'}</div></section>`;
+          }).join('');
+          attachKanbanDnD();
+        } catch (e) {
+          projectKanbanColumns.innerHTML = `<section class="col" style="grid-column:1/-1"><div class="meta">Kanban読み込み失敗: ${escapeHtml(e.message)}</div></section>`;
+        }
+      }
+
+      async function persistKanbanOrder() {
+        if (!projectKanbanColumns) return;
+        const items = [];
+        projectKanbanColumns.querySelectorAll('.col').forEach((col) => {
+          const status = col.getAttribute('data-status') || 'backlog';
+          Array.from(col.querySelectorAll('.ticket')).forEach((card, idx) => {
+            const id = card.getAttribute('data-ticket-id');
+            if (!id) return;
+            items.push({ id, status, sort_order: (idx + 1) * 100 });
+          });
+        });
+        if (!items.length) return;
+        await window.DashboardDB.reorderTickets({ items });
+      }
+
+      function attachKanbanDnD() {
+        if (!projectKanbanColumns) return;
+        let dragging = null;
+
+        projectKanbanColumns.querySelectorAll('.ticket').forEach((card) => {
+          card.addEventListener('dragstart', (e) => {
+            dragging = card;
+            card.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/plain', card.getAttribute('data-ticket-id') || '');
+          });
+          card.addEventListener('dragend', async () => {
+            card.classList.remove('dragging');
+            projectKanbanColumns.querySelectorAll('.col').forEach((c) => c.classList.remove('drop-over'));
+            if (!dragging) return;
+            try {
+              await persistKanbanOrder();
+              await renderActivityLog();
+            } catch (e) {
+              console.error(e);
+            }
+            dragging = null;
+          });
+        });
+
+        projectKanbanColumns.querySelectorAll('.col').forEach((col) => {
+          col.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            col.classList.add('drop-over');
+            const body = col.querySelector('.col-body') || col;
+            const after = (() => {
+              const cards = [...body.querySelectorAll('.ticket:not(.dragging)')];
+              const y = e.clientY;
+              let closest = { offset: Number.NEGATIVE_INFINITY, el: null };
+              for (const c of cards) {
+                const box = c.getBoundingClientRect();
+                const offset = y - box.top - box.height / 2;
+                if (offset < 0 && offset > closest.offset) closest = { offset, el: c };
+              }
+              return closest.el;
+            })();
+            if (!dragging) return;
+            if (!after) body.appendChild(dragging);
+            else body.insertBefore(dragging, after);
+          });
+          col.addEventListener('dragleave', () => col.classList.remove('drop-over'));
+          col.addEventListener('drop', async (e) => {
+            e.preventDefault();
+            col.classList.remove('drop-over');
+            if (!dragging) return;
+            dragging.setAttribute('data-status', col.getAttribute('data-status') || 'backlog');
+          });
+        });
+      }
+
+      function renderTextList(el, rows, prefix = '') {
+        if (!el) return;
+        const items = (rows || []).filter(Boolean);
+        if (!items.length) {
+          el.innerHTML = '<div class="item"><div class="meta">-</div></div>';
+          return;
+        }
+        el.innerHTML = items.map((t, i) => `<div class="item"><b>${prefix ? `${prefix}-${i + 1}` : `#${i + 1}`}</b><div class="meta">${escapeHtml(t)}</div></div>`).join('');
+      }
+
+      function renderLinks(el, links) {
+        if (!el) return;
+        const rows = Array.isArray(links) ? links : [];
+        if (!rows.length) {
+          el.innerHTML = '<div class="item"><div class="meta">-</div></div>';
+          return;
+        }
+        el.innerHTML = rows.map((r) => {
+          const label = r?.label || r?.url || '-';
+          const url = r?.url || '';
+          return `<div class="item"><b>${escapeHtml(label)}</b><div class="meta">${url ? `<a href="${escapeHtml(url)}" target="_blank" rel="noreferrer" style="color:#93c5fd">${escapeHtml(url)}</a>` : '-'}</div></div>`;
+        }).join('');
+      }
+
+      let voiceActive = false;
+      function launchVoice(mode, qaId) {
+        if (!voiceBtn || !voiceState) return;
+        voiceBtn.classList.add('is-active');
+        voiceState.textContent = mode === 'qa-item' ? `state: connected / Q&A item context (${qaId})` : 'state: connected / project context pushed';
+      }
+      function stopVoice() {
+        if (!voiceBtn || !voiceState) return;
+        voiceBtn.classList.remove('is-active');
+        voiceState.textContent = 'state: idle / voice agent OFF';
+      }
+      voiceBtn?.addEventListener('click', () => {
+        if (voiceActive) { stopVoice(); voiceActive = false; }
+        else { launchVoice('manual'); voiceActive = true; }
+      });
+
+      function questionStatusBadge(status) {
+        if (status === 'in_talk') return '<span class="qa-status qa-talk">In Talk</span>';
+        if (status === 'resolved') return '<span class="qa-status qa-resolved">Resolved</span>';
+        return '<span class="qa-status qa-open">Open</span>';
+      }
+
+      async function renderOpenQuestions() {
+        if (!openQuestionsList) return;
+        if (!PROJECT_ID) {
+          openQuestionsList.innerHTML = '<div class="item"><div class="meta">project_id が未指定です</div></div>';
+          return;
+        }
+        try {
+          const [rows, tickets] = await Promise.all([
+            window.DashboardDB.fetchOpenQuestions(PROJECT_ID, { includeResolved: false, limit: 50 }),
+            window.DashboardDB.fetchTickets({ projectId: PROJECT_ID, limit: 500 }),
+          ]);
+
+          const qaBlocked = (tickets || []).filter((t) => t.status === 'qa_blocked');
+          const qaRows = [...(rows || [])];
+          qaBlocked.forEach((t) => {
+            const already = qaRows.find((q) => String(q.detail || '').includes(t.id) || String(q.question_key || '').includes(t.ticket_no || ''));
+            if (already) return;
+            qaRows.unshift({
+              id: `ticket-${t.id}`,
+              question_key: t.ticket_no || 'Q',
+              title: t.title || '(no title)',
+              detail: `ticket_id=${t.id}\nstatus=qa_blocked\n${t.description || ''}`,
+              status: 'open',
+              _ticket: t,
+            });
+          });
+
+          if (!qaRows.length) {
+            openQuestionsList.innerHTML = '<div class="item"><div class="meta">Open Questionはありません</div></div>';
+            return;
+          }
+
+          openQuestionsList.innerHTML = qaRows.map((q) => `<div class="item"><b><a href="#" class="qa-launch" data-qa="${escapeHtml(q.question_key || q.id)}" data-ticket-id="${escapeHtml(q._ticket?.id || '')}" data-detail="${escapeHtml(q.detail || '')}">${escapeHtml(q.question_key || 'Q')} ${escapeHtml(q.title || '')}</a> ${questionStatusBadge(q.status)}</b><div class="meta">${escapeHtml(q.detail || '-')}</div></div>`).join('');
+
+          openQuestionsList.querySelectorAll('.qa-launch').forEach((el) => {
+            el.addEventListener('click', async (e) => {
+              e.preventDefault();
+              const qaId = el.getAttribute('data-qa') || '';
+              let ticketId = el.getAttribute('data-ticket-id') || null;
+              const detail = el.getAttribute('data-detail') || '';
+              if (!ticketId) {
+                const m = String(detail).match(/ticket_id=([^\n\s]+)/);
+                if (m && m[1]) ticketId = m[1];
+              }
+              launchVoice('qa-item', qaId);
+              voiceActive = true;
+              try {
+                const [project, ticket, ticketComments, projectComments, openQuestions] = await Promise.all([
+                  window.DashboardDB.fetchProjectById(PROJECT_ID),
+                  ticketId ? window.DashboardDB.fetchTicketById(ticketId) : Promise.resolve(null),
+                  ticketId ? window.DashboardDB.fetchTicketComments(ticketId, 30) : Promise.resolve([]),
+                  window.DashboardDB.fetchProjectComments(PROJECT_ID, 20),
+                  window.DashboardDB.fetchOpenQuestions(PROJECT_ID, { includeResolved: false, limit: 50 }),
+                ]);
+
+                const actorQuestionThreads = (ticketComments || [])
+                  .filter((c) => ['tachikoma', 'fuchikoma'].includes(String(c.created_by || '').toLowerCase()))
+                  .map((c) => ({
+                    id: c.id,
+                    created_by: c.created_by,
+                    body: c.body,
+                    created_at: c.created_at,
+                  }));
+
+                const context = {
+                  project_id: PROJECT_ID,
+                  qa_id: qaId,
+                  project: project || null,
+                  ticket: ticket || null,
+                  ticket_recent_comments: ticketComments || [],
+                  project_recent_comments: projectComments || [],
+                  actor_question_threads: actorQuestionThreads,
+                  open_questions: openQuestions || [],
+                  question_detail: detail || null,
+                };
+                await window.DashboardDB.pushToTachikoma({
+                  type: 'voice_qa_context_start',
+                  project_id: PROJECT_ID,
+                  ticket_id: ticketId,
+                  qa_id: qaId,
+                  context,
+                  source: 'project_detail_open_questions_click',
+                });
+                voiceState.textContent = `state: connected / context pushed (${qaId})`;
+              } catch (err) {
+                voiceState.textContent = `state: context push error / ${err.message || err}`;
+              }
+            });
+          });
+        } catch (e) {
+          openQuestionsList.innerHTML = `<div class="item"><div class="meta">読み込み失敗: ${escapeHtml(e.message)}</div></div>`;
+        }
+      }
+
+
+      function logTypeClass(entityType) {
+        if (entityType === 'tickets' || entityType === 'ticket_comments') return 'ticket-type';
+        if (entityType === 'projects' || entityType === 'open_questions' || entityType === 'project_rollbacks' || entityType === 'project_whiteboards') return 'project-type';
+        return 'system-type';
+      }
+
+      async function renderActivityLog() {
+        if (!PROJECT_ID || !activityLogList) return;
+        try {
+          const rows = await window.DashboardDB.fetchProjectActivity(PROJECT_ID, 20);
+          if (!rows.length) {
+            activityLogList.innerHTML = '<div class="item"><div class="meta">活動ログはまだありません</div></div>';
+            return;
+          }
+          activityLogList.innerHTML = rows.map((r) => `<div class="item"><span class="log-type ${logTypeClass(r.entity_type)}">${escapeHtml(r.entity_type || 'log')}</span><b style="display:inline">${escapeHtml(fmtTs(r.created_at))} ${escapeHtml(r.summary || `${r.entity_type} ${r.action}`)}</b><div class="meta">action: ${escapeHtml(r.action || '-')}</div></div>`).join('');
+        } catch (e) {
+          activityLogList.innerHTML = `<div class="item"><div class="meta">読み込み失敗: ${escapeHtml(e.message)}</div></div>`;
+        }
+      }
+
+      async function renderWhiteboard() {
+        if (!PROJECT_ID || !whiteboardCanvas) return;
+        try {
+          const wb = await window.DashboardDB.fetchProjectWhiteboard(PROJECT_ID);
+          if (!wb) {
+            whiteboardCanvas.textContent = 'whiteboard not found';
+            return;
+          }
+          if (whiteboardKey) whiteboardKey.textContent = `Board ID: ${wb.board_key}`;
+          if (wb.board_url) {
+            whiteboardCanvas.innerHTML = `<iframe src="${escapeHtml(wb.board_url)}" style="width:100%;height:100%;border:0;border-radius:10px"></iframe>`;
+            if (whiteboardMeta) whiteboardMeta.textContent = '既存whiteboard実装URLを project_id ごとに表示';
+          } else {
+            whiteboardCanvas.innerHTML = `<div class="meta">board_url未設定。board_key=${escapeHtml(wb.board_key)}<br/><a style="color:#93c5fd" href="/board.html?project_id=${encodeURIComponent(PROJECT_ID)}">Boardへ移動</a></div>`;
+            if (whiteboardMeta) whiteboardMeta.textContent = 'fallback: Board画面をproject_idで利用';
+          }
+        } catch (e) {
+          whiteboardCanvas.textContent = `whiteboard error: ${e.message}`;
+        }
+      }
+
+      async function renderRollbacks() {
+        if (!PROJECT_ID || !rollbackRows) return;
+        try {
+          const rows = await window.DashboardDB.fetchRollbackPoints(PROJECT_ID, 30);
+          rollbackRows.innerHTML = rows.length
+            ? rows.map((r) => `<tr><td>${escapeHtml(r.label || '-')}</td><td>${escapeHtml(fmtTs(r.created_at))}</td><td>${escapeHtml(r.note || '-')}</td></tr>`).join('')
+            : '<tr><td colspan="3" class="meta">rollback pointなし</td></tr>';
+        } catch (e) {
+          rollbackRows.innerHTML = `<tr><td colspan="3" class="meta">読み込み失敗: ${escapeHtml(e.message)}</td></tr>`;
+        }
+      }
+
+      (async function initProjectHeader() {
+        if (!window.DashboardDB || !PROJECT_ID) {
+          if (projectMetaLine) projectMetaLine.textContent = 'project_id: (missing)';
+          await Promise.all([
+            renderProjectKanban(),
+            renderOpenQuestions(),
+            renderActivityLog(),
+            renderWhiteboard(),
+            renderRollbacks(),
+          ]);
+          return;
+        }
+        localStorage.setItem('LAST_PROJECT_ID', PROJECT_ID);
+        if (projectMetaLine) projectMetaLine.textContent = `project_id: ${PROJECT_ID}`;
+        try {
+          const users = await window.DashboardDB.fetchUsers();
+          userMap = new Map((users || []).map((u) => [u.id, { name: u.name, icon: u.icon }]));
+        } catch (_) {
+          userMap = new Map();
+        }
+        const p = await window.DashboardDB.fetchProjectById(PROJECT_ID);
+        if (p) {
+          if (projectTitle) projectTitle.textContent = p.title || 'Project Detail';
+          if (projectCrumb) projectCrumb.textContent = `Projects / ${p.project_key || p.id.slice(0,8)}`;
+          if (projectStatusChip) projectStatusChip.textContent = p.status || '-';
+          if (projectMetaLine) projectMetaLine.textContent = `project_id: ${p.id} / due: ${p.due_date || '-'}`;
+          const newTicketLink = document.getElementById('newTicketFromProject');
+          if (newTicketLink) newTicketLink.href = `/new-ticket.html?project_id=${encodeURIComponent(p.id)}`;
+          const editBtn = document.getElementById('editProjectBtn');
+          if (editBtn) editBtn.href = `/edit-project.html?project_id=${encodeURIComponent(p.id)}`;
+          renderTextList(goalList, [p.goal || p.description || '-'], 'Goal');
+          renderTextList(dodList, p.definition_of_done || [], 'DoD');
+          if (repoMeta) {
+            const repo = p.repo_url || '-';
+            const branch = p.default_branch || 'main';
+            repoMeta.innerHTML = `<div class="item"><b>Repo URL</b><div class="meta">${repo === '-' ? '-' : `<a href="${escapeHtml(repo)}" target="_blank" rel="noopener" style="color:#93c5fd">${escapeHtml(repo)}</a>`}</div></div><div class="item"><b>Default Branch</b><div class="meta">${escapeHtml(branch)}</div></div>`;
+          }
+          renderTextList(constraintsList, p.constraints || [], 'Rule');
+          renderLinks(linksList, p.links || []);
+        } else {
+          if (projectTitle) projectTitle.textContent = 'Project Not Found';
+          if (projectStatusChip) projectStatusChip.textContent = 'missing';
+          if (projectMetaLine) projectMetaLine.textContent = `project_id: ${PROJECT_ID} (not found)`;
+        }
+        await Promise.all([
+          renderProjectKanban(),
+          renderOpenQuestions(),
+          renderActivityLog(),
+          renderWhiteboard(),
+          renderRollbacks(),
+        ]);
+
+        if (unsubscribeProjectTickets) unsubscribeProjectTickets();
+        unsubscribeProjectTickets = window.DashboardDB.subscribeProjectTickets(PROJECT_ID, async (payload) => {
+          await renderProjectKanban();
+          await renderActivityLog();
+        });
+      })();
+
+      function resolveActor(createdBy) {
+        const u = userMap.get(createdBy) || null;
+        if (u) return { name: u.name || createdBy || 'Unknown', icon: u.icon || '/assets/major-icon.png' };
+        if (createdBy === 'tachikoma') return { name: 'タチコマ', icon: '/assets/tachikoma-face.png' };
+        if (createdBy === 'major') return { name: '少佐', icon: '/assets/major-icon.png' };
+        if (createdBy) return { name: createdBy, icon: '/assets/major-icon.png' };
+        return { name: '少佐', icon: '/assets/major-icon.png' };
+      }
+
+      function commentActorHtml(actorName = '少佐', actorIcon = '/assets/major-icon.png') {
+        return `<span class="actor"><img src="${escapeHtml(actorIcon)}" alt="actor"/>${escapeHtml(actorName)}</span>`;
+      }
+
+      function renderProjectComments(rows = []) {
+        if (!projectCommentFeed) return;
+        if (!rows.length) {
+          projectCommentFeed.innerHTML = '<div class="item"><div class="meta">コメントはまだありません</div></div>';
+          return;
+        }
+        projectCommentFeed.innerHTML = rows.map((r) => {
+          const ts = fmtTs(r.created_at);
+          const actor = resolveActor(r.created_by);
+          return `<div class="item"><b>${commentActorHtml(actor.name, actor.icon)} ${escapeHtml(ts)}</b><div class="meta">${escapeHtml(r.body || '')}</div></div>`;
+        }).join('');
+      }
+
+      function prependProjectComment(text, ts, createdBy = null) {
+        const row = document.createElement('div');
+        row.className = 'item';
+        const actor = resolveActor(createdBy);
+        row.innerHTML = `<b>${commentActorHtml(actor.name, actor.icon)} ${escapeHtml(ts)}</b><div class="meta">${escapeHtml(text)}</div>`;
+        const empty = projectCommentFeed.querySelector('.item .meta')?.textContent === 'コメントはまだありません';
+        if (empty) projectCommentFeed.innerHTML = '';
+        projectCommentFeed.prepend(row);
+      }
+
+      (async function initProjectComments() {
+        if (!window.DashboardDB || !projectCommentFeed || !projectCommentStatus) return;
+        if (!PROJECT_ID) {
+          projectCommentStatus.textContent = 'state: project_id missing';
+          renderProjectComments([]);
+          return;
+        }
+        try {
+          const users = await window.DashboardDB.fetchUsers();
+          userMap = new Map((users || []).map((u) => [u.id, { name: u.name, icon: u.icon }]));
+        } catch (_) {
+          userMap = new Map();
+        }
+
+        try {
+          const rows = await window.DashboardDB.fetchProjectComments(PROJECT_ID, 20);
+          renderProjectComments(rows);
+          projectCommentStatus.textContent = 'state: connected / realtime ON';
+        } catch (e) {
+          projectCommentStatus.textContent = `state: fetch error / ${e.message}`;
+          renderProjectComments([]);
+        }
+
+        window.DashboardDB.subscribeProjectComments(PROJECT_ID, async (row) => {
+          prependProjectComment(row.body, fmtTs(row.created_at), row.created_by || null);
+          renderActivityLog();
+          const cb = row.created_by || '';
+          const isMajor = cb === 'major' || (!!MAJOR_USER_ID && cb === MAJOR_USER_ID);
+          if (!isMajor) return;
+          try {
+            await window.DashboardDB.pushToTachikoma({
+              type: 'project_comment_created',
+              project_id: PROJECT_ID,
+              body: row.body || '',
+              created_by: row.created_by || null,
+              source: 'realtime_subscription',
+            });
+          } catch (e) {
+            if (projectCommentStatus) projectCommentStatus.textContent = `state: realtime notify error / ${e.message || e}`;
+          }
+        });
+      })();
+
+      projectCommentPost?.addEventListener('click', async () => {
+        if (!PROJECT_ID) {
+          projectCommentStatus.textContent = 'state: project_id missing';
+          return;
+        }
+        const text = (projectCommentInput?.value || '').trim();
+        if (!text) {
+          projectCommentStatus.textContent = 'state: コメントを入力してください';
+          return;
+        }
+
+        const cfg = window.DashboardDB?.getConfig?.();
+        if (!cfg?.enabled) {
+          projectCommentStatus.textContent = 'state: error / DB required';
+          return;
+        }
+
+        projectCommentStatus.textContent = 'state: posting...';
+        try {
+          await window.DashboardDB.insertProjectComment({ projectId: PROJECT_ID, body: text, createdBy: MAJOR_USER_ID });
+          try {
+            await window.DashboardDB.pushToTachikoma({ type: 'project_comment_created', project_id: PROJECT_ID, body: text, created_by: MAJOR_USER_ID });
+            projectCommentStatus.textContent = 'state: post完了 / tachikoma通知送信';
+          } catch (_) {
+            projectCommentStatus.textContent = 'state: post完了 / 通知はスキップ';
+          }
+          projectCommentInput.value = '';
+          await renderActivityLog();
+          const refreshed = await window.DashboardDB.fetchProjectComments(PROJECT_ID, 20);
+          renderProjectComments(refreshed);
+        } catch (e) {
+          projectCommentStatus.textContent = `state: post error / ${e.message}`;
+        }
+      });
+    </script>
+  
+    <script>
+      (function(){
+        const btn=document.getElementById('hamburgerBtn');
+        const fab=document.getElementById('hamburgerFab');
+        const sidebar=document.querySelector('.sidebar');
+        const backdrop=document.getElementById('drawerBackdrop');
+        if(!sidebar||!backdrop) return;
+        function open(){sidebar.classList.add('open');backdrop.classList.add('open');}
+        function close(){sidebar.classList.remove('open');backdrop.classList.remove('open');}
+        if(btn) btn.addEventListener('click',()=> sidebar.classList.contains('open')?close():open());
+        if(fab) fab.addEventListener('click',()=> sidebar.classList.contains('open')?close():open());
+        backdrop.addEventListener('click',close);
+      })();
+    </script>
+
+  </body>
+</html>

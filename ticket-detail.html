@@ -1,0 +1,428 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🎫 Ticket Detail | Tachikoma Dashboard</title>
+    <style>
+      :root { --bg:#0a0a0a; --card:#111; --muted:#1c1c1c; --border:#2a2a2a; --text:#fafafa; --subtle:#a1a1aa; --radius:12px; }
+      *{box-sizing:border-box} body{margin:0;font-family:Inter,system-ui;background:var(--bg);color:var(--text)}
+      .app{min-height:100vh;display:grid;grid-template-columns:260px 1fr}
+      .sidebar{border-right:1px solid var(--border);padding:20px 14px}
+      .brand{padding:10px 12px;border:1px solid var(--border);border-radius:var(--radius);background:var(--card);margin-bottom:18px;font-weight:700}
+      .menu{display:grid;gap:6px}.menu a{color:var(--text);text-decoration:none;padding:10px 12px;border-radius:10px;font-size:14px;display:flex;align-items:center;gap:8px;white-space:nowrap}.menu a.active{background:var(--card);border:1px solid var(--border)}
+      .main{padding:24px}.head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:14px}
+      .crumb{font-size:12px;color:var(--subtle);margin-bottom:4px}.chip{display:inline-flex;padding:4px 8px;border:1px solid var(--border);border-radius:999px;font-size:11px;background:#1f2937}
+      .chip.warn{background:#7f1d1d;border-color:#ef4444;color:#ffe4e6}
+      .layout{display:grid;grid-template-columns:1.1fr .9fr;gap:14px}.stack{display:grid;gap:14px}
+      .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px}
+      .title{font-size:13px;color:var(--subtle);margin-bottom:8px}
+      .item{padding:10px;border:1px solid var(--border);border-radius:10px;background:var(--muted);margin-bottom:8px}
+      .item b{display:block;font-size:13px;margin-bottom:4px}.meta{font-size:12px;color:var(--subtle);white-space:pre-wrap;line-height:1.45}
+      .columns{display:grid;grid-template-columns:repeat(6,minmax(180px,1fr));gap:10px;overflow-x:auto}
+      .col{border:1px dashed var(--border);border-radius:12px;background:#0d0d0d;padding:10px;min-height:120px}
+      .col h4{margin:0 0 10px;font-size:12px;color:var(--subtle)}
+      .mini{background:var(--muted);border:1px solid var(--border);border-radius:10px;padding:8px;font-size:12px}
+      .btn{background:#fafafa;color:#111;padding:8px 12px;border-radius:10px;border:0;font-weight:700}
+      .actor{display:inline-flex;align-items:center;gap:6px}
+      .actor img{width:18px;height:18px;border-radius:999px;object-fit:cover;border:1px solid var(--border)}
+      textarea.input{width:100%;min-height:90px;background:#0f0f0f;color:#fafafa;border:1px solid var(--border);border-radius:8px;padding:10px;font:inherit}
+      .status-line{margin-top:8px;font-size:12px;color:#93c5fd}
+      .select-wrap{position:relative}
+      .select-wrap::after{content:'▾';position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:12px;color:var(--subtle);pointer-events:none}
+      .status-select{width:100%;appearance:none;-webkit-appearance:none;background:#0f172a;border:1px solid #334155;color:#e5e7eb;border-radius:10px;padding:8px 30px 8px 10px;font-size:12px;line-height:1.2;outline:none}
+      .status-select:hover{border-color:#475569}
+      .status-select:focus{border-color:#60a5fa;box-shadow:0 0 0 3px rgba(59,130,246,.25)}
+      @media(max-width:980px){.app{grid-template-columns:1fr}.sidebar{border-right:none;border-bottom:1px solid var(--border)}.menu{display:flex;overflow:auto;gap:6px}.menu a{font-size:13px;padding:8px 10px}.main{padding:0 0 12px}.card{padding:12px}.columns{grid-template-columns:repeat(6,minmax(150px,1fr))}.table-wrap{overflow:auto}.card{border-radius:0;border-left:none;border-right:none}.head,.toolbar,.top{padding:0 12px}.row,.layout,.grid{padding:0 0}.layout{grid-template-columns:1fr}}
+    
+      /* mobile full-width unification */
+      @media (max-width: 980px) {
+        html, body, .app, .main, main { width: 100% !important; max-width: 100% !important; overflow-x: auto !important; }
+        .main { padding: 0 0 12px !important; }
+        .card { border-radius: 0 !important; border-left: none !important; border-right: none !important; margin-left: 0 !important; margin-right: 0 !important; }
+        .top, .toolbar, .head { padding: 0 12px !important; }
+        .row, .layout, .grid { gap: 10px !important; }
+        .columns { overflow-x: auto !important; -webkit-overflow-scrolling: touch; }
+        table { display: block; width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        .mobile-topbar{display:flex}
+        .sidebar{position:fixed;left:0;top:0;bottom:0;width:260px;transform:translateX(-105%);transition:transform .2s ease;z-index:50;background:var(--bg);border-right:1px solid var(--border)}
+        .sidebar.open{transform:translateX(0)}
+        .sidebar .menu{display:grid !important;grid-auto-flow:row !important;gap:6px !important;overflow:visible !important}
+        .sidebar .menu a{width:100% !important;justify-content:flex-start !important}
+      }
+
+    
+      .mobile-topbar{display:none;align-items:center;justify-content:space-between;padding:10px 12px;border-bottom:1px solid var(--border);background:var(--card);position:sticky;top:0;z-index:30}
+      .hamburger{background:transparent;border:1px solid var(--border);color:var(--text);border-radius:8px;padding:6px 10px;font-size:16px}
+      .drawer-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:40}
+      .drawer-backdrop.open{display:block}
+      .hamburger-fab{display:none;position:fixed;top:12px;left:12px;z-index:70;background:var(--card);border:1px solid var(--border);color:var(--text);border-radius:10px;padding:8px 10px;font-size:16px;line-height:1}
+      @media (max-width:980px){.hamburger-fab{display:block !important}.main{padding-top:56px !important}.mobile-topbar{display:none !important}}
+
+    </style>
+  </head>
+  <body>
+    <button id="hamburgerFab" class="hamburger-fab" aria-label="menu">☰</button>
+    <div class="app">
+      <aside class="sidebar">
+        <div class="brand">dashboard</div>
+        <nav class="menu">
+          <a href="/">🏠 Dashboard</a>
+          <a href="/projects.html">📁 Projects</a>
+          <a class="active" href="/tickets.html">🎫 Tickets</a>
+          <a href="/board.html">🧩 Board</a>
+          <a href="#">🗓️ Calendar</a>
+          <a href="#">⚙️ Settings</a>
+        </nav>
+      </aside>
+      <div class="drawer-backdrop" id="drawerBackdrop"></div>
+      <main class="main">
+        <div class="mobile-topbar"><strong>dashboard</strong><button id="hamburgerBtn" class="hamburger">☰</button></div>
+        <div class="head">
+          <div>
+            <div class="crumb" id="ticketCrumb">Tickets / -</div>
+            <h1 id="ticketTitle" style="margin:0 0 6px">Ticket Detail</h1>
+            <span class="chip" id="ticketStatusChip">-</span>
+            <span class="chip warn" id="ticketQAChip" style="display:none">Q&A中で停止</span>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap"><a id="editTicketBtn" class="btn" href="/edit-ticket.html" style="text-decoration:none;display:inline-block">Edit Ticket</a><a id="addChildTicketBtn" class="btn" href="/new-ticket.html" style="text-decoration:none;display:inline-block">+ 子チケットを追加</a></div>
+        </div>
+
+        <div class="layout">
+          <section class="stack">
+            <article class="card"><div class="title">チケット概要</div><div class="item"><b>チケット概要</b><div class="meta" id="ticketSummaryMeta">-</div></div><div class="item"><b>完了条件</b><div class="meta" id="ticketCompletionMeta">-</div></div><div class="item"><b>設計</b><div class="meta" id="ticketDesignMeta">-</div></div><div class="item"><b>仕様</b><div class="meta" id="ticketSpecificationMeta">-</div></div></article>
+
+          </section>
+          <aside class="stack">
+            <article class="card"><div class="title">メタ情報</div><div class="item"><b>Project</b><div class="meta"><a id="ticketProjectLink" href="/project-detail.html" style="color:#93c5fd">-</a></div></div><div class="item"><b>ステータス</b><div class="meta"><div class="select-wrap"><select id="ticketStatusSelect" class="status-select"><option value="backlog">Backlog</option><option value="todo">Todo</option><option value="in_progress">In Progress</option><option value="review">Review</option><option value="blocked">Blocked</option><option value="qa_blocked">Q&A Blocked</option><option value="done">Done</option></select></div></div></div><div class="item"><b>Working Branch</b><div class="meta" id="ticketBranchMeta">-</div></div><div class="item"><b>PR URL</b><div class="meta" id="ticketPrMeta">-</div></div><div class="item" id="ticketRelationItem" style="display:none"><b id="ticketRelationLabel">関連チケット</b><div class="meta" id="ticketRelationMeta">-</div></div><div class="item"><b>Assignee</b><div class="meta" id="ticketAssigneeMeta">-</div></div><div class="item"><b>Due</b><div class="meta" id="ticketDueMeta">-</div></div><div class="item"><b>Updated</b><div class="meta" id="ticketUpdatedMeta">-</div></div></article>
+            <article class="card"><div class="title">タチコマQ&Aステータス</div><div id="ticketQaStatus"><div class="item"><div class="meta">OPEN Questionなし</div></div></div></article>
+          </aside>
+      <div class="drawer-backdrop" id="drawerBackdrop"></div>
+        </div>
+
+        <article class="card" style="margin-top:14px">
+          <div class="title">少佐コメント（質問 / 指示ログ）</div>
+          <div id="commentFeed">
+          <div class="item">
+            <b>新規コメント追加</b>
+            <textarea id="majorComment" class="input" placeholder="少佐からの質問・指示を入力"></textarea>
+            <div class="meta" style="margin:8px 0 6px">添付（画像・資料）</div>
+            <input id="majorFiles" type="file" multiple accept=".png,.jpg,.jpeg,.webp,.pdf,.md,.doc,.docx,.txt" style="margin-bottom:8px" />
+            <div class="meta" id="selectedFiles" style="margin-bottom:8px">選択中ファイル: なし</div>
+            <button class="btn" id="postCommentBtn">Post Comment & Push Tachikoma</button>
+            <div id="pushStatus" class="status-line">state: idle</div>
+          </div>
+          </div>
+        </article>
+
+        <article class="card" style="margin-top:14px">
+          <div class="title">参考ファイル（添付一覧）</div>
+          <div id="attachmentFeed"><div class="item"><div class="meta">添付ファイルはまだありません</div></div></div>
+        </article>
+
+        <article class="card" style="margin-top:14px">
+          <div class="title">🕘 活動ログ（このチケット）</div>
+          <div id="ticketActivityLog"><div class="item"><div class="meta">読み込み中...</div></div></div>
+        </article>
+      </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="/assets/dashboard-db.js"></script>
+    <script>
+      const qp = new URLSearchParams(location.search);
+      const TICKET_ID = qp.get('ticket_id') || localStorage.getItem('LAST_TICKET_ID') || '';
+      let PROJECT_ID = qp.get('project_id') || localStorage.getItem('LAST_PROJECT_ID') || '';
+      const MAJOR_USER_ID = localStorage.getItem('MAJOR_USER_ID') || null;
+
+      const fileInput = document.getElementById('majorFiles');
+      const selectedFiles = document.getElementById('selectedFiles');
+      const postBtn = document.getElementById('postCommentBtn');
+      const commentInput = document.getElementById('majorComment');
+      const commentFeed = document.getElementById('commentFeed');
+      const attachmentFeed = document.getElementById('attachmentFeed');
+      const pushStatus = document.getElementById('pushStatus');
+      const ticketCrumb = document.getElementById('ticketCrumb');
+      const ticketTitle = document.getElementById('ticketTitle');
+      const ticketStatusChip = document.getElementById('ticketStatusChip');
+      const ticketQAChip = document.getElementById('ticketQAChip');
+      const ticketStatusSelect = document.getElementById('ticketStatusSelect');
+      const ticketRelationItem = document.getElementById('ticketRelationItem');
+      const ticketRelationLabel = document.getElementById('ticketRelationLabel');
+      const ticketRelationMeta = document.getElementById('ticketRelationMeta');
+      const ticketQaStatus = document.getElementById('ticketQaStatus');
+      const ticketActivityLog = document.getElementById('ticketActivityLog');
+      const addChildTicketBtn = document.getElementById('addChildTicketBtn');
+      const ticketProjectLink = document.getElementById('ticketProjectLink');
+      const ticketAssigneeMeta = document.getElementById('ticketAssigneeMeta');
+      const ticketBranchMeta = document.getElementById('ticketBranchMeta');
+      const ticketPrMeta = document.getElementById('ticketPrMeta');
+      const ticketDueMeta = document.getElementById('ticketDueMeta');
+      const ticketUpdatedMeta = document.getElementById('ticketUpdatedMeta');
+      const ticketSummaryMeta = document.getElementById('ticketSummaryMeta');
+      const ticketCompletionMeta = document.getElementById('ticketCompletionMeta');
+      const ticketDesignMeta = document.getElementById('ticketDesignMeta');
+      const ticketSpecificationMeta = document.getElementById('ticketSpecificationMeta');
+      let currentTicket = null;
+      let lastPostedCommentId = null;
+
+      function nowJst() {
+        const d = new Date();
+        const p = (n) => String(n).padStart(2, '0');
+        return `${d.getFullYear()}/${p(d.getMonth()+1)}/${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}`;
+      }
+      function esc(s){ return String(s ?? '').replace(/[&<>"']/g, (m)=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
+
+      fileInput?.addEventListener('change', () => {
+        const names = [...fileInput.files].map(f => f.name);
+        selectedFiles.textContent = `選択中ファイル: ${names.length ? names.join(' / ') : 'なし'}`;
+      });
+
+      (async function initTicketHeader() {
+        if (!window.DashboardDB || !TICKET_ID) return;
+        localStorage.setItem('LAST_TICKET_ID', TICKET_ID);
+        const [t, tickets, users, projects] = await Promise.all([
+          window.DashboardDB.fetchTicketById(TICKET_ID),
+          window.DashboardDB.fetchTickets({ limit: 2000 }),
+          window.DashboardDB.fetchUsers(),
+          window.DashboardDB.fetchProjects(500),
+        ]);
+        if (!t) return;
+        currentTicket = t;
+        PROJECT_ID = t.project_id || PROJECT_ID;
+        if (PROJECT_ID) localStorage.setItem('LAST_PROJECT_ID', PROJECT_ID);
+
+        if (ticketTitle) ticketTitle.textContent = `${t.ticket_no || t.id.slice(0,8)} ${t.title}`;
+        if (ticketCrumb) ticketCrumb.textContent = `Tickets / ${t.ticket_no || t.id.slice(0,8)}`;
+        if (ticketStatusChip) ticketStatusChip.textContent = t.status || '-';
+        if (ticketStatusSelect) ticketStatusSelect.value = t.status || 'backlog';
+        const editBtn = document.getElementById('editTicketBtn');
+        if (editBtn) editBtn.href = `/edit-ticket.html?ticket_id=${encodeURIComponent(t.id)}`;
+        if (addChildTicketBtn) addChildTicketBtn.href = `/new-ticket.html?project_id=${encodeURIComponent(PROJECT_ID)}&parent_ticket_id=${encodeURIComponent(t.id)}`;
+
+        const byId = new Map((tickets || []).map((x) => [x.id, x]));
+        const project = (projects || []).find((p) => p.id === PROJECT_ID);
+        if (ticketProjectLink) {
+          ticketProjectLink.href = `/project-detail.html?project_id=${encodeURIComponent(PROJECT_ID)}`;
+          ticketProjectLink.textContent = project ? `${project.project_key || PROJECT_ID.slice(0,8)} ${project.title}` : (PROJECT_ID || '-');
+        }
+
+        const parent = t.parent_ticket_id ? byId.get(t.parent_ticket_id) : null;
+        const children = (tickets || []).filter((x) => x.parent_ticket_id === t.id);
+        if (ticketRelationItem && ticketRelationLabel && ticketRelationMeta) {
+          if (children.length) {
+            ticketRelationItem.style.display = '';
+            ticketRelationLabel.textContent = '子チケット';
+            ticketRelationMeta.innerHTML = children.map((c) => `<a href="/ticket-detail.html?ticket_id=${encodeURIComponent(c.id)}" style="color:#93c5fd;display:block;margin-bottom:4px">${c.ticket_no || c.id.slice(0,8)} ${c.title || ''}</a>`).join('');
+          } else if (parent) {
+            ticketRelationItem.style.display = '';
+            ticketRelationLabel.textContent = '親チケット';
+            ticketRelationMeta.innerHTML = `<a href="/ticket-detail.html?ticket_id=${encodeURIComponent(parent.id)}" style="color:#93c5fd">${parent.ticket_no || parent.id.slice(0,8)} ${parent.title || ''}</a>`;
+          } else {
+            ticketRelationItem.style.display = 'none';
+            ticketRelationMeta.innerHTML = '';
+          }
+        }
+
+        const userMap = new Map((users || []).map((u) => [u.id, u]));
+        const au = userMap.get(t.assignee_id);
+        if (ticketAssigneeMeta) ticketAssigneeMeta.innerHTML = au ? `<span class="actor"><img src="${au.icon || '/assets/major-icon.png'}" alt="assignee"/>${au.name || au.id}</span>` : '-';
+        if (ticketBranchMeta) ticketBranchMeta.textContent = t.working_branch || '-';
+        if (ticketPrMeta) ticketPrMeta.innerHTML = t.pr_url ? `<a href="${esc(t.pr_url)}" target="_blank" rel="noopener" style="color:#93c5fd">${esc(t.pr_url)}</a>` : '-';
+        if (ticketDueMeta) ticketDueMeta.textContent = t.due_date || '-';
+        if (ticketUpdatedMeta) ticketUpdatedMeta.textContent = new Date(t.created_at).toLocaleString('ja-JP');
+        if (ticketSummaryMeta) ticketSummaryMeta.textContent = t.description || '-';
+        if (ticketCompletionMeta) ticketCompletionMeta.textContent = t.completion_criteria || '-';
+        if (ticketDesignMeta) ticketDesignMeta.textContent = t.design || '-';
+        if (ticketSpecificationMeta) ticketSpecificationMeta.textContent = t.specification || '-';
+
+        try {
+          const oq = await window.DashboardDB.fetchOpenQuestions(PROJECT_ID, { includeResolved: false, limit: 100 });
+          const related = (oq || []).filter((q) => String(q.detail || '').includes(t.id) || String(q.question_key || '').includes(t.ticket_no || ''));
+          if (ticketQAChip) ticketQAChip.style.display = related.length ? 'inline-flex' : 'none';
+          if (ticketQaStatus) {
+            ticketQaStatus.innerHTML = related.length
+              ? related.map((q) => `<div class="item"><b>${esc(q.question_key || 'OQ')}</b><div class="meta">${esc(q.title || '')}\n${esc(q.detail || '')}</div></div>`).join('')
+              : '<div class="item"><div class="meta">OPEN Questionなし</div></div>';
+          }
+        } catch (_) {}
+
+        try {
+          const logs = await window.DashboardDB.fetchProjectActivity(PROJECT_ID, 100);
+          const mine = (logs || []).filter((r) => String(r.entity_id || '') === String(t.id)).slice(0, 20);
+          if (ticketActivityLog) {
+            ticketActivityLog.innerHTML = mine.length
+              ? mine.map((r)=>`<div class="item"><b>${new Date(r.created_at).toLocaleString('ja-JP')}</b><div class="meta">${esc(r.summary || `${r.entity_type} ${r.action}`)}</div></div>`).join('')
+              : '<div class="item"><div class="meta">活動ログなし</div></div>';
+          }
+        } catch (e) {
+          if (ticketActivityLog) ticketActivityLog.innerHTML = `<div class="item"><div class="meta">活動ログ読込失敗: ${esc(e.message || e)}</div></div>`;
+        }
+
+        await refreshAttachments();
+      })();
+
+      function renderAttachmentFeed(files = []) {
+        if (!attachmentFeed) return;
+        attachmentFeed.innerHTML = files.length
+          ? files.map((f) => `<div class="item"><b>${esc(f.file_name)}</b><div class="meta">type: ${esc(f.mime_type || 'unknown')} / added: ${new Date(f.created_at).toLocaleString('ja-JP')} / <a href="data:${esc(f.mime_type || 'application/octet-stream')};base64,${f.content_base64}" download="${esc(f.file_name)}" style="color:#93c5fd">Download</a></div></div>`).join('')
+          : '<div class="item"><div class="meta">添付ファイルはまだありません</div></div>';
+      }
+
+      async function refreshAttachments() {
+        if (!window.DashboardDB || !TICKET_ID) return;
+        try {
+          const files = await window.DashboardDB.fetchTicketAttachments(TICKET_ID, 100);
+          renderAttachmentFeed(files);
+        } catch (e) {
+          if (attachmentFeed) attachmentFeed.innerHTML = `<div class="item"><div class="meta">添付読込失敗: ${esc(e.message || e)}</div></div>`;
+        }
+      }
+
+      function actorInfo(createdBy) {
+        if (createdBy === 'tachikoma') return { name:'タチコマ', icon:'/assets/tachikoma-face.png' };
+        return { name:'少佐', icon:'/assets/major-icon.png' };
+      }
+      function prependTicketComment(text, ts, createdBy = null) {
+        const row = document.createElement('div');
+        row.className = 'item';
+        const a = actorInfo(createdBy);
+        row.innerHTML = `<b><span class="actor"><img src="${a.icon}" alt="actor"/>${ts} ${a.name}</span></b><div class="meta">${esc(text || '（添付のみ）')}</div>`;
+        const first = commentFeed.firstElementChild;
+        if (first && first.querySelector && first.querySelector('b')?.textContent === '新規コメント追加') commentFeed.insertBefore(row, first);
+        else commentFeed.prepend(row);
+      }
+
+      (async function initTicketComments() {
+        if (!window.DashboardDB || !pushStatus) return;
+        const cfg = window.DashboardDB.getConfig();
+        if (!cfg.enabled) {
+          pushStatus.textContent = 'state: local mode (SB_URL / SB_ANON_KEY 未設定)';
+          return;
+        }
+
+        if (!TICKET_ID) {
+          pushStatus.textContent = 'state: ticket_id missing';
+          return;
+        }
+
+        try {
+          const composer = commentFeed.querySelector('.item:last-child');
+          commentFeed.innerHTML = '';
+          if (composer) commentFeed.appendChild(composer);
+          const rows = await window.DashboardDB.fetchTicketComments(TICKET_ID, 20);
+          rows.slice().reverse().forEach((r) => prependTicketComment(r.body, new Date(r.created_at).toLocaleString('ja-JP'), r.created_by || null));
+          pushStatus.textContent = 'state: connected / realtime ON';
+        } catch (e) {
+          pushStatus.textContent = `state: fetch error / ${e.message}`;
+        }
+
+        window.DashboardDB.subscribeTicketComments(TICKET_ID, async (row) => {
+          if (lastPostedCommentId && String(row.id) === String(lastPostedCommentId)) {
+            lastPostedCommentId = null;
+            return;
+          }
+          prependTicketComment(row.body, new Date(row.created_at).toLocaleString('ja-JP'), row.created_by || null);
+          const cb = row.created_by || '';
+          const isMajor = cb === 'major' || (!!MAJOR_USER_ID && cb === MAJOR_USER_ID);
+          if (!isMajor) return;
+          try {
+            await window.DashboardDB.pushToTachikoma({
+              type: 'ticket_comment_created',
+              ticket_id: TICKET_ID,
+              project_id: PROJECT_ID,
+              body: row.body || '',
+              created_by: row.created_by || null,
+              source: 'realtime_subscription',
+            });
+          } catch (e) {
+            if (pushStatus) pushStatus.textContent = `state: realtime notify error / ${e.message || e}`;
+          }
+        });
+      })();
+
+      ticketStatusSelect?.addEventListener('change', async () => {
+        if (!currentTicket) return;
+        const prev = currentTicket.status || null;
+        const next = ticketStatusSelect.value;
+        try {
+          await window.DashboardDB.updateTicketStatus({ ticketId: currentTicket.id, status: next });
+          currentTicket.status = next;
+          if (ticketStatusChip) ticketStatusChip.textContent = next;
+          pushStatus.textContent = 'state: status updated';
+        } catch (e) {
+          pushStatus.textContent = `state: status update error / ${e.message}`;
+          ticketStatusSelect.value = currentTicket.status || 'backlog';
+        }
+      });
+
+      postBtn?.addEventListener('click', async () => {
+        const text = (commentInput.value || '').trim();
+        const files = [...(fileInput.files || [])];
+        if (!text && files.length === 0) {
+          pushStatus.textContent = 'state: 入力または添付が必要です';
+          return;
+        }
+
+        const ts = nowJst();
+
+        const cfg = window.DashboardDB?.getConfig?.();
+        if (!cfg?.enabled) {
+          prependTicketComment(text, ts);
+          pushStatus.textContent = 'state: local post完了（Supabase未設定）';
+        } else {
+          pushStatus.textContent = 'state: posting + push中...';
+          try {
+            const posted = await window.DashboardDB.insertTicketComment({ ticketId: TICKET_ID, body: text || '（添付のみ）', createdBy: MAJOR_USER_ID });
+            lastPostedCommentId = posted?.id || null;
+            prependTicketComment(posted?.body || text || '（添付のみ）', new Date(posted?.created_at || Date.now()).toLocaleString('ja-JP'), posted?.created_by || MAJOR_USER_ID || null);
+            const insertedAttachments = [];
+            for (const f of files) {
+              const contentBase64 = await new Promise((resolve, reject) => {
+                const r = new FileReader();
+                r.onload = () => resolve(String(r.result || '').split(',')[1] || '');
+                r.onerror = () => reject(new Error('file read error'));
+                r.readAsDataURL(f);
+              });
+              const att = await window.DashboardDB.insertTicketAttachment({ ticketId: TICKET_ID, fileName: f.name, mimeType: f.type || null, fileSize: f.size || null, contentBase64, createdBy: MAJOR_USER_ID });
+              insertedAttachments.push(att);
+            }
+            await refreshAttachments();
+            await window.DashboardDB.pushToTachikoma({
+              type: 'ticket_comment_created',
+              ticket_id: TICKET_ID,
+              project_id: PROJECT_ID,
+              body: text || '（添付のみ）',
+              created_by: MAJOR_USER_ID,
+              attachment_ids: insertedAttachments.map((a) => a.id),
+              attachments: insertedAttachments.map((a) => ({ id: a.id, name: a.file_name, type: a.mime_type || 'unknown', size: a.file_size || 0 })),
+            });
+            pushStatus.textContent = 'state: push完了 / tachikoma通知送信';
+          } catch (e) {
+            pushStatus.textContent = `state: post error / ${e.message}`;
+          }
+        }
+
+        commentInput.value = '';
+        fileInput.value = '';
+        selectedFiles.textContent = '選択中ファイル: なし';
+      });
+    </script>
+  
+    <script>
+      (function(){
+        const btn=document.getElementById('hamburgerBtn');
+        const fab=document.getElementById('hamburgerFab');
+        const sidebar=document.querySelector('.sidebar');
+        const backdrop=document.getElementById('drawerBackdrop');
+        if(!sidebar||!backdrop) return;
+        function open(){sidebar.classList.add('open');backdrop.classList.add('open');}
+        function close(){sidebar.classList.remove('open');backdrop.classList.remove('open');}
+        if(btn) btn.addEventListener('click',()=> sidebar.classList.contains('open')?close():open());
+        if(fab) fab.addEventListener('click',()=> sidebar.classList.contains('open')?close():open());
+        backdrop.addEventListener('click',close);
+      })();
+    </script>
+
+  </body>
+</html>

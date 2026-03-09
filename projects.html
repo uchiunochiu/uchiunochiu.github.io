@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Projects | Tachikoma Dashboard</title>
+    <style>
+      :root { --bg:#0a0a0a; --card:#111; --muted:#1c1c1c; --border:#2a2a2a; --text:#fafafa; --subtle:#a1a1aa; --radius:12px; }
+      *{box-sizing:border-box} body{margin:0;font-family:Inter,system-ui;background:var(--bg);color:var(--text)}
+      .app{min-height:100vh;display:grid;grid-template-columns:260px 1fr}
+      .sidebar{border-right:1px solid var(--border);padding:20px 14px}
+      .brand{padding:10px 12px;border:1px solid var(--border);border-radius:var(--radius);background:var(--card);margin-bottom:18px;font-weight:700}
+      .menu{display:grid;gap:6px}.menu a{color:var(--text);text-decoration:none;padding:10px 12px;border-radius:10px;font-size:14px;display:flex;align-items:center;gap:8px;white-space:nowrap}.menu a.active{background:var(--card);border:1px solid var(--border)}
+      .main{padding:24px}.row{display:grid;grid-template-columns:1fr;gap:14px}
+      .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px}
+      .title{font-size:13px;color:var(--subtle);margin-bottom:8px}
+      table{width:100%;border-collapse:collapse;font-size:13px} th,td{padding:10px 6px;border-bottom:1px solid var(--border);text-align:left}
+      th{font-size:12px;color:var(--subtle)}
+      .badge{padding:3px 8px;border-radius:999px;font-size:11px;border:1px solid var(--border)}
+      .planning{background:#1f2937}.progress{background:#1e3a8a}.hold{background:#78350f}.done{background:#14532d}.archived{background:#3f3f46}
+      .meta{display:grid;gap:8px;font-size:13px}.meta div{padding:10px;border:1px solid var(--border);border-radius:10px;background:var(--muted)}
+      .btn{background:#fafafa;color:#111;padding:9px 12px;border-radius:10px;border:0;font-weight:700}
+      .actor{display:inline-flex;align-items:center;gap:6px}
+      .actor img{width:18px;height:18px;border-radius:999px;object-fit:cover;border:1px solid var(--border)}
+      @media(max-width:980px){.app{grid-template-columns:1fr}.sidebar{border-right:none;border-bottom:1px solid var(--border)}.menu{display:flex;overflow:auto;gap:6px}.menu a{font-size:13px;padding:8px 10px}.main{padding:0 0 12px}.card{padding:12px}.columns{grid-template-columns:repeat(6,minmax(150px,1fr))}.table-wrap{overflow:auto}.card{border-radius:0;border-left:none;border-right:none}.head,.toolbar,.top{padding:0 12px}.row,.layout,.grid{padding:0 0}.row{grid-template-columns:1fr}}
+    
+      /* mobile full-width unification */
+      @media (max-width: 980px) {
+        html, body, .app, .main, main { width: 100% !important; max-width: 100% !important; overflow-x: auto !important; }
+        .main { padding: 0 0 12px !important; }
+        .card { border-radius: 0 !important; border-left: none !important; border-right: none !important; margin-left: 0 !important; margin-right: 0 !important; }
+        .top, .toolbar, .head { padding: 0 12px !important; }
+        .row, .layout, .grid { gap: 10px !important; }
+        .columns { overflow-x: auto !important; -webkit-overflow-scrolling: touch; }
+        table { display: block; width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        .mobile-topbar{display:flex}
+        .sidebar{position:fixed;left:0;top:0;bottom:0;width:260px;transform:translateX(-105%);transition:transform .2s ease;z-index:50;background:var(--bg);border-right:1px solid var(--border)}
+        .sidebar.open{transform:translateX(0)}
+        .sidebar .menu{display:grid !important;grid-auto-flow:row !important;gap:6px !important;overflow:visible !important}
+        .sidebar .menu a{width:100% !important;justify-content:flex-start !important}
+      }
+
+    
+      .mobile-topbar{display:none;align-items:center;justify-content:space-between;padding:10px 12px;border-bottom:1px solid var(--border);background:var(--card);position:sticky;top:0;z-index:30}
+      .hamburger{background:transparent;border:1px solid var(--border);color:var(--text);border-radius:8px;padding:6px 10px;font-size:16px}
+      .drawer-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:40}
+      .drawer-backdrop.open{display:block}
+      .hamburger-fab{display:none;position:fixed;top:12px;left:12px;z-index:70;background:var(--card);border:1px solid var(--border);color:var(--text);border-radius:10px;padding:8px 10px;font-size:16px;line-height:1}
+      @media (max-width:980px){.hamburger-fab{display:block !important}.main{padding-top:56px !important}.mobile-topbar{display:none !important}}
+
+    </style>
+  </head>
+  <body>
+    <button id="hamburgerFab" class="hamburger-fab" aria-label="menu">☰</button>
+    <div class="app">
+      <aside class="sidebar">
+        <div class="brand">dashboard</div>
+        <nav class="menu">
+          <a href="/">🏠 Dashboard</a>
+          <a class="active" href="/projects.html">📁 Projects</a>
+          <a href="/tickets.html">🎫 Tickets</a>
+          <a href="/board.html">🧩 Board</a>
+          <a href="#">🗓️ Calendar</a>
+          <a href="#">⚙️ Settings</a>
+        </nav>
+      </aside>
+      <div class="drawer-backdrop" id="drawerBackdrop"></div>
+      <main class="main">
+        <div class="mobile-topbar"><strong>dashboard</strong><button id="hamburgerBtn" class="hamburger">☰</button></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+          <div><h1 style="margin:0">📁 Projects</h1><div style="color:var(--subtle);font-size:14px">プロジェクト一覧 + 右ペイン詳細</div></div>
+          <a class="btn" id="newProjectBtn" href="/new-project.html" style="text-decoration:none;display:inline-block">+ New Project</a>
+        </div>
+        <div id="projectStatus" style="font-size:12px;color:var(--subtle);margin-bottom:8px">state: idle</div>
+        <div class="row">
+          <section class="card">
+            <div class="title">📁 Project List</div>
+            <table>
+              <thead><tr><th>CreateAt</th><th>Key</th><th>Name</th><th>Status</th><th>CreateUser</th><th>Tickets</th></tr></thead>
+              <tbody id="projectRows"></tbody>
+            </table>
+          </section>
+
+      <div class="drawer-backdrop" id="drawerBackdrop"></div>
+        </div>
+
+      </main>
+    </div>
+  
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="/assets/dashboard-db.js"></script>
+    <script>
+      const MAJOR_USER_ID = '00000000-0000-0000-0000-0000000000aa'; // replace
+      const projectRows = document.getElementById('projectRows');
+      const projectStatus = document.getElementById('projectStatus');
+      const newProjectBtn = document.getElementById('newProjectBtn');
+
+      function badgeClass(status) {
+        if (status === 'in_progress') return 'progress';
+        if (status === 'done') return 'done';
+        if (status === 'blocked') return 'hold';
+        return 'planning';
+      }
+
+      function statusLabel(status) {
+        const m = { planning: 'Planning', in_progress: 'In Progress', blocked: 'Blocked', review: 'Review', done: 'Done' };
+        return m[status] || status;
+      }
+
+      function fmtDate(s) {
+        if (!s) return '-';
+        const d = new Date(s);
+        if (Number.isNaN(d.getTime())) return '-';
+        const p = (n) => String(n).padStart(2, '0');
+        return `${d.getFullYear()}/${p(d.getMonth()+1)}/${p(d.getDate())}`;
+      }
+
+      function renderProjects(rows, ticketCountMap, userMap) {
+        if (!projectRows) return;
+        projectRows.innerHTML = '';
+        if (!rows.length) {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `<td colspan="6" style="color:#a1a1aa">0件です。<a href="/new-project.html" style="color:#fafafa">新規作成</a> か <a href="/setup.html#diag" style="color:#fafafa">/setup.html#diag</a> で接続診断してください。</td>`;
+          projectRows.appendChild(tr);
+          return;
+        }
+        rows.forEach((p) => {
+          const u = (p.created_by && userMap.get(p.created_by)) || userMap.get('major') || { name: '少佐', icon: '/assets/major-icon.png' };
+          const createUser = `<span class="actor">${u.icon ? `<img src="${u.icon}" alt="u"/>` : ''}${u.name}</span>`;
+          const createAt = fmtDate(p.created_at);
+          const tickets = ticketCountMap.get(p.id) || 0;
+          const tr = document.createElement('tr');
+          tr.innerHTML = `<td>${createAt}</td><td>${p.project_key || '-'}</td><td><a href="/project-detail.html?project_id=${p.id}" style="color:#fafafa">${p.title}</a></td><td><span class="badge ${badgeClass(p.status)}">${statusLabel(p.status)}</span></td><td>${createUser}</td><td>${tickets}</td>`;
+          projectRows.appendChild(tr);
+        });
+      }
+
+      async function loadProjects() {
+        if (!window.DashboardDB) return;
+        const cfg = window.DashboardDB.getConfig();
+        if (!cfg.enabled) {
+          projectStatus.textContent = 'state: local mode（Supabase未設定）';
+        } else {
+          projectStatus.textContent = 'state: loading projects...';
+        }
+        try {
+          const [rows, tickets, users] = await Promise.all([
+            window.DashboardDB.fetchProjects(200),
+            window.DashboardDB.fetchTickets({ limit: 1000 }),
+            window.DashboardDB.fetchUsers()
+          ]);
+          const ticketCountMap = new Map();
+          tickets.forEach((t) => ticketCountMap.set(t.project_id, (ticketCountMap.get(t.project_id) || 0) + 1));
+          const userMap = new Map(users.map((u) => [u.id, u]));
+          renderProjects(rows, ticketCountMap, userMap);
+          projectStatus.textContent = `state: loaded ${rows.length} projects`;
+        } catch (e) {
+          projectStatus.textContent = `state: error / ${e.message}`;
+        }
+      }
+
+
+
+      loadProjects();
+
+      (function(){
+        const btn=document.getElementById('hamburgerBtn');
+        const fab=document.getElementById('hamburgerFab');
+        const sidebar=document.querySelector('.sidebar');
+        const backdrop=document.getElementById('drawerBackdrop');
+        if(!sidebar||!backdrop) return;
+        function open(){sidebar.classList.add('open');backdrop.classList.add('open');}
+        function close(){sidebar.classList.remove('open');backdrop.classList.remove('open');}
+        if(btn) btn.addEventListener('click',()=> sidebar.classList.contains('open')?close():open());
+        if(fab) fab.addEventListener('click',()=> sidebar.classList.contains('open')?close():open());
+        backdrop.addEventListener('click',close);
+      })();
+    </script>
+
+  </body>
+</html>

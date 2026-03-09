@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit Project | Tachikoma Dashboard</title>
+    <style>
+      :root { --bg:#0a0a0a; --card:#111; --border:#2a2a2a; --text:#fafafa; --subtle:#a1a1aa; --radius:12px; }
+      *{box-sizing:border-box} body{margin:0;font-family:Inter,system-ui;background:var(--bg);color:var(--text)}
+      .app{min-height:100vh;display:grid;grid-template-columns:260px 1fr}
+      .sidebar{border-right:1px solid var(--border);padding:20px 14px}
+      .brand{padding:10px 12px;border:1px solid var(--border);border-radius:var(--radius);background:var(--card);margin-bottom:18px;font-weight:700}
+      .menu{display:grid;gap:6px}.menu a{color:var(--text);text-decoration:none;padding:10px 12px;border-radius:10px;font-size:14px}.menu a.active{background:var(--card);border:1px solid var(--border)}
+      .main{padding:24px}.head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+      .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px}
+      .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+      label{display:block;font-size:12px;color:var(--subtle)}
+      input,select,textarea{width:100%;margin-top:6px;background:#0f0f0f;color:var(--text);border:1px solid var(--border);border-radius:8px;padding:10px;font:inherit}
+      textarea{min-height:120px}.full{grid-column:1/-1}
+      .actions{display:flex;gap:10px;align-items:center;margin-top:12px}
+      .btn{background:#fafafa;color:#111;padding:9px 12px;border-radius:10px;border:0;font-weight:700;cursor:pointer}
+      .danger{background:#991b1b;color:#fff}
+      .muted{font-size:12px;color:var(--subtle)}
+      @media(max-width:980px){.app{grid-template-columns:1fr}.sidebar{display:none}.grid{grid-template-columns:1fr}.main{padding:12px}}
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <aside class="sidebar">
+        <div class="brand">dashboard</div>
+        <nav class="menu">
+          <a href="/">🏠 Dashboard</a><a class="active" href="/projects.html">📁 Projects</a><a href="/tickets.html">🎫 Tickets</a><a href="/board.html">🧩 Board</a>
+        </nav>
+      </aside>
+      <main class="main">
+        <div class="head"><div><h1 style="margin:0">Edit Project</h1><div class="muted">既存情報を編集</div></div><a href="/projects.html" class="muted">← Back</a></div>
+        <section class="card">
+          <div class="grid">
+            <label>Project Key<input id="project_key" /></label>
+            <label>Title<input id="title" /></label>
+            <label>Status<select id="status"><option value="planning">planning</option><option value="in_progress">in_progress</option><option value="blocked">blocked</option><option value="review">review</option><option value="done">done</option></select></label>
+            <label>Due Date<input id="due_date" type="date" /></label>
+            <label class="full">Description<textarea id="description"></textarea></label>
+            <label class="full">目的（Goal）<textarea id="goal"></textarea></label>
+            <label class="full">完了条件（Definition of Done）※1行1項目<textarea id="definition_of_done"></textarea></label>
+            <label class="full">制約（Constraints / Guardrails）※1行1項目<textarea id="constraints"></textarea></label>
+            <label class="full">参照リンク（カテゴリ管理）※label|url / 1行1件<textarea id="links"></textarea></label>
+            <label class="full">Repository URL<input id="repo_url" /></label>
+            <label>Default Branch<input id="default_branch" placeholder="main" /></label>
+          </div>
+          <div class="actions"><button id="saveBtn" class="btn">Save</button><button id="deleteBtn" class="btn danger">Delete Project</button><span id="state" class="muted">state: loading...</span></div>
+        </section>
+      </main>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="/assets/dashboard-db.js"></script>
+    <script>
+      const qp = new URLSearchParams(location.search);
+      const projectId = qp.get('project_id') || localStorage.getItem('LAST_PROJECT_ID') || '';
+      const state = document.getElementById('state');
+      function lines(v){ return Array.isArray(v) ? v.join('\n') : ''; }
+      function linksLines(v){
+        if (!Array.isArray(v)) return '';
+        return v.map((x) => `${x?.label || ''}|${x?.url || ''}`).join('\n');
+      }
+      function parseLines(text){ return (text || '').split('\n').map(s => s.trim()).filter(Boolean); }
+      function parseLinks(text){
+        return parseLines(text).map((line) => {
+          const [label, url] = line.split('|').map((s) => (s || '').trim());
+          return { label: label || url || line, url: url || '' };
+        });
+      }
+
+      async function init(){
+        if(!projectId){ state.textContent='state: project_id missing'; return; }
+        const p = await window.DashboardDB.fetchProjectById(projectId);
+        if(!p){ state.textContent='state: project not found'; return; }
+        document.getElementById('project_key').value = p.project_key || '';
+        document.getElementById('title').value = p.title || '';
+        document.getElementById('status').value = p.status || 'planning';
+        document.getElementById('due_date').value = p.due_date || '';
+        document.getElementById('description').value = p.description || '';
+        document.getElementById('goal').value = p.goal || '';
+        document.getElementById('definition_of_done').value = lines(p.definition_of_done);
+        document.getElementById('constraints').value = lines(p.constraints);
+        document.getElementById('links').value = linksLines(p.links);
+        document.getElementById('repo_url').value = p.repo_url || '';
+        document.getElementById('default_branch').value = p.default_branch || 'main';
+        state.textContent='state: ready';
+      }
+      init().catch(e=>state.textContent=`state: init error / ${e.message}`);
+
+      document.getElementById('saveBtn').onclick = async()=>{
+        const payload = {
+          projectId,
+          projectKey: document.getElementById('project_key').value.trim(),
+          title: document.getElementById('title').value.trim(),
+          status: document.getElementById('status').value,
+          dueDate: document.getElementById('due_date').value || null,
+          description: document.getElementById('description').value.trim() || null,
+          goal: document.getElementById('goal').value.trim(),
+          definitionOfDone: parseLines(document.getElementById('definition_of_done').value),
+          constraints: parseLines(document.getElementById('constraints').value),
+          links: parseLinks(document.getElementById('links').value),
+          repoUrl: document.getElementById('repo_url').value.trim() || null,
+          defaultBranch: document.getElementById('default_branch').value.trim() || null,
+        };
+        if(!payload.title){ state.textContent='state: title required'; return; }
+        state.textContent='state: saving...';
+        try{ await window.DashboardDB.updateProject(payload); state.textContent='state: saved'; location.href='/projects.html'; }
+        catch(e){ state.textContent=`state: save error / ${e.message}`; }
+      };
+
+      document.getElementById('deleteBtn').onclick = async()=>{
+        if(!confirm('このプロジェクトを削除します（紐づくチケットも削除）')) return;
+        state.textContent='state: deleting...';
+        try{ await window.DashboardDB.deleteProject({ projectId }); state.textContent='state: deleted'; location.href='/projects.html'; }
+        catch(e){ state.textContent=`state: delete error / ${e.message}`; }
+      };
+    </script>
+  </body>
+</html>

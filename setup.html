@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="ja">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Dashboard Setup</title>
+<style>body{font-family:system-ui;background:#0a0a0a;color:#fafafa;max-width:760px;margin:40px auto;padding:0 16px}input{width:100%;padding:10px;margin:6px 0 14px;border-radius:8px;border:1px solid #333;background:#111;color:#fff}button{padding:10px 14px;border:0;border-radius:8px;background:#fafafa;color:#111;font-weight:700}.muted{color:#aaa;font-size:13px}</style></head>
+<body>
+<h1>Dashboard Supabase Setup</h1>
+<p class="muted">一回だけ入力すればOKです。</p>
+<label>SB_URL</label><input id="sburl" placeholder="https://xxxx.supabase.co" />
+<label>SB_ANON_KEY</label><input id="sbanon" placeholder="eyJ..." />
+<button id="save">保存</button>
+<p id="msg" class="muted"></p>
+<pre id="diag" class="muted" style="white-space:pre-wrap;background:#111;border:1px solid #333;border-radius:8px;padding:12px;display:none"></pre>
+<script>
+const sburl=document.getElementById('sburl');
+const sbanon=document.getElementById('sbanon');
+const msg=document.getElementById('msg');
+const diag=document.getElementById('diag');
+
+function save(vUrl, vKey){
+  localStorage.setItem('SB_URL', String(vUrl||'').trim());
+  localStorage.setItem('SB_ANON_KEY', String(vKey||'').trim());
+}
+
+const qp=new URLSearchParams(location.search);
+const qUrl=qp.get('sburl')||'';
+const qKey=qp.get('sbanon')||'';
+
+if(qUrl && qKey){
+  save(qUrl, qKey);
+  sburl.value=qUrl;
+  sbanon.value=qKey;
+  msg.textContent='URLパラメータから保存しました。/projects.html を開いて確認してください。';
+}else{
+  sburl.value=localStorage.getItem('SB_URL')||'';
+  sbanon.value=localStorage.getItem('SB_ANON_KEY')||'';
+}
+
+document.getElementById('save').onclick=()=>{
+  save(sburl.value, sbanon.value);
+  msg.textContent='保存しました。/projects.html を開いて確認してください。';
+};
+
+async function probe(path){
+  const url=(sburl.value||'').replace(/\/$/,'') + path;
+  const res=await fetch(url,{headers:{apikey:sbanon.value||'',Authorization:'Bearer '+(sbanon.value||'')}});
+  let body='';
+  try{ body=await res.text(); }catch(_){ body='(no body)'; }
+  return {status:res.status, url, body: body.slice(0, 300)};
+}
+
+(async function runDiag(){
+  if(location.hash!=='#diag') return;
+  diag.style.display='block';
+  diag.textContent='診断中...';
+  try{
+    const checks=[
+      '/rest/v1/',
+      '/rest/v1/projects?select=id&limit=1',
+      '/rest/v1/tickets?select=id&limit=1',
+      '/rest/v1/app_users?select=id&limit=1'
+    ];
+    const out=[];
+    for(const p of checks){
+      const r=await probe(p);
+      out.push(`[${r.status}] ${r.url}\n${r.body}\n`);
+    }
+    diag.textContent=out.join('\n');
+  }catch(e){
+    diag.textContent='診断失敗: '+(e?.message||String(e));
+  }
+})();
+</script>
+</body></html>

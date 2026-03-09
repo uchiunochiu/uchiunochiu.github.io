@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>New Project | Tachikoma Dashboard</title>
+    <style>
+      :root { --bg:#0a0a0a; --card:#111; --muted:#1c1c1c; --border:#2a2a2a; --text:#fafafa; --subtle:#a1a1aa; --radius:12px; }
+      *{box-sizing:border-box}
+      body{margin:0;font-family:Inter,system-ui;background:var(--bg);color:var(--text)}
+      .app{min-height:100vh;display:grid;grid-template-columns:260px 1fr}
+      .sidebar{border-right:1px solid var(--border);padding:20px 14px}
+      .brand{padding:10px 12px;border:1px solid var(--border);border-radius:var(--radius);background:var(--card);margin-bottom:18px;font-weight:700}
+      .menu{display:grid;gap:6px}
+      .menu a{color:var(--text);text-decoration:none;padding:10px 12px;border-radius:10px;font-size:14px;display:flex;align-items:center;gap:8px;white-space:nowrap}
+      .menu a.active{background:var(--card);border:1px solid var(--border)}
+      .main{padding:24px}
+      .head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+      .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px}
+      .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+      label{display:block;font-size:12px;color:var(--subtle)}
+      input,select,textarea{width:100%;margin-top:6px;background:#0f0f0f;color:var(--text);border:1px solid var(--border);border-radius:8px;padding:10px;font:inherit}
+      textarea{min-height:120px}
+      .full{grid-column:1/-1}
+      .btn{background:#fafafa;color:#111;padding:9px 12px;border-radius:10px;border:0;font-weight:700;cursor:pointer}
+      .muted{font-size:12px;color:var(--subtle)}
+      .actions{display:flex;gap:10px;align-items:center;margin-top:12px}
+      @media(max-width:980px){.app{grid-template-columns:1fr}.sidebar{border-right:none;border-bottom:1px solid var(--border)}.grid{grid-template-columns:1fr}.main{padding:12px}}
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <aside class="sidebar">
+        <div class="brand">dashboard</div>
+        <nav class="menu">
+          <a href="/">🏠 Dashboard</a>
+          <a class="active" href="/projects.html">📁 Projects</a>
+          <a href="/tickets.html">🎫 Tickets</a>
+          <a href="/board.html">🧩 Board</a>
+          <a href="#">🗓️ Calendar</a>
+          <a href="#">⚙️ Settings</a>
+        </nav>
+      </aside>
+
+      <main class="main">
+        <div class="head">
+          <div>
+            <h1 style="margin:0">+ New Project</h1>
+            <div class="muted">プロジェクト新規作成</div>
+          </div>
+          <a href="/projects.html" class="muted">← Back</a>
+        </div>
+
+        <section class="card">
+          <div class="grid">
+            <label>Project Key
+              <input id="project_key" placeholder="PRJ-101" />
+            </label>
+
+            <label>Title
+              <input id="title" placeholder="Project title" />
+            </label>
+
+            <label>Status
+              <select id="status">
+                <option value="planning">planning</option>
+                <option value="in_progress">in_progress</option>
+                <option value="blocked">blocked</option>
+                <option value="review">review</option>
+              </select>
+            </label>
+
+            <label>Due Date
+              <input id="due_date" type="date" />
+            </label>
+
+            <label class="full">Description
+              <textarea id="description" placeholder="project description"></textarea>
+            </label>
+
+            <label class="full">目的（Goal）
+              <textarea id="goal" placeholder="このプロジェクトで達成すること"></textarea>
+            </label>
+
+            <label class="full">完了条件（Definition of Done）※1行1項目
+              <textarea id="definition_of_done" placeholder="例: Project詳細で必要情報を1画面で把握できる"></textarea>
+            </label>
+
+            <label class="full">制約（Constraints / Guardrails）※1行1項目
+              <textarea id="constraints" placeholder="例: Owner概念なし / YYYY/MM/DD形式"></textarea>
+            </label>
+
+            <label class="full">参照リンク（カテゴリ管理）※label|url 形式 / 1行1件
+              <textarea id="links" placeholder="Design Docs|https://example.com/docs"></textarea>
+            </label>
+
+            <label class="full">Repository URL
+              <input id="repo_url" placeholder="https://github.com/owner/repo" />
+            </label>
+
+            <label>Default Branch
+              <input id="default_branch" placeholder="main" value="main" />
+            </label>
+          </div>
+
+          <div class="actions">
+            <button id="createBtn" class="btn">Create Project</button>
+            <span id="state" class="muted">state: idle</span>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="/assets/dashboard-db.js"></script>
+    <script>
+      const state=document.getElementById('state');
+      function parseLines(text){
+        return (text || '').split('\n').map(s => s.trim()).filter(Boolean);
+      }
+
+      function parseLinks(text){
+        return parseLines(text).map((line) => {
+          const [label, url] = line.split('|').map((s) => (s || '').trim());
+          return { label: label || url || line, url: url || '' };
+        });
+      }
+
+      document.getElementById('createBtn').onclick=async()=>{
+        const projectKey=document.getElementById('project_key').value.trim();
+        const title=document.getElementById('title').value.trim();
+        const status=document.getElementById('status').value;
+        const dueDate=document.getElementById('due_date').value || null;
+        const description=document.getElementById('description').value.trim() || null;
+        const goal=document.getElementById('goal').value.trim();
+        const definitionOfDone=parseLines(document.getElementById('definition_of_done').value);
+        const constraints=parseLines(document.getElementById('constraints').value);
+        const links=parseLinks(document.getElementById('links').value);
+        const repoUrl=document.getElementById('repo_url').value.trim() || null;
+        const defaultBranch=document.getElementById('default_branch').value.trim() || null;
+        if(!title){state.textContent='state: title required';return;}
+        state.textContent='state: creating...';
+        try{
+          const p=await window.DashboardDB.createProject({projectKey,title,description,status,dueDate,goal,definitionOfDone,constraints,links,repoUrl,defaultBranch,createdBy:null});
+          if(p?.id) localStorage.setItem('LAST_PROJECT_ID', p.id);
+          location.href='/projects.html';
+        }catch(e){state.textContent=`state: error / ${e.message}`;}
+      };
+    </script>
+  </body>
+</html>
