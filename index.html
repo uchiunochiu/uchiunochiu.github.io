@@ -144,7 +144,7 @@
 
       .columns {
         display: grid;
-        grid-template-columns: repeat(6, minmax(180px, 1fr));
+        grid-template-columns: repeat(7, minmax(180px, 1fr));
         gap: 10px;
         overflow-x: auto;
       }
@@ -356,8 +356,8 @@
         const qaRows = tickets.filter(t=>t.status==='qa_blocked').slice(0,5);
         document.getElementById('topQaRows').innerHTML = qaRows.length ? qaRows.map(t=>`<tr><td><a href="/ticket-detail.html?ticket_id=${t.id}" style="color:#fafafa">${t.ticket_no||t.id.slice(0,8)}</a></td><td>${t.projects?.title||'-'}</td><td>${t.blocked_reason||'Q&A中で停止'}</td><td><span class="badge warn">Q&A中で停止</span></td></tr>`).join('') : '<tr><td colspan="4" class="muted">該当なし</td></tr>';
 
-        const cols = ['backlog','todo','in_progress','review','blocked','done'];
-        const labels = {backlog:'Backlog',todo:'Todo',in_progress:'In Progress',review:'Review',blocked:'Blocked',done:'Done'};
+        const cols = ['backlog','todo','spec_review','in_progress','review','blocked','done'];
+        const labels = {backlog:'Backlog',todo:'Todo',spec_review:'Spec Review',in_progress:'In Progress',review:'Review',blocked:'Blocked',done:'Done'};
         const colHtml = cols.map(c=>{
           const list = tickets.filter(t=>(t.status||'backlog')===c).slice(0,6);
           return `<div class="col"><h4>${labels[c]}</h4>${list.map(t=>`<div class="ticket">${t.ticket_no||t.id.slice(0,8)} ${t.title}</div>`).join('') || '<div class="ticket">(empty)</div>'}</div>`;

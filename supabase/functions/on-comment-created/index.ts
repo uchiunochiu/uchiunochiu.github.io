@@ -27,6 +27,56 @@ function buildStatusMessage(payload: any, statusLabel: string, header: string) {
   ].filter(Boolean).join("\n");
 }
 
+function buildTodoOperationPrompt(payload: any) {
+  const ticketId = payload?.ticket_id ?? "";
+  const ticketNo = payload?.ticket_no ?? "";
+  const title = payload?.title ?? "";
+  const projectId = payload?.project_id ?? "";
+  const ticketUrl = ticketId
+    ? `https://dashboard-mu-woad-68.vercel.app/ticket-detail.html?ticket_id=${ticketId}`
+    : "";
+
+  return [
+    "[TODO運用命令 / 厳守]",
+    "前提: チケットは親プロジェクト完了のための実行タスク。",
+    "今回の責務は『設計作成（tickets.design 更新）と少佐への承認依頼DM送信』まで。",
+    "",
+    "必須確認項目:",
+    "- project.goal / project.definition_of_done / project.constraints / project.links",
+    "- tickets.title / tickets.description（チケット概要）/ tickets.completion_criteria（完了条件）",
+    "- ticket_comments / ticket_attachments",
+    "",
+    "通常分岐:",
+    "- 設計可能なら tickets.design を更新し、Discord DMで次を送信する。",
+    "  todoチケットの{ticket_no} {title}について、設計のたたき台を作りました。ご確認お願いします。",
+    "  ---設計要約---",
+    "  ・{要点1}",
+    "  ・{要点2}",
+    "  ・{要点3}",
+    "  -----",
+    "  {ticket_url}",
+    "",
+    "qa_blocked分岐（重要）:",
+    "- 情報不足/曖昧/依存未解決で設計確定できない場合、tickets.status を qa_blocked に変更する。",
+    "- 質問内容は必ず ticket_comments に記録する。",
+    "- Discord DMには『コメントを残した旨』と『チケットURL』のみを通知する。",
+    "",
+    "禁止事項:",
+    "- このフェーズで tickets.specification 更新、実装依頼、in_progress/review/done 変更を行わない。",
+    "- 例外として qa_blocked への変更のみ許可。",
+    "",
+    "出力必須:",
+    "- current_phase / checked_fields / decision(design_ready or qa_blocked) / execution_result / next_action",
+    "",
+    "[EVENT DATA]",
+    `ticket_id: ${ticketId}`,
+    `ticket_no: ${ticketNo}`,
+    `title: ${title}`,
+    `project_id: ${projectId}`,
+    `ticket_url: ${ticketUrl}`,
+  ].join("\n");
+}
+
 function buildCommentMessage(payload: any) {
   return String(payload?.body || "").trim() || "(empty comment)";
 }
@@ -68,7 +118,7 @@ Deno.serve(async (req: Request) => {
     const isComment = eventType === "project_comment_created" || eventType === "ticket_comment_created";
 
     const message = isTodo
-      ? buildStatusMessage(payload, "todo", "Todoチケットを検知しました。内容確認に入ります。")
+      ? buildTodoOperationPrompt(payload)
       : isReview
         ? buildStatusMessage(payload, "review", "Reviewチケットを検知しました。レビュー依頼です。")
         : isComment

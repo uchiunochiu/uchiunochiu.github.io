@@ -28,7 +28,7 @@
       .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 
       .project-board{margin-top:14px}
-      .columns{display:grid;grid-template-columns:repeat(7,minmax(180px,1fr));gap:10px;overflow-x:auto}
+      .columns{display:grid;grid-template-columns:repeat(8,minmax(180px,1fr));gap:10px;overflow-x:auto}
       .col{border:1px dashed var(--border);border-radius:12px;background:#0d0d0d;padding:10px;height:40vh;min-height:220px;max-height:500px;display:flex;flex-direction:column}
       .col h4{margin:0 0 10px;font-size:12px;color:var(--subtle);position:sticky;top:0;background:#0d0d0d;padding-bottom:6px;z-index:1}
       .col-body{flex:1;overflow-y:auto;overflow-x:hidden;padding-right:2px}
@@ -73,7 +73,7 @@
 
       table{width:100%;border-collapse:collapse;font-size:13px} th,td{padding:10px 6px;border-bottom:1px solid var(--border);text-align:left} th{font-size:12px;color:var(--subtle)}
       @media(max-width:980px){.col{height:36vh;min-height:180px;max-height:420px}}
-      @media(max-width:980px){.app{grid-template-columns:1fr}.sidebar{border-right:none;border-bottom:1px solid var(--border)}.menu{display:flex;overflow:auto;gap:6px}.menu a{font-size:13px;padding:8px 10px}.main{padding:0 0 12px}.card{padding:12px}.columns{grid-template-columns:repeat(7,minmax(150px,1fr))}.table-wrap{overflow:auto}.card{border-radius:0;border-left:none;border-right:none}.head,.toolbar,.top{padding:0 12px}.row,.layout,.grid{padding:0 0}.layout{grid-template-columns:1fr}.grid2{grid-template-columns:1fr}}
+      @media(max-width:980px){.app{grid-template-columns:1fr}.sidebar{border-right:none;border-bottom:1px solid var(--border)}.menu{display:flex;overflow:auto;gap:6px}.menu a{font-size:13px;padding:8px 10px}.main{padding:0 0 12px}.card{padding:12px}.columns{grid-template-columns:repeat(8,minmax(150px,1fr))}.table-wrap{overflow:auto}.card{border-radius:0;border-left:none;border-right:none}.head,.toolbar,.top{padding:0 12px}.row,.layout,.grid{padding:0 0}.layout{grid-template-columns:1fr}.grid2{grid-template-columns:1fr}}
     
       /* mobile full-width unification */
       @media (max-width: 980px) {
@@ -135,6 +135,7 @@
           <div id="projectKanbanColumns" class="columns">
             <section class="col"><h4>Backlog</h4><div class="col-body"><div class="meta">読み込み中...</div></div></section>
             <section class="col"><h4>Todo</h4><div class="col-body"><div class="meta">読み込み中...</div></div></section>
+            <section class="col"><h4>Spec Review</h4><div class="col-body"><div class="meta">読み込み中...</div></div></section>
             <section class="col"><h4>In Progress</h4><div class="col-body"><div class="meta">読み込み中...</div></div></section>
             <section class="col"><h4>Review</h4><div class="col-body"><div class="meta">読み込み中...</div></div></section>
             <section class="col"><h4>Blocked</h4><div class="col-body"><div class="meta">読み込み中...</div></div></section>
@@ -234,8 +235,8 @@
       let userMap = new Map();
       let unsubscribeProjectTickets = null;
 
-      const KANBAN_COLS = ['backlog','todo','in_progress','review','blocked','qa_blocked','done'];
-      const KANBAN_LABEL = {backlog:'Backlog',todo:'Todo',in_progress:'In Progress',review:'Review',blocked:'Blocked',qa_blocked:'Q&A Blocked',done:'Done'};
+      const KANBAN_COLS = ['backlog','todo','spec_review','in_progress','review','blocked','qa_blocked','done'];
+      const KANBAN_LABEL = {backlog:'Backlog',todo:'Todo',spec_review:'Spec Review',in_progress:'In Progress',review:'Review',blocked:'Blocked',qa_blocked:'Q&A Blocked',done:'Done'};
       const KANBAN_LEGACY_FALLBACK = [
         { ticket_no:'DSH-16', title:'KPIカード再設計', status:'backlog' },
         { ticket_no:'DSH-11', title:'Ticket詳細パネル', status:'todo' },

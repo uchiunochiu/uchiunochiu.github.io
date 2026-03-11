@@ -101,11 +101,11 @@
       const ticketDiag = document.getElementById('ticketDiag');
 
       function statusClass(status) {
-        const m = { backlog: 'backlog', todo: 'todo', in_progress: 'progress', review: 'review', blocked: 'blocked', qa_blocked: 'blocked', done: 'done' };
+        const m = { backlog: 'backlog', todo: 'todo', spec_review: 'review', in_progress: 'progress', review: 'review', blocked: 'blocked', qa_blocked: 'blocked', done: 'done' };
         return m[status] || 'todo';
       }
       function statusLabel(status) {
-        const m = { backlog:'Backlog', todo:'Todo', in_progress:'In Progress', review:'Review', blocked:'Blocked', qa_blocked:'Q&A Blocked', done:'Done' };
+        const m = { backlog:'Backlog', todo:'Todo', spec_review:'Spec Review', in_progress:'In Progress', review:'Review', blocked:'Blocked', qa_blocked:'Q&A Blocked', done:'Done' };
         return m[status] || status;
       }
 

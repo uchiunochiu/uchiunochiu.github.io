@@ -18,7 +18,7 @@
       .project-section{margin-top:14px;border:1px solid var(--border);border-radius:14px;background:var(--card);padding:12px}
       .project-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
       .project-title{font-size:16px;font-weight:700}.project-meta{font-size:12px;color:var(--subtle)}
-      .columns{display:grid;grid-template-columns:repeat(7,minmax(180px,1fr));gap:10px;overflow-x:auto}
+      .columns{display:grid;grid-template-columns:repeat(8,minmax(180px,1fr));gap:10px;overflow-x:auto}
       .col{border:1px dashed var(--border);border-radius:12px;background:#0d0d0d;padding:10px;min-height:150px}
       .col h4{margin:0 0 10px;font-size:12px;color:var(--subtle)}
       .ticket{background:var(--muted);border:1px solid var(--border);border-radius:10px;padding:10px;margin-bottom:8px}
@@ -63,8 +63,8 @@
       const boardStatus = document.getElementById('boardStatus');
       const qp = new URLSearchParams(location.search);
       const PROJECT_ID_FILTER = qp.get('project_id') || '';
-      const COLS = ['backlog','todo','in_progress','review','blocked','qa_blocked','done'];
-      const LABEL = {backlog:'Backlog',todo:'Todo',in_progress:'In Progress',review:'Review',blocked:'Blocked',qa_blocked:'Q&A Blocked',done:'Done'};
+      const COLS = ['backlog','todo','spec_review','in_progress','review','blocked','qa_blocked','done'];
+      const LABEL = {backlog:'Backlog',todo:'Todo',spec_review:'Spec Review',in_progress:'In Progress',review:'Review',blocked:'Blocked',qa_blocked:'Q&A Blocked',done:'Done'};
 
       function nextStates(current){
         return COLS.filter(s=>s!==current).slice(0,3);
