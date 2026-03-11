@@ -549,11 +549,12 @@
       if (!after || !after.status) return;
       const toStatus = after.status;
       const isTodoTransition = before !== 'todo' && toStatus === 'todo';
+      const isInProgressTransition = before !== 'in_progress' && toStatus === 'in_progress';
       const isQaBlockedTransition = before !== 'qa_blocked' && toStatus === 'qa_blocked';
-      if (!isTodoTransition && !isQaBlockedTransition) return;
+      if (!isTodoTransition && !isInProgressTransition && !isQaBlockedTransition) return;
 
       await pushToTachikoma({
-        type: isTodoTransition ? 'ticket_todo_detected' : 'ticket_qa_blocked_detected',
+        type: isTodoTransition ? 'ticket_todo_detected' : (isInProgressTransition ? 'ticket_in_progress_detected' : 'ticket_qa_blocked_detected'),
         ticket_id: after.id || null,
         project_id: after.project_id || null,
         ticket_no: after.ticket_no || null,

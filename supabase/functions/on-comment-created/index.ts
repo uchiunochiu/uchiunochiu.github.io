@@ -39,7 +39,7 @@ function buildTodoOperationPrompt(payload: any) {
   return [
     "[TODO運用命令 / 厳守]",
     "前提: チケットは親プロジェクト完了のための実行タスク。",
-    "今回の責務は『設計作成（tickets.design 更新）と少佐への承認依頼DM送信』まで。",
+    "今回の責務は『設計作成（tickets.design 更新）→少佐への承認依頼DM送信→tickets.status を spec_review に更新』まで。",
     "",
     "必須確認項目:",
     "- project.goal / project.definition_of_done / project.constraints / project.links",
@@ -47,7 +47,7 @@ function buildTodoOperationPrompt(payload: any) {
     "- ticket_comments / ticket_attachments",
     "",
     "通常分岐:",
-    "- 設計可能なら tickets.design を更新し、Discord DMで次を送信する。",
+    "- 設計可能なら tickets.design を更新し、Discord DMで次を送信した後、tickets.status を spec_review に更新する。",
     "  todoチケットの{ticket_no} {title}について、設計のたたき台を作りました。ご確認お願いします。",
     "  ---設計要約---",
     "  ・{要点1}",
@@ -63,10 +63,50 @@ function buildTodoOperationPrompt(payload: any) {
     "",
     "禁止事項:",
     "- このフェーズで tickets.specification 更新、実装依頼、in_progress/review/done 変更を行わない。",
-    "- 例外として qa_blocked への変更のみ許可。",
+    "- 例外として spec_review または qa_blocked への変更のみ許可。",
     "",
     "出力必須:",
     "- current_phase / checked_fields / decision(design_ready or qa_blocked) / execution_result / next_action",
+    "",
+    "[EVENT DATA]",
+    `ticket_id: ${ticketId}`,
+    `ticket_no: ${ticketNo}`,
+    `title: ${title}`,
+    `project_id: ${projectId}`,
+    `ticket_url: ${ticketUrl}`,
+  ].join("\n");
+}
+
+function buildInProgressOperationPrompt(payload: any) {
+  const ticketId = payload?.ticket_id ?? "";
+  const ticketNo = payload?.ticket_no ?? "";
+  const title = payload?.title ?? "";
+  const projectId = payload?.project_id ?? "";
+  const ticketUrl = ticketId
+    ? `https://dashboard-mu-woad-68.vercel.app/ticket-detail.html?ticket_id=${ticketId}`
+    : "";
+
+  return [
+    "[IN_PROGRESS運用命令 / 厳守]",
+    "前提: 少佐が spec_review から in_progress へ変更した時点で承認確定。",
+    "今回の責務: 仕様確定、Git作業開始、フチコマ実装依頼、進行管理。",
+    "",
+    "必須実行:",
+    "1) tickets.specification を最終確定する（未確定なら先に更新）。",
+    "2) working_branch を決定・作成し tickets.working_branch に記録する。",
+    "3) フチコマへ実装依頼し、着手確認を取得する。",
+    "4) DB変更有無を db_change_check として明示する（あり/なし）。",
+    "5) DB変更ありの場合、migrationファイル同梱を必須化する。",
+    "",
+    "分岐:",
+    "- 要件判断待ちは qa_blocked に変更し、質問を ticket_comments に記録。DMへ『コメント記録済み＋ticket_url』通知。",
+    "- 権限/API key/環境不足は blocked に変更し、理由を ticket_comments に記録。DMへ『コメント記録済み＋ticket_url』通知。",
+    "",
+    "完了条件:",
+    "- 実装完了＋一次レビューOKで tickets.status を review に変更し、Discord DMでレビュー依頼を送る。",
+    "",
+    "禁止事項:",
+    "- 根拠不明のまま実装を進めない。",
     "",
     "[EVENT DATA]",
     `ticket_id: ${ticketId}`,
@@ -114,16 +154,19 @@ Deno.serve(async (req: Request) => {
 
     const eventType = payload?.type || "unknown";
     const isTodo = eventType === "ticket_todo_detected";
+    const isInProgress = eventType === "ticket_in_progress_detected";
     const isReview = eventType === "ticket_review_detected";
     const isComment = eventType === "project_comment_created" || eventType === "ticket_comment_created";
 
     const message = isTodo
       ? buildTodoOperationPrompt(payload)
-      : isReview
-        ? buildStatusMessage(payload, "review", "Reviewチケットを検知しました。レビュー依頼です。")
-        : isComment
-          ? buildCommentMessage(payload)
-          : `Dashboard event: ${eventType}`;
+      : isInProgress
+        ? buildInProgressOperationPrompt(payload)
+        : isReview
+          ? buildStatusMessage(payload, "review", "Reviewチケットを検知しました。レビュー依頼です。")
+          : isComment
+            ? buildCommentMessage(payload)
+            : `Dashboard event: ${eventType}`;
 
     const body = {
       message,
