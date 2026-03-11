@@ -117,6 +117,33 @@ function buildInProgressOperationPrompt(payload: any) {
   ].join("\n");
 }
 
+
+function buildInProgressResumePrompt(payload: any, mode: "spec_review" | "qa_blocked" | "blocked") {
+  const ticketId = payload?.ticket_id ?? "";
+  const ticketNo = payload?.ticket_no ?? "";
+  const title = payload?.title ?? "";
+  const ticketUrl = ticketId
+    ? `https://dashboard-mu-woad-68.vercel.app/ticket-detail.html?ticket_id=${ticketId}`
+    : "";
+
+  const modeLine = mode === "spec_review"
+    ? "承認確定からの着手です。"
+    : mode === "qa_blocked"
+      ? "Q&A解消後の再開です。未解消事項を再確認して再開してください。"
+      : "実行環境復旧後の再開です。権限/API/環境が回復したことを確認して再開してください。";
+
+  return [
+    "[IN_PROGRESS再開命令 / 厳守]",
+    modeLine,
+    "まず tickets.working_branch / tickets.specification / 依存条件を確認し、フチコマへ実装再開を依頼する。",
+    "未解消なら qa_blocked または blocked に戻し、理由を ticket_comments に記録してDM通知する。",
+    "実装完了＋一次レビューOKで review へ変更し、DMでレビュー依頼する。",
+    "",
+    `[EVENT] ticket=${ticketNo || ticketId} ${title}`,
+    ticketUrl,
+  ].filter(Boolean).join("\n");
+}
+
 function buildCommentMessage(payload: any) {
   return String(payload?.body || "").trim() || "(empty comment)";
 }
@@ -155,18 +182,27 @@ Deno.serve(async (req: Request) => {
     const eventType = payload?.type || "unknown";
     const isTodo = eventType === "ticket_todo_detected";
     const isInProgress = eventType === "ticket_in_progress_detected";
+    const isInProgressFromSpecReview = eventType === "ticket_in_progress_from_spec_review";
+    const isInProgressFromQaBlocked = eventType === "ticket_in_progress_from_qa_blocked";
+    const isInProgressFromBlocked = eventType === "ticket_in_progress_from_blocked";
     const isReview = eventType === "ticket_review_detected";
     const isComment = eventType === "project_comment_created" || eventType === "ticket_comment_created";
 
     const message = isTodo
       ? buildTodoOperationPrompt(payload)
-      : isInProgress
+      : isInProgressFromSpecReview
         ? buildInProgressOperationPrompt(payload)
-        : isReview
-          ? buildStatusMessage(payload, "review", "Reviewチケットを検知しました。レビュー依頼です。")
-          : isComment
-            ? buildCommentMessage(payload)
-            : `Dashboard event: ${eventType}`;
+        : isInProgressFromQaBlocked
+          ? buildInProgressResumePrompt(payload, "qa_blocked")
+          : isInProgressFromBlocked
+            ? buildInProgressResumePrompt(payload, "blocked")
+            : isInProgress
+              ? buildInProgressResumePrompt(payload, "spec_review")
+              : isReview
+                ? buildStatusMessage(payload, "review", "Reviewチケットを検知しました。レビュー依頼です。")
+                : isComment
+                  ? buildCommentMessage(payload)
+                  : `Dashboard event: ${eventType}`;
 
     const body = {
       message,

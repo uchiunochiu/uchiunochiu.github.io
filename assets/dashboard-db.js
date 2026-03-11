@@ -553,8 +553,16 @@
       const isQaBlockedTransition = before !== 'qa_blocked' && toStatus === 'qa_blocked';
       if (!isTodoTransition && !isInProgressTransition && !isQaBlockedTransition) return;
 
+      const inProgressEventType = before === 'spec_review'
+        ? 'ticket_in_progress_from_spec_review'
+        : before === 'qa_blocked'
+          ? 'ticket_in_progress_from_qa_blocked'
+          : before === 'blocked'
+            ? 'ticket_in_progress_from_blocked'
+            : 'ticket_in_progress_detected';
+
       await pushToTachikoma({
-        type: isTodoTransition ? 'ticket_todo_detected' : (isInProgressTransition ? 'ticket_in_progress_detected' : 'ticket_qa_blocked_detected'),
+        type: isTodoTransition ? 'ticket_todo_detected' : (isInProgressTransition ? inProgressEventType : 'ticket_qa_blocked_detected'),
         ticket_id: after.id || null,
         project_id: after.project_id || null,
         ticket_no: after.ticket_no || null,
