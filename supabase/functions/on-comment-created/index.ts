@@ -15,7 +15,7 @@ function buildStatusMessage(payload: any, statusLabel: string, header: string) {
   const title = payload?.title ?? "";
   const projectId = payload?.project_id ?? "";
   const ticketUrl = ticketId
-    ? `https://dashboard-mu-woad-68.vercel.app/ticket-detail.html?ticket_id=${ticketId}`
+    ? `https://uchiunochiu.github.io/ticket-detail.html?ticket_id=${ticketId}`
     : "";
 
   return [
@@ -33,7 +33,7 @@ function buildTodoOperationPrompt(payload: any) {
   const title = payload?.title ?? "";
   const projectId = payload?.project_id ?? "";
   const ticketUrl = ticketId
-    ? `https://dashboard-mu-woad-68.vercel.app/ticket-detail.html?ticket_id=${ticketId}`
+    ? `https://uchiunochiu.github.io/ticket-detail.html?ticket_id=${ticketId}`
     : "";
 
   return [
@@ -83,7 +83,7 @@ function buildInProgressOperationPrompt(payload: any) {
   const title = payload?.title ?? "";
   const projectId = payload?.project_id ?? "";
   const ticketUrl = ticketId
-    ? `https://dashboard-mu-woad-68.vercel.app/ticket-detail.html?ticket_id=${ticketId}`
+    ? `https://uchiunochiu.github.io/ticket-detail.html?ticket_id=${ticketId}`
     : "";
 
   return [
@@ -123,7 +123,7 @@ function buildInProgressResumePrompt(payload: any, mode: "spec_review" | "qa_blo
   const ticketNo = payload?.ticket_no ?? "";
   const title = payload?.title ?? "";
   const ticketUrl = ticketId
-    ? `https://dashboard-mu-woad-68.vercel.app/ticket-detail.html?ticket_id=${ticketId}`
+    ? `https://uchiunochiu.github.io/ticket-detail.html?ticket_id=${ticketId}`
     : "";
 
   const modeLine = mode === "spec_review"
