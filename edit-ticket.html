@@ -35,6 +35,7 @@
             <label>Ticket No<input id="ticket_no" /></label>
             <label>Title<input id="title" /></label>
             <label>Status<select id="status"><option value="backlog">backlog</option><option value="todo">todo</option><option value="spec_review">spec_review</option><option value="in_progress">in_progress</option><option value="review">review</option><option value="blocked">blocked</option><option value="qa_blocked">qa_blocked</option><option value="done">done</option></select></label>
+            <label>Ticket Type<select id="ticket_type"><option value="Marketing">Marketing</option><option value="Develop">Develop</option><option value="OtherTask">OtherTask</option></select></label>
             <label>Assignee<select id="assignee_id"></select></label>
             <label>Due Date<input id="due_date" type="date" /></label>
             <label class="full">チケット概要<textarea id="description"></textarea></label>
@@ -66,6 +67,7 @@
         document.getElementById('ticket_no').value = t.ticket_no || '';
         document.getElementById('title').value = t.title || '';
         document.getElementById('status').value = t.status || 'backlog';
+        document.getElementById('ticket_type').value = t.ticket_type || 'OtherTask';
         document.getElementById('due_date').value = t.due_date || '';
         document.getElementById('assignee_id').value = t.assignee_id || '';
         document.getElementById('description').value = t.description || '';
@@ -86,6 +88,7 @@
           ticketNo: document.getElementById('ticket_no').value.trim(),
           title: document.getElementById('title').value.trim(),
           status: document.getElementById('status').value,
+          ticketType: document.getElementById('ticket_type').value || 'OtherTask',
           dueDate: document.getElementById('due_date').value || null,
           assigneeId: document.getElementById('assignee_id').value || null,
           description: document.getElementById('description').value.trim() || null,

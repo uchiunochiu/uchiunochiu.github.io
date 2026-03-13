@@ -358,7 +358,7 @@
         try {
           let q = client
             .from(ticketsTable)
-            .select('id, ticket_no, project_id, parent_ticket_id, title, description, completion_criteria, design, specification, working_branch, pr_url, status, due_date, assignee_id, sort_order, created_at, projects(title)')
+            .select('id, ticket_no, ticket_type, project_id, parent_ticket_id, title, description, completion_criteria, design, specification, working_branch, pr_url, status, due_date, assignee_id, sort_order, created_at, projects(title)')
             .order('sort_order', { ascending: true, nullsFirst: false })
             .order('created_at', { ascending: false })
             .limit(limit);
@@ -374,7 +374,7 @@
               try {
                 let q2 = client
                   .from(alt)
-                  .select('id, ticket_no, project_id, parent_ticket_id, title, description, completion_criteria, design, specification, working_branch, pr_url, status, due_date, assignee_id, sort_order, created_at')
+                  .select('id, ticket_no, ticket_type, project_id, parent_ticket_id, title, description, completion_criteria, design, specification, working_branch, pr_url, status, due_date, assignee_id, sort_order, created_at')
                   .order('sort_order', { ascending: true, nullsFirst: false })
                   .order('created_at', { ascending: false })
                   .limit(limit);
@@ -400,7 +400,7 @@
           try {
             let q = client
               .from(ticketsTable)
-              .select('id, ticket_no, project_id, parent_ticket_id, title, description, completion_criteria, design, specification, working_branch, pr_url, status, due_date, assignee_id, sort_order, created_at')
+              .select('id, ticket_no, ticket_type, project_id, parent_ticket_id, title, description, completion_criteria, design, specification, working_branch, pr_url, status, due_date, assignee_id, sort_order, created_at')
               .order('sort_order', { ascending: true, nullsFirst: false })
               .order('created_at', { ascending: false })
               .limit(limit);
@@ -481,7 +481,7 @@
     return true;
   }
 
-  async function createTicket({ ticketNo, projectId, parentTicketId = null, title, description = null, completionCriteria = null, design = null, specification = null, workingBranch = null, prUrl = null, status = 'backlog', dueDate = null, assigneeId = null, createdBy = null }) {
+  async function createTicket({ ticketNo, ticketType = 'OtherTask', projectId, parentTicketId = null, title, description = null, completionCriteria = null, design = null, specification = null, workingBranch = null, prUrl = null, status = 'backlog', dueDate = null, assigneeId = null, createdBy = null }) {
     if (!projectId) throw new Error('project_id is required');
     if (!status) status = 'backlog';
     const client = getClient();
@@ -489,6 +489,7 @@
       try {
         const row = {
           ticket_no: ticketNo || null,
+          ticket_type: ticketType || 'OtherTask',
           project_id: projectId,
           parent_ticket_id: parentTicketId,
           title,
@@ -511,25 +512,31 @@
         const { data, error } = await client.from('tickets').insert(row).select('*').single();
         if (error) throw error;
         return data;
-      } catch (_) {}
+      } catch (e) {
+        console.error('[DashboardDB.createTicket] failed', e);
+        throw e;
+      }
     }
 
     throw new Error('DB_REQUIRED: tickets');
   }
 
-  async function updateTicket({ ticketId, ticketNo, title, description = null, completionCriteria = null, design = null, specification = null, workingBranch = null, prUrl = null, status, dueDate = null, assigneeId = null }) {
+  async function updateTicket({ ticketId, ticketNo, ticketType = 'OtherTask', title, description = null, completionCriteria = null, design = null, specification = null, workingBranch = null, prUrl = null, status, dueDate = null, assigneeId = null }) {
     const client = getClient();
     if (client) {
       try {
         const { data: beforeRow } = await client.from('tickets').select('status').eq('id', ticketId).maybeSingle();
         const before = beforeRow?.status || null;
-        const row = { ticket_no: ticketNo || null, title, description, completion_criteria: completionCriteria, design, specification, working_branch: workingBranch, pr_url: prUrl, status, due_date: dueDate, assignee_id: assigneeId };
+        const row = { ticket_no: ticketNo || null, ticket_type: ticketType || 'OtherTask', title, description, completion_criteria: completionCriteria, design, specification, working_branch: workingBranch, pr_url: prUrl, status, due_date: dueDate, assignee_id: assigneeId };
         const { data, error } = await client.from('tickets').update(row).eq('id', ticketId).select('*').single();
         if (error) throw error;
-        // NOTE: updateTicket は本文/メタ編集でも呼ばれるため、通知トリガーはここでは行わない。
-        // ステータス遷移通知は updateTicketStatus / updateTicketBoard / reorderTickets のみで扱う。
+        // edit-ticket 経由でも status を変更できるため、遷移通知を落とさない。
+        await maybeNotifyStatusTransition({ before, after: data, source: 'update_ticket' });
         return data;
-      } catch (_) {}
+      } catch (e) {
+        console.error('[DashboardDB.updateTicket] failed', e);
+        throw e;
+      }
     }
     throw new Error('DB_REQUIRED: tickets');
   }
@@ -549,9 +556,14 @@
       if (!after || !after.status) return;
       const toStatus = after.status;
       const isTodoTransition = before !== 'todo' && toStatus === 'todo';
+      const isSpecReviewTransition = before !== 'spec_review' && toStatus === 'spec_review';
       const isInProgressTransition = before !== 'in_progress' && toStatus === 'in_progress';
+      const isReviewTransition = before !== 'review' && toStatus === 'review';
+      const isBlockedTransition = before !== 'blocked' && toStatus === 'blocked';
       const isQaBlockedTransition = before !== 'qa_blocked' && toStatus === 'qa_blocked';
-      if (!isTodoTransition && !isInProgressTransition && !isQaBlockedTransition) return;
+      const isDoneTransition = before === 'review' && toStatus === 'done';
+      const isDoneSkipTransition = before !== 'done' && toStatus === 'done' && before !== 'review';
+      if (!isTodoTransition && !isSpecReviewTransition && !isInProgressTransition && !isReviewTransition && !isBlockedTransition && !isQaBlockedTransition && !isDoneTransition && !isDoneSkipTransition) return;
 
       const inProgressEventType = before === 'spec_review'
         ? 'ticket_in_progress_from_spec_review'
@@ -562,7 +574,21 @@
             : 'ticket_in_progress_detected';
 
       await pushToTachikoma({
-        type: isTodoTransition ? 'ticket_todo_detected' : (isInProgressTransition ? inProgressEventType : 'ticket_qa_blocked_detected'),
+        type: isTodoTransition
+          ? 'ticket_todo_detected'
+          : isSpecReviewTransition
+            ? 'ticket_spec_review_detected'
+            : isInProgressTransition
+              ? inProgressEventType
+              : isReviewTransition
+                ? 'ticket_review_detected'
+                : isBlockedTransition
+                  ? 'ticket_blocked_detected'
+                  : isQaBlockedTransition
+                    ? 'ticket_qa_blocked_detected'
+                    : isDoneTransition
+                      ? 'ticket_done_detected'
+                      : 'ticket_done_skipped_detected',
         ticket_id: after.id || null,
         project_id: after.project_id || null,
         ticket_no: after.ticket_no || null,
@@ -589,7 +615,9 @@
           status: 'open',
         });
       }
-    } catch (_) {}
+    } catch (e) {
+      console.error('[DashboardDB.maybeNotifyStatusTransition] failed', e);
+    }
   }
 
   async function updateTicketStatus({ ticketId, status }) {
@@ -883,8 +911,35 @@
   async function pushToTachikoma(event) {
     const cfg = getConfig();
     if (!cfg.enabled) return;
-    const url = `${cfg.SB_URL}/functions/v1/on-comment-created`;
-    await fetch(url, {
+
+    // 1) Persist event for event-driven local automations (realtime subscribers)
+    const restUrl = `${cfg.SB_URL}/rest/v1/tachikoma_events`;
+    const evRes = await fetch(restUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        apikey: cfg.SB_ANON_KEY,
+        Authorization: `Bearer ${cfg.SB_ANON_KEY}`,
+        Prefer: 'return=minimal',
+      },
+      body: JSON.stringify({
+        event_type: event?.type || 'unknown',
+        project_id: event?.project_id || null,
+        ticket_id: event?.ticket_id || null,
+        body: event?.body || null,
+        raw_payload: event || {},
+        handling_status: 'pending',
+        attempts: 0,
+      }),
+    });
+    if (!evRes.ok) {
+      const txt = await evRes.text().catch(() => '');
+      throw new Error(`tachikoma_events insert failed: ${evRes.status} ${txt.slice(0, 300)}`);
+    }
+
+    // 2) Push immediate notification relay
+    const fnUrl = `${cfg.SB_URL}/functions/v1/on-comment-created`;
+    const res = await fetch(fnUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -893,6 +948,10 @@
       },
       body: JSON.stringify(event),
     });
+    if (!res.ok) {
+      const txt = await res.text().catch(() => '');
+      throw new Error(`pushToTachikoma failed: ${res.status} ${txt.slice(0, 300)}`);
+    }
   }
 
   async function fetchProjectById(projectId) {

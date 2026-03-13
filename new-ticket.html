@@ -86,6 +86,14 @@
               </select>
             </label>
 
+            <label>Ticket Type
+              <select id="ticket_type">
+                <option value="Marketing">Marketing</option>
+                <option value="Develop">Develop</option>
+                <option value="OtherTask" selected>OtherTask</option>
+              </select>
+            </label>
+
             <label>Due Date
               <input id="due_date" type="date" />
             </label>
@@ -204,11 +212,12 @@
         const prUrl = document.getElementById('pr_url').value.trim() || null;
         const files = [...(document.getElementById('ticket_files').files || [])];
         const statusVal = document.getElementById('status').value || 'backlog';
+        const ticketType = document.getElementById('ticket_type').value || 'OtherTask';
 
         if (!projectId || !title) { state.textContent = 'state: project/title required'; return; }
         state.textContent = 'state: creating...';
         try {
-          const t = await window.DashboardDB.createTicket({ projectId, ticketNo, parentTicketId, title, description, completionCriteria, design, specification, workingBranch, prUrl, status: statusVal, dueDate, assigneeId, createdBy: null });
+          const t = await window.DashboardDB.createTicket({ projectId, ticketNo, ticketType, parentTicketId, title, description, completionCriteria, design, specification, workingBranch, prUrl, status: statusVal, dueDate, assigneeId, createdBy: null });
           if (t?.id && files.length) {
             for (const f of files) {
               const contentBase64 = await new Promise((resolve, reject) => {
