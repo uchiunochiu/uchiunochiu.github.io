@@ -511,14 +511,6 @@
                   open_questions: openQuestions || [],
                   question_detail: detail || null,
                 };
-                await window.DashboardDB.pushToTachikoma({
-                  type: 'voice_qa_context_start',
-                  project_id: PROJECT_ID,
-                  ticket_id: ticketId,
-                  qa_id: qaId,
-                  context,
-                  source: 'project_detail_open_questions_click',
-                });
                 voiceState.textContent = `state: connected / context pushed (${qaId})`;
               } catch (err) {
                 voiceState.textContent = `state: context push error / ${err.message || err}`;
@@ -709,13 +701,6 @@
           const isMajor = cb === 'major' || (!!MAJOR_USER_ID && cb === MAJOR_USER_ID);
           if (!isMajor) return;
           try {
-            await window.DashboardDB.pushToTachikoma({
-              type: 'project_comment_created',
-              project_id: PROJECT_ID,
-              body: row.body || '',
-              created_by: row.created_by || null,
-              source: 'realtime_subscription',
-            });
           } catch (e) {
             if (projectCommentStatus) projectCommentStatus.textContent = `state: realtime notify error / ${e.message || e}`;
           }
@@ -743,7 +728,6 @@
         try {
           await window.DashboardDB.insertProjectComment({ projectId: PROJECT_ID, body: text, createdBy: MAJOR_USER_ID });
           try {
-            await window.DashboardDB.pushToTachikoma({ type: 'project_comment_created', project_id: PROJECT_ID, body: text, created_by: MAJOR_USER_ID });
             projectCommentStatus.textContent = 'state: post完了 / tachikoma通知送信';
           } catch (_) {
             projectCommentStatus.textContent = 'state: post完了 / 通知はスキップ';

@@ -327,14 +327,6 @@
           const isMajor = cb === 'major' || (!!MAJOR_USER_ID && cb === MAJOR_USER_ID);
           if (!isMajor) return;
           try {
-            await window.DashboardDB.pushToTachikoma({
-              type: 'ticket_comment_created',
-              ticket_id: TICKET_ID,
-              project_id: PROJECT_ID,
-              body: row.body || '',
-              created_by: row.created_by || null,
-              source: 'realtime_subscription',
-            });
           } catch (e) {
             if (pushStatus) pushStatus.textContent = `state: realtime notify error / ${e.message || e}`;
           }
@@ -388,15 +380,6 @@
               insertedAttachments.push(att);
             }
             await refreshAttachments();
-            await window.DashboardDB.pushToTachikoma({
-              type: 'ticket_comment_created',
-              ticket_id: TICKET_ID,
-              project_id: PROJECT_ID,
-              body: text || '（添付のみ）',
-              created_by: MAJOR_USER_ID,
-              attachment_ids: insertedAttachments.map((a) => a.id),
-              attachments: insertedAttachments.map((a) => ({ id: a.id, name: a.file_name, type: a.mime_type || 'unknown', size: a.file_size || 0 })),
-            });
             pushStatus.textContent = 'state: push完了 / tachikoma通知送信';
           } catch (e) {
             pushStatus.textContent = `state: post error / ${e.message}`;

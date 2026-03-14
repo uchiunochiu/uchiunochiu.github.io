@@ -521,6 +521,33 @@
     throw new Error('DB_REQUIRED: tickets');
   }
 
+  async function emitStatusTransitionEvent({ before = null, after = null, source = 'dashboard_db' } = {}) {
+    const client = getClient();
+    if (!client || !after || !after.id) return;
+    const to = after.status || null;
+    if (!to || before === to) return;
+    const payload = {
+      type: 'status_transition',
+      ticket_id: after.id,
+      project_id: after.project_id || null,
+      ticket_no: after.ticket_no || null,
+      title: after.title || null,
+      from_status: before,
+      to_status: to,
+      source,
+    };
+    const { error } = await client.from('tachikoma_events').insert({
+      event_type: 'status_transition',
+      project_id: after.project_id || null,
+      ticket_id: after.id,
+      body: null,
+      raw_payload: payload,
+      handling_status: 'pending',
+      attempts: 0,
+    });
+    if (error) throw error;
+  }
+
   async function updateTicket({ ticketId, ticketNo, ticketType = 'OtherTask', title, description = null, completionCriteria = null, design = null, specification = null, workingBranch = null, prUrl = null, status, dueDate = null, assigneeId = null }) {
     const client = getClient();
     if (client) {
@@ -530,8 +557,7 @@
         const row = { ticket_no: ticketNo || null, ticket_type: ticketType || 'OtherTask', title, description, completion_criteria: completionCriteria, design, specification, working_branch: workingBranch, pr_url: prUrl, status, due_date: dueDate, assignee_id: assigneeId };
         const { data, error } = await client.from('tickets').update(row).eq('id', ticketId).select('*').single();
         if (error) throw error;
-        // edit-ticket 経由でも status を変更できるため、遷移通知を落とさない。
-        await maybeNotifyStatusTransition({ before, after: data, source: 'update_ticket' });
+        await emitStatusTransitionEvent({ before, after: data, source: 'update_ticket' });
         return data;
       } catch (e) {
         console.error('[DashboardDB.updateTicket] failed', e);
@@ -551,75 +577,6 @@
     return { ok: true, project_id: current?.project_id || null };
   }
 
-  async function maybeNotifyStatusTransition({ before = null, after = null, source = 'dashboard_db' } = {}) {
-    try {
-      if (!after || !after.status) return;
-      const toStatus = after.status;
-      const isTodoTransition = before !== 'todo' && toStatus === 'todo';
-      const isSpecReviewTransition = before !== 'spec_review' && toStatus === 'spec_review';
-      const isInProgressTransition = before !== 'in_progress' && toStatus === 'in_progress';
-      const isReviewTransition = before !== 'review' && toStatus === 'review';
-      const isBlockedTransition = before !== 'blocked' && toStatus === 'blocked';
-      const isQaBlockedTransition = before !== 'qa_blocked' && toStatus === 'qa_blocked';
-      const isDoneTransition = before === 'review' && toStatus === 'done';
-      const isDoneSkipTransition = before !== 'done' && toStatus === 'done' && before !== 'review';
-      if (!isTodoTransition && !isSpecReviewTransition && !isInProgressTransition && !isReviewTransition && !isBlockedTransition && !isQaBlockedTransition && !isDoneTransition && !isDoneSkipTransition) return;
-
-      const inProgressEventType = before === 'spec_review'
-        ? 'ticket_in_progress_from_spec_review'
-        : before === 'qa_blocked'
-          ? 'ticket_in_progress_from_qa_blocked'
-          : before === 'blocked'
-            ? 'ticket_in_progress_from_blocked'
-            : 'ticket_in_progress_detected';
-
-      await pushToTachikoma({
-        type: isTodoTransition
-          ? 'ticket_todo_detected'
-          : isSpecReviewTransition
-            ? 'ticket_spec_review_detected'
-            : isInProgressTransition
-              ? inProgressEventType
-              : isReviewTransition
-                ? 'ticket_review_detected'
-                : isBlockedTransition
-                  ? 'ticket_blocked_detected'
-                  : isQaBlockedTransition
-                    ? 'ticket_qa_blocked_detected'
-                    : isDoneTransition
-                      ? 'ticket_done_detected'
-                      : 'ticket_done_skipped_detected',
-        ticket_id: after.id || null,
-        project_id: after.project_id || null,
-        ticket_no: after.ticket_no || null,
-        title: after.title || null,
-        description: after.description || null,
-        completion_criteria: after.completion_criteria || null,
-        design: after.design || null,
-        specification: after.specification || null,
-        working_branch: after.working_branch || null,
-        pr_url: after.pr_url || null,
-        parent_ticket_id: after.parent_ticket_id || null,
-        from_status: before,
-        to_status: toStatus,
-        source,
-      });
-
-      if (isQaBlockedTransition && after.project_id) {
-        const detail = `ticket_id=${after.id || ''}\nstatus=qa_blocked\n${after.description || ''}`;
-        await upsertOpenQuestion({
-          projectId: after.project_id,
-          questionKey: after.ticket_no || null,
-          title: after.title || '(no title)',
-          detail,
-          status: 'open',
-        });
-      }
-    } catch (e) {
-      console.error('[DashboardDB.maybeNotifyStatusTransition] failed', e);
-    }
-  }
-
   async function updateTicketStatus({ ticketId, status }) {
     const client = getClient();
     if (!client) throw new Error('DB_REQUIRED: tickets');
@@ -632,7 +589,7 @@
       .select('*')
       .single();
     if (error) throw error;
-    await maybeNotifyStatusTransition({ before, after: data, source: 'update_ticket_status' });
+    await emitStatusTransitionEvent({ before, after: data, source: 'update_ticket_status' });
     return data;
   }
 
@@ -650,37 +607,25 @@
       .select('*')
       .single();
     if (error) throw error;
-    await maybeNotifyStatusTransition({ before, after: data, source: 'update_ticket_board' });
+    await emitStatusTransitionEvent({ before, after: data, source: 'update_ticket_board' });
     return data;
   }
 
   async function reorderTickets({ items = [] }) {
     const client = getClient();
     if (!client) throw new Error('DB_REQUIRED: tickets');
-    const ids = [...new Set((items || []).map((it) => it?.id).filter(Boolean))];
-    let beforeMap = new Map();
-    if (ids.length) {
-      const { data: beforeRows } = await client.from('tickets').select('id,status').in('id', ids);
-      beforeMap = new Map((beforeRows || []).map((r) => [r.id, r.status || null]));
-    }
 
     for (const it of items) {
-      const { error } = await client.from('tickets').update({ sort_order: it.sort_order, status: it.status }).eq('id', it.id);
-      if (error) throw error;
-    }
-
-    if (ids.length) {
-      const { data: afterRows } = await client
+      const { data: beforeRow } = await client.from('tickets').select('status').eq('id', it.id).maybeSingle();
+      const before = beforeRow?.status || null;
+      const { data, error } = await client
         .from('tickets')
-        .select('id,project_id,ticket_no,title,description,completion_criteria,design,specification,parent_ticket_id,status')
-        .in('id', ids);
-      for (const row of (afterRows || [])) {
-        await maybeNotifyStatusTransition({
-          before: beforeMap.get(row.id) || null,
-          after: row,
-          source: 'reorder_tickets',
-        });
-      }
+        .update({ sort_order: it.sort_order, status: it.status })
+        .eq('id', it.id)
+        .select('*')
+        .single();
+      if (error) throw error;
+      await emitStatusTransitionEvent({ before, after: data, source: 'reorder_tickets' });
     }
 
     return { ok: true, count: items.length };
@@ -908,52 +853,6 @@
     return () => client.removeChannel(channel);
   }
 
-  async function pushToTachikoma(event) {
-    const cfg = getConfig();
-    if (!cfg.enabled) return;
-
-    // 1) Persist event for event-driven local automations (realtime subscribers)
-    const restUrl = `${cfg.SB_URL}/rest/v1/tachikoma_events`;
-    const evRes = await fetch(restUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        apikey: cfg.SB_ANON_KEY,
-        Authorization: `Bearer ${cfg.SB_ANON_KEY}`,
-        Prefer: 'return=minimal',
-      },
-      body: JSON.stringify({
-        event_type: event?.type || 'unknown',
-        project_id: event?.project_id || null,
-        ticket_id: event?.ticket_id || null,
-        body: event?.body || null,
-        raw_payload: event || {},
-        handling_status: 'pending',
-        attempts: 0,
-      }),
-    });
-    if (!evRes.ok) {
-      const txt = await evRes.text().catch(() => '');
-      throw new Error(`tachikoma_events insert failed: ${evRes.status} ${txt.slice(0, 300)}`);
-    }
-
-    // 2) Push immediate notification relay
-    const fnUrl = `${cfg.SB_URL}/functions/v1/on-comment-created`;
-    const res = await fetch(fnUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        apikey: cfg.SB_ANON_KEY,
-        Authorization: `Bearer ${cfg.SB_ANON_KEY}`,
-      },
-      body: JSON.stringify(event),
-    });
-    if (!res.ok) {
-      const txt = await res.text().catch(() => '');
-      throw new Error(`pushToTachikoma failed: ${res.status} ${txt.slice(0, 300)}`);
-    }
-  }
-
   async function fetchProjectById(projectId) {
     const rows = await fetchProjects(500);
     return rows.find((r) => r.id === projectId) || null;
@@ -999,6 +898,5 @@
     subscribeProjectComments,
     subscribeTicketComments,
     subscribeProjectTickets,
-    pushToTachikoma,
   };
 })();

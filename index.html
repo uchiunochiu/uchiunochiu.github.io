@@ -224,62 +224,48 @@
         <article class="card" style="margin-bottom:14px">
           <details class="accordion">
             <summary>
-              <span>運用フロー（必読）</span>
+              <span>★運用フロー（必読）</span>
               <span class="chev">⌄</span>
             </summary>
             <div class="accordion-body">
-              <div class="flow-meta">version: v1 / updated: 2026-03-09</div>
-              <div id="flowInline" style="border:1px solid var(--border);border-radius:10px;padding:10px;max-height:760px;overflow:auto"><h1>Dashboard運用フロー（GitHub連携版 / 正本）</h1>
+              <div class="flow-meta">version: v3 / updated: 2026-03-14</div>
+              <div id="flowInline" style="border:1px solid var(--border);border-radius:10px;padding:10px;max-height:760px;overflow:auto"><h1>★Dashboard運用フロー（v3 / 実装同期）</h1>
   <div class="wrap">
     <div class="box">
       <div class="phase">凡例（前提）</div>
       <div class="step"><b>役割分離:</b> Dashboard=指示/状態管理、GitHub=実装証跡（branch/commit/PR）</div>
-      <div class="mini"><b>ロール:</b> 少佐=承認/最終Done、タチコマ=設計・指揮・一次レビュー、フチコマ=実装</div>
-      <div class="mini"><b>ステータス:</b> Backlog / Todo / In Progress / Review / Blocked / Done</div>
+      <div class="mini"><b>ロール:</b> 少佐=承認/Done、タチコマ=進行管理、フチコマ=実装</div>
+      <div class="mini"><b>標準フロー:</b> todo → (qa_blocked | spec_review) → in_progress → review → done</div>
+      <div class="mini"><b>todo固定順序:</b> project確認 → ticket確認 → ticket_comments確認 → ticket_attachments(本文含む)確認 → design/specification作成</div>
     </div>
 
-    <div class="box"><div class="phase">0. 起票</div><div class="step">Backlogにチケット作成（少佐 or タチコマ）</div></div>
+    <div class="box"><div class="phase">1. todo検知（固定順序）</div><div class="step">少佐がTodoへ変更すると自動解析開始。必ず <b>project / ticket / ticket_comments / ticket_attachments</b> を先に確認し、その後に <b>design / specification</b> を生成して tickets へ反映する。</div></div>
     <div class="arrow">↓</div>
-    <div class="box"><div class="phase">1. 着手トリガー</div><div class="step">少佐がチケットを <b>Todo</b> に変更</div></div>
-    <div class="arrow">↓</div>
-
-    <div class="box"><div class="phase">2. タチコマ理解・設計</div><div class="step">チケット内容を理解し、<b>設計</b> 欄を記載（処理フロー/データ扱い）</div></div>
-    <div class="arrow">↓</div>
-
-    <div class="box"><div class="phase">3. DM承認依頼</div><div class="step">Discord DMで設計要約を少佐へ提示し承認依頼</div><div class="mini">承認後、承認要約をチケットコメントへ転記（証跡化）</div></div>
-    <div class="arrow">↓</div>
-
     <div class="branch">
-      <div class="box ng"><div class="phase">3-A. 承認NG</div><div class="step">少佐コメントを反映して設計修正</div><div class="mini">2へ戻る</div></div>
-      <div class="box ok"><div class="phase">3-B. 承認OK</div><div class="step">仕様確定へ進行</div></div>
+      <div class="box ng"><div class="phase">1-A. qa_blocked分岐</div><div class="step">要件不足・依存未確定・実装先不明がある場合は <b>qa_blocked</b> へ変更。<br><b>ticket_comments必須:</b> <code>[auto-orchestrator][qa_blocked]</code> と不足/確認事項を記録。<br><b>DM必須:</b> 「todoチケットの{ticket_no} {title}は、チケット要件に質問があるため qa_blocked に変更しました。」＋ticket URL。</div></div>
+      <div class="box ok"><div class="phase">1-B. spec_review分岐</div><div class="step">情報が揃っていれば design/specification を保存して <b>spec_review</b> へ変更。<br><b>通知ルール:</b> todo→spec_review では自動DMなし・自動コメントなし。</div></div>
     </div>
 
     <div class="arrow">↓</div>
-    <div class="box"><div class="phase">4. 仕様確定</div><div class="step"><b>仕様</b> 欄を記載。あわせて Git 情報を固定（repo/default branch/working branch命名）</div></div>
+    <div class="box"><div class="phase">2. in_progress</div><div class="step">少佐が spec_review→in_progress に変更したら実装開始。開始時に <code>[auto-orchestrator][in_progress-start]</code> をticket_commentsへ記録し、project/ticket/design/specification を再読込する。</div></div>
     <div class="arrow">↓</div>
-
-    <div class="box"><div class="phase">5. 実装委任</div><div class="step">タチコマがフチコマへ実装依頼（対象branchを明示）</div><div class="mini">フチコマが着手可能確認できるまで In Progress へ変更しない</div></div>
+    <div class="box"><div class="phase">3. review</div><div class="step">実装完了時は review へ遷移。working_branch / pr_url を更新し、レビュー依頼DMを送信する。</div></div>
     <div class="arrow">↓</div>
+    <div class="box"><div class="phase">4. done</div><div class="step">Doneの扱いは運用定義に従う。</div></div>
 
+    <div class="arrow">↓</div>
     <div class="branch">
-      <div class="box ng"><div class="phase">5-A. 着手不可</div><div class="step">タチコマが <b>Blocked</b> に変更し、理由を少佐へDM報告</div><div class="mini">原因解消後、5へ戻る</div></div>
-      <div class="box ok"><div class="phase">5-B. 着手可能</div><div class="step">チケットを <b>In Progress</b> に変更して実装開始</div></div>
+      <div class="box ng"><div class="phase">例外A. blocked</div><div class="step">技術課題・依存待ちで停止。理由をticket_commentsに記録し、解消後in_progressへ復帰。</div></div>
+      <div class="box ng"><div class="phase">例外B. qa_blocked（実装中）</div><div class="step">実装中に不明点/設計不足が発生した場合も qa_blocked へ遷移。質問をticket_commentsへ記録し、回答後に再開判定。</div></div>
     </div>
 
-    <div class="arrow">↓</div>
-    <div class="box"><div class="phase">6. フチコマ実装</div><div class="step">branch上で実装し、commit/push。必要ならPR作成（`working_branch`/`pr_url` を更新）</div></div>
-    <div class="arrow">↓</div>
-
-    <div class="box"><div class="phase">7. タチコマ一次レビュー</div><div class="step">設計/仕様一致を確認（差分・動作チェック）</div></div>
-    <div class="arrow">↓</div>
-
-    <div class="branch">
-      <div class="box ng"><div class="phase">7-A. 問題あり</div><div class="step">タチコマが修正依頼し In Progress 継続</div><div class="mini">修正後、5-Bへ戻る（活動ログでループ回数管理）</div></div>
-      <div class="box ok"><div class="phase">7-B. 問題なし</div><div class="step">Reviewへ変更し、DMで少佐にレビュー依頼（PR/commit URL付き）</div></div>
+    <div class="box" style="margin-top:10px">
+      <div class="phase">固定通知文面（DM）</div>
+      <div class="step">・実装開始: 「{title}チケットを実装開始します。 / branch：{working_branch} / {ticket_url}」<br>
+      ・一時停止(blocked): 「「{title}」チケットの実装を一時停止しました。コメントの確認をお願いします。」<br>
+      ・中断(qa_blocked): 「「{title}」チケットの実装中に不明点があり実装を中断しました。コメントの確認をお願いします。」<br>
+      ・レビュー依頼(review): 「実装が完了しました！…レビューお願いします！」</div>
     </div>
-
-    <div class="arrow">↓</div>
-    <div class="box"><div class="phase">8. 最終判定（少佐）</div><div class="step">問題なければ少佐が <b>Done</b> に変更してクローズ</div><div class="mini">Done条件: main反映済み（PR mergeまたは同等証跡）</div></div>
   </div></div>
             </div>
           </details>
