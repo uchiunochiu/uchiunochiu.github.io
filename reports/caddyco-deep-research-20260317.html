@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CaddyCo Deep Research Report (2026-03-17)</title>
+  <style>
+    body{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;margin:0;background:#f5f7fb;color:#111827}
+    .wrap{max-width:1080px;margin:0 auto;padding:24px}
+    .card{background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:16px;margin-bottom:12px}
+    h1{margin:0 0 8px} h2{margin:0 0 10px;font-size:18px}
+    .sub{color:#6b7280;font-size:13px}
+    table{width:100%;border-collapse:collapse}
+    th,td{border-bottom:1px solid #eef2f7;padding:10px;text-align:left;font-size:14px;vertical-align:top}
+    th{background:#f8fafc;color:#6b7280;font-weight:600}
+    .ok{color:#0f766e;font-weight:600}.warn{color:#b45309;font-weight:600}
+    a{color:#2563eb;word-break:break-all}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="card">
+      <h1>CaddyCo Deep Research Report</h1>
+      <div class="sub">Project: CaddyCo / Date: 2026-03-17 / Scope: 競合・収益化・プロモーション</div>
+      <p><b>結論（短要約）:</b> 単なるスコア記録は競合優位が弱く、<span class="ok">「ラウンド体験SNS + 動画記録 + 実戦改善（クラブ別分析）」</span>を統合した体験で差別化するのが有効。初期収益は「フリーミアム + 分析機能サブスク」で開始し、LTV改善後に提携課金（用品/レッスン/予約）を重ねるのが現実的。</p>
+    </section>
+
+    <section class="card">
+      <h2>1) 競合ランドスケープ（比較表）</h2>
+      <table>
+        <thead><tr><th>サービス</th><th>強み</th><th>弱み/隙</th><th>CaddyCo示唆</th></tr></thead>
+        <tbody>
+          <tr><td>18Birdies</td><td>GPS・スコア・コミュニティ、UI評価が高い</td><td>日本ローカル文脈/同伴者文化への最適化余地</td><td>日本ユーザー向け「同伴者・写真/動画・ラウンド日記」を前面化</td></tr>
+          <tr><td>Golfshot</td><td>Apple Watch連携、統計・自動追跡が強い</td><td>上級機能は学習コストが上がる</td><td>初心者にも分かる「改善提案の翻訳UI」を差別化に</td></tr>
+          <tr><td>Arccos</td><td>ショットデータ規模・AI示唆が非常に強い</td><td>ハード連携前提、価格/導入障壁がある層も</td><td>スマホ中心の軽量導入で裾野を獲る</td></tr>
+          <tr><td>汎用スコア管理アプリ群</td><td>導入が簡単</td><td>SNS体験・分析深度が弱い</td><td>「記録→共有→改善」1フロー化で上位互換化</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>2) 収益化シナリオ（実装順）</h2>
+      <table>
+        <thead><tr><th>Phase</th><th>モデル</th><th>提供価値</th><th>リスク</th><th>推奨</th></tr></thead>
+        <tbody>
+          <tr><td>Phase 1</td><td>Freemium + Proサブスク</td><td>基本記録無料、詳細分析/動画高機能を有料化</td><td>無料比率が高すぎると収益化遅延</td><td class="ok">採用</td></tr>
+          <tr><td>Phase 2</td><td>提携アフィリエイト</td><td>クラブ/ボール/レッスン送客で追加収益</td><td>体験を壊す広告導線は離脱要因</td><td class="ok">選択導線で実施</td></tr>
+          <tr><td>Phase 3</td><td>大会・コミュニティ課金</td><td>ランキング/イベント参加権</td><td>アクティブ母数不足だと成立しない</td><td class="warn">MAU成長後</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>3) プロモーション戦略（媒体別）</h2>
+      <table>
+        <thead><tr><th>媒体</th><th>狙い</th><th>初期施策</th><th>KPI</th></tr></thead>
+        <tbody>
+          <tr><td>Instagram / TikTok</td><td>新規獲得（体験訴求）</td><td>「1ラウンドが1分で振り返れる」短尺動画</td><td>CTR / CPI / 初回投稿率</td></tr>
+          <tr><td>YouTube（ゴルフ系）</td><td>信頼獲得</td><td>スコア改善事例・比較レビュー</td><td>視聴維持率 / 指名検索増</td></tr>
+          <tr><td>X/コミュニティ</td><td>継続活性</td><td>週次スコア改善チャレンジ</td><td>WAU / 投稿率</td></tr>
+          <tr><td>ゴルフ場・練習場連携</td><td>オフライン導線</td><td>QRでラウンド開始テンプレ提供</td><td>登録CVR / 継続率</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>4) KPI仮説（チャート）</h2>
+      <canvas id="kpiChart" height="130"></canvas>
+      <p class="sub">目標は「初回記録完了率」と「7日継続率」の改善。SNS機能は投稿率を牽引し、継続率へ波及させる設計が鍵。</p>
+    </section>
+
+    <section class="card">
+      <h2>5) 出典URL</h2>
+      <ul>
+        <li><a target="_blank" rel="noreferrer" href="https://18birdies.com/">https://18birdies.com/</a></li>
+        <li><a target="_blank" rel="noreferrer" href="https://golfshot.com/">https://golfshot.com/</a></li>
+        <li><a target="_blank" rel="noreferrer" href="https://www.arccosgolf.com/">https://www.arccosgolf.com/</a></li>
+        <li><a target="_blank" rel="noreferrer" href="https://www.revenuecat.com/blog/growth/alex-prasad-v1-sports-sub-club-podcast/">https://www.revenuecat.com/blog/growth/alex-prasad-v1-sports-sub-club-podcast/</a></li>
+      </ul>
+    </section>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+  <script>
+    new Chart(document.getElementById('kpiChart'), {
+      type:'bar',
+      data:{
+        labels:['初回記録完了率','7日継続率','投稿率'],
+        datasets:[
+          { label:'現状仮説', data:[45,22,18] },
+          { label:'改善目標(90日)', data:[70,35,32] }
+        ]
+      },
+      options:{responsive:true, plugins:{legend:{position:'top'}}, scales:{y:{beginAtZero:true,max:100}}}
+    });
+  </script>
+</body>
+</html>
