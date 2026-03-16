@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ResearchReport | Tachikoma Dashboard</title>
+    <style>
+      :root { --bg:#0a0a0a; --card:#111; --muted:#1c1c1c; --border:#2a2a2a; --text:#fafafa; --subtle:#a1a1aa; --radius:12px; }
+      *{box-sizing:border-box} body{margin:0;font-family:Inter,system-ui;background:var(--bg);color:var(--text)}
+      .app{min-height:100vh;display:grid;grid-template-columns:260px 1fr}
+      .sidebar{border-right:1px solid var(--border);padding:20px 14px}
+      .brand{padding:10px 12px;border:1px solid var(--border);border-radius:var(--radius);background:var(--card);margin-bottom:18px;font-weight:700}
+      .menu{display:grid;gap:6px}
+      .menu a{color:var(--text);text-decoration:none;padding:10px 12px;border-radius:10px;font-size:14px;display:flex;align-items:center;gap:8px;white-space:nowrap}
+      .menu a.active{background:var(--card);border:1px solid var(--border)}
+      .main{padding:24px}
+      .head{display:flex;justify-content:space-between;align-items:end;margin-bottom:12px}
+      .muted{font-size:12px;color:var(--subtle)}
+      .row{display:grid;grid-template-columns:1fr 330px;gap:12px}
+      .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:12px}
+      .toolbar{display:flex;gap:8px;align-items:center;margin-bottom:10px}
+      input{width:100%;background:#0f0f0f;color:var(--text);border:1px solid var(--border);border-radius:8px;padding:9px;font:inherit}
+      table{width:100%;border-collapse:collapse}
+      th,td{padding:10px 8px;border-bottom:1px solid #222;text-align:left;font-size:13px;vertical-align:top}
+      th{color:var(--subtle);font-weight:600}
+      a.link{color:#93c5fd;text-decoration:none;word-break:break-all}
+      .summary{white-space:pre-wrap;color:#e5e7eb}
+      .pill{display:inline-block;padding:3px 8px;border-radius:999px;border:1px solid #2c3344;color:#aab2c9;font-size:11px}
+      @media(max-width:1100px){.app{grid-template-columns:1fr}.sidebar{display:none}.row{grid-template-columns:1fr}.main{padding:12px}}
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <aside class="sidebar">
+        <div class="brand">dashboard</div>
+        <nav class="menu">
+          <a href="/">🏠 Dashboard</a>
+          <a href="/projects.html">📁 Projects</a>
+          <a href="/tickets.html">🎫 Tickets</a>
+          <a href="/board.html">🧩 Board</a>
+          <a class="active" href="/research-reports.html">📊 ResearchReport</a>
+          <a href="#">🗓️ Calendar</a>
+          <a href="#">⚙️ Settings</a>
+        </nav>
+      </aside>
+      <main class="main">
+        <div class="head">
+          <div>
+            <h1 style="margin:0">ResearchReport</h1>
+            <div class="muted">プロジェクトに紐づくリサーチ結果（要約・出典・レポートURL）</div>
+          </div>
+          <div id="count" class="muted">0 reports</div>
+        </div>
+
+        <div class="row">
+          <section class="card">
+            <div class="toolbar">
+              <input id="q" placeholder="プロジェクト名 / 要約キーワードで検索" />
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th style="width:170px">Project</th>
+                  <th style="width:280px">Summary</th>
+                  <th style="width:220px">Report URL</th>
+                  <th>Sources</th>
+                </tr>
+              </thead>
+              <tbody id="rows"><tr><td colspan="4" class="muted">読み込み中...</td></tr></tbody>
+            </table>
+          </section>
+
+          <aside class="card">
+            <div style="margin-bottom:8px"><b>Reports by Project</b></div>
+            <canvas id="chart" height="220"></canvas>
+            <div style="margin-top:10px" class="muted">要約は短文、詳細は Report URL で管理。</div>
+          </aside>
+        </div>
+      </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+    <script src="/assets/dashboard-db.js"></script>
+    <script>
+      const rowsEl = document.getElementById('rows');
+      const countEl = document.getElementById('count');
+      const qEl = document.getElementById('q');
+      const chartEl = document.getElementById('chart');
+      let chart;
+      let dataRows = [];
+
+      function esc(s){return String(s ?? '').replace(/[&<>"']/g, (c)=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+      function pmMap(links){
+        const out={};
+        (Array.isArray(links)?links:[]).forEach((x)=>{
+          const label=String(x?.label||'');
+          if(!label.startsWith('pm:')) return;
+          out[label.slice(3)] = String(x?.url||'');
+        });
+        return out;
+      }
+      function sourceLinks(v){
+        return String(v||'').split('\n').map(s=>s.trim()).filter(Boolean)
+          .map(u=>`<a class="link" href="${esc(u)}" target="_blank" rel="noreferrer">${esc(u)}</a>`).join('<br>') || '<span class="muted">-</span>';
+      }
+
+      function renderChart(rows){
+        const counts = {};
+        rows.forEach(r=>{ counts[r.project] = (counts[r.project]||0)+1; });
+        const labels = Object.keys(counts);
+        const vals = labels.map(k=>counts[k]);
+        if(chart) chart.destroy();
+        chart = new Chart(chartEl, {
+          type:'bar',
+          data:{labels, datasets:[{label:'Reports', data:vals}]},
+          options:{plugins:{legend:{display:false}}, scales:{x:{ticks:{color:'#a1a1aa'}}, y:{ticks:{color:'#a1a1aa'}, beginAtZero:true}}}
+        });
+      }
+
+      function render(){
+        const q = qEl.value.trim().toLowerCase();
+        const rows = dataRows.filter(r => !q || [r.project, r.summary, r.reportUrl, r.sourcesRaw].join(' ').toLowerCase().includes(q));
+        countEl.textContent = `${rows.length} reports`;
+        if(!rows.length){ rowsEl.innerHTML = '<tr><td colspan="4" class="muted">該当なし</td></tr>'; renderChart([]); return; }
+        rowsEl.innerHTML = rows.map(r=>`<tr>
+          <td><b>${esc(r.project)}</b><div class="muted">${esc(r.projectKey||'-')}</div></td>
+          <td><div class="summary">${esc(r.summary||'-')}</div></td>
+          <td>${r.reportUrl ? `<a class="link" href="${esc(r.reportUrl)}" target="_blank" rel="noreferrer">open report</a>` : '<span class="muted">-</span>'}</td>
+          <td>${sourceLinks(r.sourcesRaw)}</td>
+        </tr>`).join('');
+        renderChart(rows);
+      }
+
+      async function init(){
+        const projects = await window.DashboardDB.fetchProjects({ limit: 2000 });
+        const out = [];
+        (projects||[]).forEach(p=>{
+          const pm = pmMap(p.links || []);
+          if(!pm.deep_research && !pm.research_report_url && !pm.research_sources) return;
+          out.push({
+            project: p.title || '-',
+            projectKey: p.project_key || '-',
+            summary: pm.deep_research || '',
+            reportUrl: pm.research_report_url || '',
+            sourcesRaw: pm.research_sources || '',
+          });
+        });
+        dataRows = out;
+        render();
+      }
+      qEl.addEventListener('input', render);
+      init().catch(e=>{ rowsEl.innerHTML = `<tr><td colspan="4" class="muted">読み込み失敗: ${esc(e.message)}</td></tr>`; });
+    </script>
+  </body>
+</html>
