@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Research Report Template</title>
+  <style>
+    body{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;margin:0;background:#f7f8fb;color:#141821}
+    .wrap{max-width:980px;margin:0 auto;padding:24px}
+    .card{background:#fff;border:1px solid #e7ebf2;border-radius:14px;padding:16px;margin-bottom:12px}
+    h1{margin:0 0 8px} h2{margin:0 0 10px;font-size:18px}
+    .sub{color:#6b7280;font-size:13px}
+    table{width:100%;border-collapse:collapse}
+    th,td{border-bottom:1px solid #eef1f6;padding:10px;text-align:left;font-size:14px}
+    th{background:#f8fafc;color:#6b7280}
+    a{color:#2563eb}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <h1>Deep Research Report</h1>
+      <div class="sub">Project: {{project_name}} / Date: {{date}}</div>
+      <p>{{summary_1to3_lines}}</p>
+    </div>
+
+    <div class="card">
+      <h2>市場比較（Table）</h2>
+      <table>
+        <thead><tr><th>項目</th><th>自社</th><th>競合A</th><th>競合B</th></tr></thead>
+        <tbody>
+          <tr><td>価格</td><td></td><td></td><td></td></tr>
+          <tr><td>導入難易度</td><td></td><td></td><td></td></tr>
+          <tr><td>差別化要素</td><td></td><td></td><td></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h2>KPI比較（Graph用データ）</h2>
+      <p class="sub">必要なら Chart.js を埋め込み、媒体別CVR/CPAなどを可視化する。</p>
+      <pre>{
+  "labels": ["LINE", "Instagram", "Google"],
+  "cvr": [0.12, 0.08, 0.15],
+  "cpa": [1200, 1800, 1500]
+}</pre>
+    </div>
+
+    <div class="card">
+      <h2>出典URL</h2>
+      <ul>
+        <li><a href="{{source_1}}">{{source_1}}</a></li>
+        <li><a href="{{source_2}}">{{source_2}}</a></li>
+        <li><a href="{{source_3}}">{{source_3}}</a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

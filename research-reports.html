@@ -16,7 +16,7 @@
       .main{padding:24px}
       .head{display:flex;justify-content:space-between;align-items:end;margin-bottom:12px}
       .muted{font-size:12px;color:var(--subtle)}
-      .row{display:grid;grid-template-columns:1fr 330px;gap:12px}
+      .row{display:grid;grid-template-columns:1fr;gap:12px}
       .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:12px}
       .toolbar{display:flex;gap:8px;align-items:center;margin-bottom:10px}
       input{width:100%;background:#0f0f0f;color:var(--text);border:1px solid var(--border);border-radius:8px;padding:9px;font:inherit}
@@ -49,7 +49,7 @@
             <h1 style="margin:0">ResearchReport</h1>
             <div class="muted">プロジェクトに紐づくリサーチ結果（要約・出典・レポートURL）</div>
           </div>
-          <div id="count" class="muted">0 reports</div>
+          <div class="muted"><span id="count">0 reports</span> / <a class="link" href="/research-report-template.html" target="_blank" rel="noreferrer">template</a></div>
         </div>
 
         <div class="row">
@@ -69,25 +69,16 @@
               <tbody id="rows"><tr><td colspan="4" class="muted">読み込み中...</td></tr></tbody>
             </table>
           </section>
-
-          <aside class="card">
-            <div style="margin-bottom:8px"><b>Reports by Project</b></div>
-            <canvas id="chart" height="220"></canvas>
-            <div style="margin-top:10px" class="muted">要約は短文、詳細は Report URL で管理。</div>
-          </aside>
         </div>
       </main>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
     <script src="/assets/dashboard-db.js"></script>
     <script>
       const rowsEl = document.getElementById('rows');
       const countEl = document.getElementById('count');
       const qEl = document.getElementById('q');
-      const chartEl = document.getElementById('chart');
-      let chart;
       let dataRows = [];
 
       function esc(s){return String(s ?? '').replace(/[&<>"']/g, (c)=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
@@ -105,31 +96,17 @@
           .map(u=>`<a class="link" href="${esc(u)}" target="_blank" rel="noreferrer">${esc(u)}</a>`).join('<br>') || '<span class="muted">-</span>';
       }
 
-      function renderChart(rows){
-        const counts = {};
-        rows.forEach(r=>{ counts[r.project] = (counts[r.project]||0)+1; });
-        const labels = Object.keys(counts);
-        const vals = labels.map(k=>counts[k]);
-        if(chart) chart.destroy();
-        chart = new Chart(chartEl, {
-          type:'bar',
-          data:{labels, datasets:[{label:'Reports', data:vals}]},
-          options:{plugins:{legend:{display:false}}, scales:{x:{ticks:{color:'#a1a1aa'}}, y:{ticks:{color:'#a1a1aa'}, beginAtZero:true}}}
-        });
-      }
-
       function render(){
         const q = qEl.value.trim().toLowerCase();
         const rows = dataRows.filter(r => !q || [r.project, r.summary, r.reportUrl, r.sourcesRaw].join(' ').toLowerCase().includes(q));
         countEl.textContent = `${rows.length} reports`;
-        if(!rows.length){ rowsEl.innerHTML = '<tr><td colspan="4" class="muted">該当なし</td></tr>'; renderChart([]); return; }
+        if(!rows.length){ rowsEl.innerHTML = '<tr><td colspan="4" class="muted">該当なし</td></tr>'; return; }
         rowsEl.innerHTML = rows.map(r=>`<tr>
           <td><b>${esc(r.project)}</b><div class="muted">${esc(r.projectKey||'-')}</div></td>
           <td><div class="summary">${esc(r.summary||'-')}</div></td>
           <td>${r.reportUrl ? `<a class="link" href="${esc(r.reportUrl)}" target="_blank" rel="noreferrer">open report</a>` : '<span class="muted">-</span>'}</td>
           <td>${sourceLinks(r.sourcesRaw)}</td>
         </tr>`).join('');
-        renderChart(rows);
       }
 
       async function fetchProjectsFallback(){
