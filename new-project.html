@@ -90,6 +90,19 @@
               <textarea id="constraints" placeholder="例: Owner概念なし / YYYY/MM/DD形式"></textarea>
             </label>
 
+            <div class="full" style="border:1px solid var(--border);border-radius:10px;padding:10px;background:#0d0d0d">
+              <div style="font-size:12px;color:var(--subtle);margin-bottom:8px">PMスキル初期テンプレ（プロジェクト単位）</div>
+              <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+                <select id="pm_template" style="max-width:320px">
+                  <option value="">テンプレを選択…</option>
+                  <option value="discover_strategy">Discover + Strategy（新規企画向け）</option>
+                  <option value="execution_focus">Execution Focus（実装推進向け）</option>
+                  <option value="growth_focus">Growth Focus（運用改善向け）</option>
+                </select>
+                <button id="apply_pm_template" type="button" class="btn" style="padding:8px 10px">Apply PM Template</button>
+              </div>
+            </div>
+
             <label class="full">参照リンク（カテゴリ管理）※label|url 形式 / 1行1件
               <textarea id="links" placeholder="Design Docs|https://example.com/docs"></textarea>
             </label>
@@ -125,6 +138,36 @@
           return { label: label || url || line, url: url || '' };
         });
       }
+
+      function applyPmTemplate(kind){
+        const goalEl = document.getElementById('goal');
+        const dodEl = document.getElementById('definition_of_done');
+        const constraintsEl = document.getElementById('constraints');
+        const descEl = document.getElementById('description');
+        if(kind === 'discover_strategy'){
+          if(!descEl.value.trim()) descEl.value = '新規プロダクトの課題発見→戦略仮説→実行計画までを一気通しで定義する。';
+          goalEl.value = 'PMスキルを使って Discover→Strategy→PRD方針 を確定し、実行チケットへ分解できる状態にする。';
+          dodEl.value = ['対象顧客と課題仮説を明文化','優先度（Impact×Risk）を確定','MVP範囲とKPIを確定','実行チケットを起票'].join('\n');
+          constraintsEl.value = ['新規仮説の乱造は禁止（既存仮説の更新優先）','KPI未定義の施策は実行しない','毎週レビューは実験結果ベースで実施'].join('\n');
+        } else if(kind === 'execution_focus'){
+          if(!descEl.value.trim()) descEl.value = '確定済み戦略を実装可能な仕様とタスクへ落とし込み、短サイクルで実行する。';
+          goalEl.value = '仕様の曖昧さを排除し、実装とレビューが止まらない運用を作る。';
+          dodEl.value = ['design/specificationが全チケットに記入済み','優先度順で着手可能','reviewまでの平均リードタイムを短縮'].join('\n');
+          constraintsEl.value = ['仕様未確定のままin_progress禁止','blocked理由は必ずコメント記録','Done前に検証ログ必須'].join('\n');
+        } else if(kind === 'growth_focus'){
+          if(!descEl.value.trim()) descEl.value = '運用データから改善仮説を更新し、継続率と成果指標を改善する。';
+          goalEl.value = 'KPIに基づく改善サイクルを固定化し、継続率・工数削減を向上させる。';
+          dodEl.value = ['週次KPIレポートが自動で確認可能','改善施策のAB結果を記録','翌週の優先施策を1つに決定'].join('\n');
+          constraintsEl.value = ['KPI計測不能な施策は除外','改善案は最大3件に絞る','同時に走らせる実験は2件まで'].join('\n');
+        }
+      }
+
+      document.getElementById('apply_pm_template').onclick = () => {
+        const kind = document.getElementById('pm_template').value;
+        if(!kind){ state.textContent = 'state: pm template not selected'; return; }
+        applyPmTemplate(kind);
+        state.textContent = 'state: pm template applied';
+      };
 
       document.getElementById('createBtn').onclick=async()=>{
         const projectKey=document.getElementById('project_key').value.trim();
