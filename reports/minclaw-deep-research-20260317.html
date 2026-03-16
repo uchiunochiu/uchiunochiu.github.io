@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>minClaw Deep Research Report (2026-03-17)</title>
+  <style>
+    body{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;margin:0;background:#f6f8fc;color:#111827}
+    .wrap{max-width:1100px;margin:0 auto;padding:24px}
+    .card{background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:16px;margin-bottom:12px}
+    h1{margin:0 0 8px} h2{margin:0 0 10px;font-size:18px}
+    .sub{color:#6b7280;font-size:13px}
+    table{width:100%;border-collapse:collapse}
+    th,td{border-bottom:1px solid #eef2f7;padding:10px;text-align:left;font-size:14px;vertical-align:top}
+    th{background:#f8fafc;color:#6b7280;font-weight:600}
+    .ok{color:#0f766e;font-weight:600}.warn{color:#b45309;font-weight:600}
+    a{color:#2563eb;word-break:break-all}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="card">
+      <h1>minClaw Deep Research Report</h1>
+      <div class="sub">Project: minClaw / Date: 2026-03-17 / Scope: 競合・提供価値・収益化・媒体戦略</div>
+      <p><b>結論（短要約）:</b> minClawの勝ち筋は「LINEを司令UIにしたSMB実務オーケストレーション」。単機能SaaSと制作外注の間にある空白（<b>即時性×運用一体性×安全性</b>）を埋めると優位を作れる。MVPは予約管理/サイト更新/週次レポートを維持し、次点でCRM再来店導線を追加するのが最も再現性が高い。</p>
+    </section>
+
+    <section class="card">
+      <h2>1) 競合比較（実務観点）</h2>
+      <table>
+        <thead><tr><th>カテゴリ</th><th>代表</th><th>強み</th><th>弱み/空白</th><th>minClaw示唆</th></tr></thead>
+        <tbody>
+          <tr><td>予約特化SaaS</td><td>Square Appointments / Wix Bookings</td><td>予約導線・カレンダー管理が強い</td><td>サイト更新/CRM/運用指示の統合は弱い</td><td>予約を核に他業務を1UIで束ねる</td></tr>
+          <tr><td>汎用CRM</td><td>HubSpot CRM</td><td>顧客管理の拡張性が高い</td><td>現場オペレーション直結には設計が重い</td><td>SMB向けに最小項目で即運用可能に</td></tr>
+          <tr><td>外注・制作会社</td><td>地域制作会社</td><td>個別対応・要望反映</td><td>反映速度/ランニングコスト/属人化</td><td>LINE即時更新で速度優位を作る</td></tr>
+          <tr><td>メッセージAPI基盤</td><td>LINE Messaging API</td><td>チャット起点の操作体験が強い</td><td>設計・実装・運用ガードは自前</td><td>RBAC/監査ログを差別化要素化</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>2) 価値仮説と優先順位</h2>
+      <table>
+        <thead><tr><th>仮説</th><th>期待効果</th><th>実装コスト</th><th>優先</th></tr></thead>
+        <tbody>
+          <tr><td>LINE指示で予約/更新を即実行</td><td>導入障壁低下・時短</td><td>中</td><td class="ok">P1</td></tr>
+          <tr><td>危険操作の確認フロー + 監査ログ</td><td>誤操作・越境リスク低減</td><td>中</td><td class="ok">P1</td></tr>
+          <tr><td>週次レポート自動送信</td><td>価値体感の可視化</td><td>低</td><td class="ok">P1</td></tr>
+          <tr><td>CRM再来店メッセージ自動化</td><td>継続率/売上改善</td><td>中</td><td class="warn">P2</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>3) 収益化プラン（段階）</h2>
+      <table>
+        <thead><tr><th>Phase</th><th>課金</th><th>提供価値</th><th>KPI</th></tr></thead>
+        <tbody>
+          <tr><td>Phase 1</td><td>月額基本プラン</td><td>予約管理・サイト更新・週次レポート</td><td>初期設定完了率 / 週次実行回数</td></tr>
+          <tr><td>Phase 2</td><td>上位プラン</td><td>CRM再来店導線・権限強化・履歴分析</td><td>継続率 / ARPA</td></tr>
+          <tr><td>Phase 3</td><td>運用代行オプション</td><td>運用テンプレ導入・業種別チューニング</td><td>解約率 / NPS</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>4) 媒体戦略（初期90日）</h2>
+      <table>
+        <thead><tr><th>媒体</th><th>役割</th><th>実施内容</th><th>評価指標</th></tr></thead>
+        <tbody>
+          <tr><td>LINE公式</td><td>主導線（本命）</td><td>導入→運用→継続の完結導線</td><td>有効指示率 / 定着率</td></tr>
+          <tr><td>Instagram</td><td>認知獲得</td><td>ビフォーアフター（作業時間削減）投稿</td><td>CPC / LP遷移率</td></tr>
+          <tr><td>Googleビジネスプロフィール</td><td>地域検索流入</td><td>導入事例・口コミ蓄積</td><td>問い合わせCVR</td></tr>
+          <tr><td>提携チャネル（制作会社/コンサル）</td><td>紹介獲得</td><td>代理導入パッケージ提供</td><td>紹介成約率</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>5) KPI目標（90日）</h2>
+      <canvas id="kpiChart" height="130"></canvas>
+      <p class="sub">仮説値。初期は「導入完了率」と「週次実行数」の改善を最優先し、継続率へ接続する。</p>
+    </section>
+
+    <section class="card">
+      <h2>6) 出典URL</h2>
+      <ul>
+        <li><a target="_blank" rel="noreferrer" href="https://developers.line.biz/en/docs/messaging-api/overview/">https://developers.line.biz/en/docs/messaging-api/overview/</a></li>
+        <li><a target="_blank" rel="noreferrer" href="https://squareup.com/us/en/appointments">https://squareup.com/us/en/appointments</a></li>
+        <li><a target="_blank" rel="noreferrer" href="https://www.wix.com/scheduling-software">https://www.wix.com/scheduling-software</a></li>
+        <li><a target="_blank" rel="noreferrer" href="https://www.hubspot.com/products/crm">https://www.hubspot.com/products/crm</a></li>
+        <li><a target="_blank" rel="noreferrer" href="https://docs.openclaw.ai">https://docs.openclaw.ai</a></li>
+      </ul>
+    </section>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+  <script>
+    new Chart(document.getElementById('kpiChart'), {
+      type:'bar',
+      data:{
+        labels:['初期設定完了率','週次実行企業率','月次継続率'],
+        datasets:[
+          { label:'現状仮説', data:[40,35,55] },
+          { label:'90日目標', data:[70,65,75] }
+        ]
+      },
+      options:{responsive:true, plugins:{legend:{position:'top'}}, scales:{y:{beginAtZero:true,max:100}}}
+    });
+  </script>
+</body>
+</html>
