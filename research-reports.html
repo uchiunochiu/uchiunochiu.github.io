@@ -132,8 +132,25 @@
         renderChart(rows);
       }
 
+      async function fetchProjectsFallback(){
+        const url = 'https://kzixjgzqyujqyjwvdgkn.supabase.co/rest/v1/projects?select=project_key,title,links&limit=2000';
+        const key = 'sb_publishable_ZpX-YNB5Av3mtNiIablq3w_JOPXMVxK';
+        const res = await fetch(url, { headers: { apikey: key, Authorization: `Bearer ${key}` } });
+        if (!res.ok) throw new Error(`fallback fetch failed: ${res.status}`);
+        return await res.json();
+      }
+
       async function init(){
-        const projects = await window.DashboardDB.fetchProjects({ limit: 2000 });
+        let projects = [];
+        try {
+          if (window.DashboardDB?.fetchProjects) {
+            projects = await window.DashboardDB.fetchProjects({ limit: 2000 });
+          }
+        } catch (_) {}
+        if (!Array.isArray(projects) || !projects.length) {
+          projects = await fetchProjectsFallback();
+        }
+
         const out = [];
         (projects||[]).forEach(p=>{
           const pm = pmMap(p.links || []);
