@@ -90,6 +90,7 @@
               <select id="ticket_type">
                 <option value="Marketing">Marketing</option>
                 <option value="Develop">Develop</option>
+                <option value="Discover">Discover</option>
                 <option value="OtherTask" selected>OtherTask</option>
               </select>
             </label>
@@ -160,6 +161,47 @@
         return no;
       }
 
+      function applyDiscoverTemplateIfEmpty() {
+        const titleEl = document.getElementById('title');
+        const descriptionEl = document.getElementById('description');
+        const completionEl = document.getElementById('completion_criteria');
+        const designEl = document.getElementById('design');
+        const specEl = document.getElementById('specification');
+
+        if (!titleEl.value.trim()) titleEl.value = 'Discover: 〇〇の課題発見と検証設計';
+        if (!descriptionEl.value.trim()) {
+          descriptionEl.value = [
+            '目的: 新規アイデア/課題に対する発見プロセスを実施し、次の実験候補を特定する。',
+            '',
+            '入力: 背景、対象ユーザー、現状の仮説',
+            '出力: 仮説一覧、優先順位、検証実験案',
+          ].join('\n');
+        }
+        if (!completionEl.value.trim()) {
+          completionEl.value = [
+            '- 課題仮説を3件以上整理',
+            '- 影響度×不確実性で優先順位付け',
+            '- 直近で実施可能な実験を2件以上提案',
+          ].join('\n');
+        }
+        if (!designEl.value.trim()) {
+          designEl.value = [
+            '1) 現状整理（対象ユーザー/課題/代替手段）',
+            '2) 仮説抽出（価値・実現性・運用）',
+            '3) 優先順位付け（Impact × Risk）',
+            '4) 実験設計（期間/評価指標/成功条件）',
+          ].join('\n');
+        }
+        if (!specEl.value.trim()) {
+          specEl.value = [
+            '【成果物】',
+            '- 課題仮説リスト',
+            '- 優先度マトリクス',
+            '- 実験計画（担当/期限/KPI）',
+          ].join('\n');
+        }
+      }
+
       async function init(){
         const qp = new URLSearchParams(location.search);
         const pinnedProjectId = qp.get('project_id') || '';
@@ -189,6 +231,11 @@
         } else if (pt) {
           pt.value = '(none)';
         }
+
+        const ticketTypeEl = document.getElementById('ticket_type');
+        ticketTypeEl.addEventListener('change', () => {
+          if (ticketTypeEl.value === 'Discover') applyDiscoverTemplateIfEmpty();
+        });
 
         await refreshTicketNoPreview();
         state.textContent = 'state: ready';

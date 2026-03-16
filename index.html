@@ -269,6 +269,61 @@
   </div></div>
             </div>
           </details>
+
+          <details class="accordion" style="margin-top:10px">
+            <summary>
+              <span>PMスキルの使い方（Discover運用ガイド）</span>
+              <span class="chev">⌄</span>
+            </summary>
+            <div class="accordion-body">
+              <div class="flow-meta">version: v1 / updated: 2026-03-16</div>
+              <div style="border:1px solid var(--border);border-radius:10px;padding:10px;max-height:760px;overflow:auto">
+                <h1 style="font-size:16px;margin:0 0 10px">PMスキル運用ガイド</h1>
+                <div class="wrap">
+                  <div class="box">
+                    <div class="phase">前提</div>
+                    <div class="step">PMスキルは「/discover コマンド」ではなく、<b>チケット起点のワークフロー</b>で使います。<br>新規チケット作成時に <b>Ticket Type = Discover</b> を選ぶと、発見プロセス用テンプレが自動で入力されます。</div>
+                  </div>
+
+                  <div class="box">
+                    <div class="phase">基本手順（最短）</div>
+                    <div class="step">
+                      1) New Ticket を開く<br>
+                      2) Ticket Type を <b>Discover</b> にする<br>
+                      3) テンプレのままでも良いので、対象テーマをタイトルに入れる（例: 「Discover: SMB向けLINE予約管理」）<br>
+                      4) Status を <b>todo</b> にして作成<br>
+                      5) タチコマに「このDiscoverチケットを進めて」と依頼
+                    </div>
+                  </div>
+
+                  <div class="box">
+                    <div class="phase">Discoverで出る成果物</div>
+                    <div class="step">
+                      - 課題仮説リスト（誰の何が痛いか）<br>
+                      - 優先度マトリクス（Impact × Risk）<br>
+                      - 検証実験案（期間/KPI/成功条件）<br>
+                      - 次アクション（実装 or 追加調査）
+                    </div>
+                  </div>
+
+                  <div class="box">
+                    <div class="phase">おすすめ記入ルール</div>
+                    <div class="step">
+                      - Description: 背景と対象ユーザーを明記<br>
+                      - Completion Criteria: 「判断できる条件」を3行以上<br>
+                      - Design/Specification: まず荒く記入し、review前に確定
+                    </div>
+                    <div class="mini">※ 不明点が多い場合は qa_blocked にして質問を先に解消。</div>
+                  </div>
+
+                  <div class="box">
+                    <div class="phase">実行依頼テンプレ（DM）</div>
+                    <div class="step"><code>BOT-xxxx のDiscoverチケットを実行。仮説整理→優先度付け→検証案まで出して。</code></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </details>
         </article>
 
         <section class="grid">
