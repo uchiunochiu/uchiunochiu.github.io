@@ -150,6 +150,8 @@
             <article class="card"><div class="title">完了条件（Definition of Done）</div><div id="dodList"><div class="item"><div class="meta">-</div></div></div></article>
             <article class="card"><div class="title">Repository</div><div id="repoMeta"><div class="item"><div class="meta">-</div></div></div></article>
             <article class="card"><div class="title">制約（Constraints / Guardrails）</div><div id="constraintsList"><div class="item"><div class="meta">-</div></div></div></article>
+            <article class="card"><div class="title">PM Outputs（Discovery）</div><div id="pmDiscoveryList"><div class="item"><div class="meta">-</div></div></div></article>
+            <article class="card"><div class="title">PM Outputs（Strategy〜Growth）</div><div id="pmStrategyList"><div class="item"><div class="meta">-</div></div></div></article>
             <article class="card"><div class="title">参照リンク（カテゴリ管理）</div><div id="linksList"><div class="item"><div class="meta">-</div></div></div></article>
           </section>
 
@@ -224,6 +226,8 @@
       const dodList = document.getElementById('dodList');
       const repoMeta = document.getElementById('repoMeta');
       const constraintsList = document.getElementById('constraintsList');
+      const pmDiscoveryList = document.getElementById('pmDiscoveryList');
+      const pmStrategyList = document.getElementById('pmStrategyList');
       const linksList = document.getElementById('linksList');
       const openQuestionsList = document.getElementById('openQuestionsList');
       const activityLogList = document.getElementById('activityLogList');
@@ -412,6 +416,29 @@
           const url = r?.url || '';
           return `<div class="item"><b>${escapeHtml(label)}</b><div class="meta">${url ? `<a href="${escapeHtml(url)}" target="_blank" rel="noreferrer" style="color:#93c5fd">${escapeHtml(url)}</a>` : '-'}</div></div>`;
         }).join('');
+      }
+
+      function pmMapFromLinks(links) {
+        const rows = Array.isArray(links) ? links : [];
+        const out = {};
+        rows.forEach((r) => {
+          const label = String(r?.label || '');
+          if (!label.startsWith('pm:')) return;
+          out[label.slice(3)] = String(r?.url || '');
+        });
+        return out;
+      }
+
+      function renderPmGroup(el, pmMap, keys) {
+        if (!el) return;
+        const rows = keys
+          .map(([key, label]) => ({ label, value: pmMap[key] || '' }))
+          .filter((x) => x.value);
+        if (!rows.length) {
+          el.innerHTML = '<div class="item"><div class="meta">-</div></div>';
+          return;
+        }
+        el.innerHTML = rows.map((r) => `<div class="item"><b>${escapeHtml(r.label)}</b><div class="meta">${escapeHtml(r.value)}</div></div>`).join('');
       }
 
       let voiceActive = false;
@@ -614,7 +641,26 @@
             repoMeta.innerHTML = `<div class="item"><b>Repo URL</b><div class="meta">${repo === '-' ? '-' : `<a href="${escapeHtml(repo)}" target="_blank" rel="noopener" style="color:#93c5fd">${escapeHtml(repo)}</a>`}</div></div><div class="item"><b>Default Branch</b><div class="meta">${escapeHtml(branch)}</div></div>`;
           }
           renderTextList(constraintsList, p.constraints || [], 'Rule');
-          renderLinks(linksList, p.links || []);
+          const pm = pmMapFromLinks(p.links || []);
+          renderPmGroup(pmDiscoveryList, pm, [
+            ['problem_definition', '課題定義'],
+            ['target_customer', '対象顧客'],
+            ['jtbd', 'JTBD'],
+            ['alternatives', '代替手段'],
+            ['hypotheses', '仮説一覧'],
+            ['evidence', '根拠データ'],
+            ['problem_priority', '課題優先度'],
+          ]);
+          renderPmGroup(pmStrategyList, pm, [
+            ['value_proposition', '価値提案'],
+            ['positioning', 'ポジショニング'],
+            ['mvp_scope', 'MVP範囲'],
+            ['kpi_tree', 'KPIツリー'],
+            ['north_star', 'North Star'],
+            ['execution_roadmap', '実行ロードマップ'],
+            ['gtm_plan', 'GTM計画'],
+          ]);
+          renderLinks(linksList, (p.links || []).filter((x) => !String(x?.label || '').startsWith('pm:')));
         } else {
           if (projectTitle) projectTitle.textContent = 'Project Not Found';
           if (projectStatusChip) projectStatusChip.textContent = 'missing';

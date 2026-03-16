@@ -56,6 +56,30 @@
                 <button id="apply_pm_template" type="button" class="btn" style="padding:8px 10px">Apply PM Template</button>
               </div>
             </div>
+            <div class="full" style="border:1px solid var(--border);border-radius:10px;padding:10px;background:#0d0d0d">
+              <div style="font-size:12px;color:var(--subtle);margin-bottom:8px">PM Outputs（Discovery）</div>
+              <div class="grid" style="grid-template-columns:1fr 1fr">
+                <label>課題定義<textarea id="pm_problem_definition"></textarea></label>
+                <label>対象顧客<textarea id="pm_target_customer"></textarea></label>
+                <label>JTBD<textarea id="pm_jtbd"></textarea></label>
+                <label>代替手段<textarea id="pm_alternatives"></textarea></label>
+                <label>仮説一覧<textarea id="pm_hypotheses"></textarea></label>
+                <label>根拠データ<textarea id="pm_evidence"></textarea></label>
+                <label class="full">課題優先度<textarea id="pm_problem_priority"></textarea></label>
+              </div>
+            </div>
+            <div class="full" style="border:1px solid var(--border);border-radius:10px;padding:10px;background:#0d0d0d">
+              <div style="font-size:12px;color:var(--subtle);margin-bottom:8px">PM Outputs（Strategy〜Growth）</div>
+              <div class="grid" style="grid-template-columns:1fr 1fr">
+                <label>価値提案<textarea id="pm_value_proposition"></textarea></label>
+                <label>ポジショニング<textarea id="pm_positioning"></textarea></label>
+                <label>MVP範囲<textarea id="pm_mvp_scope"></textarea></label>
+                <label>KPIツリー<textarea id="pm_kpi_tree"></textarea></label>
+                <label>North Star<textarea id="pm_north_star"></textarea></label>
+                <label>実行ロードマップ<textarea id="pm_execution_roadmap"></textarea></label>
+                <label class="full">GTM計画<textarea id="pm_gtm_plan"></textarea></label>
+              </div>
+            </div>
             <label class="full">参照リンク（カテゴリ管理）※label|url / 1行1件<textarea id="links"></textarea></label>
             <label class="full">Repository URL<input id="repo_url" /></label>
             <label>Default Branch<input id="default_branch" placeholder="main" /></label>
@@ -71,9 +95,19 @@
       const projectId = qp.get('project_id') || localStorage.getItem('LAST_PROJECT_ID') || '';
       const state = document.getElementById('state');
       function lines(v){ return Array.isArray(v) ? v.join('\n') : ''; }
+      function extractPmFromLinks(v){
+        const rows = Array.isArray(v) ? v : [];
+        const out = {};
+        rows.forEach((x) => {
+          const label = String(x?.label || '');
+          if (!label.startsWith('pm:')) return;
+          out[label.slice(3)] = String(x?.url || '');
+        });
+        return out;
+      }
       function linksLines(v){
         if (!Array.isArray(v)) return '';
-        return v.map((x) => `${x?.label || ''}|${x?.url || ''}`).join('\n');
+        return v.filter((x) => !String(x?.label || '').startsWith('pm:')).map((x) => `${x?.label || ''}|${x?.url || ''}`).join('\n');
       }
       function parseLines(text){ return (text || '').split('\n').map(s => s.trim()).filter(Boolean); }
       function parseLinks(text){
@@ -81,6 +115,32 @@
           const [label, url] = line.split('|').map((s) => (s || '').trim());
           return { label: label || url || line, url: url || '' };
         });
+      }
+      function collectPmOutputs(){
+        return {
+          problem_definition: document.getElementById('pm_problem_definition').value.trim(),
+          target_customer: document.getElementById('pm_target_customer').value.trim(),
+          jtbd: document.getElementById('pm_jtbd').value.trim(),
+          alternatives: document.getElementById('pm_alternatives').value.trim(),
+          hypotheses: document.getElementById('pm_hypotheses').value.trim(),
+          evidence: document.getElementById('pm_evidence').value.trim(),
+          problem_priority: document.getElementById('pm_problem_priority').value.trim(),
+          value_proposition: document.getElementById('pm_value_proposition').value.trim(),
+          positioning: document.getElementById('pm_positioning').value.trim(),
+          mvp_scope: document.getElementById('pm_mvp_scope').value.trim(),
+          kpi_tree: document.getElementById('pm_kpi_tree').value.trim(),
+          north_star: document.getElementById('pm_north_star').value.trim(),
+          execution_roadmap: document.getElementById('pm_execution_roadmap').value.trim(),
+          gtm_plan: document.getElementById('pm_gtm_plan').value.trim(),
+        };
+      }
+      function buildLinksWithPm(baseLinks){
+        const normal = (Array.isArray(baseLinks) ? baseLinks : []).filter((x) => !String(x?.label || '').startsWith('pm:'));
+        const pm = collectPmOutputs();
+        const pmLinks = Object.entries(pm)
+          .filter(([, v]) => v)
+          .map(([k, v]) => ({ label: `pm:${k}`, url: v }));
+        return [...normal, ...pmLinks];
       }
 
       function applyPmTemplate(kind){
@@ -93,16 +153,31 @@
           goalEl.value = 'PMスキルを使って Discover→Strategy→PRD方針 を確定し、実行チケットへ分解できる状態にする。';
           dodEl.value = ['対象顧客と課題仮説を明文化','優先度（Impact×Risk）を確定','MVP範囲とKPIを確定','実行チケットを起票'].join('\n');
           constraintsEl.value = ['新規仮説の乱造は禁止（既存仮説の更新優先）','KPI未定義の施策は実行しない','毎週レビューは実験結果ベースで実施'].join('\n');
+          document.getElementById('pm_problem_definition').value = '解くべき課題を1文で定義';
+          document.getElementById('pm_target_customer').value = '主要顧客セグメント';
+          document.getElementById('pm_jtbd').value = 'When..., I want to..., so I can...';
+          document.getElementById('pm_hypotheses').value = '仮説A\n仮説B\n仮説C';
+          document.getElementById('pm_problem_priority').value = 'Impact×Riskで優先順位を記載';
+          document.getElementById('pm_value_proposition').value = '提供価値の一文';
+          document.getElementById('pm_mvp_scope').value = 'MVPで必須の機能範囲';
+          document.getElementById('pm_kpi_tree').value = 'North Star -> Input KPI';
+          document.getElementById('pm_north_star').value = '主要北極星指標';
         } else if(kind === 'execution_focus'){
           if(!descEl.value.trim()) descEl.value = '確定済み戦略を実装可能な仕様とタスクへ落とし込み、短サイクルで実行する。';
           goalEl.value = '仕様の曖昧さを排除し、実装とレビューが止まらない運用を作る。';
           dodEl.value = ['design/specificationが全チケットに記入済み','優先度順で着手可能','reviewまでの平均リードタイムを短縮'].join('\n');
           constraintsEl.value = ['仕様未確定のままin_progress禁止','blocked理由は必ずコメント記録','Done前に検証ログ必須'].join('\n');
+          document.getElementById('pm_execution_roadmap').value = 'W1:基盤 / W2:実装 / W3:検証';
+          document.getElementById('pm_gtm_plan').value = 'リリース前後の告知/導入導線';
         } else if(kind === 'growth_focus'){
           if(!descEl.value.trim()) descEl.value = '運用データから改善仮説を更新し、継続率と成果指標を改善する。';
           goalEl.value = 'KPIに基づく改善サイクルを固定化し、継続率・工数削減を向上させる。';
           dodEl.value = ['週次KPIレポートが自動で確認可能','改善施策のAB結果を記録','翌週の優先施策を1つに決定'].join('\n');
           constraintsEl.value = ['KPI計測不能な施策は除外','改善案は最大3件に絞る','同時に走らせる実験は2件まで'].join('\n');
+          document.getElementById('pm_kpi_tree').value = 'North Star -> 活性化率/継続率/収益';
+          document.getElementById('pm_north_star').value = '継続利用企業数';
+          document.getElementById('pm_execution_roadmap').value = '月次改善サイクル計画';
+          document.getElementById('pm_gtm_plan').value = '再来店/CRM/紹介導線の最適化';
         }
       }
 
@@ -126,6 +201,21 @@
         document.getElementById('definition_of_done').value = lines(p.definition_of_done);
         document.getElementById('constraints').value = lines(p.constraints);
         document.getElementById('links').value = linksLines(p.links);
+        const pm = extractPmFromLinks(p.links || []);
+        document.getElementById('pm_problem_definition').value = pm.problem_definition || '';
+        document.getElementById('pm_target_customer').value = pm.target_customer || '';
+        document.getElementById('pm_jtbd').value = pm.jtbd || '';
+        document.getElementById('pm_alternatives').value = pm.alternatives || '';
+        document.getElementById('pm_hypotheses').value = pm.hypotheses || '';
+        document.getElementById('pm_evidence').value = pm.evidence || '';
+        document.getElementById('pm_problem_priority').value = pm.problem_priority || '';
+        document.getElementById('pm_value_proposition').value = pm.value_proposition || '';
+        document.getElementById('pm_positioning').value = pm.positioning || '';
+        document.getElementById('pm_mvp_scope').value = pm.mvp_scope || '';
+        document.getElementById('pm_kpi_tree').value = pm.kpi_tree || '';
+        document.getElementById('pm_north_star').value = pm.north_star || '';
+        document.getElementById('pm_execution_roadmap').value = pm.execution_roadmap || '';
+        document.getElementById('pm_gtm_plan').value = pm.gtm_plan || '';
         document.getElementById('repo_url').value = p.repo_url || '';
         document.getElementById('default_branch').value = p.default_branch || 'main';
         state.textContent='state: ready';
@@ -143,7 +233,7 @@
           goal: document.getElementById('goal').value.trim(),
           definitionOfDone: parseLines(document.getElementById('definition_of_done').value),
           constraints: parseLines(document.getElementById('constraints').value),
-          links: parseLinks(document.getElementById('links').value),
+          links: buildLinksWithPm(parseLinks(document.getElementById('links').value)),
           repoUrl: document.getElementById('repo_url').value.trim() || null,
           defaultBranch: document.getElementById('default_branch').value.trim() || null,
         };
