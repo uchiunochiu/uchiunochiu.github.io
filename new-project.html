@@ -133,7 +133,8 @@
               <div style="font-size:12px;color:var(--subtle);margin-bottom:8px">PM Outputs（Research / Promotion）</div>
               <div class="grid" style="grid-template-columns:1fr 1fr">
                 <label>ディープリサーチ要約（短文）<textarea id="pm_deep_research" placeholder="結論を1〜3行で要約"></textarea></label>
-                <label>リサーチ出典URL（1行1件）<textarea id="pm_research_sources" placeholder="https://example.com/source-1\nhttps://example.com/source-2"></textarea></label>
+                <label>リサーチPDF URL<textarea id="pm_research_report_url" placeholder="https://drive.google.com/file/d/.../view"></textarea></label>
+                <label class="full">リサーチ出典URL（1行1件）<textarea id="pm_research_sources" placeholder="https://example.com/source-1\nhttps://example.com/source-2"></textarea></label>
                 <label>競合分析<textarea id="pm_competitor_analysis" placeholder="主要競合と差別化ポイント"></textarea></label>
                 <label>プロモーション戦略<textarea id="pm_promotion_strategy" placeholder="訴求軸・オファー・導線"></textarea></label>
                 <label class="full">有効媒体（チャネル）<textarea id="pm_promotion_media" placeholder="媒体候補と優先順位"></textarea></label>
@@ -193,6 +194,7 @@
           execution_roadmap: document.getElementById('pm_execution_roadmap').value.trim(),
           gtm_plan: document.getElementById('pm_gtm_plan').value.trim(),
           deep_research: document.getElementById('pm_deep_research').value.trim(),
+          research_report_url: document.getElementById('pm_research_report_url').value.trim(),
           research_sources: document.getElementById('pm_research_sources').value.trim(),
           competitor_analysis: document.getElementById('pm_competitor_analysis').value.trim(),
           promotion_strategy: document.getElementById('pm_promotion_strategy').value.trim(),
@@ -230,6 +232,7 @@
           document.getElementById('pm_kpi_tree').value = 'North Star -> Input KPI';
           document.getElementById('pm_north_star').value = '主要北極星指標';
           document.getElementById('pm_deep_research').value = '市場・顧客・競合の一次情報を収集し、示唆を要約';
+          document.getElementById('pm_research_report_url').value = 'https://drive.google.com/file/d/REPORT_ID/view';
           document.getElementById('pm_research_sources').value = 'https://example.com/source-1\nhttps://example.com/source-2';
           document.getElementById('pm_competitor_analysis').value = '競合A/B/Cの強み・弱み・価格・導線比較';
           document.getElementById('pm_promotion_strategy').value = '訴求メッセージ・オファー・導入導線を設計';
@@ -242,6 +245,7 @@
           document.getElementById('pm_execution_roadmap').value = 'W1:基盤 / W2:実装 / W3:検証';
           document.getElementById('pm_gtm_plan').value = 'リリース前後の告知/導入導線';
           document.getElementById('pm_competitor_analysis').value = '競合比較から実装優先度を再整理';
+          document.getElementById('pm_research_report_url').value = 'https://drive.google.com/file/d/REPORT_ID/view';
           document.getElementById('pm_research_sources').value = 'https://example.com/competitor-1\nhttps://example.com/competitor-2';
           document.getElementById('pm_promotion_strategy').value = 'ローンチ前後の訴求とオンボードを整備';
           document.getElementById('pm_promotion_media').value = '媒体別の実行順（Owned→Earned→Paid）を定義';
@@ -255,6 +259,7 @@
           document.getElementById('pm_execution_roadmap').value = '月次改善サイクル計画';
           document.getElementById('pm_gtm_plan').value = '再来店/CRM/紹介導線の最適化';
           document.getElementById('pm_deep_research').value = 'KPI悪化要因を外部・内部データで深掘り';
+          document.getElementById('pm_research_report_url').value = 'https://drive.google.com/file/d/REPORT_ID/view';
           document.getElementById('pm_research_sources').value = 'https://example.com/insight-1\nhttps://example.com/insight-2';
           document.getElementById('pm_competitor_analysis').value = '競合の施策変化と差分を定点観測';
           document.getElementById('pm_promotion_strategy').value = '継続率改善に効く訴求と接点を更新';

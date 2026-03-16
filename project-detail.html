@@ -452,6 +452,11 @@
               .join('<br>');
             return `<div class="item"><b>${escapeHtml(r.label)}</b><div class="meta">${links || '-'}</div></div>`;
           }
+          if (r.key === 'research_report_url') {
+            const u = String(r.value || '').trim();
+            const link = u ? `<a href="${escapeHtml(u)}" target="_blank" rel="noreferrer" style="color:#93c5fd">${escapeHtml(u)}</a>` : '-';
+            return `<div class="item"><b>${escapeHtml(r.label)}</b><div class="meta">${link}</div></div>`;
+          }
           return `<div class="item"><b>${escapeHtml(r.label)}</b><div class="meta">${escapeHtml(r.value)}</div></div>`;
         }).join('');
       }
@@ -678,6 +683,7 @@
           ]);
           renderPmGroup(pmResearchList, pm, [
             ['deep_research', 'ディープリサーチ要約'],
+            ['research_report_url', 'リサーチPDF URL'],
             ['research_sources', 'リサーチ出典URL'],
             ['competitor_analysis', '競合分析'],
             ['promotion_strategy', 'プロモーション戦略'],
