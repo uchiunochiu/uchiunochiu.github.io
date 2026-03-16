@@ -146,6 +146,7 @@
 
         <div class="layout">
           <section class="stack">
+            <article class="card"><div class="title">概要（Description）</div><div id="descriptionList"><div class="item"><div class="meta">-</div></div></div></article>
             <article class="card"><div class="title">目的（Goal）</div><div id="goalList"><div class="item"><div class="meta">-</div></div></div></article>
             <article class="card"><div class="title">完了条件（Definition of Done）</div><div id="dodList"><div class="item"><div class="meta">-</div></div></div></article>
             <article class="card"><div class="title">Repository</div><div id="repoMeta"><div class="item"><div class="meta">-</div></div></div></article>
@@ -222,6 +223,7 @@
       const projectCommentFeed = document.getElementById('projectCommentFeed');
       const projectCommentStatus = document.getElementById('projectCommentStatus');
       const projectKanbanColumns = document.getElementById('projectKanbanColumns');
+      const descriptionList = document.getElementById('descriptionList');
       const goalList = document.getElementById('goalList');
       const dodList = document.getElementById('dodList');
       const repoMeta = document.getElementById('repoMeta');
@@ -633,7 +635,8 @@
           if (newTicketLink) newTicketLink.href = `/new-ticket.html?project_id=${encodeURIComponent(p.id)}`;
           const editBtn = document.getElementById('editProjectBtn');
           if (editBtn) editBtn.href = `/edit-project.html?project_id=${encodeURIComponent(p.id)}`;
-          renderTextList(goalList, [p.goal || p.description || '-'], 'Goal');
+          renderTextList(descriptionList, [p.description || '-'], '概要');
+          renderTextList(goalList, [p.goal || '-'], 'Goal');
           renderTextList(dodList, p.definition_of_done || [], 'DoD');
           if (repoMeta) {
             const repo = p.repo_url || '-';
