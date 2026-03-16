@@ -80,6 +80,15 @@
                 <label class="full">GTM計画<textarea id="pm_gtm_plan"></textarea></label>
               </div>
             </div>
+            <div class="full" style="border:1px solid var(--border);border-radius:10px;padding:10px;background:#0d0d0d">
+              <div style="font-size:12px;color:var(--subtle);margin-bottom:8px">PM Outputs（Research / Promotion）</div>
+              <div class="grid" style="grid-template-columns:1fr 1fr">
+                <label>ディープリサーチ要約<textarea id="pm_deep_research"></textarea></label>
+                <label>競合分析<textarea id="pm_competitor_analysis"></textarea></label>
+                <label>プロモーション戦略<textarea id="pm_promotion_strategy"></textarea></label>
+                <label>有効媒体（チャネル）<textarea id="pm_promotion_media"></textarea></label>
+              </div>
+            </div>
             <label class="full">参照リンク（カテゴリ管理）※label|url / 1行1件<textarea id="links"></textarea></label>
             <label class="full">Repository URL<input id="repo_url" /></label>
             <label>Default Branch<input id="default_branch" placeholder="main" /></label>
@@ -132,6 +141,10 @@
           north_star: document.getElementById('pm_north_star').value.trim(),
           execution_roadmap: document.getElementById('pm_execution_roadmap').value.trim(),
           gtm_plan: document.getElementById('pm_gtm_plan').value.trim(),
+          deep_research: document.getElementById('pm_deep_research').value.trim(),
+          competitor_analysis: document.getElementById('pm_competitor_analysis').value.trim(),
+          promotion_strategy: document.getElementById('pm_promotion_strategy').value.trim(),
+          promotion_media: document.getElementById('pm_promotion_media').value.trim(),
         };
       }
       function buildLinksWithPm(baseLinks){
@@ -162,6 +175,10 @@
           document.getElementById('pm_mvp_scope').value = 'MVPで必須の機能範囲';
           document.getElementById('pm_kpi_tree').value = 'North Star -> Input KPI';
           document.getElementById('pm_north_star').value = '主要北極星指標';
+          document.getElementById('pm_deep_research').value = '市場・顧客・競合の一次情報を収集し、示唆を要約';
+          document.getElementById('pm_competitor_analysis').value = '競合A/B/Cの強み・弱み・価格・導線比較';
+          document.getElementById('pm_promotion_strategy').value = '訴求メッセージ・オファー・導入導線を設計';
+          document.getElementById('pm_promotion_media').value = '優先媒体: LINE/Instagram/Googleビジネスプロフィール';
         } else if(kind === 'execution_focus'){
           if(!descEl.value.trim()) descEl.value = '確定済み戦略を実装可能な仕様とタスクへ落とし込み、短サイクルで実行する。';
           goalEl.value = '仕様の曖昧さを排除し、実装とレビューが止まらない運用を作る。';
@@ -169,6 +186,9 @@
           constraintsEl.value = ['仕様未確定のままin_progress禁止','blocked理由は必ずコメント記録','Done前に検証ログ必須'].join('\n');
           document.getElementById('pm_execution_roadmap').value = 'W1:基盤 / W2:実装 / W3:検証';
           document.getElementById('pm_gtm_plan').value = 'リリース前後の告知/導入導線';
+          document.getElementById('pm_competitor_analysis').value = '競合比較から実装優先度を再整理';
+          document.getElementById('pm_promotion_strategy').value = 'ローンチ前後の訴求とオンボードを整備';
+          document.getElementById('pm_promotion_media').value = '媒体別の実行順（Owned→Earned→Paid）を定義';
         } else if(kind === 'growth_focus'){
           if(!descEl.value.trim()) descEl.value = '運用データから改善仮説を更新し、継続率と成果指標を改善する。';
           goalEl.value = 'KPIに基づく改善サイクルを固定化し、継続率・工数削減を向上させる。';
@@ -178,6 +198,10 @@
           document.getElementById('pm_north_star').value = '継続利用企業数';
           document.getElementById('pm_execution_roadmap').value = '月次改善サイクル計画';
           document.getElementById('pm_gtm_plan').value = '再来店/CRM/紹介導線の最適化';
+          document.getElementById('pm_deep_research').value = 'KPI悪化要因を外部・内部データで深掘り';
+          document.getElementById('pm_competitor_analysis').value = '競合の施策変化と差分を定点観測';
+          document.getElementById('pm_promotion_strategy').value = '継続率改善に効く訴求と接点を更新';
+          document.getElementById('pm_promotion_media').value = '既存顧客接点を優先して媒体最適化';
         }
       }
 
@@ -216,6 +240,10 @@
         document.getElementById('pm_north_star').value = pm.north_star || '';
         document.getElementById('pm_execution_roadmap').value = pm.execution_roadmap || '';
         document.getElementById('pm_gtm_plan').value = pm.gtm_plan || '';
+        document.getElementById('pm_deep_research').value = pm.deep_research || '';
+        document.getElementById('pm_competitor_analysis').value = pm.competitor_analysis || '';
+        document.getElementById('pm_promotion_strategy').value = pm.promotion_strategy || '';
+        document.getElementById('pm_promotion_media').value = pm.promotion_media || '';
         document.getElementById('repo_url').value = p.repo_url || '';
         document.getElementById('default_branch').value = p.default_branch || 'main';
         state.textContent='state: ready';

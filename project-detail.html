@@ -153,6 +153,7 @@
             <article class="card"><div class="title">制約（Constraints / Guardrails）</div><div id="constraintsList"><div class="item"><div class="meta">-</div></div></div></article>
             <article class="card"><div class="title">PM Outputs（Discovery）</div><div id="pmDiscoveryList"><div class="item"><div class="meta">-</div></div></div></article>
             <article class="card"><div class="title">PM Outputs（Strategy〜Growth）</div><div id="pmStrategyList"><div class="item"><div class="meta">-</div></div></div></article>
+            <article class="card"><div class="title">PM Outputs（Research / Promotion）</div><div id="pmResearchList"><div class="item"><div class="meta">-</div></div></div></article>
             <article class="card"><div class="title">参照リンク（カテゴリ管理）</div><div id="linksList"><div class="item"><div class="meta">-</div></div></div></article>
           </section>
 
@@ -230,6 +231,7 @@
       const constraintsList = document.getElementById('constraintsList');
       const pmDiscoveryList = document.getElementById('pmDiscoveryList');
       const pmStrategyList = document.getElementById('pmStrategyList');
+      const pmResearchList = document.getElementById('pmResearchList');
       const linksList = document.getElementById('linksList');
       const openQuestionsList = document.getElementById('openQuestionsList');
       const activityLogList = document.getElementById('activityLogList');
@@ -662,6 +664,12 @@
             ['north_star', 'North Star'],
             ['execution_roadmap', '実行ロードマップ'],
             ['gtm_plan', 'GTM計画'],
+          ]);
+          renderPmGroup(pmResearchList, pm, [
+            ['deep_research', 'ディープリサーチ要約'],
+            ['competitor_analysis', '競合分析'],
+            ['promotion_strategy', 'プロモーション戦略'],
+            ['promotion_media', '有効媒体（チャネル）'],
           ]);
           renderLinks(linksList, (p.links || []).filter((x) => !String(x?.label || '').startsWith('pm:')));
         } else {
