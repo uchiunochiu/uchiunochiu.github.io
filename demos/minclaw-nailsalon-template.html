@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{{COMPANY_NAME}} | ネイルサロン公式サイト</title>
+  <meta name="description" content="{{COMPANY_NAME}} ネイルサロンの公式サイトテンプレート" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap');
+    :root{--bg:#fff8fc;--paper:#fff;--ink:#2d1f33;--muted:#6c5675;--line:#f0dced;--brand:#c45ca7;--brand2:#8a3f79;--soft:#fff0fa;--mint:#ffeef5;--max:1160px;--r:18px;--sh:0 10px 28px rgba(45,31,51,.09)}
+    *{box-sizing:border-box} html,body{margin:0} body{font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN",sans-serif;color:var(--ink);background:radial-gradient(1100px 500px at 110% -10%,#ffe8f7 0%,transparent 58%),var(--bg);line-height:1.75}
+    a{text-decoration:none;color:inherit} img{display:block;max-width:100%}
+    .container{max-width:var(--max);margin:0 auto;padding:0 24px}
+
+    .topbar{background:#3a2341;color:#f7eefa;font-size:12px}
+    .topbar .in{height:38px;display:flex;align-items:center;justify-content:space-between;gap:14px;overflow:auto;white-space:nowrap}
+    .toplinks{display:flex;gap:14px;opacity:.95}
+
+    .header{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--bg),#fff 36%);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+    .header .in{height:74px;display:flex;align-items:center;justify-content:space-between}
+    .logo{display:flex;align-items:center;gap:12px}.mark{width:34px;height:34px;border-radius:10px;background:linear-gradient(145deg,#e28acb,#c45ca7)}
+    .name{font-family:Manrope,sans-serif;font-weight:800}.name small{margin-left:8px;color:var(--muted);font-weight:600}
+    .nav{display:flex;gap:22px;font-size:14px;color:var(--muted)}
+
+    .hero{position:relative;height:min(44vw,430px);border-bottom:1px solid var(--line);overflow:hidden}
+    .hero img{width:100%;height:100%;object-fit:cover;object-position:center 40%}
+    .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(39,18,38,.16),rgba(39,18,38,.5))}
+    .hero-content{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);width:min(var(--max),100%);padding:0 24px;color:#fff;z-index:2}
+    .chip{display:inline-flex;padding:6px 12px;border-radius:999px;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.4);font-size:12px;font-weight:700}
+    h1{margin:12px 0 8px;font-family:Manrope,sans-serif;font-size:clamp(30px,4.8vw,54px);line-height:1.1}
+    .hero p{margin:0;max-width:62ch;font-size:15px;color:#faeef9}
+
+    .main{padding:30px 0 48px}
+    .grid{display:grid;grid-template-columns:1fr 340px;gap:16px;align-items:start}
+    .card{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:18px;box-shadow:var(--sh)}
+    .sec{margin-bottom:16px}.sec h2{margin:0 0 12px;font-family:Manrope,sans-serif;font-size:26px;line-height:1.2}
+
+    .quick{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+    .tile{background:var(--soft);border:1px solid #f0d6eb;border-radius:12px;padding:12px;font-size:13px;font-weight:700}
+
+    .notice-list{display:grid;gap:8px}
+    .notice-item{display:flex;gap:10px;align-items:flex-start;padding:10px;border:1px solid var(--line);border-radius:12px}
+    .date{font-size:12px;color:var(--muted);min-width:72px}
+
+    .menu-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .menu-card{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#fff}
+    .menu-card img{height:150px;width:100%;object-fit:cover}
+    .menu-card .txt{padding:12px}
+
+    .greeting{display:grid;grid-template-columns:220px 1fr;gap:14px;align-items:start}
+    .staff{border-radius:16px;overflow:hidden;border:1px solid var(--line)}
+    .staff img{height:250px;width:100%;object-fit:cover}
+
+    .sidebar .panel{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:14px;box-shadow:var(--sh);margin-bottom:12px}
+    .sidebar h3{margin:0 0 8px;font-size:16px}
+    .hours{width:100%;border-collapse:collapse;font-size:12px}
+    .hours th,.hours td{padding:7px 6px;border-bottom:1px solid #f4e5f1;text-align:center}
+    .hours th{background:#fff2fb;font-weight:700}
+    .badge{display:inline-flex;padding:4px 8px;border-radius:999px;background:var(--mint);border:1px solid #f2d3e4;font-size:11px;font-weight:700;color:#7a2d63}
+    .cta{display:grid;gap:8px}.btn{height:40px;border-radius:10px;border:1px solid transparent;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px}
+    .btn.primary{background:var(--brand);color:#fff}.btn.sub{background:#fff;border-color:var(--line)}
+
+    .footer{padding:26px 0 40px;color:#8a6f92;font-size:12px}
+
+    @media (max-width:980px){
+      .container{padding:0 16px}
+      .grid,.menu-grid,.greeting,.quick{grid-template-columns:1fr}
+      .nav{display:none}
+      .hero{height:360px}
+      .hero-content{padding:0 16px}
+      .greeting .staff img{height:220px}
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="container in">
+      <div class="toplinks">
+        <a href="#beginner">初めての方へ</a>
+        <a href="#faq">よくある質問</a>
+        <a href="#access">アクセス</a>
+        <a href="#about">サロン紹介</a>
+      </div>
+      <div>受付時間：平日 10:00-20:00 / 土日祝 10:00-18:00</div>
+    </div>
+  </div>
+
+  <header class="header">
+    <div class="container in">
+      <div class="logo"><span class="mark"></span><div class="name">{{COMPANY_NAME}}<small>Nail Salon</small></div></div>
+      <nav class="nav">
+        <a href="#menu">メニュー</a>
+        <a href="#design">デザイン</a>
+        <a href="#about">スタッフ</a>
+        <a href="#contact">予約・お問い合わせ</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <img src="https://images.unsplash.com/photo-1610992015732-2449b76344bc?auto=format&fit=crop&w=2200&q=80" alt="nail salon hero" />
+    <div class="hero-content">
+      <span class="chip">Modern Nail Salon Template</span>
+      <h1>{{COMPANY_NAME}}</h1>
+      <p>上品でトレンド感のある指先デザインを、落ち着いた空間で。初期公開まで自動生成されるネイルサロン向けテンプレートです。</p>
+    </div>
+  </section>
+
+  <main class="main">
+    <div class="container grid">
+      <section>
+        <div class="card sec" id="beginner">
+          <h2>導線メニュー</h2>
+          <div class="quick">
+            <a class="tile" href="#menu">メニュー</a>
+            <a class="tile" href="#design">デザインギャラリー</a>
+            <a class="tile" href="#about">サロン紹介</a>
+          </div>
+        </div>
+
+        <div class="card sec" id="notice">
+          <h2>お知らせ</h2>
+          <div class="notice-list">
+            <div class="notice-item"><span class="date">2026.03.15</span><div>春限定デザインコースを公開しました。</div></div>
+            <div class="notice-item"><span class="date">2026.03.09</span><div>平日昼割キャンペーンを開始しました。</div></div>
+            <div class="notice-item"><span class="date">2026.03.01</span><div>新規スタッフ加入のお知らせ。</div></div>
+          </div>
+        </div>
+
+        <div class="card sec" id="menu">
+          <h2>メニューのご案内</h2>
+          <p style="margin:0 0 12px;color:var(--muted)">オフィス向けシンプルから、イベント向け華やかデザインまで対応します。</p>
+          <div class="menu-grid">
+            <article class="menu-card"><img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&w=900&q=80" alt="ワンカラー" /><div class="txt"><strong>ワンカラー</strong><div style="font-size:13px;color:var(--muted)">¥5,500〜</div></div></article>
+            <article class="menu-card"><img src="https://images.unsplash.com/photo-1632345031435-8727f6897d53?auto=format&fit=crop&w=900&q=80" alt="定額デザイン" /><div class="txt"><strong>定額デザイン</strong><div style="font-size:13px;color:var(--muted)">¥7,700〜</div></div></article>
+          </div>
+        </div>
+
+        <div class="card sec" id="about">
+          <h2>ごあいさつ</h2>
+          <div class="greeting">
+            <div class="staff"><img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=500&q=80" alt="オーナー" /></div>
+            <div>
+              <p>こんにちは。オーナーネイリストの山田です。お客さまのライフスタイルに合わせて、長く楽しめるデザインと丁寧なケアをご提供しています。</p>
+              <p>初めての方にも安心してご来店いただけるよう、カウンセリングを大切にしています。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <aside class="sidebar">
+        <div class="panel" id="access">
+          <h3>アクセス</h3>
+          <div style="font-size:13px;color:var(--muted)">東京都〇〇区〇〇 1-2-3<br/>最寄り駅から徒歩3分</div>
+          <div style="margin-top:8px;font-family:Manrope,sans-serif;font-weight:800;font-size:22px">03-0000-0000</div>
+        </div>
+
+        <div class="panel" id="schedule">
+          <h3>営業時間</h3>
+          <table class="hours">
+            <tr><th>曜日</th><th>営業時間</th></tr>
+            <tr><td>月-金</td><td>10:00 - 20:00</td></tr>
+            <tr><td>土日祝</td><td>10:00 - 18:00</td></tr>
+            <tr><td>定休日</td><td>不定休</td></tr>
+          </table>
+          <div style="margin-top:10px"><span class="badge">完全予約制</span></div>
+        </div>
+
+        <div class="panel" id="contact">
+          <h3>予約・お問い合わせ</h3>
+          <div class="cta">
+            <a class="btn primary" href="#">WEB予約</a>
+            <a class="btn sub" href="#">電話予約</a>
+          </div>
+          <div style="margin-top:10px;font-size:12px;color:var(--muted)">当日予約はお電話でお問い合わせください。</div>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">© {{COMPANY_NAME}} Nail Salon. All rights reserved.</div>
+  </footer>
+</body>
+</html>
