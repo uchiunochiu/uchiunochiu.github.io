@@ -6,262 +6,176 @@
   <title>{{COMPANY_NAME}} | クリニック公式サイト</title>
   <meta name="description" content="{{COMPANY_NAME}} クリニックの公式サイトテンプレート" />
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap');
-
-    :root{
-      --bg:#f4f9fd;
-      --paper:#fff;
-      --ink:#102138;
-      --muted:#4e5f79;
-      --line:#d8e7f4;
-      --brand:#0b7ea8;
-      --brand-deep:#085f84;
-      --soft:#e9f7fd;
-      --mint:#dff7f1;
-      --shadow:0 12px 34px rgba(16,33,56,.08);
-      --radius:18px;
-      --max:1160px;
-    }
-
-    *{box-sizing:border-box}
-    html,body{margin:0;padding:0}
-    body{
-      font-family:"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN",sans-serif;
-      color:var(--ink);
-      background:
-        radial-gradient(1200px 520px at 120% -10%, #dff7ff 0%, transparent 58%),
-        radial-gradient(700px 420px at -15% 15%, #ecf8ff 0%, transparent 56%),
-        var(--bg);
-      line-height:1.75;
-    }
-    a{text-decoration:none;color:inherit}
-    img{display:block;max-width:100%}
-
+    @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap');
+    :root{--bg:#f5f9fc;--paper:#fff;--ink:#12263f;--muted:#4f627d;--line:#d8e6f3;--brand:#0d87b0;--brand2:#0a5d80;--soft:#eaf7fd;--mint:#e6faf5;--max:1160px;--r:18px;--sh:0 10px 30px rgba(18,38,63,.08)}
+    *{box-sizing:border-box} html,body{margin:0} body{font-family:"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN",sans-serif;color:var(--ink);background:radial-gradient(1100px 500px at 110% -10%,#dcf5ff 0%,transparent 58%),var(--bg);line-height:1.75}
+    a{text-decoration:none;color:inherit} img{display:block;max-width:100%}
     .container{max-width:var(--max);margin:0 auto;padding:0 24px}
 
-    .header{
-      position:sticky;top:0;z-index:30;
-      border-bottom:1px solid var(--line);
-      backdrop-filter:blur(10px);
-      background:color-mix(in srgb, var(--bg), #fff 30%);
-    }
-    .header-in{height:74px;display:flex;align-items:center;justify-content:space-between}
-    .hero-banner{width:100%;height:min(44vw,420px);border-bottom:1px solid var(--line);overflow:hidden;position:relative}
-    .hero-banner img{width:100%;height:100%;object-fit:cover;object-position:center 38%}
-    .hero-banner::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,22,37,.14),rgba(8,22,37,.38))}
-    .hero-banner .overlay{position:absolute;left:50%;bottom:22px;transform:translateX(-50%);width:min(1160px,100%);padding:0 24px;color:#fff;z-index:2}
-    .hero-banner .overlay b{font-family:Manrope,sans-serif;font-size:clamp(30px,4.6vw,52px);line-height:1.1;display:block}
-    .hero-banner .overlay p{margin:10px 0 0;max-width:58ch;color:#ecf7ff;font-size:15px;line-height:1.65}
-    .hero-banner .overlay .chip{margin-bottom:10px;background:rgba(255,255,255,.18);border-color:rgba(255,255,255,.35);color:#f5fcff}
-    .hero-banner .overlay .cta{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap}
-    .hero-banner .overlay .btn.sub{background:rgba(255,255,255,.88)}
-    .brand{display:flex;align-items:center;gap:12px}
-    .brand-mark{width:34px;height:34px;border-radius:10px;background:linear-gradient(145deg,#20b7df,#0b7ea8)}
-    .brand-name{font-family:Manrope,sans-serif;font-weight:800;letter-spacing:.02em}
-    .brand-name small{margin-left:8px;font-weight:600;color:var(--muted)}
-    nav{display:flex;gap:24px;font-size:14px;color:var(--muted)}
+    .topbar{background:#0f223a;color:#d7e8fb;font-size:12px}
+    .topbar .in{height:38px;display:flex;align-items:center;justify-content:space-between;gap:14px;overflow:auto;white-space:nowrap}
+    .toplinks{display:flex;gap:14px;opacity:.95}
 
-    .hero{padding:68px 0 34px}
-    .hero-grid{display:grid;grid-template-columns:1.2fr .95fr;gap:16px}
-    .hero-main{
-      background:linear-gradient(160deg,rgba(255,255,255,.96) 0%,rgba(238,248,255,.94) 100%);
-      border:1px solid #cfe3f4;
-      border-radius:26px;
-      padding:34px;
-      box-shadow:var(--shadow);
-      position:relative;
-      overflow:hidden;
-    }
-    .hero-main::after{
-      content:"";position:absolute;right:-110px;bottom:-140px;width:320px;height:320px;border-radius:50%;
-      background:radial-gradient(circle,#d5f0ff 0%,transparent 68%);
-      pointer-events:none;
-    }
-    .chip{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border:1px solid #bfe4f5;border-radius:999px;background:#ecfbff;color:#0d5672;font-size:12px;font-weight:700}
-    h1{margin:14px 0 10px;font-family:Manrope,sans-serif;font-size:clamp(30px,4.8vw,50px);line-height:1.14;letter-spacing:.01em}
-    .lead{margin:0;color:var(--muted);font-size:15px;max-width:54ch}
-    .cta{margin-top:22px;display:flex;gap:10px;flex-wrap:wrap}
-    .btn{height:44px;padding:0 18px;border-radius:12px;display:inline-flex;align-items:center;font-size:14px;font-weight:700;transition:.2s transform,.2s box-shadow}
-    .btn:hover{transform:translateY(-1px)}
-    .btn.primary{background:var(--brand);color:#fff;box-shadow:0 10px 22px rgba(11,126,168,.28)}
-    .btn.sub{background:#fff;border:1px solid #cfe3f4;color:var(--ink)}
+    .header{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--bg),#fff 34%);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+    .header .in{height:74px;display:flex;align-items:center;justify-content:space-between}
+    .logo{display:flex;align-items:center;gap:12px}.mark{width:34px;height:34px;border-radius:10px;background:linear-gradient(145deg,#21b9e2,#0d87b0)}
+    .name{font-family:Manrope,sans-serif;font-weight:800}.name small{margin-left:8px;color:var(--muted);font-weight:600}
+    .nav{display:flex;gap:22px;font-size:14px;color:var(--muted)}
 
-    .hero-photo{
-      margin-top:20px;
-      height:220px;
-      border-radius:16px;
-      overflow:hidden;
-      border:1px solid #cfe3f4;
-      box-shadow:0 10px 26px rgba(11,126,168,.14);
-    }
-    .hero-photo img{width:100%;height:100%;object-fit:cover}
+    .hero{position:relative;height:min(44vw,430px);border-bottom:1px solid var(--line);overflow:hidden}
+    .hero img{width:100%;height:100%;object-fit:cover;object-position:center 40%}
+    .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,18,31,.16),rgba(8,18,31,.45))}
+    .hero-content{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);width:min(var(--max),100%);padding:0 24px;color:#fff;z-index:2}
+    .chip{display:inline-flex;padding:6px 12px;border-radius:999px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35);font-size:12px;font-weight:700}
+    h1{margin:12px 0 8px;font-family:Manrope,sans-serif;font-size:clamp(30px,4.8vw,54px);line-height:1.1}
+    .hero p{margin:0;max-width:62ch;font-size:15px;color:#e8f5ff}
 
-    .hero-side{display:grid;gap:12px}
-    .panel{background:var(--paper);border:1px solid #cfe3f4;border-radius:16px;padding:16px;box-shadow:var(--shadow)}
-    .panel h3{margin:0 0 6px;font-size:15px}
-    .panel p{margin:0;color:var(--muted);font-size:13px}
-    .hours{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;font-size:13px;color:#27415e}
+    .main{padding:30px 0 48px}
+    .grid{display:grid;grid-template-columns:1fr 340px;gap:16px;align-items:start}
+    .card{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:18px;box-shadow:var(--sh)}
+    .sec{margin-bottom:16px}.sec h2{margin:0 0 12px;font-family:Manrope,sans-serif;font-size:26px;line-height:1.2}
 
-    .section{padding:16px 0 6px}
-    .section h2{margin:0 0 14px;font-family:Manrope,sans-serif;font-size:26px;line-height:1.22}
+    .quick{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+    .tile{background:var(--soft);border:1px solid #cde7f6;border-radius:12px;padding:12px;font-size:13px;font-weight:700}
 
-    .cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
-    .card{background:var(--paper);border:1px solid #cfe3f4;border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}
-    .card h3{margin:0 0 8px;font-size:18px}
-    .card p{margin:0;color:var(--muted);font-size:14px}
+    .notice-list{display:grid;gap:8px}
+    .notice-item{display:flex;gap:10px;align-items:flex-start;padding:10px;border:1px solid var(--line);border-radius:12px}
+    .date{font-size:12px;color:var(--muted);min-width:72px}
 
-    .service-thumb{height:140px;border-radius:12px;overflow:hidden;border:1px solid #cfe3f4;margin-bottom:12px}
-    .service-thumb img{width:100%;height:100%;object-fit:cover}
+    .endoscopy{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .endo-card{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#fff}
+    .endo-card img{height:150px;width:100%;object-fit:cover}
+    .endo-card .txt{padding:12px}
 
-    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-    .doctor-card{display:flex;gap:14px;align-items:flex-start}
-    .doctor-photo{width:84px;height:84px;border-radius:16px;overflow:hidden;border:1px solid #cfe3f4;flex:0 0 auto}
-    .doctor-photo img{width:100%;height:100%;object-fit:cover}
+    .greeting{display:grid;grid-template-columns:220px 1fr;gap:14px;align-items:start}
+    .doctor{border-radius:16px;overflow:hidden;border:1px solid var(--line)}
+    .doctor img{height:250px;width:100%;object-fit:cover}
 
-    .gallery{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
-    .gallery figure{margin:0;border-radius:14px;overflow:hidden;border:1px solid #cfe3f4;background:#fff;box-shadow:var(--shadow)}
-    .gallery img{height:120px;width:100%;object-fit:cover}
-    .gallery figcaption{padding:8px 10px;font-size:12px;color:var(--muted)}
+    .sidebar .panel{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:14px;box-shadow:var(--sh);margin-bottom:12px}
+    .sidebar h3{margin:0 0 8px;font-size:16px}
+    .hours{width:100%;border-collapse:collapse;font-size:12px}
+    .hours th,.hours td{padding:7px 6px;border-bottom:1px solid #e5edf6;text-align:center}
+    .hours th{background:#f3f8fc;font-weight:700}
+    .badge{display:inline-flex;padding:4px 8px;border-radius:999px;background:var(--mint);border:1px solid #bfeee0;font-size:11px;font-weight:700;color:#145c49}
+    .cta{display:grid;gap:8px}.btn{height:40px;border-radius:10px;border:1px solid transparent;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px}
+    .btn.primary{background:var(--brand);color:#fff}.btn.sub{background:#fff;border-color:var(--line)}
 
-    .notice{margin-top:16px;background:linear-gradient(140deg,#0e2238,#173759 62%,#16547a 100%);color:#e7f3ff;border-radius:22px;padding:24px}
-    .notice h2{margin:0 0 8px;font-size:24px}
-    .notice p{margin:0;color:#cfe6ff}
-
-    .footer{padding:28px 0 40px;font-size:12px;color:#68809d}
+    .footer{padding:26px 0 40px;color:#68809d;font-size:12px}
 
     @media (max-width:980px){
-      .hero-grid,.cards,.grid2,.gallery{grid-template-columns:1fr}
-      nav{display:none}
       .container{padding:0 16px}
-      .hero-photo{height:190px}
+      .grid,.endoscopy,.greeting,.quick{grid-template-columns:1fr}
+      .nav{display:none}
+      .hero{height:360px}
+      .hero-content{padding:0 16px}
+      .greeting .doctor img{height:220px}
     }
   </style>
 </head>
 <body>
-  <header class="header">
-    <div class="container header-in">
-      <div class="brand">
-        <span class="brand-mark"></span>
-        <div class="brand-name">{{COMPANY_NAME}}<small>Clinic</small></div>
+  <div class="topbar">
+    <div class="container in">
+      <div class="toplinks">
+        <a href="#beginner">初診の方へ</a>
+        <a href="#faq">よくあるご質問</a>
+        <a href="#access">アクセス</a>
+        <a href="#about">クリニック紹介</a>
       </div>
-      <nav>
-        <a href="#services">診療案内</a>
-        <a href="#doctors">医師紹介</a>
-        <a href="#facility">院内紹介</a>
-        <a href="#contact">お問い合わせ</a>
+      <div>電話受付：平日 8:15-12:30 / 15:30-18:20</div>
+    </div>
+  </div>
+
+  <header class="header">
+    <div class="container in">
+      <div class="logo"><span class="mark"></span><div class="name">{{COMPANY_NAME}}<small>Clinic</small></div></div>
+      <nav class="nav">
+        <a href="#diagnosis">診療のご案内</a>
+        <a href="#endoscopy">胃・大腸内視鏡</a>
+        <a href="#about">ごあいさつ</a>
+        <a href="#contact">予約・お問い合わせ</a>
       </nav>
     </div>
   </header>
 
-  <section class="hero-banner" aria-label="hero">
-    <img src="https://images.unsplash.com/photo-1581595219315-a187dd40c322?auto=format&fit=crop&w=2200&q=80" alt="clinic hero wide" />
-    <div class="overlay">
+  <section class="hero">
+    <img src="https://images.unsplash.com/photo-1631815589968-fdb09a223b1e?auto=format&fit=crop&w=2200&q=80" alt="clinic" />
+    <div class="hero-content">
       <span class="chip">Modern Clinic Template</span>
-      <b>{{COMPANY_NAME}}</b>
-      <p>地域に寄り添う医療を、よりわかりやすく。申込み時の企業名を反映して、初期公開まで自動で作成されるクリニック向けテンプレートです。</p>
-      <div class="cta">
-        <a class="btn primary" href="#contact">初診のご予約</a>
-        <a class="btn sub" href="#services">診療案内を見る</a>
-      </div>
+      <h1>{{COMPANY_NAME}}</h1>
+      <p>くつろぎの環境で行う、からだに優しい検査と地域密着の診療を両立するクリニックサイト構成です。</p>
     </div>
   </section>
 
-  <main>
-    <section class="hero">
-      <div class="container hero-grid">
-        <article class="hero-main">
-          <h2 style="margin:0 0 10px;font-family:Manrope,sans-serif;font-size:26px;line-height:1.25">当院の特徴</h2>
-          <p class="lead">初診から継続フォローまで、患者さまの生活背景に合わせた診療導線を設計しています。オンライン予約・検査連携・説明資料の一元化で、待ち時間と不安を最小化します。</p>
-
-                            </article>
-
-        <aside class="hero-side">
-          <section class="panel">
-            <h3>診療時間</h3>
-            <div class="hours">
-              <div>平日</div><div>09:00 - 18:00</div>
-              <div>土曜</div><div>09:00 - 13:00</div>
-              <div>休診</div><div>日曜・祝日</div>
-            </div>
-          </section>
-          <section class="panel" style="background:var(--soft)">
-            <h3>オンライン予約</h3>
-            <p>24時間受付。再診の方は最短1分で予約可能です。</p>
-          </section>
-          <section class="panel" style="background:var(--mint)">
-            <h3>発熱外来</h3>
-            <p>別導線で受付。来院前に必ずお電話でご連絡ください。</p>
-          </section>
-        </aside>
-      </div>
-    </section>
-
-    <section id="services" class="section">
-      <div class="container">
-        <h2>診療案内</h2>
-        <div class="cards">
-          <article class="card">
-            <div class="service-thumb"><img src="https://images.unsplash.com/photo-1666214280557-f1b5022eb634?auto=format&fit=crop&w=900&q=80" alt="内科" /></div>
-            <h3>内科</h3>
-            <p>生活習慣病、風邪症状、慢性疾患の継続管理まで幅広く対応します。</p>
-          </article>
-          <article class="card">
-            <div class="service-thumb"><img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=900&q=80" alt="予防医療" /></div>
-            <h3>予防医療</h3>
-            <p>健康診断・ワクチン接種・保健指導を通じて未病段階のケアを実施します。</p>
-          </article>
-          <article class="card">
-            <div class="service-thumb"><img src="https://images.unsplash.com/photo-1580281657527-47df84d67c2f?auto=format&fit=crop&w=900&q=80" alt="在宅サポート" /></div>
-            <h3>在宅サポート</h3>
-            <p>通院が難しい方のために、訪問診療とオンライン診療を提供します。</p>
-          </article>
+  <main class="main">
+    <div class="container grid">
+      <section>
+        <div class="card sec" id="beginner">
+          <h2>導線メニュー</h2>
+          <div class="quick">
+            <a class="tile" href="#diagnosis">診療のご案内</a>
+            <a class="tile" href="#endoscopy">胃・大腸内視鏡検査</a>
+            <a class="tile" href="#about">クリニック紹介</a>
+          </div>
         </div>
-      </div>
-    </section>
 
-    <section id="doctors" class="section">
-      <div class="container">
-        <h2>医師紹介</h2>
-        <div class="grid2">
-          <article class="card doctor-card">
-            <div class="doctor-photo"><img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=360&q=80" alt="院長" /></div>
+        <div class="card sec" id="notice">
+          <h2>お知らせ</h2>
+          <div class="notice-list">
+            <div class="notice-item"><span class="date">2026.03.15</span><div>4月の診療日カレンダーを公開しました。</div></div>
+            <div class="notice-item"><span class="date">2026.03.09</span><div>内視鏡検査のWeb予約枠を拡大しました。</div></div>
+            <div class="notice-item"><span class="date">2026.03.01</span><div>発熱外来の予約方法を更新しました。</div></div>
+          </div>
+        </div>
+
+        <div class="card sec" id="endoscopy">
+          <h2>胃内視鏡検査・大腸内視鏡検査</h2>
+          <p style="margin:0 0 12px;color:var(--muted)">麻酔や炭酸ガスを用いた苦痛の少ない方法で、からだにやさしい内視鏡検査を心がけています。</p>
+          <div class="endoscopy">
+            <article class="endo-card"><img src="https://images.unsplash.com/photo-1666214280557-f1b5022eb634?auto=format&fit=crop&w=900&q=80" alt="胃内視鏡" /><div class="txt"><strong>胃内視鏡検査</strong><div style="font-size:13px;color:var(--muted)">朝の時間帯から検査可能</div></div></article>
+            <article class="endo-card"><img src="https://images.unsplash.com/photo-1581594549595-35f6edc7b762?auto=format&fit=crop&w=900&q=80" alt="大腸内視鏡" /><div class="txt"><strong>大腸内視鏡検査</strong><div style="font-size:13px;color:var(--muted)">鎮静下での検査にも対応</div></div></article>
+          </div>
+        </div>
+
+        <div class="card sec" id="about">
+          <h2>ごあいさつ</h2>
+          <div class="greeting">
+            <div class="doctor"><img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=500&q=80" alt="院長" /></div>
             <div>
-              <h3>院長 山田 太郎</h3>
-              <p>総合内科専門医。患者さまの背景まで丁寧に把握する診療を心がけています。</p>
+              <p>はじめまして。院長の山田太郎です。当院では、専門領域である消化器内科・内視鏡検査だけでなく、地域のかかりつけ医として日々の健康に寄り添う診療を大切にしています。</p>
+              <p>地域の皆さまから信頼されるクリニックを目指し、スタッフ一同誠実に取り組んでまいります。</p>
             </div>
-          </article>
-          <article class="card doctor-card">
-            <div class="doctor-photo"><img src="https://images.unsplash.com/photo-1614608682850-e0d6ed316d47?auto=format&fit=crop&w=360&q=80" alt="副院長" /></div>
-            <div>
-              <h3>副院長 佐藤 花子</h3>
-              <p>予防医療・生活習慣改善を担当。わかりやすい説明を重視しています。</p>
-            </div>
-          </article>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <section id="facility" class="section">
-      <div class="container">
-        <h2>院内紹介</h2>
-        <div class="gallery">
-          <figure><img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=600&q=80" alt="受付" /><figcaption>受付</figcaption></figure>
-          <figure><img src="https://images.unsplash.com/photo-1584982751601-97dcc096659c?auto=format&fit=crop&w=600&q=80" alt="待合" /><figcaption>待合スペース</figcaption></figure>
-          <figure><img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=600&q=80" alt="診察室" /><figcaption>診察室</figcaption></figure>
-          <figure><img src="https://images.unsplash.com/photo-1586773860418-d37222d8fce3?auto=format&fit=crop&w=600&q=80" alt="検査設備" /><figcaption>検査設備</figcaption></figure>
+      <aside class="sidebar">
+        <div class="panel" id="access">
+          <h3>アクセス</h3>
+          <div style="font-size:13px;color:var(--muted)">〒560-0016 大阪府〇〇市〇〇 1-2-3<br/>最寄り駅から徒歩5分</div>
+          <div style="margin-top:8px;font-family:Manrope,sans-serif;font-weight:800;font-size:22px">06-0000-0000</div>
         </div>
-      </div>
-    </section>
 
-    <section id="contact" class="section">
-      <div class="container">
-        <div class="notice">
-          <h2>お問い合わせ・ご予約</h2>
-          <p>初診のご相談、検査予約、各種お問い合わせはお気軽にご連絡ください。</p>
-          <p style="margin-top:10px;font-size:13px;color:#9fc3e6">Template generated by minClaw provisioning flow.</p>
+        <div class="panel" id="diagnosis">
+          <h3>診療時間</h3>
+          <table class="hours">
+            <tr><th>時間</th><th>月</th><th>火</th><th>水</th><th>木</th><th>金</th><th>土</th><th>日</th></tr>
+            <tr><td>9:30-12:30</td><td>●</td><td>×</td><td>●</td><td>●</td><td>●</td><td>●</td><td>×</td></tr>
+            <tr><td>13:00-16:00</td><td>●</td><td>×</td><td>●</td><td>●</td><td>●</td><td>●</td><td>×</td></tr>
+            <tr><td>16:30-18:30</td><td>●</td><td>×</td><td>●</td><td>●</td><td>●</td><td>×</td><td>×</td></tr>
+          </table>
+          <div style="margin-top:10px"><span class="badge">当院は予約制です</span></div>
         </div>
-      </div>
-    </section>
+
+        <div class="panel" id="contact">
+          <h3>予約・お問い合わせ</h3>
+          <div class="cta">
+            <a class="btn primary" href="#">WEB予約</a>
+            <a class="btn sub" href="#">電話予約</a>
+          </div>
+          <div style="margin-top:10px;font-size:12px;color:var(--muted)">発熱外来は電話予約のみ対応しています。</div>
+        </div>
+      </aside>
+    </div>
   </main>
 
   <footer class="footer">
