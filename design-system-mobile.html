@@ -41,6 +41,18 @@
       .slider::after{content:'';position:absolute;left:56%;top:-4px;width:12px;height:12px;border-radius:50%;background:#2563eb}
       .toast-mini{padding:8px 10px;border-radius:10px;background:#0f172a;color:#fff;font-size:12px}
       .tooltip-mini{display:inline-block;padding:4px 8px;border-radius:6px;background:#111827;color:#fff;font-size:11px}
+      .apphead{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+      .iconbtn{width:34px;height:34px;border-radius:10px;border:1px solid #e2e8f0;background:#fff;display:flex;align-items:center;justify-content:center;font-size:14px}
+      .hero-img{width:100%;height:150px;object-fit:cover;border-radius:12px;border:1px solid #e2e8f0}
+      .carousel{display:flex;gap:8px;overflow:auto;padding-bottom:4px}
+      .slide{min-width:220px;border-radius:12px;overflow:hidden;border:1px solid #e2e8f0;background:#fff}
+      .slide img{width:100%;height:120px;object-fit:cover;display:block}
+      .slide .cap{padding:8px;font-size:12px}
+      .chips{display:flex;gap:6px;overflow:auto}
+      .chip2{padding:5px 8px;border-radius:999px;border:1px solid #cbd5e1;font-size:11px;background:#fff;white-space:nowrap}
+      .tabbar{position:sticky;bottom:0;display:grid;grid-template-columns:repeat(4,1fr);gap:6px;background:#fff;border-top:1px solid #e2e8f0;padding-top:8px}
+      .tab{font-size:11px;color:#64748b;text-align:center}
+      .tab b{display:block;color:#2563eb}
 
       .gallery{display:grid;grid-template-columns:repeat(3,minmax(220px,1fr));gap:12px}
       .tile{border:1px solid var(--border);background:#0f1014;border-radius:12px;padding:12px}
@@ -189,24 +201,102 @@
         </section>
 
         <section class="card">
-          <h3 style="margin:0 0 8px">7) Full Component Sample（All / Mobile）</h3>
-          <div class="sub" style="margin-bottom:10px">iPhone 16 Proサイズ（393×852）白背景で、gluestack主要コンポーネントを1画面に集約。</div>
+          <h3 style="margin:0 0 8px">7) App Compornent Gallary</h3>
+          <div class="sub" style="margin-bottom:10px">iPhone 16 Pro（393×852）白背景。実サイト寄りの構成で主要コンポーネントを一画面に集約。</div>
           <div class="rule" style="margin-bottom:10px">accordion / actionsheet / alert / alert-dialog / avatar / badge / box / button / card / center / checkbox / divider / drawer / fab / form-control / grid / heading / hstack / icon / image / input / link / menu / modal / popover / portal / pressable / progress / radio / select / skeleton / slider / spinner / switch / table / text / textarea / toast / tooltip / vstack</div>
           <div class="iphone-wrap">
             <div class="iphone16">
-              <div class="ks-sec"><div class="ks-row" style="justify-content:space-between"><b>Heading + Text</b><span class="badge">badge</span></div><div style="font-size:12px;color:#64748b">text component sample</div></div>
-              <div class="ks-sec"><div class="ks-row"><span class="dot-avatar"></span><span class="icon-box"></span><span class="link-t">Link component</span><button class="ghost">Pressable</button></div></div>
-              <div class="ks-sec"><div style="font-size:12px;margin-bottom:6px">FormControl / Input / Textarea</div><input class="input" placeholder="Input"/><div style="height:6px"></div><div class="input" style="height:72px;padding-top:8px">Textarea</div></div>
-              <div class="ks-sec"><div class="ks-row"><div class="list-item" style="flex:1"><span>Checkbox</span><span>☑︎</span></div><div class="list-item" style="flex:1"><span>Radio</span><span>◉</span></div></div><div style="height:8px"></div><div class="list-item"><span>Switch</span><span class="switch"></span></div></div>
-              <div class="ks-sec"><div class="ks-row"><button class="btn" style="flex:1">Button</button><button class="ghost" style="flex:1">Menu ▾</button></div><div style="height:8px"></div><div class="list-item"><span>Select</span><span>▾</span></div></div>
-              <div class="ks-sec"><div class="card-ui">Card + Box + VStack/HStack + Grid</div><div style="height:8px"></div><div class="ks-row"><div class="card-ui" style="flex:1;text-align:center">Grid A</div><div class="card-ui" style="flex:1;text-align:center">Grid B</div></div></div>
-              <div class="ks-sec"><div class="pill-alert">Alert</div><div style="height:8px"></div><div class="toast-mini">Toast (portal)</div><div style="height:8px"></div><div class="tooltip-mini">Tooltip</div></div>
-              <div class="ks-sec"><div style="font-size:12px">Progress / Slider / Spinner / Skeleton</div><div class="mini-progress"><span></span></div><div style="height:8px"></div><div class="slider"></div><div style="height:8px"></div><div style="font-size:12px">⟳ Spinner</div><div style="height:8px"></div><div class="mini-skeleton"></div></div>
-              <div class="ks-sec"><div style="font-size:12px;margin-bottom:6px">Table</div><table><tbody><tr><td>A</td><td>1</td></tr><tr><td>B</td><td>2</td></tr></tbody></table></div>
-              <div class="ks-sec"><div class="list-item"><span>Accordion</span><span>＋</span></div><div style="height:8px"></div><div class="list-item"><span>Modal / AlertDialog / Drawer / ActionSheet / Popover</span><span>preview</span></div></div>
+              <div class="apphead">
+                <div><b style="font-size:16px">Explore</b><div style="font-size:12px;color:#64748b">Tokyo weekend picks</div></div>
+                <div class="ks-row"><button class="iconbtn">🔔</button><button class="iconbtn">☰</button></div>
+              </div>
+
+              <div class="ks-sec">
+                <img class="hero-img" src="https://picsum.photos/seed/gluestackhero/720/420" alt="hero" />
+                <div style="height:8px"></div>
+                <div class="ks-row" style="justify-content:space-between"><b>Featured Story</b><span class="chip2">badge • new</span></div>
+                <div style="font-size:12px;color:#64748b">image + heading + text + link + icon</div>
+                <a class="link-t" href="#">Read more →</a>
+              </div>
+
+              <div class="ks-sec">
+                <div class="chips">
+                  <span class="chip2">All</span><span class="chip2">Food</span><span class="chip2">Travel</span><span class="chip2">Events</span><span class="chip2">Tech</span>
+                </div>
+                <div style="height:8px"></div>
+                <div class="carousel">
+                  <div class="slide"><img src="https://picsum.photos/seed/a1/600/360" alt="s1"/><div class="cap">Carousel item A</div></div>
+                  <div class="slide"><img src="https://picsum.photos/seed/a2/600/360" alt="s2"/><div class="cap">Carousel item B</div></div>
+                  <div class="slide"><img src="https://picsum.photos/seed/a3/600/360" alt="s3"/><div class="cap">Carousel item C</div></div>
+                </div>
+              </div>
+
+              <div class="ks-sec">
+                <div style="font-size:12px;margin-bottom:6px">FormControl / Input / Select / Textarea</div>
+                <input class="input" placeholder="Email address" />
+                <div style="height:6px"></div>
+                <div class="list-item"><span>Select plan</span><span>▾</span></div>
+                <div style="height:6px"></div>
+                <div class="input" style="height:70px;padding-top:8px">Textarea message...</div>
+                <div style="font-size:11px;color:#dc2626;margin-top:4px">error text sample</div>
+              </div>
+
+              <div class="ks-sec">
+                <div class="ks-row"><div class="list-item" style="flex:1"><span>Checkbox</span><span>☑︎</span></div><div class="list-item" style="flex:1"><span>Radio</span><span>◉</span></div></div>
+                <div style="height:8px"></div>
+                <div class="list-item"><span>Switch notifications</span><span class="switch"></span></div>
+              </div>
+
+              <div class="ks-sec">
+                <div class="ks-row"><button class="btn" style="flex:1">Primary</button><button class="ghost" style="flex:1">Secondary</button></div>
+                <div style="height:8px"></div>
+                <div class="ks-row"><button class="ghost" style="flex:1">Menu ▾</button><button class="btn" style="flex:1;background:#dc2626">Destructive</button></div>
+              </div>
+
+              <div class="ks-sec">
+                <div class="card-ui"><b>Card + Avatar + HStack/VStack</b><div style="height:8px"></div><div class="ks-row"><span class="dot-avatar"></span><div><div style="font-size:12px">John Doe</div><div style="font-size:11px;color:#64748b">Product Designer</div></div><span class="chip2">pro</span></div></div>
+              </div>
+
+              <div class="ks-sec">
+                <div class="pill-alert">Alert: payment failed, try again.</div>
+                <div style="height:8px"></div>
+                <div class="toast-mini">Toast (portal): Saved successfully</div>
+                <div style="height:8px"></div>
+                <span class="tooltip-mini">Tooltip preview</span>
+              </div>
+
+              <div class="ks-sec">
+                <div style="font-size:12px">Progress / Slider / Spinner / Skeleton</div>
+                <div class="mini-progress"><span></span></div>
+                <div style="height:8px"></div>
+                <div class="slider"></div>
+                <div style="height:8px"></div>
+                <div style="font-size:12px">⟳ spinner loading</div>
+                <div style="height:8px"></div>
+                <div class="mini-skeleton"></div>
+              </div>
+
+              <div class="ks-sec">
+                <div style="font-size:12px;margin-bottom:6px">Table</div>
+                <table><tbody><tr><td>Order #A1</td><td>Paid</td></tr><tr><td>Order #A2</td><td>Pending</td></tr></tbody></table>
+              </div>
+
+              <div class="ks-sec">
+                <div class="list-item"><span>Accordion section</span><span>＋</span></div>
+                <div style="height:8px"></div>
+                <div class="list-item"><span>Modal / AlertDialog / Drawer / ActionSheet / Popover</span><span>preview</span></div>
+              </div>
+
               <hr style="border:none;border-top:1px solid #e2e8f0" />
               <div style="text-align:center;font-size:11px;color:#94a3b8">Center + Divider sample</div>
               <button class="fab">＋</button>
+
+              <div class="tabbar">
+                <div class="tab"><b>🏠</b>Home</div>
+                <div class="tab">🔍<br/>Search</div>
+                <div class="tab">❤️<br/>Saved</div>
+                <div class="tab">👤<br/>Profile</div>
+              </div>
             </div>
           </div>
         </section>
