@@ -18,11 +18,11 @@
   <main class="wrap">
     <section class="card">
       <h1>minClaw 申込フォーム</h1>
-      <p>以下4項目を入力してください。</p>
+      <p>以下3項目を入力してください（LINE user idは自動連携）。</p>
       <form onsubmit="event.preventDefault();alert('申込を受け付けました（デモ）');">
         <label>企業名<input class="input" required placeholder="株式会社サンプル" /></label>
         <label>申込者氏名<input class="input" required placeholder="山田 太郎" /></label>
-        <label>LINE user id<input class="input" required placeholder="Uxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" /></label>
+        <div class="sub">連携済みLINE ID: Uxxxxx...xxxx（自動取得）</div>
         <label>
           サイトslug（半角英数字20文字以内）
           <input class="input" required maxlength="20" pattern="[A-Za-z0-9]{1,20}" placeholder="Acompany01" />
