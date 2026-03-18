@@ -56,9 +56,9 @@
       .ico{display:inline-flex;vertical-align:middle;line-height:0}
       .ico svg{display:block}
       .story-row{display:flex;gap:10px;overflow:auto;padding-bottom:4px}
-      .story{min-width:72px;text-align:center}
-      .story .ring{width:56px;height:56px;border-radius:50%;padding:2px;background:linear-gradient(135deg,#2563eb,#a855f7)}
-      .story .ring span{display:flex;width:100%;height:100%;border-radius:50%;background:#fff;align-items:center;justify-content:center;font-size:12px}
+      .story{min-width:78px;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}
+      .story .ring{width:58px;height:58px;border-radius:50%;padding:2px;background:linear-gradient(135deg,#2563eb,#a855f7);display:flex;align-items:center;justify-content:center}
+      .story .ring img{width:100%;height:100%;border-radius:50%;object-fit:cover;display:block;background:#fff}
       .composer{display:grid;gap:8px}
       .post{border:1px solid #e2e8f0;border-radius:12px;background:#fff;overflow:hidden}
       .post .head{display:flex;justify-content:space-between;align-items:flex-start;padding:12px 12px 8px;gap:8px}
@@ -231,20 +231,20 @@
 
               <div class="ks-sec">
                 <div class="story-row">
-                  <div class="story"><div class="ring"><span>ME</span></div><div style="font-size:11px;margin-top:4px">You</div></div>
-                  <div class="story"><div class="ring"><span>A</span></div><div style="font-size:11px;margin-top:4px">Aya</div></div>
-                  <div class="story"><div class="ring"><span>K</span></div><div style="font-size:11px;margin-top:4px">Ken</div></div>
-                  <div class="story"><div class="ring"><span>M</span></div><div style="font-size:11px;margin-top:4px">Mio</div></div>
+                  <div class="story"><div class="ring"><img src="https://picsum.photos/seed/user-me/116/116" alt="You" /></div><div style="font-size:11px;line-height:1.2">You</div></div>
+                  <div class="story"><div class="ring"><img src="https://picsum.photos/seed/user-aya/116/116" alt="Aya" /></div><div style="font-size:11px;line-height:1.2">Aya</div></div>
+                  <div class="story"><div class="ring"><img src="https://picsum.photos/seed/user-ken/116/116" alt="Ken" /></div><div style="font-size:11px;line-height:1.2">Ken</div></div>
+                  <div class="story"><div class="ring"><img src="https://picsum.photos/seed/user-mio/116/116" alt="Mio" /></div><div style="font-size:11px;line-height:1.2">Mio</div></div>
                 </div>
               </div>
 
               <div class="ks-sec composer">
-                <div class="ks-row"><span class="dot-avatar"></span><input class="input" style="flex:1" placeholder="今日のログを書く…" /></div>
+                <div class="ks-row"><span class="dot-avatar" style="background-image:url(https://picsum.photos/seed/user-me/80/80);background-size:cover"></span><input class="input" style="flex:1" placeholder="今日のログを書く…" /></div>
                 <div class="ks-row"><button class="ghost" style="flex:1">写真を追加</button><button class="btn" style="flex:1">投稿</button></div>
               </div>
 
               <div class="post">
-                <div class="head"><div class="ks-row"><span class="dot-avatar"></span><div><b style="font-size:13px;line-height:1.35">uchiu.no.chiu</b><div class="meta">14:02 ・ Tokyo</div></div></div><span class="chip2">travel</span></div>
+                <div class="head"><div class="ks-row"><span class="dot-avatar" style="background-image:url(https://picsum.photos/seed/user-me/80/80);background-size:cover"></span><div><b style="font-size:13px;line-height:1.35">uchiu.no.chiu</b><div class="meta">14:02 ・ Tokyo</div></div></div><span class="chip2">travel</span></div>
                 <img class="img" src="https://picsum.photos/seed/lifelog01/700/500" alt="post1" />
                 <div class="body">渋谷の朝ラン完了。体感は軽め、心拍は安定。フォーム維持しつつ、リカバリー優先で午後は低負荷に調整します。</div>
                 <div class="actions"><span class="chip2">Like 42</span><span class="chip2">Comment 8</span><span class="chip2">↗ share</span><span class="chip2">save</span></div>
@@ -253,7 +253,7 @@
               <div style="height:12px"></div>
 
               <div class="post">
-                <div class="head"><div class="ks-row"><span class="dot-avatar"></span><div><b style="font-size:13px;line-height:1.35">Daily Habit</b><div class="meta">lifelog summary</div></div></div><span class="chip2">streak</span></div>
+                <div class="head"><div class="ks-row"><span class="dot-avatar" style="background-image:url(https://picsum.photos/seed/user-habit/80/80);background-size:cover"></span><div><b style="font-size:13px;line-height:1.35">Daily Habit</b><div class="meta">lifelog summary</div></div></div><span class="chip2">streak</span></div>
                 <div class="body">
                   <div class="kpi-grid">
                     <div class="kpi"><div class="meta">Steps</div><b>8,742</b><div class="mini-progress" style="margin-top:6px"><span style="width:78%"></span></div></div>
