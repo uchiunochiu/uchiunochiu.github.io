@@ -3,23 +3,33 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PC Design System (gluestack) | Tachikoma Dashboard</title>
+    <title>PC Design System (gluestack OSS) | Tachikoma Dashboard</title>
     <style>
-      :root { --bg:#0a0a0a; --card:#111; --border:#2a2a2a; --text:#fafafa; --subtle:#a1a1aa; --radius:12px; }
-      *{box-sizing:border-box} body{margin:0;font-family:Inter,system-ui;background:var(--bg);color:var(--text)}
+      :root {
+        --bg:#0a0a0a; --card:#111; --muted:#1b1b1f; --border:#2a2a2a; --text:#fafafa; --subtle:#a1a1aa; --radius:12px;
+        --gs-primary:#2563eb; --gs-danger:#dc2626;
+      }
+      *{box-sizing:border-box}
+      body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto;color:var(--text);background:var(--bg)}
       .app{min-height:100vh;display:grid;grid-template-columns:260px 1fr}
       .sidebar{border-right:1px solid var(--border);padding:20px 14px}
-      .brand{padding:10px 12px;border:1px solid var(--border);border-radius:var(--radius);background:var(--card);margin-bottom:18px;font-weight:700}
+      .brand{padding:10px 12px;border:1px solid var(--border);border-radius:12px;background:var(--card);margin-bottom:18px;font-weight:700}
       .menu{display:grid;gap:6px}.menu a{color:var(--text);text-decoration:none;padding:10px 12px;border-radius:10px;font-size:14px;display:flex;align-items:center;gap:8px}.menu a.active{background:var(--card);border:1px solid var(--border)}
       .main{padding:24px;display:grid;gap:14px}
-      .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px}
+      .card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px}
       .sub{color:var(--subtle);font-size:13px}
-      .pc{max-width:860px;background:#09090b;border:1px solid #27272a;border-radius:12px;padding:12px}
-      .pc h3{margin:0 0 8px}.pc p{margin:0 0 10px;color:#a1a1aa;font-size:13px}
-      .input{width:100%;height:36px;border:1px solid #27272a;border-radius:8px;padding:0 10px;background:#111113;color:#fafafa}
-      .btn{height:36px;padding:0 14px;border-radius:8px;border:1px solid #27272a;background:#18181b;color:#fafafa}
+      .k{display:inline-block;padding:3px 8px;border:1px solid var(--border);border-radius:999px;font-size:11px;color:var(--subtle);margin-right:6px}
+      table{width:100%;border-collapse:collapse;font-size:13px}
+      th,td{border-bottom:1px solid var(--border);padding:8px;vertical-align:top} th{color:var(--subtle);font-size:12px;text-align:left}
+      .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+      .preview{background:#09090b;border:1px solid #27272a;border-radius:12px;padding:12px}
+      .preview h3{margin:0 0 8px}.preview p{margin:0 0 10px;color:#a1a1aa;font-size:12px}
+      .toolbar{display:flex;gap:8px;align-items:center}
+      .input{height:36px;border:1px solid #27272a;border-radius:8px;padding:0 10px;background:#111113;color:#fafafa;min-width:220px}
+      .btn{height:36px;border:1px solid #27272a;border-radius:8px;padding:0 12px;background:#18181b;color:#fafafa}
+      .btn.primary{background:var(--gs-primary);border-color:transparent}
       .rule{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;white-space:pre-wrap;background:#0d0d0d;border:1px solid var(--border);border-radius:10px;padding:10px}
-      @media(max-width:980px){.app{grid-template-columns:1fr}.sidebar{border-right:none;border-bottom:1px solid var(--border)}.main{padding:12px}}
+      @media(max-width:980px){.app{grid-template-columns:1fr}.sidebar{border-right:none;border-bottom:1px solid var(--border)}.main{padding:12px}.grid{grid-template-columns:1fr}}
     </style>
   </head>
   <body>
@@ -32,38 +42,95 @@
           <a href="/tickets.html">🎫 Tickets</a>
           <a href="/board.html">🧩 Board</a>
           <a href="/research-reports.html">📊 ResearchReport</a>
-          <a href="/design-system-mobile.html">🎨 DesighSystem(Mobile)</a>
+          <a href="/design-system-mobile.html">📱 DesighSystem(Mobile)</a>
           <a class="active" href="/design-system-pc.html">🖥️ DesighSystem(PC)</a>
-          <a href="#">🗓️ Calendar</a>
-          <a href="#">⚙️ Settings</a>
         </nav>
       </aside>
+
       <main class="main">
         <section class="card">
           <h1 style="margin:0 0 8px">🖥️ PC Design System（gluestack OSS）</h1>
-          <div class="sub">PC専用。gluestack OSS のPC設計のみ参照。</div>
-        </section>
-        <section class="card">
-          <ul>
-            <li>gluestack UI コンポーネント（Button/Input/Card/Dialog/Table）を基準</li>
-            <li>Tailwind/NativeWindトークンで密度と余白を統一</li>
-            <li>状態管理（default/hover/focus/disabled/error）を標準化</li>
-          </ul>
-        </section>
-        <section class="card">
-          <div class="pc">
-            <h3>PC管理画面</h3>
-            <p>gluestack OSS 準拠の情報設計</p>
-            <input class="input" placeholder="Search tickets..." />
-            <div style="height:10px"></div>
-            <button class="btn">Filter</button>
+          <div class="sub">Web / Desktop 向け。<b>gluestack UI + Tailwind</b> で、管理画面の密度・可読性・状態遷移を統一。</div>
+          <div style="margin-top:10px">
+            <span class="k">Source: gluestack OSS only</span>
+            <span class="k">No Pro assets</span>
+            <span class="k">Desktop-first</span>
           </div>
         </section>
+
+        <section class="card grid">
+          <div>
+            <h3 style="margin:0 0 8px">1) Foundations</h3>
+            <table>
+              <thead><tr><th>Token</th><th>Value</th><th>Rule</th></tr></thead>
+              <tbody>
+                <tr><td>Grid</td><td>12 column</td><td>main 24px padding / widget gap 14px</td></tr>
+                <tr><td>Spacing</td><td>4/8/12/16/20/24/32</td><td>テーブル行8、セクション14</td></tr>
+                <tr><td>Radius</td><td>8/10/12</td><td>Input=8, Button=8, Card=12</td></tr>
+                <tr><td>Type</td><td>12/13/14/16/20/24</td><td>データ表は13、見出し16〜24</td></tr>
+                <tr><td>Motion</td><td>120/180/240ms</td><td>hover/focus/transitionsで統一</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div>
+            <h3 style="margin:0 0 8px">2) State Matrix</h3>
+            <table>
+              <thead><tr><th>Component</th><th>States</th><th>Required</th></tr></thead>
+              <tbody>
+                <tr><td>Button</td><td>default/hover/active/disabled/loading</td><td>Primary, Secondary, Ghost, Danger</td></tr>
+                <tr><td>Input/Select</td><td>default/focus/error/disabled</td><td>help + error文言</td></tr>
+                <tr><td>Table row</td><td>default/hover/selected</td><td>選択時は背景差分</td></tr>
+                <tr><td>Card</td><td>default/interactive/selected</td><td>選択時border + shadow</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
         <section class="card">
-          <div class="rule">[PC UI 生成ルール]
+          <h3 style="margin:0 0 8px">3) Component Catalog（実装対象）</h3>
+          <table>
+            <thead><tr><th>Category</th><th>Components (gluestack)</th><th>規約</th></tr></thead>
+            <tbody>
+              <tr><td>Shell</td><td>Box, HStack, VStack, Grid, Divider</td><td>ヘッダー・サイドバー・メインを固定テンプレ化</td></tr>
+              <tr><td>Data Entry</td><td>FormControl, Input, Textarea, Select, Checkbox, Radio, Switch</td><td>全フォームはラベル＋説明＋エラー</td></tr>
+              <tr><td>Data Display</td><td>Card, Table, Badge, Avatar, Progress, Skeleton</td><td>Loading/Empty/Errorを必須実装</td></tr>
+              <tr><td>Overlay</td><td>Modal, Drawer, Popover, Tooltip, Toast, AlertDialog</td><td>確認操作はAlertDialog標準化</td></tr>
+              <tr><td>Action</td><td>Button, Pressable, Link, Menu</td><td>主要CTAは1画面1つまで</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section class="card grid">
+          <div>
+            <h3 style="margin:0 0 8px">4) Screen Recipes</h3>
+            <table>
+              <thead><tr><th>Screen</th><th>Template</th></tr></thead>
+              <tbody>
+                <tr><td>Dashboard</td><td>KPI row + table + kanban summary</td></tr>
+                <tr><td>List</td><td>Filter bar + table + pagination</td></tr>
+                <tr><td>Detail</td><td>Overview card + activity timeline + side actions</td></tr>
+                <tr><td>Edit</td><td>2-column form + sticky action footer</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="preview">
+            <h3>PC Preview</h3>
+            <p>gluestack準拠の管理画面ツールバー</p>
+            <div class="toolbar">
+              <input class="input" placeholder="Search tickets..." />
+              <button class="btn">Filter</button>
+              <button class="btn primary">+ New Ticket</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="card">
+          <h3 style="margin:0 0 8px">5) 生成時ルール（タチコマ用）</h3>
+          <div class="rule">[PC UI Preflight]
 - 参照先: /design-system-pc.html のみ
-- ベース: gluestack OSS（Proは対象外）
-- 禁止: Mobile専用定義の混在
+- Stack: gluestack OSS + Tailwind
+- 必須: token表→state matrix→component catalogの順で設計
+- 禁止: ad-hocなpx値直書き / 状態未定義コンポーネント
 - 例外: 少佐の明示上書きのみ</div>
         </section>
       </main>
