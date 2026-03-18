@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Mobile Design System | Tachikoma Dashboard</title>
+    <title>Mobile Design System (gluestack) | Tachikoma Dashboard</title>
     <style>
       :root { --bg:#0a0a0a; --card:#111; --border:#2a2a2a; --text:#fafafa; --subtle:#a1a1aa; --radius:12px; --accent:#ff2b52; }
       *{box-sizing:border-box} body{margin:0;font-family:Inter,system-ui;background:var(--bg);color:var(--text)}
@@ -40,20 +40,20 @@
       </aside>
       <main class="main">
         <section class="card">
-          <h1 style="margin:0 0 8px">📱 Mobile Design System（PayPay風・独自）</h1>
-          <div class="sub">モバイル専用。PCルールを混在させない。</div>
+          <h1 style="margin:0 0 8px">📱 Mobile Design System（gluestack OSS）</h1>
+          <div class="sub">モバイル専用。gluestack OSS のモバイル設計のみ参照。</div>
         </section>
         <section class="card">
           <ul>
-            <li>8ptグリッド / 44px以上タップターゲット</li>
-            <li>白ベース + 高コントラスト + 赤アクセント</li>
-            <li>1画面で主要行動を完結</li>
+            <li>gluestack UI コンポーネント（Button/Input/Card/Form）を基準採用</li>
+            <li>NativeWind/Tailwindでトークン管理（spacing/radius/typography）</li>
+            <li>状態管理（default/hover/focus/disabled/error）を標準化</li>
           </ul>
         </section>
         <section class="card">
           <div class="phone">
-            <h3>モバイル送金</h3>
-            <p>PayPay風の視認性と速度感（独自実装）</p>
+            <h3>モバイルコンポーネントプレビュー</h3>
+            <p>gluestack OSS 準拠の入力/CTAパターン</p>
             <input class="input" placeholder="金額を入力" />
             <div style="height:10px"></div>
             <button class="btn">送金する</button>
@@ -62,7 +62,8 @@
         <section class="card">
           <div class="rule">[Mobile UI 生成ルール]
 - 参照先: /design-system-mobile.html のみ
-- 禁止: PC(shadcn/ui)トークン混在
+- ベース: gluestack OSS（Proは対象外）
+- 禁止: PC専用定義の混在
 - 例外: 少佐の明示上書きのみ</div>
         </section>
       </main>

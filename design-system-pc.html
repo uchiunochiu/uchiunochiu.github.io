@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PC Design System | Tachikoma Dashboard</title>
+    <title>PC Design System (gluestack) | Tachikoma Dashboard</title>
     <style>
       :root { --bg:#0a0a0a; --card:#111; --border:#2a2a2a; --text:#fafafa; --subtle:#a1a1aa; --radius:12px; }
       *{box-sizing:border-box} body{margin:0;font-family:Inter,system-ui;background:var(--bg);color:var(--text)}
@@ -40,20 +40,20 @@
       </aside>
       <main class="main">
         <section class="card">
-          <h1 style="margin:0 0 8px">🖥️ PC Design System（shadcn/ui）</h1>
-          <div class="sub">PC専用。モバイルルールを混在させない。</div>
+          <h1 style="margin:0 0 8px">🖥️ PC Design System（gluestack OSS）</h1>
+          <div class="sub">PC専用。gluestack OSS のPC設計のみ参照。</div>
         </section>
         <section class="card">
           <ul>
-            <li>shadcn/uiコンポーネント構成を基準</li>
-            <li>情報密度高めの管理UIを優先</li>
-            <li>Button/Input/Card/Dialog/Tableを標準採用</li>
+            <li>gluestack UI コンポーネント（Button/Input/Card/Dialog/Table）を基準</li>
+            <li>Tailwind/NativeWindトークンで密度と余白を統一</li>
+            <li>状態管理（default/hover/focus/disabled/error）を標準化</li>
           </ul>
         </section>
         <section class="card">
           <div class="pc">
             <h3>PC管理画面</h3>
-            <p>shadcn/ui 準拠の情報設計</p>
+            <p>gluestack OSS 準拠の情報設計</p>
             <input class="input" placeholder="Search tickets..." />
             <div style="height:10px"></div>
             <button class="btn">Filter</button>
@@ -62,7 +62,8 @@
         <section class="card">
           <div class="rule">[PC UI 生成ルール]
 - 参照先: /design-system-pc.html のみ
-- 禁止: Mobile(PayPay風)トークン混在
+- ベース: gluestack OSS（Proは対象外）
+- 禁止: Mobile専用定義の混在
 - 例外: 少佐の明示上書きのみ</div>
         </section>
       </main>
