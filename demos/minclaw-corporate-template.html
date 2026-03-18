@@ -3,67 +3,127 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Acme Holdings | Corporate Template</title>
-  <meta name="description" content="汎用コーポレートサイトテンプレート（minClaw）" />
+  <title>{{COMPANY_NAME}} | クリニック公式サイト</title>
+  <meta name="description" content="{{COMPANY_NAME}} クリニックの公式サイトテンプレート" />
   <style>
-    :root{
-      --bg:#f6f8fb;
-      --ink:#0f172a;
-      --muted:#475569;
-      --line:#dbe3ef;
-      --brand:#0b57d0;
-      --brand-2:#0ea5e9;
-      --card:#ffffff;
-      --radius:16px;
-      --shadow:0 10px 30px rgba(15,23,42,.08);
-      --max:1100px;
-    }
-    *{box-sizing:border-box}
-    body{margin:0;background:var(--bg);color:var(--ink);font-family:"Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;line-height:1.7}
-    a{text-decoration:none;color:inherit}
-    .container{max-width:var(--max);margin:0 auto;padding:0 24px}
-    .header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg),#fff 35%);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
-    .header-in{height:68px;display:flex;align-items:center;justify-content:space-between}
-    .logo{font-weight:800;letter-spacing:.02em}
-    .logo small{color:var(--muted);font-weight:600;margin-left:8px}
-    .nav{display:flex;gap:20px;color:var(--muted);font-size:14px}
+    @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap');
 
-    .hero{padding:72px 0 44px}
-    .hero-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:28px;align-items:stretch}
-    .hero-main{background:linear-gradient(140deg,#fff 0%,#eef6ff 100%);border:1px solid var(--line);border-radius:24px;padding:34px;box-shadow:var(--shadow)}
-    .tag{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border:1px solid #bfd3f6;border-radius:999px;background:#f2f7ff;font-size:12px;color:#174ea6}
-    h1{margin:14px 0 12px;font-size:clamp(28px,5vw,44px);line-height:1.2;letter-spacing:.01em}
-    .lead{color:var(--muted);font-size:15px}
-    .cta{margin-top:20px;display:flex;gap:10px;flex-wrap:wrap}
-    .btn{height:42px;padding:0 16px;border-radius:12px;border:1px solid transparent;font-weight:700;font-size:14px;display:inline-flex;align-items:center}
-    .btn.primary{background:var(--brand);color:#fff}
-    .btn.ghost{background:#fff;border-color:var(--line);color:var(--ink)}
+    :root{
+      --bg:#f6fbff;
+      --paper:#ffffff;
+      --ink:#102138;
+      --muted:#4e5f79;
+      --line:#d9e8f5;
+      --brand:#0b7ea8;
+      --brand-soft:#e6f6fc;
+      --mint:#dff7f1;
+      --shadow:0 10px 36px rgba(16,33,56,.08);
+      --radius:18px;
+      --max:1140px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0}
+    body{
+      font-family:"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN",sans-serif;
+      color:var(--ink);
+      background:
+        radial-gradient(1000px 500px at 110% -10%, #dff7ff 0%, transparent 60%),
+        radial-gradient(760px 400px at -10% 10%, #edf8ff 0%, transparent 58%),
+        var(--bg);
+      line-height:1.75;
+    }
+
+    .container{max-width:var(--max);margin:0 auto;padding:0 24px}
+
+    .header{
+      position:sticky;top:0;z-index:20;
+      border-bottom:1px solid var(--line);
+      background:color-mix(in srgb, var(--bg), #fff 28%);
+      backdrop-filter:blur(12px);
+    }
+    .header-in{height:74px;display:flex;align-items:center;justify-content:space-between}
+    .brand{display:flex;align-items:center;gap:12px}
+    .brand-mark{width:34px;height:34px;border-radius:10px;background:linear-gradient(145deg,#20b7df,#0b7ea8)}
+    .brand-name{font-family:Manrope, sans-serif;font-weight:800;letter-spacing:.02em}
+    .brand-name small{font-family:inherit;color:var(--muted);font-weight:600;margin-left:8px}
+    nav{display:flex;gap:24px;font-size:14px;color:var(--muted)}
+
+    .hero{padding:70px 0 38px}
+    .hero-grid{display:grid;grid-template-columns:1.2fr .95fr;gap:22px;align-items:stretch}
+    .hero-main{
+      background:linear-gradient(160deg,#fff,#f2fbff);
+      border:1px solid var(--line);
+      border-radius:26px;
+      padding:34px;
+      box-shadow:var(--shadow);
+      position:relative;
+      overflow:hidden;
+    }
+    .hero-main::after{
+      content:"";position:absolute;right:-80px;bottom:-120px;width:280px;height:280px;border-radius:50%;
+      background:radial-gradient(circle,#d9f4ff 0%,transparent 68%);
+    }
+    .chip{
+      display:inline-flex;align-items:center;gap:8px;
+      font-size:12px;font-weight:700;color:#0d5672;
+      border:1px solid #bfe7f5;background:#eefbff;border-radius:999px;padding:6px 12px;
+    }
+    h1{
+      margin:14px 0 10px;
+      font-family:Manrope,sans-serif;
+      font-size:clamp(30px,4.8vw,48px);
+      line-height:1.18;
+      letter-spacing:.01em;
+    }
+    .lead{margin:0;color:var(--muted);font-size:15px;max-width:52ch}
+    .cta{margin-top:22px;display:flex;gap:10px;flex-wrap:wrap}
+    .btn{
+      height:44px;padding:0 18px;border-radius:12px;border:1px solid transparent;
+      display:inline-flex;align-items:center;font-weight:700;font-size:14px;
+      transition:.2s transform,.2s box-shadow;
+    }
+    .btn:hover{transform:translateY(-1px)}
+    .btn.primary{background:var(--brand);color:#fff;box-shadow:0 8px 20px rgba(11,126,168,.26)}
+    .btn.sub{background:#fff;border-color:var(--line);color:var(--ink)}
 
     .hero-side{display:grid;gap:12px}
-    .stat{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:var(--shadow)}
-    .stat .k{font-size:12px;color:var(--muted)}
-    .stat .v{font-size:28px;font-weight:800;line-height:1.25;margin-top:4px}
+    .panel{
+      background:var(--paper);
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:16px;
+      box-shadow:var(--shadow);
+    }
+    .panel h3{margin:0 0 6px;font-size:15px}
+    .panel p{margin:0;color:var(--muted);font-size:13px}
+    .hours{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;font-size:13px;color:#27415e}
 
     .section{padding:18px 0 8px}
-    .section h2{font-size:24px;line-height:1.3;margin:0 0 14px}
+    .section h2{margin:0 0 14px;font-family:Manrope,sans-serif;font-size:26px;line-height:1.22}
+
     .cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
-    .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}
+    .card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}
     .card h3{margin:0 0 8px;font-size:18px}
     .card p{margin:0;color:var(--muted);font-size:14px}
 
-    .about{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-    .about .card{min-height:170px}
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .doctor{display:flex;gap:14px;align-items:flex-start}
+    .avatar{width:68px;height:68px;border-radius:16px;background:linear-gradient(145deg,#daf3ff,#e8fff8);border:1px solid var(--line)}
 
-    .contact{margin-top:14px;background:linear-gradient(150deg,#0f172a 0%,#1d2b4a 65%,#10366c 100%);color:#f8fbff;border-radius:22px;padding:24px}
-    .contact p{color:#d7e4ff}
-    .meta{margin-top:12px;font-size:12px;color:#9fb7de}
+    .notice{
+      margin-top:16px;
+      background:linear-gradient(140deg,#0e2238,#173759 62%,#16547a 100%);
+      color:#e7f3ff;border-radius:22px;padding:24px;
+    }
+    .notice h2{margin:0 0 8px;font-size:24px}
+    .notice p{margin:0;color:#cfe6ff}
 
-    .footer{padding:26px 0 38px;color:#64748b;font-size:12px}
+    .footer{padding:28px 0 40px;font-size:12px;color:#68809d}
 
-    @media (max-width:900px){
-      .hero-grid{grid-template-columns:1fr}
-      .cards{grid-template-columns:1fr}
-      .about{grid-template-columns:1fr}
+    @media (max-width:980px){
+      .hero-grid,.cards,.grid2{grid-template-columns:1fr}
+      nav{display:none}
       .container{padding:0 16px}
     }
   </style>
@@ -71,10 +131,14 @@
 <body>
   <header class="header">
     <div class="container header-in">
-      <div class="logo">{{COMPANY_NAME}}<small>Corporate</small></div>
-      <nav class="nav">
-        <a href="#services">サービス</a>
-        <a href="#about">会社情報</a>
+      <div class="brand">
+        <span class="brand-mark"></span>
+        <div class="brand-name">{{COMPANY_NAME}}<small>Clinic</small></div>
+      </div>
+      <nav>
+        <a href="#services">診療案内</a>
+        <a href="#doctors">医師紹介</a>
+        <a href="#access">アクセス</a>
         <a href="#contact">お問い合わせ</a>
       </nav>
     </div>
@@ -84,56 +148,100 @@
     <section class="hero">
       <div class="container hero-grid">
         <article class="hero-main">
-          <span class="tag">Template · minClaw Auto Provision</span>
+          <span class="chip">Modern Clinic Template</span>
           <h1>{{COMPANY_NAME}}</h1>
-          <p class="lead">こちらは申込後に自動生成される汎用コーポレートテンプレートです。企業名を title / H1 に反映し、初期公開状態まで一括で作成します。</p>
+          <p class="lead">地域に寄り添う医療を、よりわかりやすく。申込み時の企業名を反映して、初期公開まで自動で作成されるクリニック向けテンプレートです。</p>
           <div class="cta">
-            <a class="btn primary" href="#contact">お問い合わせ</a>
-            <a class="btn ghost" href="#services">サービスを見る</a>
+            <a class="btn primary" href="#contact">初診のご予約</a>
+            <a class="btn sub" href="#services">診療案内を見る</a>
           </div>
         </article>
+
         <aside class="hero-side">
-          <div class="stat"><div class="k">稼働年数</div><div class="v">12+</div></div>
-          <div class="stat"><div class="k">導入社数</div><div class="v">300</div></div>
-          <div class="stat"><div class="k">対応地域</div><div class="v">全国</div></div>
+          <section class="panel">
+            <h3>診療時間</h3>
+            <div class="hours">
+              <div>平日</div><div>09:00 - 18:00</div>
+              <div>土曜</div><div>09:00 - 13:00</div>
+              <div>休診</div><div>日曜・祝日</div>
+            </div>
+          </section>
+          <section class="panel" style="background:var(--brand-soft)">
+            <h3>オンライン予約</h3>
+            <p>24時間受付。再診の方は最短1分で予約可能です。</p>
+          </section>
+          <section class="panel" style="background:var(--mint)">
+            <h3>発熱外来</h3>
+            <p>別導線で受付。来院前に必ずお電話でご連絡ください。</p>
+          </section>
         </aside>
       </div>
     </section>
 
     <section id="services" class="section">
       <div class="container">
-        <h2>サービス</h2>
+        <h2>診療案内</h2>
         <div class="cards">
-          <article class="card"><h3>コンサルティング</h3><p>業務課題の整理から実行計画までを伴走支援します。</p></article>
-          <article class="card"><h3>システム開発</h3><p>要件定義・設計・実装・運用まで一貫して提供します。</p></article>
-          <article class="card"><h3>運用保守</h3><p>安定運用と継続改善を前提に、品質を維持します。</p></article>
+          <article class="card">
+            <h3>内科</h3>
+            <p>生活習慣病、風邪症状、慢性疾患の継続管理まで幅広く対応します。</p>
+          </article>
+          <article class="card">
+            <h3>予防医療</h3>
+            <p>健康診断・ワクチン接種・保健指導を通じて未病段階のケアを実施します。</p>
+          </article>
+          <article class="card">
+            <h3>在宅サポート</h3>
+            <p>通院が難しい方のために、訪問診療とオンライン診療を提供します。</p>
+          </article>
         </div>
       </div>
     </section>
 
-    <section id="about" class="section">
+    <section id="doctors" class="section">
       <div class="container">
-        <h2>会社情報</h2>
-        <div class="about">
-          <article class="card"><h3>ミッション</h3><p>事業の意思決定を速くし、現場の生産性を最大化する仕組みを提供します。</p></article>
-          <article class="card"><h3>バリュー</h3><p>誠実・迅速・継続改善。小さな改善を積み重ね、確かな成果につなげます。</p></article>
+        <h2>医師紹介</h2>
+        <div class="grid2">
+          <article class="card doctor">
+            <div class="avatar"></div>
+            <div>
+              <h3>院長 山田 太郎</h3>
+              <p>総合内科専門医。患者さまの背景まで丁寧に把握する診療を心がけています。</p>
+            </div>
+          </article>
+          <article class="card doctor">
+            <div class="avatar"></div>
+            <div>
+              <h3>副院長 佐藤 花子</h3>
+              <p>予防医療・生活習慣改善を担当。わかりやすい説明を重視しています。</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="access" class="section">
+      <div class="container">
+        <div class="card">
+          <h2 style="margin-bottom:8px">アクセス</h2>
+          <p style="margin:0;color:var(--muted)">東京都〇〇区〇〇 1-2-3 / 最寄り駅から徒歩5分 / 駐車場2台</p>
         </div>
       </div>
     </section>
 
     <section id="contact" class="section">
       <div class="container">
-        <div class="contact">
-          <h2>お問い合わせ</h2>
-          <p>導入相談・資料請求はお気軽にご連絡ください。</p>
-          <div class="meta">This is a starter template page generated by minClaw provisioning flow.</div>
+        <div class="notice">
+          <h2>お問い合わせ・ご予約</h2>
+          <p>初診のご相談、検査予約、各種お問い合わせはお気軽にご連絡ください。</p>
+          <p style="margin-top:10px;font-size:13px;color:#9fc3e6">Template generated by minClaw provisioning flow.</p>
         </div>
       </div>
     </section>
   </main>
 
   <footer class="footer">
-    <div class="container">© {{COMPANY_NAME}}. All rights reserved.</div>
+    <div class="container">© {{COMPANY_NAME}} Clinic. All rights reserved.</div>
   </footer>
 </body>
 </html>
