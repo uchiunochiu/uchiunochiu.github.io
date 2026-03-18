@@ -50,15 +50,19 @@
     .hero-banner img{width:100%;height:100%;object-fit:cover;object-position:center 38%}
     .hero-banner::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,22,37,.14),rgba(8,22,37,.38))}
     .hero-banner .overlay{position:absolute;left:50%;bottom:22px;transform:translateX(-50%);width:min(1160px,100%);padding:0 24px;color:#fff;z-index:2}
-    .hero-banner .overlay b{font-family:Manrope,sans-serif;font-size:clamp(24px,4.2vw,44px);line-height:1.12;display:block}
+    .hero-banner .overlay b{font-family:Manrope,sans-serif;font-size:clamp(30px,4.6vw,52px);line-height:1.1;display:block}
+    .hero-banner .overlay p{margin:10px 0 0;max-width:58ch;color:#ecf7ff;font-size:15px;line-height:1.65}
+    .hero-banner .overlay .chip{margin-bottom:10px;background:rgba(255,255,255,.18);border-color:rgba(255,255,255,.35);color:#f5fcff}
+    .hero-banner .overlay .cta{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap}
+    .hero-banner .overlay .btn.sub{background:rgba(255,255,255,.88)}
     .brand{display:flex;align-items:center;gap:12px}
     .brand-mark{width:34px;height:34px;border-radius:10px;background:linear-gradient(145deg,#20b7df,#0b7ea8)}
     .brand-name{font-family:Manrope,sans-serif;font-weight:800;letter-spacing:.02em}
     .brand-name small{margin-left:8px;font-weight:600;color:var(--muted)}
     nav{display:flex;gap:24px;font-size:14px;color:var(--muted)}
 
-    .hero{padding:0 0 34px;margin-top:-86px;position:relative;z-index:3}
-    .hero-grid{display:grid;grid-template-columns:1.2fr .95fr;gap:16px;align-items:start}
+    .hero{padding:68px 0 34px}
+    .hero-grid{display:grid;grid-template-columns:1.2fr .95fr;gap:16px}
     .hero-main{
       background:linear-gradient(160deg,rgba(255,255,255,.96) 0%,rgba(238,248,255,.94) 100%);
       border:1px solid #cfe3f4;
@@ -126,7 +130,6 @@
     .footer{padding:28px 0 40px;font-size:12px;color:#68809d}
 
     @media (max-width:980px){
-      .hero{margin-top:-36px}
       .hero-grid,.cards,.grid2,.gallery{grid-template-columns:1fr}
       nav{display:none}
       .container{padding:0 16px}
@@ -153,8 +156,13 @@
   <section class="hero-banner" aria-label="hero">
     <img src="https://images.unsplash.com/photo-1581595219315-a187dd40c322?auto=format&fit=crop&w=2200&q=80" alt="clinic hero wide" />
     <div class="overlay">
+      <span class="chip">Modern Clinic Template</span>
       <b>{{COMPANY_NAME}}</b>
-      <div>地域に寄り添う、やさしい医療を。</div>
+      <p>地域に寄り添う医療を、よりわかりやすく。申込み時の企業名を反映して、初期公開まで自動で作成されるクリニック向けテンプレートです。</p>
+      <div class="cta">
+        <a class="btn primary" href="#contact">初診のご予約</a>
+        <a class="btn sub" href="#services">診療案内を見る</a>
+      </div>
     </div>
   </section>
 
@@ -162,14 +170,10 @@
     <section class="hero">
       <div class="container hero-grid">
         <article class="hero-main">
-          <span class="chip">Modern Clinic Template</span>
-          <h1>{{COMPANY_NAME}}</h1>
-          <p class="lead">地域に寄り添う医療を、よりわかりやすく。申込み時の企業名を反映して、初期公開まで自動で作成されるクリニック向けテンプレートです。</p>
-          <div class="cta">
-            <a class="btn primary" href="#contact">初診のご予約</a>
-            <a class="btn sub" href="#services">診療案内を見る</a>
-          </div>
-                  </article>
+          <h2 style="margin:0 0 10px;font-family:Manrope,sans-serif;font-size:26px;line-height:1.25">当院の特徴</h2>
+          <p class="lead">初診から継続フォローまで、患者さまの生活背景に合わせた診療導線を設計しています。オンライン予約・検査連携・説明資料の一元化で、待ち時間と不安を最小化します。</p>
+
+                            </article>
 
         <aside class="hero-side">
           <section class="panel">
