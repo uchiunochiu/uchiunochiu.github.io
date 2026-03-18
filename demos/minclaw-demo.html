@@ -4,41 +4,223 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>minClaw | LINEで回る、SMBの業務自動化</title>
+  <meta name="description" content="LINE操作だけで、予約管理・サイト更新・週次レポートを自動化する minClaw のデモページ" />
   <style>
-    :root{--bg:#0b1020;--card:#121a33;--line:#22305a;--txt:#f5f7ff;--sub:#a8b2d1;--acc:#65b2ff;--ok:#6ee7b7}
-    *{box-sizing:border-box}body{margin:0;font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:linear-gradient(180deg,#081024,#0f1630);color:var(--txt)}
-    .wrap{max-width:1100px;margin:0 auto;padding:24px}
-    .hero{padding:64px 0 32px}
-    .line-cta{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:16px;padding:10px 12px;border:1px solid #1f6f3a;border-radius:12px;background:rgba(6,78,28,.25)}
-    h1{font-size:42px;line-height:1.15;margin:0 0 12px}
-    p{color:var(--sub);line-height:1.7}
-    .btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
-    .btn{padding:10px 14px;border-radius:10px;border:1px solid var(--line);text-decoration:none;color:#fff}
-    .btn.primary{background:#1d4ed8;border-color:#2f60e3}
-    .btn.line{background:#06c755;border-color:#0aa84b;color:#04170b;font-weight:700}
-    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-top:20px}
-    .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px}
-    .kpi{font-size:26px;font-weight:700}
-    h2{margin:36px 0 12px;font-size:24px}
-    table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
-    th,td{padding:10px;border-bottom:1px solid #1f2c4d;text-align:left;font-size:14px}
-    th{color:var(--sub);font-weight:600}
-    footer{margin:40px 0 10px;color:#8390b8;font-size:12px}
+    @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap');
+
+    :root {
+      --bg: #f7f8fa;
+      --surface: #ffffff;
+      --text: #101216;
+      --sub: #4f5967;
+      --line: #e8ecf2;
+      --brand: #ff2b52;
+      --brand-hover: #e91f47;
+      --ok: #06c755;
+      --ok-deep: #05a848;
+      --radius-lg: 16px;
+      --radius-md: 12px;
+      --shadow: 0 10px 28px rgba(16, 18, 22, .08);
+      --max: 1140px;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; }
+    body {
+      font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", sans-serif;
+      background:
+        radial-gradient(900px 420px at 100% -10%, #ffe6ec 0%, transparent 55%),
+        radial-gradient(700px 320px at -10% 10%, #ffeef3 0%, transparent 56%),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    .container { max-width: var(--max); margin: 0 auto; padding: 0 16px; }
+
+    .hero {
+      margin: 14px 0 0;
+      border-radius: 22px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      background: #fff;
+    }
+
+    .hero-media {
+      height: min(52vw, 430px);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 38%;
+      filter: saturate(1.06) contrast(1.02);
+    }
+    .hero-media::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(16, 18, 22, .08), rgba(16, 18, 22, .55));
+    }
+
+    .hero-body {
+      margin-top: -120px;
+      position: relative;
+      z-index: 2;
+      padding: 0 16px 18px;
+    }
+
+    .hero-card {
+      background: color-mix(in srgb, #fff 92%, #ffd9e3 8%);
+      border: 1px solid #f4ccd8;
+      border-radius: 18px;
+      padding: 18px;
+      backdrop-filter: blur(6px);
+      box-shadow: 0 16px 30px rgba(16, 18, 22, .12);
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid #ffc1d0;
+      background: #fff2f6;
+      color: #a11639;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    h1 {
+      margin: 12px 0 8px;
+      font-family: Manrope, sans-serif;
+      font-size: clamp(26px, 6.5vw, 50px);
+      line-height: 1.12;
+      letter-spacing: .01em;
+    }
+
+    .lead { margin: 0; color: var(--sub); font-size: 14px; }
+
+    .line-cta {
+      margin-top: 14px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid #9de0b8;
+      background: #ecfff4;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btns { margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap; }
+    .btn {
+      height: 42px;
+      padding: 0 14px;
+      border-radius: 12px;
+      border: 1px solid transparent;
+      display: inline-flex;
+      align-items: center;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 14px;
+      transition: .18s ease;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn.primary { background: var(--brand); color: #fff; }
+    .btn.primary:hover { background: var(--brand-hover); }
+    .btn.line { background: var(--ok); color: #04260f; border-color: #58cf89; }
+    .btn.line:hover { background: var(--ok-deep); color: #fff; }
+    .btn.ghost { background: #fff; border-color: var(--line); color: var(--text); }
+
+    .section { margin-top: 18px; }
+    .section h2 {
+      margin: 0 0 10px;
+      font-family: Manrope, sans-serif;
+      font-size: 24px;
+      line-height: 1.2;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      padding: 14px;
+      box-shadow: var(--shadow);
+    }
+
+    .kpi { font-family: Manrope, sans-serif; font-size: 30px; font-weight: 800; line-height: 1.15; margin-bottom: 4px; }
+    .card h3 { margin: 0 0 6px; font-size: 18px; }
+    .card p { margin: 0; color: var(--sub); font-size: 14px; }
+
+    .table-wrap {
+      overflow: auto;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      background: var(--surface);
+    }
+
+    table { width: 100%; border-collapse: collapse; min-width: 660px; }
+    th, td { padding: 10px; border-bottom: 1px solid #edf1f6; text-align: left; font-size: 14px; }
+    th { color: var(--sub); font-weight: 700; background: #fbfcfe; }
+    tr:last-child td { border-bottom: 0; }
+
+    .tail {
+      margin-top: 18px;
+      background: linear-gradient(145deg, #111827, #182337 64%, #223457);
+      color: #e6eefb;
+      border-radius: 18px;
+      padding: 18px;
+    }
+
+    footer { margin: 18px 0 26px; color: #708099; font-size: 12px; text-align: center; }
+
+    @media (max-width: 980px) {
+      .grid { grid-template-columns: 1fr; }
+      .hero-media { height: 310px; }
+      .hero-body { margin-top: -88px; }
+      h1 { font-size: 32px; }
+    }
   </style>
 </head>
 <body>
-  <div class="wrap">
+  <div class="container">
     <section class="hero">
-      <h1>LINEで指示するだけ。<br>SMB運用をまるごと自動化。</h1>
-      <p>minClawは、予約管理・サイト更新・週次レポートを1つのLINE操作に統合する、SMB向け業務オーケストレーションサービスです。</p>
-      <div class="line-cta">
-        <strong>公式LINEで今すぐ試す</strong>
-        <a class="btn line" href="https://line.me/R/ti/p/@629ngkws" target="_blank" rel="noreferrer">友だち追加</a>
+      <div class="hero-media">
+        <img src="https://images.unsplash.com/photo-1585110396000-c9ffd4e4b308?auto=format&fit=crop&w=2200&q=80" alt="rabbit hero" />
       </div>
-      <div class="btns">
-        <a class="btn primary" href="#demo">デモを見る</a>
-        <a class="btn" href="#contact">導入相談</a>
+      <div class="hero-body">
+        <article class="hero-card">
+          <span class="chip">Mobile Design System Styled</span>
+          <h1>LINEで指示するだけ。<br>SMB運用をまるごと自動化。</h1>
+          <p class="lead">minClawは、予約管理・サイト更新・週次レポートを1つのLINE操作に統合する、SMB向け業務オーケストレーションサービスです。</p>
+
+          <div class="line-cta">
+            <strong>公式LINEで今すぐ試す</strong>
+            <a class="btn line" href="https://line.me/R/ti/p/@629ngkws" target="_blank" rel="noreferrer">友だち追加</a>
+          </div>
+
+          <div class="btns">
+            <a class="btn primary" href="#demo">デモを見る</a>
+            <a class="btn ghost" href="#contact">導入相談</a>
+          </div>
+        </article>
       </div>
+    </section>
+
+    <section class="section">
       <div class="grid">
         <div class="card"><div class="kpi">-5h/月</div><p>1社あたりの業務削減目標</p></div>
         <div class="card"><div class="kpi">3機能</div><p>予約・更新・週次レポートをMVP提供</p></div>
@@ -46,33 +228,37 @@
       </div>
     </section>
 
-    <section id="demo">
+    <section id="demo" class="section">
       <h2>デモ機能</h2>
       <div class="grid">
-        <div class="card"><h3>予約管理</h3><p>LINEで「明日の10:00 佐藤さん予約」で即登録。変更・キャンセルも同UIで完結。</p></div>
-        <div class="card"><h3>サイト更新</h3><p>営業時間・告知・メニューをLINE指示で更新。外注待ちをゼロに。</p></div>
-        <div class="card"><h3>週次レポート</h3><p>予約件数・売上推定・対応数を毎週自動で要約配信。</p></div>
+        <article class="card"><h3>予約管理</h3><p>LINEで「明日の10:00 佐藤さん予約」で即登録。変更・キャンセルも同UIで完結。</p></article>
+        <article class="card"><h3>サイト更新</h3><p>営業時間・告知・メニューをLINE指示で更新。外注待ちをゼロに。</p></article>
+        <article class="card"><h3>週次レポート</h3><p>予約件数・売上推定・対応数を毎週自動で要約配信。</p></article>
       </div>
     </section>
 
-    <section>
+    <section class="section">
       <h2>導入プラン（サンプル）</h2>
-      <table>
-        <thead><tr><th>プラン</th><th>対象</th><th>主な機能</th><th>価格</th></tr></thead>
-        <tbody>
-          <tr><td>Starter</td><td>小規模店舗</td><td>予約管理 / サイト更新</td><td>¥19,800/月</td></tr>
-          <tr><td>Growth</td><td>複数担当運用</td><td>Starter + 週次レポート + 権限管理</td><td>¥39,800/月</td></tr>
-          <tr><td>Pro</td><td>運用高度化</td><td>Growth + CRM導線 + 分析拡張</td><td>要相談</td></tr>
-        </tbody>
-      </table>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>プラン</th><th>対象</th><th>主な機能</th><th>価格</th></tr></thead>
+          <tbody>
+            <tr><td>Starter</td><td>小規模店舗</td><td>予約管理 / サイト更新</td><td>¥19,800/月</td></tr>
+            <tr><td>Growth</td><td>複数担当運用</td><td>Starter + 週次レポート + 権限管理</td><td>¥39,800/月</td></tr>
+            <tr><td>Pro</td><td>運用高度化</td><td>Growth + CRM導線 + 分析拡張</td><td>要相談</td></tr>
+          </tbody>
+        </table>
+      </div>
     </section>
 
-    <section id="contact">
-      <h2>次のステップ</h2>
-      <p>このデモは初期版です。業種（美容室・整体・飲食など）に合わせたテンプレ導入を前提にカスタマイズします。</p>
+    <section id="contact" class="section">
+      <div class="tail">
+        <h2 style="margin:0 0 8px;font-size:24px">次のステップ</h2>
+        <p style="margin:0;color:#c6d4ec">このデモは初期版です。業種（美容室・整体・飲食など）に合わせたテンプレ導入を前提にカスタマイズします。</p>
+      </div>
     </section>
 
-    <footer>minClaw Demo Site / v0.1</footer>
+    <footer>minClaw Demo Site / v0.2</footer>
   </div>
 </body>
 </html>
