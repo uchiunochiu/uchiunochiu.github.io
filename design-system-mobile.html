@@ -61,11 +61,11 @@
       .story .ring span{display:flex;width:100%;height:100%;border-radius:50%;background:#fff;align-items:center;justify-content:center;font-size:12px}
       .composer{display:grid;gap:8px}
       .post{border:1px solid #e2e8f0;border-radius:12px;background:#fff;overflow:hidden}
-      .post .head{display:flex;justify-content:space-between;align-items:center;padding:10px}
-      .post .body{padding:0 10px 10px}
-      .post .meta{font-size:11px;color:#64748b}
-      .post .img{width:100%;height:190px;object-fit:cover;display:block}
-      .actions{display:flex;gap:10px;padding:10px;border-top:1px solid #e2e8f0}
+      .post .head{display:flex;justify-content:space-between;align-items:flex-start;padding:12px 12px 8px;gap:8px}
+      .post .body{padding:12px;font-size:14px;line-height:1.65;letter-spacing:.01em;color:#0f172a}
+      .post .meta{font-size:11px;line-height:1.4;color:#64748b}
+      .post .img{width:100%;height:206px;object-fit:cover;display:block}
+      .actions{display:flex;gap:8px;padding:10px 12px;border-top:1px solid #e2e8f0;flex-wrap:wrap}
       .kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
       .kpi{border:1px solid #e2e8f0;border-radius:10px;padding:10px;background:#fff}
       .timeline{display:grid;gap:8px}
@@ -244,16 +244,16 @@
               </div>
 
               <div class="post">
-                <div class="head"><div class="ks-row"><span class="dot-avatar"></span><div><b style="font-size:12px">uchiu.no.chiu</b><div class="meta">14:02 ・ Tokyo</div></div></div><span class="chip2">travel</span></div>
+                <div class="head"><div class="ks-row"><span class="dot-avatar"></span><div><b style="font-size:13px;line-height:1.35">uchiu.no.chiu</b><div class="meta">14:02 ・ Tokyo</div></div></div><span class="chip2">travel</span></div>
                 <img class="img" src="https://picsum.photos/seed/lifelog01/700/500" alt="post1" />
-                <div class="body">渋谷の朝ラン完了。体感は軽め、心拍は安定。</div>
+                <div class="body">渋谷の朝ラン完了。体感は軽め、心拍は安定。フォーム維持しつつ、リカバリー優先で午後は低負荷に調整します。</div>
                 <div class="actions"><span class="chip2">Like 42</span><span class="chip2">Comment 8</span><span class="chip2">↗ share</span><span class="chip2">save</span></div>
               </div>
 
-              <div style="height:10px"></div>
+              <div style="height:12px"></div>
 
               <div class="post">
-                <div class="head"><div class="ks-row"><span class="dot-avatar"></span><div><b style="font-size:12px">Daily Habit</b><div class="meta">lifelog summary</div></div></div><span class="chip2">streak</span></div>
+                <div class="head"><div class="ks-row"><span class="dot-avatar"></span><div><b style="font-size:13px;line-height:1.35">Daily Habit</b><div class="meta">lifelog summary</div></div></div><span class="chip2">streak</span></div>
                 <div class="body">
                   <div class="kpi-grid">
                     <div class="kpi"><div class="meta">Steps</div><b>8,742</b><div class="mini-progress" style="margin-top:6px"><span style="width:78%"></span></div></div>
