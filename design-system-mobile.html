@@ -27,21 +27,21 @@
       .input{width:100%;height:40px;border:1px solid #cbd5e1;border-radius:10px;padding:0 10px;background:#fff}
       .btn{width:100%;height:40px;border:0;border-radius:8px;background:var(--gs-primary);color:#fff;font-weight:700}
       .btn:active{background:var(--gs-primary-pressed)}
-      .rule{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;white-space:pre-wrap;background:#0d0d0d;border:1px solid var(--border);border-radius:10px;padding:10px}
+      .rule{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;white-space:pre-wrap;background:#0d0d0d;border:1px solid var(--border);border-radius:10px;padding:8px}
       .iphone-wrap{display:flex;justify-content:center}
       .iphone16{width:393px;height:852px;background:#fff;border:10px solid #111827;border-radius:36px;padding:12px;overflow:auto;color:#0f172a;box-shadow:0 24px 50px rgba(0,0,0,.45)}
       .iphone16 h4{margin:0 0 8px;font-size:15px}
       .ks-sec{border:0;border-radius:0;padding:16px 0;margin-bottom:16px;background:#fff}
       .ks-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-      .dot-avatar{width:30px;height:30px;border-radius:50%;background:#cbd5e1}
-      .icon-box{width:20px;height:20px;border-radius:6px;background:#e2e8f0;display:inline-block}
+      .dot-avatar{width:32px;height:32px;border-radius:50%;background:#cbd5e1}
+      .icon-box{width:24px;height:24px;border-radius:8px;background:#e2e8f0;display:inline-block}
       .link-t{font-size:12px;color:#2563eb;text-decoration:underline}
       .fab{position:sticky;left:100%;bottom:8px;width:40px;height:40px;border-radius:999px;background:#2563eb;color:#fff;border:0;font-size:22px;line-height:1}
       .slider{height:4px;border-radius:999px;background:#dbeafe;position:relative;width:100%}
       .slider::after{content:'';position:absolute;left:56%;top:-4px;width:12px;height:12px;border-radius:50%;background:#2563eb}
       .toast-mini{padding:8px 10px;border-radius:10px;background:#0f172a;color:#fff;font-size:12px}
       .tooltip-mini{display:inline-block;padding:4px 8px;border-radius:6px;background:#111827;color:#fff;font-size:11px}
-      .apphead{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+      .apphead{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
       .iconbtn{width:32px;height:32px;border-radius:8px;border:1px solid #e2e8f0;background:#fff;display:flex;align-items:center;justify-content:center;font-size:14px}
       .hero-img{width:100%;height:160px;object-fit:cover;border-radius:16px;border:1px solid #e2e8f0}
       .carousel{display:flex;gap:8px;overflow:auto;padding-bottom:4px}
@@ -78,9 +78,9 @@
       .tile h4{margin:0 0 8px;font-size:13px}
       .tile .mini{font-size:11px;color:var(--subtle);margin-bottom:8px}
       .chip{display:inline-block;font-size:10px;padding:3px 6px;border:1px solid #334155;border-radius:999px;color:#cbd5e1;margin-right:6px}
-      .ghost{height:36px;border:1px solid #cbd5e1;background:#fff;color:#0f172a;border-radius:10px;padding:0 10px;font-weight:600}
-      .card-ui{border:1px solid #e2e8f0;border-radius:12px;padding:10px;background:#fff;color:#0f172a}
-      .list-item{display:flex;justify-content:space-between;align-items:center;padding:10px;border:1px solid #e2e8f0;border-radius:10px;background:#fff;color:#0f172a}
+      .ghost{height:40px;border:1px solid #cbd5e1;background:#fff;color:#0f172a;border-radius:10px;padding:0 10px;font-weight:600}
+      .card-ui{border:1px solid #e2e8f0;border-radius:12px;padding:8px;background:#fff;color:#0f172a}
+      .list-item{display:flex;justify-content:space-between;align-items:center;padding:8px;border:1px solid #e2e8f0;border-radius:10px;background:#fff;color:#0f172a}
       .switch{width:38px;height:22px;border-radius:999px;background:#cbd5e1;position:relative}
       .switch::after{content:'';position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:#fff}
       .pill-alert{padding:8px 10px;border-radius:10px;font-size:12px;background:#fef2f2;color:#991b1b;border:1px solid #fecaca}
@@ -109,7 +109,7 @@
         <section class="card">
           <h1 style="margin:0 0 8px">📱 Mobile Design System（gluestack OSS）</h1>
           <div class="sub">React Native / Expo 向け。<b>gluestack UI + NativeWind</b> を前提に、寸法・状態・余白を固定化。</div>
-          <div style="margin-top:10px">
+          <div style="margin-top:8px">
             <span class="k">Source: gluestack OSS only</span>
             <span class="k">No Pro assets</span>
             <span class="k">Mobile-first</span>
@@ -161,24 +161,24 @@
 
         <section class="card">
           <h3 style="margin:0 0 8px">4) Component Gallery（Mobile / gluestack）</h3>
-          <div class="sub" style="margin-bottom:10px">gluestackの主要コンポーネントをモバイル向けに一覧化（状態プレビュー付き）</div>
+          <div class="sub" style="margin-bottom:8px">gluestackの主要コンポーネントをモバイル向けに一覧化（状態プレビュー付き）</div>
           <div class="gallery">
-            <div class="tile"><h4>Button</h4><div class="mini">solid / outline / destructive / loading</div><div class="phone" style="padding:10px"><button class="btn">Primary</button><div style="height:8px"></div><button class="ghost" style="width:100%">Outline</button><div style="height:8px"></div><button class="btn" style="background:var(--gs-danger)">Destructive</button></div></div>
-            <div class="tile"><h4>Input + FormControl</h4><div class="mini">label / helper / error</div><div class="phone" style="padding:10px"><div style="font-size:12px;margin-bottom:4px">Email</div><input class="input" placeholder="name@example.com"/><div style="font-size:11px;color:#64748b;margin-top:4px">確認メールを送信</div><div style="font-size:11px;color:#dc2626;margin-top:4px">形式が不正</div></div></div>
-            <div class="tile"><h4>Textarea</h4><div class="mini">multiline input</div><div class="phone" style="padding:10px"><div class="input" style="height:84px;padding-top:10px">要望を入力…</div></div></div>
-            <div class="tile"><h4>Checkbox / Radio / Switch</h4><div class="mini">selection controls</div><div class="phone" style="padding:10px;display:grid;gap:8px"><div class="list-item"><span>Checkbox</span><span>☑︎</span></div><div class="list-item"><span>Radio</span><span>◉</span></div><div class="list-item"><span>Switch</span><span class="switch"></span></div></div></div>
-            <div class="tile"><h4>Select / Menu Trigger</h4><div class="mini">single select</div><div class="phone" style="padding:10px"><div class="list-item"><span>プラン選択</span><span>▾</span></div></div></div>
-            <div class="tile"><h4>Card</h4><div class="mini">default / selected / disabled</div><div class="phone" style="padding:10px;display:grid;gap:8px"><div class="card-ui">Basic card</div><div class="card-ui" style="border-color:#2563eb;box-shadow:0 0 0 1px #2563eb inset">Selected card</div><div class="card-ui" style="opacity:.45">Disabled card</div></div></div>
-            <div class="tile"><h4>List Item</h4><div class="mini">navigation / destructive</div><div class="phone" style="padding:10px;display:grid;gap:8px"><div class="list-item"><span>プロフィール</span><span>›</span></div><div class="list-item" style="color:#b91c1c"><span>アカウント削除</span><span>›</span></div></div></div>
-            <div class="tile"><h4>Badge / Chip</h4><div class="mini">status labels</div><div class="phone" style="padding:10px"><span class="chip">new</span><span class="chip">beta</span><span class="chip">done</span></div></div>
-            <div class="tile"><h4>Alert</h4><div class="mini">inline warning/error</div><div class="phone" style="padding:10px"><div class="pill-alert">入力内容を確認してください</div></div></div>
-            <div class="tile"><h4>Toast</h4><div class="mini">ephemeral feedback</div><div class="phone" style="padding:10px"><div class="list-item" style="background:#111827;color:#fff;border-color:#1f2937">保存しました</div></div></div>
-            <div class="tile"><h4>Modal / Dialog</h4><div class="mini">confirmation pattern</div><div class="phone" style="padding:10px"><div class="card-ui"><b>削除しますか？</b><div style="height:8px"></div><button class="btn" style="height:36px">確認</button></div></div></div>
-            <div class="tile"><h4>ActionSheet / Drawer</h4><div class="mini">bottom actions</div><div class="phone" style="padding:10px"><div class="card-ui" style="border-radius:12px 12px 6px 6px">共有 / 編集 / 削除</div></div></div>
-            <div class="tile"><h4>Progress / Spinner</h4><div class="mini">async status</div><div class="phone" style="padding:10px;display:grid;gap:8px"><div class="mini-progress"><span></span></div><div style="font-size:12px">Loading… ⟳</div></div></div>
-            <div class="tile"><h4>Skeleton</h4><div class="mini">loading placeholders</div><div class="phone" style="padding:10px;display:grid;gap:8px"><div class="mini-skeleton" style="width:60%"></div><div class="mini-skeleton"></div><div class="mini-skeleton" style="width:80%"></div></div></div>
-            <div class="tile"><h4>Avatar / Image</h4><div class="mini">media elements</div><div class="phone" style="padding:10px;display:flex;gap:10px;align-items:center"><div style="width:36px;height:36px;border-radius:50%;background:#cbd5e1"></div><div style="width:72px;height:48px;border-radius:8px;background:#e2e8f0"></div></div></div>
-            <div class="tile"><h4>Accordion</h4><div class="mini">expand/collapse content</div><div class="phone" style="padding:10px"><div class="list-item"><span>FAQ 1</span><span>＋</span></div></div></div>
+            <div class="tile"><h4>Button</h4><div class="mini">solid / outline / destructive / loading</div><div class="phone" style="padding:8px"><button class="btn">Primary</button><div style="height:8px"></div><button class="ghost" style="width:100%">Outline</button><div style="height:8px"></div><button class="btn" style="background:var(--gs-danger)">Destructive</button></div></div>
+            <div class="tile"><h4>Input + FormControl</h4><div class="mini">label / helper / error</div><div class="phone" style="padding:8px"><div style="font-size:12px;margin-bottom:4px">Email</div><input class="input" placeholder="name@example.com"/><div style="font-size:11px;color:#64748b;margin-top:4px">確認メールを送信</div><div style="font-size:11px;color:#dc2626;margin-top:4px">形式が不正</div></div></div>
+            <div class="tile"><h4>Textarea</h4><div class="mini">multiline input</div><div class="phone" style="padding:8px"><div class="input" style="height:84px;padding-top:8px">要望を入力…</div></div></div>
+            <div class="tile"><h4>Checkbox / Radio / Switch</h4><div class="mini">selection controls</div><div class="phone" style="padding:8px;display:grid;gap:8px"><div class="list-item"><span>Checkbox</span><span>☑︎</span></div><div class="list-item"><span>Radio</span><span>◉</span></div><div class="list-item"><span>Switch</span><span class="switch"></span></div></div></div>
+            <div class="tile"><h4>Select / Menu Trigger</h4><div class="mini">single select</div><div class="phone" style="padding:8px"><div class="list-item"><span>プラン選択</span><span>▾</span></div></div></div>
+            <div class="tile"><h4>Card</h4><div class="mini">default / selected / disabled</div><div class="phone" style="padding:8px;display:grid;gap:8px"><div class="card-ui">Basic card</div><div class="card-ui" style="border-color:#2563eb;box-shadow:0 0 0 1px #2563eb inset">Selected card</div><div class="card-ui" style="opacity:.45">Disabled card</div></div></div>
+            <div class="tile"><h4>List Item</h4><div class="mini">navigation / destructive</div><div class="phone" style="padding:8px;display:grid;gap:8px"><div class="list-item"><span>プロフィール</span><span>›</span></div><div class="list-item" style="color:#b91c1c"><span>アカウント削除</span><span>›</span></div></div></div>
+            <div class="tile"><h4>Badge / Chip</h4><div class="mini">status labels</div><div class="phone" style="padding:8px"><span class="chip">new</span><span class="chip">beta</span><span class="chip">done</span></div></div>
+            <div class="tile"><h4>Alert</h4><div class="mini">inline warning/error</div><div class="phone" style="padding:8px"><div class="pill-alert">入力内容を確認してください</div></div></div>
+            <div class="tile"><h4>Toast</h4><div class="mini">ephemeral feedback</div><div class="phone" style="padding:8px"><div class="list-item" style="background:#111827;color:#fff;border-color:#1f2937">保存しました</div></div></div>
+            <div class="tile"><h4>Modal / Dialog</h4><div class="mini">confirmation pattern</div><div class="phone" style="padding:8px"><div class="card-ui"><b>削除しますか？</b><div style="height:8px"></div><button class="btn" style="height:40px">確認</button></div></div></div>
+            <div class="tile"><h4>ActionSheet / Drawer</h4><div class="mini">bottom actions</div><div class="phone" style="padding:8px"><div class="card-ui" style="border-radius:12px 12px 6px 6px">共有 / 編集 / 削除</div></div></div>
+            <div class="tile"><h4>Progress / Spinner</h4><div class="mini">async status</div><div class="phone" style="padding:8px;display:grid;gap:8px"><div class="mini-progress"><span></span></div><div style="font-size:12px">Loading… ⟳</div></div></div>
+            <div class="tile"><h4>Skeleton</h4><div class="mini">loading placeholders</div><div class="phone" style="padding:8px;display:grid;gap:8px"><div class="mini-skeleton" style="width:60%"></div><div class="mini-skeleton"></div><div class="mini-skeleton" style="width:80%"></div></div></div>
+            <div class="tile"><h4>Avatar / Image</h4><div class="mini">media elements</div><div class="phone" style="padding:8px;display:flex;gap:10px;align-items:center"><div style="width:36px;height:40px;border-radius:50%;background:#cbd5e1"></div><div style="width:72px;height:48px;border-radius:8px;background:#e2e8f0"></div></div></div>
+            <div class="tile"><h4>Accordion</h4><div class="mini">expand/collapse content</div><div class="phone" style="padding:8px"><div class="list-item"><span>FAQ 1</span><span>＋</span></div></div></div>
           </div>
         </section>
 
@@ -221,8 +221,8 @@
 
         <section class="card">
           <h3 style="margin:0 0 8px">7) App Compornent Gallary</h3>
-          <div class="sub" style="margin-bottom:10px">iPhone 16 Pro（393×852）白背景。SNS / ライフログ系の実運用イメージで下部まで密度を揃えたサンプル。</div>
-          <div class="rule" style="margin-bottom:10px">accordion / actionsheet / alert / alert-dialog / avatar / badge / box / button / card / center / checkbox / divider / drawer / fab / form-control / grid / heading / hstack / icon / image / input / link / menu / modal / popover / portal / pressable / progress / radio / select / skeleton / slider / spinner / switch / table / text / textarea / toast / tooltip / vstack</div>
+          <div class="sub" style="margin-bottom:8px">iPhone 16 Pro（393×852）白背景。SNS / ライフログ系の実運用イメージで下部まで密度を揃えたサンプル。</div>
+          <div class="rule" style="margin-bottom:8px">accordion / actionsheet / alert / alert-dialog / avatar / badge / box / button / card / center / checkbox / divider / drawer / fab / form-control / grid / heading / hstack / icon / image / input / link / menu / modal / popover / portal / pressable / progress / radio / select / skeleton / slider / spinner / switch / table / text / textarea / toast / tooltip / vstack</div>
           <div class="iphone-wrap">
             <div class="iphone16">
               <div class="apphead">
@@ -295,7 +295,7 @@
               </div>
 
               <div class="ks-sec">
-                <div style="font-size:12px;margin-bottom:6px">Table / Accordion / Dialog系</div>
+                <div style="font-size:12px;margin-bottom:8px">Table / Accordion / Dialog系</div>
                 <table><tbody><tr><td>Draft #17</td><td>editing</td></tr><tr><td>Draft #16</td><td>published</td></tr></tbody></table>
                 <div style="height:8px"></div>
                 <div class="list-item"><span>Accordion section</span><span>＋</span></div>
