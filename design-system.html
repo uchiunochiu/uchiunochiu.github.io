@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DesighSystem | Tachikoma Dashboard</title>
+    <style>
+      :root {
+        --bg:#0a0a0a; --card:#111; --muted:#1c1c1c; --border:#2a2a2a; --text:#fafafa; --subtle:#a1a1aa; --radius:12px;
+        --paypay-accent:#ff2b52; --paypay-bg:#f7f8fa; --paypay-text:#101216;
+        --shadcn-bg:#09090b; --shadcn-surface:#111113; --shadcn-border:#27272a; --shadcn-text:#fafafa;
+      }
+      *{box-sizing:border-box}
+      body{margin:0;font-family:Inter,system-ui;background:var(--bg);color:var(--text)}
+      .app{min-height:100vh;display:grid;grid-template-columns:260px 1fr}
+      .sidebar{border-right:1px solid var(--border);padding:20px 14px}
+      .brand{padding:10px 12px;border:1px solid var(--border);border-radius:var(--radius);background:var(--card);margin-bottom:18px;font-weight:700}
+      .menu{display:grid;gap:6px}
+      .menu a{color:var(--text);text-decoration:none;padding:10px 12px;border-radius:10px;font-size:14px;display:flex;align-items:center;gap:8px;white-space:nowrap}
+      .menu a.active{background:var(--card);border:1px solid var(--border)}
+
+      .main{padding:24px;display:grid;gap:14px}
+      .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px}
+      .sub{color:var(--subtle);font-size:13px}
+      .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+      .tokens{display:grid;grid-template-columns:repeat(3,minmax(120px,1fr));gap:10px}
+      .token{border:1px solid var(--border);border-radius:10px;overflow:hidden;background:#0f0f0f}
+      .sw{height:50px}
+      .meta{padding:8px;font-size:12px}
+      .meta b{display:block;margin-bottom:4px}
+      .preview-wrap{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+      .phone{background:var(--paypay-bg);border:1px solid #e8ecf2;border-radius:16px;padding:12px;color:var(--paypay-text)}
+      .phone h3{margin:0 0 8px;font-size:18px}
+      .phone p{margin:0 0 10px;color:#4f5967;font-size:13px}
+      .pc{background:var(--shadcn-bg);border:1px solid var(--shadcn-border);border-radius:12px;padding:12px;color:var(--shadcn-text)}
+      .pc h3{margin:0 0 8px;font-size:16px}
+      .pc p{margin:0 0 10px;color:#a1a1aa;font-size:13px}
+      .btn-m{height:44px;width:100%;border:0;border-radius:12px;background:var(--paypay-accent);color:#fff;font-weight:700}
+      .btn-pc{height:36px;padding:0 14px;border-radius:8px;border:1px solid #27272a;background:#18181b;color:#fafafa}
+      .input-m{width:100%;height:42px;border:1px solid #cad2de;border-radius:8px;padding:0 10px}
+      .input-pc{width:100%;height:36px;border:1px solid #27272a;border-radius:8px;padding:0 10px;background:#111113;color:#fafafa}
+      .rule{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;white-space:pre-wrap;background:#0d0d0d;border:1px solid var(--border);border-radius:10px;padding:10px}
+      .pill{display:inline-block;padding:4px 10px;border:1px solid var(--border);border-radius:999px;font-size:11px;color:var(--subtle);margin-right:6px}
+      .list{margin:8px 0 0 18px;padding:0}
+      .list li{margin:4px 0;font-size:13px;color:#d4d4d8}
+      @media(max-width:980px){
+        .app{grid-template-columns:1fr}
+        .sidebar{border-right:none;border-bottom:1px solid var(--border)}
+        .main{padding:12px}
+        .grid,.preview-wrap{grid-template-columns:1fr}
+        .tokens{grid-template-columns:repeat(2,minmax(120px,1fr))}
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <aside class="sidebar">
+        <div class="brand">dashboard</div>
+        <nav class="menu">
+          <a href="/">🏠 Dashboard</a>
+          <a href="/projects.html">📁 Projects</a>
+          <a href="/tickets.html">🎫 Tickets</a>
+          <a href="/board.html">🧩 Board</a>
+          <a href="/research-reports.html">📊 ResearchReport</a>
+          <a class="active" href="/design-system.html">🎨 DesighSystem</a>
+          <a href="#">🗓️ Calendar</a>
+          <a href="#">⚙️ Settings</a>
+        </nav>
+      </aside>
+
+      <main class="main">
+        <section class="card">
+          <h1 style="margin:0 0 8px">🎨 DesighSystem</h1>
+          <div class="sub">タチコマがUI作成時に参照する2系統を固定定義：<b>モバイル=PayPay風</b>、<b>PC=shadcn/ui風</b>。</div>
+          <div style="margin-top:10px">
+            <span class="pill">Mobile: PayPay-like (original)</span>
+            <span class="pill">PC: shadcn/ui-based</span>
+          </div>
+        </section>
+
+        <section class="card grid">
+          <div>
+            <h2 style="margin:0 0 8px;font-size:16px">A) Mobile Design System（PayPay風）</h2>
+            <ul class="list">
+              <li>高速・明瞭・信頼感を最優先（金融アプリ向け）</li>
+              <li>8ptグリッド、44px以上タップターゲット</li>
+              <li>アクセント: coral-red / 白ベース / 高コントラスト</li>
+              <li>1画面で主要行動が完結する導線</li>
+            </ul>
+          </div>
+          <div>
+            <h2 style="margin:0 0 8px;font-size:16px">B) PC Design System（shadcn/ui）</h2>
+            <ul class="list">
+              <li>shadcn/uiコンポーネント構成を基準</li>
+              <li>Radix準拠の操作性とアクセシビリティ</li>
+              <li>デスクトップは情報密度高め・構造明瞭</li>
+              <li>Button/Input/Card/Dialog/Tableを標準採用</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2 style="margin:0 0 10px;font-size:16px">Token Visualization</h2>
+          <div class="tokens">
+            <div class="token"><div class="sw" style="background:#ff2b52"></div><div class="meta"><b>mobile.brand</b>#FF2B52</div></div>
+            <div class="token"><div class="sw" style="background:#f7f8fa"></div><div class="meta"><b>mobile.bg</b>#F7F8FA</div></div>
+            <div class="token"><div class="sw" style="background:#101216"></div><div class="meta"><b>mobile.text</b>#101216</div></div>
+            <div class="token"><div class="sw" style="background:#09090b"></div><div class="meta"><b>pc.bg</b>#09090B</div></div>
+            <div class="token"><div class="sw" style="background:#111113"></div><div class="meta"><b>pc.surface</b>#111113</div></div>
+            <div class="token"><div class="sw" style="background:#27272a"></div><div class="meta"><b>pc.border</b>#27272A</div></div>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2 style="margin:0 0 10px;font-size:16px">Component Preview</h2>
+          <div class="preview-wrap">
+            <div class="phone">
+              <h3>モバイル送金</h3>
+              <p>PayPay風の視認性と速度感（オリジナル実装）</p>
+              <input class="input-m" placeholder="金額を入力" />
+              <div style="height:10px"></div>
+              <button class="btn-m">送金する</button>
+            </div>
+            <div class="pc">
+              <h3>PC管理画面</h3>
+              <p>shadcn/uiコンポーネント思想の構成</p>
+              <input class="input-pc" placeholder="Search tickets..." />
+              <div style="height:10px"></div>
+              <button class="btn-pc">Filter</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2 style="margin:0 0 8px;font-size:16px">タチコマ参照ルール（可視化）</h2>
+          <div class="rule">[UI生成プリフライト]
+1) 画面種別を判定: Mobile or PC
+2) Mobileなら "PayPay風(独自)", PCなら "shadcn/ui" を適用
+3) トークンとコンポーネントを本ページ定義から選択
+4) 例外は少佐の明示上書きのみ</div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

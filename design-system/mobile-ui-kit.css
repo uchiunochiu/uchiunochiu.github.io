@@ -1,0 +1,102 @@
+:root {
+  --bg-base: #F7F8FA;
+  --bg-surface: #FFFFFF;
+  --bg-inverse: #111317;
+
+  --text-primary: #101216;
+  --text-secondary: #4F5967;
+  --text-muted: #7A8494;
+  --text-inverse: #F5F7FB;
+
+  --border-soft: #E8ECF2;
+  --border-strong: #CAD2DE;
+  --focus: #1E66F5;
+
+  --brand: #FF2B52;
+  --brand-hover: #E91F47;
+  --brand-pressed: #CE173C;
+  --on-brand: #FFFFFF;
+
+  --success: #1E9E62;
+  --warning: #D48806;
+  --danger: #D92D20;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+
+  --shadow-card: 0 4px 16px rgba(16,18,22,.06);
+  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+body {
+  margin: 0;
+  background: var(--bg-base);
+  color: var(--text-primary);
+  font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', sans-serif;
+}
+
+.ds-app {
+  max-width: 420px;
+  margin: 0 auto;
+  min-height: 100dvh;
+  padding: var(--space-4);
+}
+
+.ds-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: var(--space-4);
+}
+
+.ds-title {
+  margin: 0 0 var(--space-2);
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.ds-sub {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+
+.ds-btn {
+  height: 48px;
+  border: none;
+  border-radius: var(--radius-md);
+  font-weight: 700;
+  padding: 0 var(--space-4);
+  transition: transform 180ms var(--ease), background-color 180ms var(--ease);
+}
+
+.ds-btn:active { transform: translateY(1px); }
+
+.ds-btn-primary {
+  background: var(--brand);
+  color: var(--on-brand);
+}
+.ds-btn-primary:hover { background: var(--brand-hover); }
+.ds-btn-primary:active { background: var(--brand-pressed); }
+
+.ds-input {
+  width: 100%;
+  box-sizing: border-box;
+  height: 44px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  padding: 0 12px;
+  background: #fff;
+}
+.ds-input:focus {
+  outline: 2px solid color-mix(in srgb, var(--focus), transparent 70%);
+  border-color: var(--focus);
+}
