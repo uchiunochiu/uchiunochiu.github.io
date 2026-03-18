@@ -28,7 +28,8 @@
       .btn{width:100%;height:42px;border:0;border-radius:10px;background:var(--gs-primary);color:#fff;font-weight:700}
       .btn:active{background:var(--gs-primary-pressed)}
       .rule{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;white-space:pre-wrap;background:#0d0d0d;border:1px solid var(--border);border-radius:10px;padding:10px}
-      .gallery{display:grid;grid-template-columns:repeat(2,minmax(220px,1fr));gap:12px}
+
+      .gallery{display:grid;grid-template-columns:repeat(3,minmax(220px,1fr));gap:12px}
       .tile{border:1px solid var(--border);background:#0f1014;border-radius:12px;padding:12px}
       .tile h4{margin:0 0 8px;font-size:13px}
       .tile .mini{font-size:11px;color:var(--subtle);margin-bottom:8px}
@@ -38,6 +39,10 @@
       .list-item{display:flex;justify-content:space-between;align-items:center;padding:10px;border:1px solid #e2e8f0;border-radius:10px;background:#fff;color:#0f172a}
       .switch{width:38px;height:22px;border-radius:999px;background:#cbd5e1;position:relative}
       .switch::after{content:'';position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:#fff}
+      .pill-alert{padding:8px 10px;border-radius:10px;font-size:12px;background:#fef2f2;color:#991b1b;border:1px solid #fecaca}
+      .mini-progress{height:8px;border-radius:999px;background:#dbeafe;overflow:hidden}
+      .mini-progress>span{display:block;height:100%;width:62%;background:#2563eb}
+      .mini-skeleton{height:12px;border-radius:8px;background:#e2e8f0}
       @media(max-width:980px){.app{grid-template-columns:1fr}.sidebar{border-right:none;border-bottom:1px solid var(--border)}.main{padding:12px}.grid{grid-template-columns:1fr}.gallery{grid-template-columns:1fr}}
     </style>
   </head>
@@ -112,51 +117,31 @@
 
         <section class="card">
           <h3 style="margin:0 0 8px">4) Component Gallery（Mobile / gluestack）</h3>
+          <div class="sub" style="margin-bottom:10px">gluestackの主要コンポーネントをモバイル向けに一覧化（状態プレビュー付き）</div>
           <div class="gallery">
-            <div class="tile">
-              <h4>Buttons</h4>
-              <div class="mini">Primary / Secondary / Destructive</div>
-              <div class="phone" style="padding:10px">
-                <button class="btn">Primary</button>
-                <div style="height:8px"></div>
-                <button class="ghost" style="width:100%">Secondary</button>
-                <div style="height:8px"></div>
-                <button class="btn" style="background:var(--gs-danger)">Destructive</button>
-              </div>
-            </div>
-            <div class="tile">
-              <h4>Inputs + FormControl</h4>
-              <div class="mini">Label / helper / error</div>
-              <div class="phone" style="padding:10px">
-                <div style="font-size:12px;margin-bottom:4px">メール</div>
-                <input class="input" placeholder="name@example.com" />
-                <div style="font-size:11px;color:#64748b;margin-top:4px">確認メールを送信します</div>
-                <div style="font-size:11px;color:#dc2626;margin-top:4px">形式が不正です</div>
-              </div>
-            </div>
-            <div class="tile">
-              <h4>Cards</h4>
-              <div class="mini">Default / Selected / Disabled</div>
-              <div class="phone" style="padding:10px;display:grid;gap:8px">
-                <div class="card-ui">Basic card</div>
-                <div class="card-ui" style="border-color:#2563eb;box-shadow:0 0 0 1px #2563eb inset">Selected card</div>
-                <div class="card-ui" style="opacity:.45">Disabled card</div>
-              </div>
-            </div>
-            <div class="tile">
-              <h4>List / Settings</h4>
-              <div class="mini">List item + switch + badge</div>
-              <div class="phone" style="padding:10px;display:grid;gap:8px">
-                <div class="list-item"><span>通知設定 <span class="chip">new</span></span><span>›</span></div>
-                <div class="list-item"><span>自動更新</span><span class="switch"></span></div>
-              </div>
-            </div>
+            <div class="tile"><h4>Button</h4><div class="mini">solid / outline / destructive / loading</div><div class="phone" style="padding:10px"><button class="btn">Primary</button><div style="height:8px"></div><button class="ghost" style="width:100%">Outline</button><div style="height:8px"></div><button class="btn" style="background:var(--gs-danger)">Destructive</button></div></div>
+            <div class="tile"><h4>Input + FormControl</h4><div class="mini">label / helper / error</div><div class="phone" style="padding:10px"><div style="font-size:12px;margin-bottom:4px">Email</div><input class="input" placeholder="name@example.com"/><div style="font-size:11px;color:#64748b;margin-top:4px">確認メールを送信</div><div style="font-size:11px;color:#dc2626;margin-top:4px">形式が不正</div></div></div>
+            <div class="tile"><h4>Textarea</h4><div class="mini">multiline input</div><div class="phone" style="padding:10px"><div class="input" style="height:84px;padding-top:10px">要望を入力…</div></div></div>
+            <div class="tile"><h4>Checkbox / Radio / Switch</h4><div class="mini">selection controls</div><div class="phone" style="padding:10px;display:grid;gap:8px"><div class="list-item"><span>Checkbox</span><span>☑︎</span></div><div class="list-item"><span>Radio</span><span>◉</span></div><div class="list-item"><span>Switch</span><span class="switch"></span></div></div></div>
+            <div class="tile"><h4>Select / Menu Trigger</h4><div class="mini">single select</div><div class="phone" style="padding:10px"><div class="list-item"><span>プラン選択</span><span>▾</span></div></div></div>
+            <div class="tile"><h4>Card</h4><div class="mini">default / selected / disabled</div><div class="phone" style="padding:10px;display:grid;gap:8px"><div class="card-ui">Basic card</div><div class="card-ui" style="border-color:#2563eb;box-shadow:0 0 0 1px #2563eb inset">Selected card</div><div class="card-ui" style="opacity:.45">Disabled card</div></div></div>
+            <div class="tile"><h4>List Item</h4><div class="mini">navigation / destructive</div><div class="phone" style="padding:10px;display:grid;gap:8px"><div class="list-item"><span>プロフィール</span><span>›</span></div><div class="list-item" style="color:#b91c1c"><span>アカウント削除</span><span>›</span></div></div></div>
+            <div class="tile"><h4>Badge / Chip</h4><div class="mini">status labels</div><div class="phone" style="padding:10px"><span class="chip">new</span><span class="chip">beta</span><span class="chip">done</span></div></div>
+            <div class="tile"><h4>Alert</h4><div class="mini">inline warning/error</div><div class="phone" style="padding:10px"><div class="pill-alert">入力内容を確認してください</div></div></div>
+            <div class="tile"><h4>Toast</h4><div class="mini">ephemeral feedback</div><div class="phone" style="padding:10px"><div class="list-item" style="background:#111827;color:#fff;border-color:#1f2937">保存しました</div></div></div>
+            <div class="tile"><h4>Modal / Dialog</h4><div class="mini">confirmation pattern</div><div class="phone" style="padding:10px"><div class="card-ui"><b>削除しますか？</b><div style="height:8px"></div><button class="btn" style="height:36px">確認</button></div></div></div>
+            <div class="tile"><h4>ActionSheet / Drawer</h4><div class="mini">bottom actions</div><div class="phone" style="padding:10px"><div class="card-ui" style="border-radius:12px 12px 6px 6px">共有 / 編集 / 削除</div></div></div>
+            <div class="tile"><h4>Progress / Spinner</h4><div class="mini">async status</div><div class="phone" style="padding:10px;display:grid;gap:8px"><div class="mini-progress"><span></span></div><div style="font-size:12px">Loading… ⟳</div></div></div>
+            <div class="tile"><h4>Skeleton</h4><div class="mini">loading placeholders</div><div class="phone" style="padding:10px;display:grid;gap:8px"><div class="mini-skeleton" style="width:60%"></div><div class="mini-skeleton"></div><div class="mini-skeleton" style="width:80%"></div></div></div>
+            <div class="tile"><h4>Avatar / Image</h4><div class="mini">media elements</div><div class="phone" style="padding:10px;display:flex;gap:10px;align-items:center"><div style="width:36px;height:36px;border-radius:50%;background:#cbd5e1"></div><div style="width:72px;height:48px;border-radius:8px;background:#e2e8f0"></div></div></div>
+            <div class="tile"><h4>Accordion</h4><div class="mini">expand/collapse content</div><div class="phone" style="padding:10px"><div class="list-item"><span>FAQ 1</span><span>＋</span></div></div></div>
           </div>
         </section>
 
         <section class="card grid">
           <div>
             <h3 style="margin:0 0 8px">5) Screen Recipes</h3>
+
             <table>
               <thead><tr><th>Screen</th><th>Template</th></tr></thead>
               <tbody>

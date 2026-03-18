@@ -29,7 +29,8 @@
       .btn{height:36px;border:1px solid #27272a;border-radius:8px;padding:0 12px;background:#18181b;color:#fafafa}
       .btn.primary{background:var(--gs-primary);border-color:transparent}
       .rule{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;white-space:pre-wrap;background:#0d0d0d;border:1px solid var(--border);border-radius:10px;padding:10px}
-      .gallery{display:grid;grid-template-columns:repeat(2,minmax(280px,1fr));gap:12px}
+
+      .gallery{display:grid;grid-template-columns:repeat(3,minmax(260px,1fr));gap:12px}
       .tile{border:1px solid var(--border);background:#0f1014;border-radius:12px;padding:12px}
       .tile h4{margin:0 0 8px;font-size:13px}
       .tile .mini{font-size:11px;color:var(--subtle);margin-bottom:8px}
@@ -39,6 +40,9 @@
       .tbl{border:1px solid #27272a;border-radius:8px;overflow:hidden}
       .tbl div{padding:8px;border-bottom:1px solid #27272a;font-size:12px}
       .tbl div:last-child{border-bottom:0}
+      .mini-progress{height:8px;border-radius:999px;background:#1e3a8a33;overflow:hidden}
+      .mini-progress>span{display:block;height:100%;width:58%;background:#2563eb}
+      .mini-skeleton{height:12px;border-radius:8px;background:#27272a}
       @media(max-width:980px){.app{grid-template-columns:1fr}.sidebar{border-right:none;border-bottom:1px solid var(--border)}.main{padding:12px}.grid{grid-template-columns:1fr}.gallery{grid-template-columns:1fr}}
     </style>
   </head>
@@ -112,50 +116,27 @@
 
         <section class="card">
           <h3 style="margin:0 0 8px">4) Component Gallery（PC / gluestack）</h3>
+          <div class="sub" style="margin-bottom:10px">管理画面向けの主要コンポーネントをPC密度で一覧化</div>
           <div class="gallery">
-            <div class="tile">
-              <h4>Toolbar Set</h4>
-              <div class="mini">Search + Filter + Primary CTA</div>
-              <div class="panel">
-                <div class="row"><input class="input" placeholder="Search tickets..." style="min-width:0;flex:1" /><button class="btn">Filter</button><button class="btn primary">+ New</button></div>
-                <div><span class="pill">12-col grid</span><span class="pill">gap 8</span><span class="pill">h36 controls</span></div>
-              </div>
-            </div>
-            <div class="tile">
-              <h4>Table Block</h4>
-              <div class="mini">Header + row hover/selected</div>
-              <div class="panel">
-                <div class="tbl">
-                  <div><b>Ticket-101</b> / in_progress</div>
-                  <div style="background:#111827">Ticket-102 / review (selected)</div>
-                  <div>Ticket-103 / blocked</div>
-                </div>
-              </div>
-            </div>
-            <div class="tile">
-              <h4>Form Block</h4>
-              <div class="mini">Label + helper + error</div>
-              <div class="panel">
-                <div style="font-size:12px">Title</div>
-                <input class="input" placeholder="Project title" style="min-width:0;width:100%" />
-                <div style="font-size:11px;color:#a1a1aa">最大80文字</div>
-                <div style="font-size:11px;color:#f87171">必須項目です</div>
-              </div>
-            </div>
-            <div class="tile">
-              <h4>Cards + Badges</h4>
-              <div class="mini">KPI card + status badges</div>
-              <div class="panel">
-                <div class="row" style="justify-content:space-between"><b>Open Tickets</b><span class="pill">42</span></div>
-                <div><span class="pill">planning</span><span class="pill">in_progress</span><span class="pill">review</span></div>
-              </div>
-            </div>
+            <div class="tile"><h4>Toolbar Set</h4><div class="mini">Search + Filter + Primary CTA</div><div class="panel"><div class="row"><input class="input" placeholder="Search tickets..." style="min-width:0;flex:1"/><button class="btn">Filter</button><button class="btn primary">+ New</button></div></div></div>
+            <div class="tile"><h4>Table Block</h4><div class="mini">header / hover / selected</div><div class="panel"><div class="tbl"><div><b>Ticket-101</b> / in_progress</div><div style="background:#111827">Ticket-102 / review</div><div>Ticket-103 / blocked</div></div></div></div>
+            <div class="tile"><h4>Form Controls</h4><div class="mini">label / helper / error</div><div class="panel"><div style="font-size:12px">Project Name</div><input class="input" style="min-width:0;width:100%" placeholder="New dashboard"/><div style="font-size:11px;color:#a1a1aa">最大80文字</div><div style="font-size:11px;color:#f87171">必須項目です</div></div></div>
+            <div class="tile"><h4>Buttons</h4><div class="mini">primary / secondary / ghost / danger</div><div class="panel"><div class="row"><button class="btn primary">Primary</button><button class="btn">Secondary</button><button class="btn" style="background:transparent">Ghost</button><button class="btn" style="background:#7f1d1d">Danger</button></div></div></div>
+            <div class="tile"><h4>Cards + Badge</h4><div class="mini">kpi / status chips</div><div class="panel"><div class="row" style="justify-content:space-between"><b>Open Tickets</b><span class="pill">42</span></div><div><span class="pill">planning</span><span class="pill">in_progress</span><span class="pill">review</span></div></div></div>
+            <div class="tile"><h4>Modal / AlertDialog</h4><div class="mini">confirmation pattern</div><div class="panel"><div style="border:1px solid #27272a;border-radius:8px;padding:10px"><b>Delete ticket?</b><div style="height:8px"></div><div class="row"><button class="btn">Cancel</button><button class="btn" style="background:#7f1d1d">Delete</button></div></div></div></div>
+            <div class="tile"><h4>Drawer / Side Panel</h4><div class="mini">context edit panel</div><div class="panel"><div style="height:74px;border:1px dashed #3f3f46;border-radius:8px;padding:8px">Right Drawer Content</div></div></div>
+            <div class="tile"><h4>Popover / Tooltip</h4><div class="mini">micro interactions</div><div class="panel"><div class="row"><button class="btn">Open Popover</button><span class="pill">Tooltip: status detail</span></div></div></div>
+            <div class="tile"><h4>Menu / Select</h4><div class="mini">actions & filtering</div><div class="panel"><div class="row"><button class="btn">Actions ▾</button><input class="input" style="min-width:160px" placeholder="Status: All"/></div></div></div>
+            <div class="tile"><h4>Accordion</h4><div class="mini">expand/collapse sections</div><div class="panel"><div class="tbl"><div>Section A ＋</div><div>Section B ＋</div></div></div></div>
+            <div class="tile"><h4>Progress / Spinner</h4><div class="mini">long tasks and loading</div><div class="panel"><div class="mini-progress"><span></span></div><div style="font-size:12px">Generating report… ⟳</div></div></div>
+            <div class="tile"><h4>Skeleton</h4><div class="mini">placeholder rows</div><div class="panel"><div class="mini-skeleton" style="width:40%"></div><div class="mini-skeleton"></div><div class="mini-skeleton" style="width:70%"></div></div></div>
           </div>
         </section>
 
         <section class="card grid">
           <div>
             <h3 style="margin:0 0 8px">5) Screen Recipes</h3>
+
             <table>
               <thead><tr><th>Screen</th><th>Template</th></tr></thead>
               <tbody>
