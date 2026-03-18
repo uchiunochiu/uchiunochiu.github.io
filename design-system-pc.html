@@ -29,6 +29,16 @@
       .btn{height:36px;border:1px solid #27272a;border-radius:8px;padding:0 12px;background:#18181b;color:#fafafa}
       .btn.primary{background:var(--gs-primary);border-color:transparent}
       .rule{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;white-space:pre-wrap;background:#0d0d0d;border:1px solid var(--border);border-radius:10px;padding:10px}
+      .desk-sample{background:#0b0c10;border:1px solid #27272a;border-radius:14px;padding:12px;display:grid;gap:10px}
+      .d-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+      .d-col2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+      .widget{border:1px solid #27272a;border-radius:10px;background:#111113;padding:10px}
+      .tiny{font-size:11px;color:#a1a1aa}
+      .toggle{width:40px;height:22px;border-radius:999px;background:#374151;position:relative}
+      .toggle::after{content:'';position:absolute;left:20px;top:2px;width:18px;height:18px;background:#fff;border-radius:50%}
+      .dot{width:30px;height:30px;border-radius:50%;background:#374151}
+      .line{height:10px;background:#27272a;border-radius:8px}
+      .line.s{width:40%}.line.m{width:70%}
 
       .gallery{display:grid;grid-template-columns:repeat(3,minmax(260px,1fr));gap:12px}
       .tile{border:1px solid var(--border);background:#0f1014;border-radius:12px;padding:12px}
@@ -167,6 +177,27 @@
 - 禁止: ad-hocなpx値直書き / 状態未定義コンポーネント
 - 例外: 少佐の明示上書きのみ</div>
         </section>
+
+        <section class="card">
+          <h3 style="margin:0 0 8px">7) Full Component Sample（All / PC）</h3>
+          <div class="sub" style="margin-bottom:10px">gluestack主要コンポーネントを管理画面1ページに集約したデスクトップサンプル。</div>
+          <div class="rule" style="margin-bottom:10px">accordion / actionsheet / alert / alert-dialog / avatar / badge / box / button / card / center / checkbox / divider / drawer / fab / form-control / grid / heading / hstack / icon / image / input / link / menu / modal / popover / portal / pressable / progress / radio / select / skeleton / slider / spinner / switch / table / text / textarea / toast / tooltip / vstack</div>
+          <div class="desk-sample">
+            <div class="d-row"><b>Heading</b><span class="pill">Badge</span><span class="pill">Text</span><span class="pill">Link</span></div>
+            <div class="d-row"><input class="input" placeholder="Input"/><input class="input" placeholder="Select ▾"/><button class="btn">Menu ▾</button><button class="btn primary">Button</button><button class="btn">Pressable</button></div>
+            <div class="d-row"><div class="widget" style="min-width:240px;flex:1"><div class="tiny">FormControl + Textarea</div><div style="height:6px"></div><div class="input" style="height:70px;padding-top:8px;min-width:0;width:100%">Textarea...</div></div><div class="widget" style="min-width:220px"><div class="tiny">Checkbox / Radio / Switch</div><div style="height:6px"></div><div>☑︎ checkbox</div><div>◉ radio</div><div class="toggle"></div></div></div>
+            <div class="d-col2">
+              <div class="widget"><b>Card + Box + VStack/HStack/Grid</b><div class="d-row" style="margin-top:8px"><div class="widget" style="flex:1">Grid A</div><div class="widget" style="flex:1">Grid B</div></div></div>
+              <div class="widget"><b>Avatar / Image / Icon</b><div class="d-row" style="margin-top:8px"><div class="dot"></div><div style="width:72px;height:44px;border-radius:8px;background:#374151"></div><div style="width:18px;height:18px;border-radius:4px;background:#4b5563"></div></div></div>
+            </div>
+            <div class="widget"><b>Table</b><table><tbody><tr><td>Row A</td><td>ok</td></tr><tr><td>Row B</td><td>warn</td></tr></tbody></table></div>
+            <div class="d-col2"><div class="widget"><b>Alert / Toast / Tooltip</b><div style="margin-top:8px;color:#fca5a5">Alert text</div><div style="margin-top:8px" class="pill">Toast (portal)</div><div style="margin-top:8px" class="pill">Tooltip</div></div><div class="widget"><b>Progress / Slider / Spinner / Skeleton</b><div style="margin-top:8px" class="mini-progress"><span></span></div><div style="margin-top:8px" class="mini-progress"><span style="width:30%"></span></div><div style="margin-top:8px">⟳ spinner</div><div style="margin-top:8px" class="line s"></div><div style="margin-top:6px" class="line m"></div></div></div>
+            <div class="d-row"><div class="widget" style="flex:1">Accordion +</div><div class="widget" style="flex:1">Modal / AlertDialog / Drawer / ActionSheet / Popover preview</div><button class="btn primary">FAB</button></div>
+            <hr style="border:none;border-top:1px solid #27272a;width:100%" />
+            <div style="text-align:center" class="tiny">Center + Divider sample</div>
+          </div>
+        </section>
+
       </main>
     </div>
   </body>

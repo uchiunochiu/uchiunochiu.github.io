@@ -28,6 +28,19 @@
       .btn{width:100%;height:42px;border:0;border-radius:10px;background:var(--gs-primary);color:#fff;font-weight:700}
       .btn:active{background:var(--gs-primary-pressed)}
       .rule{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;white-space:pre-wrap;background:#0d0d0d;border:1px solid var(--border);border-radius:10px;padding:10px}
+      .iphone-wrap{display:flex;justify-content:center}
+      .iphone16{width:393px;height:852px;background:#fff;border:10px solid #111827;border-radius:36px;padding:12px;overflow:auto;color:#0f172a;box-shadow:0 24px 50px rgba(0,0,0,.45)}
+      .iphone16 h4{margin:0 0 8px;font-size:15px}
+      .ks-sec{border:1px solid #e2e8f0;border-radius:12px;padding:10px;margin-bottom:10px;background:#fff}
+      .ks-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+      .dot-avatar{width:30px;height:30px;border-radius:50%;background:#cbd5e1}
+      .icon-box{width:20px;height:20px;border-radius:6px;background:#e2e8f0;display:inline-block}
+      .link-t{font-size:12px;color:#2563eb;text-decoration:underline}
+      .fab{position:sticky;left:100%;bottom:8px;width:42px;height:42px;border-radius:999px;background:#2563eb;color:#fff;border:0;font-size:22px;line-height:1}
+      .slider{height:4px;border-radius:999px;background:#dbeafe;position:relative;width:100%}
+      .slider::after{content:'';position:absolute;left:56%;top:-4px;width:12px;height:12px;border-radius:50%;background:#2563eb}
+      .toast-mini{padding:8px 10px;border-radius:10px;background:#0f172a;color:#fff;font-size:12px}
+      .tooltip-mini{display:inline-block;padding:4px 8px;border-radius:6px;background:#111827;color:#fff;font-size:11px}
 
       .gallery{display:grid;grid-template-columns:repeat(3,minmax(220px,1fr));gap:12px}
       .tile{border:1px solid var(--border);background:#0f1014;border-radius:12px;padding:12px}
@@ -174,6 +187,30 @@
 - 禁止: ad-hocなpx値直書き / 状態未定義コンポーネント
 - 例外: 少佐の明示上書きのみ</div>
         </section>
+
+        <section class="card">
+          <h3 style="margin:0 0 8px">7) Full Component Sample（All / Mobile）</h3>
+          <div class="sub" style="margin-bottom:10px">iPhone 16 Proサイズ（393×852）白背景で、gluestack主要コンポーネントを1画面に集約。</div>
+          <div class="rule" style="margin-bottom:10px">accordion / actionsheet / alert / alert-dialog / avatar / badge / box / button / card / center / checkbox / divider / drawer / fab / form-control / grid / heading / hstack / icon / image / input / link / menu / modal / popover / portal / pressable / progress / radio / select / skeleton / slider / spinner / switch / table / text / textarea / toast / tooltip / vstack</div>
+          <div class="iphone-wrap">
+            <div class="iphone16">
+              <div class="ks-sec"><div class="ks-row" style="justify-content:space-between"><b>Heading + Text</b><span class="badge">badge</span></div><div style="font-size:12px;color:#64748b">text component sample</div></div>
+              <div class="ks-sec"><div class="ks-row"><span class="dot-avatar"></span><span class="icon-box"></span><span class="link-t">Link component</span><button class="ghost">Pressable</button></div></div>
+              <div class="ks-sec"><div style="font-size:12px;margin-bottom:6px">FormControl / Input / Textarea</div><input class="input" placeholder="Input"/><div style="height:6px"></div><div class="input" style="height:72px;padding-top:8px">Textarea</div></div>
+              <div class="ks-sec"><div class="ks-row"><div class="list-item" style="flex:1"><span>Checkbox</span><span>☑︎</span></div><div class="list-item" style="flex:1"><span>Radio</span><span>◉</span></div></div><div style="height:8px"></div><div class="list-item"><span>Switch</span><span class="switch"></span></div></div>
+              <div class="ks-sec"><div class="ks-row"><button class="btn" style="flex:1">Button</button><button class="ghost" style="flex:1">Menu ▾</button></div><div style="height:8px"></div><div class="list-item"><span>Select</span><span>▾</span></div></div>
+              <div class="ks-sec"><div class="card-ui">Card + Box + VStack/HStack + Grid</div><div style="height:8px"></div><div class="ks-row"><div class="card-ui" style="flex:1;text-align:center">Grid A</div><div class="card-ui" style="flex:1;text-align:center">Grid B</div></div></div>
+              <div class="ks-sec"><div class="pill-alert">Alert</div><div style="height:8px"></div><div class="toast-mini">Toast (portal)</div><div style="height:8px"></div><div class="tooltip-mini">Tooltip</div></div>
+              <div class="ks-sec"><div style="font-size:12px">Progress / Slider / Spinner / Skeleton</div><div class="mini-progress"><span></span></div><div style="height:8px"></div><div class="slider"></div><div style="height:8px"></div><div style="font-size:12px">⟳ Spinner</div><div style="height:8px"></div><div class="mini-skeleton"></div></div>
+              <div class="ks-sec"><div style="font-size:12px;margin-bottom:6px">Table</div><table><tbody><tr><td>A</td><td>1</td></tr><tr><td>B</td><td>2</td></tr></tbody></table></div>
+              <div class="ks-sec"><div class="list-item"><span>Accordion</span><span>＋</span></div><div style="height:8px"></div><div class="list-item"><span>Modal / AlertDialog / Drawer / ActionSheet / Popover</span><span>preview</span></div></div>
+              <hr style="border:none;border-top:1px solid #e2e8f0" />
+              <div style="text-align:center;font-size:11px;color:#94a3b8">Center + Divider sample</div>
+              <button class="fab">＋</button>
+            </div>
+          </div>
+        </section>
+
       </main>
     </div>
   </body>
