@@ -11,16 +11,23 @@
     .input{width:100%;padding:10px;border:1px solid #22305a;border-radius:8px;background:#0e1530;color:#fff}
     .btn{margin-top:12px;padding:10px 14px;border-radius:8px;border:1px solid #22305a;background:#1d4ed8;color:#fff}
     label{display:block;margin-top:10px}
+    .sub{font-size:12px;color:#b9c4ea;margin-top:4px}
   </style>
 </head>
 <body>
   <main class="wrap">
     <section class="card">
       <h1>minClaw 申込フォーム</h1>
-      <p>以下2項目を入力してください。</p>
+      <p>以下4項目を入力してください。</p>
       <form onsubmit="event.preventDefault();alert('申込を受け付けました（デモ）');">
         <label>企業名<input class="input" required placeholder="株式会社サンプル" /></label>
         <label>申込者氏名<input class="input" required placeholder="山田 太郎" /></label>
+        <label>LINE user id<input class="input" required placeholder="Uxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" /></label>
+        <label>
+          サイトslug（半角英数字20文字以内）
+          <input class="input" required maxlength="20" pattern="[A-Za-z0-9]{1,20}" placeholder="Acompany01" />
+          <div class="sub">公開URLは /minClaw/&lt;slug&gt;/ 形式で作成されます。</div>
+        </label>
         <button class="btn" type="submit">申込する</button>
       </form>
     </section>
