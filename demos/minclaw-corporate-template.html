@@ -46,6 +46,11 @@
       background:color-mix(in srgb, var(--bg), #fff 30%);
     }
     .header-in{height:74px;display:flex;align-items:center;justify-content:space-between}
+    .hero-banner{width:100%;height:min(44vw,420px);border-bottom:1px solid var(--line);overflow:hidden;position:relative}
+    .hero-banner img{width:100%;height:100%;object-fit:cover;object-position:center 38%}
+    .hero-banner::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,22,37,.14),rgba(8,22,37,.38))}
+    .hero-banner .overlay{position:absolute;left:50%;bottom:22px;transform:translateX(-50%);width:min(1160px,100%);padding:0 24px;color:#fff;z-index:2}
+    .hero-banner .overlay b{font-family:Manrope,sans-serif;font-size:clamp(24px,4.2vw,44px);line-height:1.12;display:block}
     .brand{display:flex;align-items:center;gap:12px}
     .brand-mark{width:34px;height:34px;border-radius:10px;background:linear-gradient(145deg,#20b7df,#0b7ea8)}
     .brand-name{font-family:Manrope,sans-serif;font-weight:800;letter-spacing:.02em}
@@ -144,6 +149,14 @@
     </div>
   </header>
 
+  <section class="hero-banner" aria-label="hero">
+    <img src="https://images.unsplash.com/photo-1581595219315-a187dd40c322?auto=format&fit=crop&w=2200&q=80" alt="clinic hero wide" />
+    <div class="overlay">
+      <b>{{COMPANY_NAME}}</b>
+      <div>地域に寄り添う、やさしい医療を。</div>
+    </div>
+  </section>
+
   <main>
     <section class="hero">
       <div class="container hero-grid">
@@ -155,10 +168,7 @@
             <a class="btn primary" href="#contact">初診のご予約</a>
             <a class="btn sub" href="#services">診療案内を見る</a>
           </div>
-          <div class="hero-photo">
-            <img src="https://images.unsplash.com/photo-1631815589968-fdb09a223b1e?auto=format&fit=crop&w=1400&q=80" alt="clinic hero" />
-          </div>
-        </article>
+                  </article>
 
         <aside class="hero-side">
           <section class="panel">
