@@ -3,212 +3,228 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>minClaw | SMB向けLINE業務整理</title>
-  <meta name="description" content="ITに詳しくない中小企業オーナー向け。LINE起点で業務を整理するminClawのサービスページ。" />
+  <title>minClaw | LINEで整える、SMBの業務運用</title>
+  <meta name="description" content="ITに詳しくない中小企業オーナー向け。LINE起点で業務運用を整える minClaw サービスページ。" />
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap');
 
     :root{
-      --bg:#f6f8fb;
-      --surface:#ffffff;
-      --line:#e3e8f1;
-      --ink:#111827;
-      --sub:#5f6b7e;
+      --bg:#f4f7fc;
+      --ink:#0f172a;
+      --sub:#5f6b7d;
+      --line:#dbe3f1;
+      --card:#ffffff;
       --brand:#2563eb;
-      --brand-deep:#1d4ed8;
+      --brand-deep:#1e4fd0;
       --ok:#06c755;
-      --radius:14px;
-      --shadow:0 8px 24px rgba(17,24,39,.06);
-      --max:1040px;
+      --ok-deep:#05a848;
+      --max:1120px;
+      --radius:16px;
+      --shadow:0 18px 40px rgba(15,23,42,.10);
     }
 
     *{box-sizing:border-box}
     body{
       margin:0;
-      font-family:"Noto Sans JP",system-ui,sans-serif;
+      background:
+        radial-gradient(1000px 480px at -12% -12%, #dbeafe 0%, transparent 60%),
+        radial-gradient(860px 420px at 110% -8%, #cffafe 0%, transparent 57%),
+        var(--bg);
       color:var(--ink);
-      background:var(--bg);
+      font-family:"Noto Sans JP",system-ui,sans-serif;
       line-height:1.75;
     }
 
-    .container{max-width:var(--max);margin:0 auto;padding:28px 18px 46px}
+    .container{max-width:var(--max);margin:0 auto;padding:18px}
 
     .hero{
-      background:var(--surface);
+      border-radius:24px;
+      overflow:hidden;
       border:1px solid var(--line);
-      border-radius:20px;
-      padding:34px;
       box-shadow:var(--shadow);
+      background:#fff;
+    }
+
+    .hero-media{
+      height:min(48vw,420px);
+      position:relative;
+      overflow:hidden;
+    }
+    .hero-media img{
+      width:100%;height:100%;object-fit:cover;object-position:center 38%;
+      transform:scale(1.03);
+      animation:heroZoom 10s ease-in-out infinite alternate;
+      filter:saturate(1.05) contrast(1.02);
+    }
+    .hero-media::after{
+      content:"";
+      position:absolute;inset:0;
+      background:linear-gradient(180deg, rgba(7,14,29,.12), rgba(7,14,29,.58));
+    }
+    @keyframes heroZoom { from { transform:scale(1.02); } to { transform:scale(1.08); } }
+
+    .hero-body{position:relative;margin-top:-126px;padding:0 18px 18px}
+    .hero-card{
+      position:relative;
+      z-index:1;
+      background:rgba(255,255,255,.94);
+      border:1px solid #d8e2f5;
+      border-radius:18px;
+      padding:20px;
+      backdrop-filter:blur(6px);
+      box-shadow:0 14px 34px rgba(15,23,42,.14);
     }
 
     .badge{
-      display:inline-flex;
-      align-items:center;
-      padding:5px 10px;
-      border-radius:999px;
-      border:1px solid #cad7ef;
-      background:#f2f6ff;
-      color:#1f4aa5;
-      font-size:12px;
-      font-weight:700;
+      display:inline-flex;align-items:center;
+      border:1px solid #c6d6f5;background:#eef4ff;color:#1f4aa5;
+      border-radius:999px;padding:5px 10px;font-size:12px;font-weight:700;
     }
 
     h1{
-      margin:14px 0 12px;
+      margin:12px 0 10px;
       font-family:Manrope,"Noto Sans JP",sans-serif;
-      font-size:clamp(30px,4.8vw,48px);
-      line-height:1.15;
+      font-size:clamp(30px,5.6vw,54px);
+      line-height:1.1;
       letter-spacing:.01em;
     }
 
     .lead{margin:0;max-width:760px;color:var(--sub);font-size:16px}
 
-    .line-box{
-      margin-top:18px;
-      padding:12px;
-      border:1px solid #a8e3c2;
+    .line-callout{
+      margin-top:14px;
+      padding:11px 12px;
+      border:1px solid #9fe2bb;
       border-radius:12px;
       background:#effff6;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      flex-wrap:wrap;
+      display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;
     }
 
-    .actions{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap}
+    .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
     .btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      height:42px;
-      padding:0 14px;
-      border-radius:10px;
-      border:1px solid transparent;
-      text-decoration:none;
-      font-size:14px;
-      font-weight:700;
-      transition:.16s ease;
+      display:inline-flex;align-items:center;justify-content:center;
+      height:42px;padding:0 14px;border-radius:11px;border:1px solid transparent;
+      text-decoration:none;font-weight:700;font-size:14px;transition:.18s ease;
     }
     .btn:hover{transform:translateY(-1px)}
-    .btn.primary{background:var(--brand);color:#fff}
-    .btn.primary:hover{background:var(--brand-deep)}
-    .btn.ghost{background:#fff;border-color:#cfd7e6;color:#23324d}
-    .btn.line{background:var(--ok);border-color:#62d495;color:#072310}
+    .btn.primary{background:linear-gradient(135deg,var(--brand),var(--brand-deep));color:#fff}
+    .btn.ghost{background:#fff;border-color:#cdd8eb;color:#263754}
+    .btn.line{background:var(--ok);border-color:#62d495;color:#05220f}
+    .btn.line:hover{background:var(--ok-deep);color:#fff}
 
-    .section{margin-top:22px}
-    .section h2{margin:0 0 10px;font-family:Manrope,sans-serif;font-size:25px}
+    .section{margin-top:20px}
+    .section h2{margin:0 0 10px;font-family:Manrope,sans-serif;font-size:26px}
 
-    .grid{
-      display:grid;
-      grid-template-columns:repeat(3,minmax(0,1fr));
-      gap:12px;
-    }
-
+    .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
     .card{
-      background:var(--surface);
+      background:var(--card);
       border:1px solid var(--line);
       border-radius:var(--radius);
       padding:16px;
-      box-shadow:0 2px 8px rgba(17,24,39,.04);
+      box-shadow:0 6px 18px rgba(15,23,42,.05);
     }
-
     .card h3{margin:0 0 8px;font-size:17px}
     .card p{margin:0;color:var(--sub);font-size:14px}
 
-    .table-box{
+    .table-wrap{
       border:1px solid var(--line);
       border-radius:var(--radius);
-      overflow:hidden;
-      background:var(--surface);
-      box-shadow:0 2px 8px rgba(17,24,39,.04);
+      overflow:auto;
+      background:#fff;
+      box-shadow:0 6px 18px rgba(15,23,42,.05);
     }
-
-    table{width:100%;border-collapse:collapse}
-    th,td{padding:12px;border-bottom:1px solid #edf1f7;text-align:left;font-size:14px}
-    th{background:#f9fbfe;color:#5f6b7e;font-weight:700}
+    table{width:100%;border-collapse:collapse;min-width:660px}
+    th,td{padding:11px 12px;border-bottom:1px solid #edf1f8;text-align:left;font-size:14px}
+    th{background:#f8fbff;color:#61708a;font-weight:700}
     tr:last-child td{border-bottom:0}
 
     .footer-cta{
-      margin-top:24px;
-      background:#fff;
-      border:1px solid var(--line);
-      border-radius:16px;
-      padding:20px;
+      margin-top:22px;
+      border-radius:18px;
+      background:linear-gradient(145deg,#0f1f3d,#123261 70%);
+      color:#e8f1ff;
+      padding:22px;
       box-shadow:var(--shadow);
     }
+    .footer-cta p{color:#c8d9fa;margin:8px 0 0}
 
-    .footer-cta p{margin:8px 0 0;color:var(--sub)}
-    footer{margin-top:16px;text-align:center;font-size:12px;color:#7a869b}
+    footer{margin:18px 0 8px;text-align:center;color:#77839a;font-size:12px}
 
-    @media (max-width:900px){
-      .hero{padding:22px}
+    @media (max-width:920px){
+      .hero-media{height:300px}
+      .hero-body{margin-top:-86px;padding:0 12px 12px}
+      .hero-card{padding:16px}
       .grid{grid-template-columns:1fr}
-      th,td{font-size:13px}
     }
   </style>
 </head>
 <body>
   <div class="container">
     <section class="hero">
-      <span class="badge">ITに詳しくないオーナー向け</span>
-      <h1>LINEだけで、<br>業務を整える。</h1>
-      <p class="lead">minClawは、予約・連絡・週次確認をLINE起点で一本化するサービスです。いまの運用を崩さず、少しずつ業務を整えていけます。</p>
-
-      <div class="line-box">
-        <strong>まずは10分、現状の運用を相談する</strong>
-        <a class="btn line" href="https://line.me/R/ti/p/@629ngkws" target="_blank" rel="noreferrer">LINEで相談</a>
+      <div class="hero-media">
+        <img src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?auto=format&fit=crop&w=2200&q=80" alt="small business owner" />
       </div>
 
-      <div class="actions">
-        <a class="btn primary" href="#pain">課題を見る</a>
-        <a class="btn ghost" href="#value">価値を見る</a>
+      <div class="hero-body">
+        <article class="hero-card">
+          <span class="badge">ITが苦手なオーナーでも使える設計</span>
+          <h1>LINEだけで、<br>業務が整う。</h1>
+          <p class="lead">minClawは、予約・連絡・週次確認をLINE起点で一本化するサービスです。いまの運用を崩さず、少しずつムダを減らしていけます。</p>
+
+          <div class="line-callout">
+            <strong>まずは10分、現状の運用を相談</strong>
+            <a class="btn line" href="https://line.me/R/ti/p/@629ngkws" target="_blank" rel="noreferrer">LINEで相談する</a>
+          </div>
+
+          <div class="actions">
+            <a class="btn primary" href="#pain">課題を見る</a>
+            <a class="btn ghost" href="#value">価値を見る</a>
+          </div>
+        </article>
       </div>
     </section>
 
-    <section id="pain" class="section">
+    <section class="section" id="pain">
       <h2>よくある課題</h2>
       <div class="grid">
         <article class="card">
           <h3>対応窓口が分かれている</h3>
-          <p>LINE、電話、口頭で情報が散らばり、確認漏れが起きる。</p>
+          <p>LINE・電話・口頭に情報が散らばり、確認漏れが発生しやすい。</p>
         </article>
         <article class="card">
           <h3>引き継ぎが属人的</h3>
-          <p>担当者が変わるたびに履歴確認が必要で、対応品質に差が出る。</p>
+          <p>担当者変更のたびに履歴確認が必要で、対応品質が揺れる。</p>
         </article>
         <article class="card">
           <h3>忙しくて改善に手が回らない</h3>
-          <p>日々の作業に追われ、オーナーが判断すべきことに時間を使えない。</p>
+          <p>日々の運用に追われ、オーナーが経営判断に時間を使いづらい。</p>
         </article>
       </div>
     </section>
 
-    <section id="value" class="section">
-      <h2>minClawの提供価値</h2>
+    <section class="section" id="value">
+      <h2>minClawが提供する価値</h2>
       <div class="grid">
         <article class="card">
           <h3>受付の一元化</h3>
-          <p>LINEを共通窓口にして、対応漏れを減らす。</p>
+          <p>LINEを共通窓口にして、問い合わせ対応の漏れを減らす。</p>
         </article>
         <article class="card">
           <h3>運用の標準化</h3>
-          <p>定型業務を整理し、誰でも同じ品質で対応できる状態を作る。</p>
+          <p>定型対応を整理し、誰が対応しても品質を保てるようにする。</p>
         </article>
         <article class="card">
           <h3>状況の見える化</h3>
-          <p>週次で状況を確認し、次の打ち手を早く決められる。</p>
+          <p>週次で運用状況を確認し、次に打つ施策を決めやすくする。</p>
         </article>
       </div>
     </section>
 
     <section class="section">
       <h2>導入プラン（例）</h2>
-      <div class="table-box">
+      <div class="table-wrap">
         <table>
-          <thead>
-            <tr><th>プラン</th><th>対象</th><th>主な機能</th><th>価格</th></tr>
-          </thead>
+          <thead><tr><th>プラン</th><th>対象</th><th>主な機能</th><th>価格</th></tr></thead>
           <tbody>
             <tr><td>Starter</td><td>小規模店舗</td><td>受付整理 / 基本運用</td><td>¥19,800/月</td></tr>
             <tr><td>Growth</td><td>複数担当運用</td><td>Starter + 週次可視化 + 権限管理</td><td>¥39,800/月</td></tr>
@@ -220,13 +236,13 @@
 
     <section class="footer-cta" id="contact">
       <h2 style="margin:0;font-family:Manrope,sans-serif;font-size:24px">導入前に、現状整理から始めます。</h2>
-      <p>「何を、どこから変えるべきか」を一緒に整理し、無理のない導入ステップを提案します。</p>
+      <p>「どこから変えるべきか」を一緒に整理し、無理のない導入ステップを提案します。</p>
       <div class="actions" style="margin-top:12px">
         <a class="btn line" href="https://line.me/R/ti/p/@629ngkws" target="_blank" rel="noreferrer">LINEで相談する</a>
       </div>
     </section>
 
-    <footer>minClaw Service Demo / trust-minimal v2</footer>
+    <footer>minClaw Service Demo / trust-minimal hero-enhanced</footer>
   </div>
 </body>
 </html>
