@@ -3,214 +3,169 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>CaddyCo — モバイルモックアップ</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Syne:wght@600;700&display=swap" rel="stylesheet">
+  <title>CaddyCo モバイルプロトタイプ</title>
   <style>
     :root {
-      /* 4px grid */
-      --u-1: 4px;
-      --u-2: 8px;
-      --u-3: 12px;
-      --u-4: 16px;
-      --u-5: 20px;
-      --u-6: 24px;
-      --u-8: 32px;
+      /* 4pt Grid */
+      --space-1: 4px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-6: 24px;
 
       --bg: #ffffff;
-      --panel: #ffffff;
-      --ink: #1f2328;
-      --muted: #6b7280;
-      --line: #e7e5e4;
-      --line-strong: #d6d3d1;
-      --accent-blue: #7f99ad;
-      --accent-amber: #b9a16f;
-      --accent-green: #8ca58f;
+      --surface: #ffffff;
+      --text: #1f2328;
+      --muted: #66707c;
+      --line: #e5e7eb;
+      --line-strong: #d1d5db;
+      --soft: #f8fafc;
 
-      --radius-card: 20px;
+      --radius-card: 12px;
+      --radius-control: 12px;
       --radius-pill: 999px;
-      --radius-sm: 12px;
+
       --shadow-soft: 0 1px 2px rgba(15, 23, 42, 0.06);
-      --shadow-lift: 0 6px 16px rgba(15, 23, 42, 0.08);
+
+      --tap-min: 44px;
     }
 
     * { box-sizing: border-box; }
 
     body {
       margin: 0;
-      min-height: 100vh;
-      font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", "Meiryo", sans-serif;
-      color: var(--ink);
       background: var(--bg);
-      padding: 0;
+      color: var(--text);
+      font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", "Meiryo", sans-serif;
+      min-height: 100vh;
     }
 
-    .phone {
-      width: 100%;
+    .app {
       max-width: 430px;
-      min-height: 100dvh;
       margin: 0 auto;
-      border-radius: 0;
-      border: none;
+      min-height: 100dvh;
       background: var(--bg);
-      box-shadow: none;
-      overflow: hidden;
       position: relative;
       display: flex;
       flex-direction: column;
     }
 
-    .statusbar {
+    .status {
       height: 32px;
+      padding: 0 var(--space-4) var(--space-1);
       display: flex;
       align-items: end;
       justify-content: space-between;
-      padding: 0 var(--u-4) var(--u-1);
+      color: var(--muted);
       font-size: 12px;
       font-weight: 600;
-      color: #6b7280;
     }
 
     .screen {
       display: none;
       flex: 1;
       overflow: auto;
-      padding: var(--u-4) var(--u-4) 104px;
-      scrollbar-width: thin;
-      scrollbar-color: #cfcfcf transparent;
-      animation: in 180ms ease;
+      padding: var(--space-4) var(--space-4) 96px;
+      animation: fade-in 140ms ease;
     }
 
     .screen.active { display: block; }
 
-    @keyframes in {
-      from { opacity: 0; transform: translateY(6px); }
+    @keyframes fade-in {
+      from { opacity: 0; transform: translateY(4px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    h1, h2, h3, p { margin: 0; }
+    .section-gap > * + * { margin-top: var(--space-4); }
 
-    .hero {
-      padding: var(--u-4);
-      border-radius: var(--radius-card);
-      background: var(--panel);
+    .card {
+      background: var(--surface);
       border: 1px solid var(--line);
-      color: var(--ink);
-      position: relative;
+      border-radius: var(--radius-card);
+      padding: var(--space-4);
       box-shadow: var(--shadow-soft);
-      margin-bottom: var(--u-4);
     }
 
-    .hero::before {
-      content: "";
-      position: absolute;
-      left: var(--u-4);
-      top: var(--u-4);
-      width: 44px;
-      height: 1px;
-      border-radius: 999px;
-      background: #d6d3d1;
-      opacity: 0.9;
+    .hero-title {
+      font-size: 28px;
+      line-height: 1.25;
+      margin: 0;
+      letter-spacing: 0;
     }
 
     .brand-row {
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      gap: var(--u-2);
-      margin-bottom: var(--u-8);
-      margin-top: var(--u-2);
+      align-items: center;
+      gap: var(--space-2);
+      margin-bottom: var(--space-4);
     }
 
     .brand-chip {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-pill);
+      min-height: var(--tap-min);
+      padding: 0 var(--space-3);
       display: inline-flex;
       align-items: center;
-      gap: var(--u-2);
-      padding: var(--u-2) var(--u-3);
-      border-radius: var(--radius-pill);
-      border: 1px solid var(--line);
-      background: #fafaf9;
+      gap: var(--space-2);
       font-size: 12px;
-      font-weight: 600;
-      color: #505866;
+      color: #4b5563;
+      background: #ffffff;
     }
 
     .logo {
-      width: 28px;
-      height: 28px;
-      border-radius: 9px;
+      width: 24px;
+      height: 24px;
+      border-radius: 8px;
+      background: #111827;
+      color: #ffffff;
       display: grid;
       place-items: center;
-      background: #111111;
-      color: #ffffff;
-      font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", "Meiryo", sans-serif;
+      font-size: 12px;
       font-weight: 700;
-      font-size: 13px;
     }
 
-    .title {
-      font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", "Meiryo", sans-serif;
-      font-size: 27px;
-      letter-spacing: -0.02em;
-      margin-bottom: var(--u-2);
-      line-height: 1.14;
-      color: #20242b;
-    }
+    h1, h2, h3, p { margin: 0; }
 
-    .sub {
-      color: #6b7280;
-      font-size: 14px;
-      line-height: 1.55;
-    }
-
-    .surface {
-      background: var(--panel);
-      border: 1px solid var(--line);
-      border-radius: var(--radius-card);
-      box-shadow: var(--shadow-soft);
-      padding: var(--u-4);
-      margin-bottom: var(--u-3);
-    }
-
-    .top {
+    .title-row {
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      gap: var(--u-3);
-      margin-bottom: var(--u-3);
+      align-items: start;
+      gap: var(--space-3);
+      margin-bottom: var(--space-4);
     }
 
-    .screen-title {
-      font-size: 20px;
-      font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", "Meiryo", sans-serif;
-      letter-spacing: -0.01em;
-      color: #22262c;
-    }
+    .screen-title { font-size: 20px; line-height: 1.4; }
+    .muted { color: var(--muted); font-size: 13px; line-height: 1.5; }
 
     .chip {
-      font-size: 12px;
-      font-weight: 600;
-      color: #5c6573;
       border: 1px solid var(--line);
-      padding: 6px 10px;
       border-radius: var(--radius-pill);
+      min-height: var(--tap-min);
+      padding: 0 var(--space-3);
+      display: inline-flex;
+      align-items: center;
+      font-size: 12px;
+      font-weight: 700;
+      color: #4b5563;
       white-space: nowrap;
-      background: #fafaf9;
     }
+
+    .form-group + .form-group { margin-top: var(--space-3); }
 
     .grid-2 {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: var(--u-2);
+      gap: var(--space-2);
     }
 
     label {
       display: block;
+      margin-bottom: var(--space-2);
       font-size: 12px;
       color: var(--muted);
-      margin-bottom: var(--u-1);
-      font-weight: 600;
+      font-weight: 700;
     }
 
     input, select, textarea, button {
@@ -220,181 +175,95 @@
 
     input, select, textarea {
       width: 100%;
-      min-height: 44px;
+      min-height: var(--tap-min);
       border: 1px solid var(--line-strong);
-      border-radius: 12px;
-      padding: 10px 12px;
-      background: #fcfcfb;
-      color: var(--ink);
+      border-radius: var(--radius-control);
+      padding: 0 var(--space-3);
+      color: var(--text);
+      background: #ffffff;
       outline: none;
     }
 
     textarea {
-      min-height: 88px;
+      padding-top: var(--space-3);
+      min-height: 96px;
       resize: vertical;
     }
 
     .btn {
       width: 100%;
-      min-height: 44px;
-      border-radius: 14px;
+      min-height: var(--tap-min);
+      border-radius: var(--radius-control);
       border: 1px solid transparent;
       font-weight: 700;
       cursor: pointer;
-      transition: transform .14s ease, background-color .14s ease, border-color .14s ease;
+      background: #ffffff;
+      color: var(--text);
     }
 
-    .btn:active { transform: translateY(1px) scale(.99); }
+    .btn + .btn { margin-top: var(--space-2); }
 
     .btn-primary {
-      background: #16181b;
-      color: #f8f8f8;
-      border-color: #16181b;
-      box-shadow: var(--shadow-soft);
+      background: #111827;
+      border-color: #111827;
+      color: #ffffff;
     }
 
     .btn-secondary {
-      background: #fbfbfa;
-      color: #343b46;
       border-color: var(--line-strong);
+      color: #374151;
+      background: #ffffff;
     }
 
-    .btn-google {
-      background: #fff;
-      border: 1px solid var(--line-strong);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: var(--u-2);
-      color: #2e3642;
-    }
-
-    .g-dot {
-      width: 16px;
-      height: 16px;
-      border-radius: 50%;
-      border: 2px solid #a8adb5;
-      background: transparent;
-      opacity: 0.75;
-    }
-
-    .kpi-row {
+    .kpi-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: var(--u-2);
-      margin-top: var(--u-3);
+      gap: var(--space-2);
     }
 
     .kpi {
-      border-radius: 14px;
-      background: #fafaf9;
       border: 1px solid var(--line);
-      padding: var(--u-2);
-      position: relative;
-      overflow: hidden;
+      border-radius: var(--radius-card);
+      background: var(--soft);
+      padding: var(--space-2);
     }
 
-    .kpi::before {
-      content: "";
-      position: absolute;
-      left: 10px;
-      top: 8px;
-      width: 18px;
-      height: 2px;
-      border-radius: 999px;
-      background: #d6d3d1;
-      opacity: 1;
-    }
+    .kpi b { display: block; font-size: 18px; margin-bottom: var(--space-1); }
+    .kpi span { font-size: 11px; color: var(--muted); }
 
-    .kpi b { font-size: 18px; display: block; margin-top: 4px; }
-    .kpi p { margin-top: 2px; color: #68707e; font-size: 11px; }
-
-    .score-wrap {
-      text-align: center;
-      padding: var(--u-3);
-      background: #f7f7f6;
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      color: #222831;
-      margin-bottom: var(--u-3);
-    }
-
-    .hole { font-size: 13px; color: #6b7280; }
-    .hole-no { font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", "Meiryo", sans-serif; font-size: 52px; line-height: 1; margin: var(--u-2) 0; }
-    .hole-meta { font-size: 13px; color: #6f7783; }
-
-    .controls {
-      display: grid;
-      grid-template-columns: 52px 1fr 52px;
-      gap: var(--u-2);
-      align-items: center;
-      margin-bottom: var(--u-2);
-    }
-
-    .icon-btn {
-      min-height: 52px;
-      border-radius: 12px;
-      border: 1px solid var(--line-strong);
-      background: #fff;
-      font-size: 24px;
-      font-weight: 600;
-      color: #2b3340;
-      cursor: pointer;
-    }
-
-    .counter {
-      min-height: 52px;
-      border-radius: 12px;
-      border: 1px solid var(--line-strong);
-      background: #fff;
-      color: #1e242d;
-      display: grid;
-      place-items: center;
-      font-size: 28px;
-      font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", "Meiryo", sans-serif;
-    }
-
-    .pills { display: flex; flex-wrap: wrap; gap: var(--u-2); justify-content: center; }
-
-    .pill {
-      min-height: 44px;
-      border-radius: var(--radius-pill);
-      border: 1px solid var(--line-strong);
-      background: #fff;
-      color: #4c5564;
-      padding: 10px 12px;
+    .criteria {
+      border: 1px dashed var(--line-strong);
+      border-radius: var(--radius-card);
+      padding: var(--space-3);
+      background: #ffffff;
       font-size: 12px;
-      font-weight: 600;
-      cursor: pointer;
+      color: #374151;
+      line-height: 1.5;
     }
 
-    .pill.active {
-      border-color: #b7c8d5;
-      color: #304453;
-      background: #f5f8fa;
-    }
+    .criteria b { display: block; margin-bottom: var(--space-1); }
 
     .meter {
-      margin-bottom: var(--u-3);
       border: 1px solid var(--line);
-      border-radius: 12px;
-      padding: var(--u-2);
-      background: #fafaf9;
+      border-radius: var(--radius-card);
+      background: var(--soft);
+      padding: var(--space-3);
+      margin-bottom: var(--space-3);
     }
 
-    .meter-top {
+    .meter-head {
       display: flex;
       justify-content: space-between;
-      margin-bottom: var(--u-2);
       font-size: 12px;
-      color: #646d7b;
-      font-weight: 600;
+      font-weight: 700;
+      color: #4b5563;
+      margin-bottom: var(--space-2);
     }
 
     .bar {
       height: 8px;
       border-radius: var(--radius-pill);
-      background: #e2e4e8;
+      background: #e5e7eb;
       overflow: hidden;
     }
 
@@ -402,506 +271,492 @@
       display: block;
       height: 100%;
       width: 0;
-      background: #a8adb5;
-      transition: width .2s ease;
+      background: #9ca3af;
+      transition: width 160ms ease;
+    }
+
+    .score-card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-card);
+      background: #ffffff;
+      padding: var(--space-4);
+      text-align: center;
+      margin-bottom: var(--space-3);
+    }
+
+    .hole-no {
+      font-size: 52px;
+      line-height: 1;
+      margin: var(--space-2) 0;
+    }
+
+    .controls {
+      display: grid;
+      grid-template-columns: 52px 1fr 52px;
+      gap: var(--space-2);
+      margin-bottom: var(--space-3);
+    }
+
+    .icon-btn, .counter {
+      min-height: 52px;
+      border: 1px solid var(--line-strong);
+      border-radius: var(--radius-control);
+      background: #ffffff;
+    }
+
+    .icon-btn { font-size: 24px; cursor: pointer; }
+    .counter { display: grid; place-items: center; font-size: 28px; font-weight: 700; }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+      margin-bottom: var(--space-3);
+    }
+
+    .pill {
+      min-height: var(--tap-min);
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--line-strong);
+      padding: 0 var(--space-3);
+      background: #ffffff;
+      color: #4b5563;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .pill.active {
+      border-color: #9ca3af;
+      background: #f3f4f6;
+      color: #111827;
     }
 
     .toggle {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: var(--u-2);
-      padding: var(--u-1);
-      border-radius: 14px;
+      gap: var(--space-2);
       border: 1px solid var(--line);
-      background: #f7f7f6;
-      margin-top: var(--u-2);
+      border-radius: var(--radius-card);
+      padding: var(--space-1);
+      background: var(--soft);
     }
 
     .toggle button {
-      min-height: 44px;
+      min-height: var(--tap-min);
       border: 0;
       border-radius: 10px;
       background: transparent;
-      color: #68707e;
+      color: #6b7280;
       font-weight: 700;
       cursor: pointer;
     }
 
     .toggle button.active {
-      background: #fff;
-      color: #232a34;
+      background: #ffffff;
+      color: #111827;
       box-shadow: var(--shadow-soft);
-    }
-
-    .feed-item, .history-item {
-      border-radius: 14px;
-      border: 1px solid var(--line);
-      background: #fff;
-      padding: var(--u-3);
-      margin-bottom: var(--u-2);
-      position: relative;
-      box-shadow: var(--shadow-soft);
-    }
-
-    .feed-item::before,
-    .history-item::before {
-      content: "";
-      position: absolute;
-      left: 10px;
-      top: 11px;
-      width: 3px;
-      height: 18px;
-      border-radius: 999px;
-      opacity: 0.85;
-      background: var(--accent-blue);
-    }
-
-    #timelinePanel .feed-item:nth-child(2)::before { background: var(--accent-amber); }
-    #friendsPanel .feed-item:nth-child(1)::before { background: var(--accent-green); }
-    #friendsPanel .feed-item:nth-child(2)::before { background: var(--accent-blue); }
-    .history-item:nth-of-type(2)::before { background: var(--accent-amber); }
-    .history-item:nth-of-type(3)::before { background: var(--accent-green); }
-
-    .feed-meta {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: var(--u-2);
-      font-size: 12px;
-      color: #66707d;
-      font-weight: 600;
     }
 
     .tweet-list {
-      background: #fff;
       border: 1px solid var(--line);
-      border-radius: 16px;
+      border-radius: var(--radius-card);
       overflow: hidden;
-      box-shadow: var(--shadow-soft);
+      background: #ffffff;
     }
 
     .tweet {
       display: grid;
       grid-template-columns: 40px 1fr;
-      gap: var(--u-3);
-      padding: var(--u-3);
+      gap: var(--space-3);
+      padding: var(--space-3) var(--space-4);
       border-bottom: 1px solid var(--line);
-      background: #fff;
     }
 
     .tweet:last-child { border-bottom: none; }
 
-    .tweet-avatar {
+    .avatar {
       width: 40px;
       height: 40px;
       border-radius: 999px;
-      background: #eceff3;
-      color: #252b33;
+      border: 1px solid #d1d5db;
+      background: #f3f4f6;
       display: grid;
       place-items: center;
       font-size: 12px;
       font-weight: 700;
-      border: 1px solid #dde2e8;
     }
 
     .tweet-head {
       display: flex;
       align-items: center;
-      gap: 6px;
-      font-size: 13px;
-      margin-bottom: 4px;
+      gap: var(--space-1);
+      margin-bottom: var(--space-1);
+      font-size: 12px;
       color: #6b7280;
     }
 
     .tweet-head strong {
-      color: #1f2328;
+      color: #111827;
       font-size: 14px;
     }
 
     .tweet-body {
       font-size: 14px;
       line-height: 1.5;
-      color: #1f2328;
-      margin-bottom: var(--u-2);
+      margin-bottom: var(--space-2);
     }
 
     .tweet-actions {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: var(--u-1);
+      gap: var(--space-1);
     }
 
     .tweet-actions button {
-      min-height: 44px;
+      min-height: var(--tap-min);
       border: 0;
       border-radius: 10px;
-      background: transparent;
+      background: #ffffff;
       color: #6b7280;
-      font-size: 12px;
-      font-weight: 600;
-      cursor: pointer;
       text-align: left;
-      padding-left: var(--u-2);
-    }
-
-    .tweet-actions button:hover { background: #f8fafc; }
-
-    .follow-list {
-      background: #fff;
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: var(--shadow-soft);
-    }
-
-    .follow-item {
-      display: grid;
-      grid-template-columns: 40px 1fr auto;
-      gap: var(--u-3);
-      align-items: center;
-      padding: var(--u-3);
-      border-bottom: 1px solid var(--line);
-    }
-
-    .follow-item:last-child { border-bottom: none; }
-
-    .follow-meta strong { display: block; font-size: 14px; }
-    .follow-meta span { color: #6b7280; font-size: 12px; }
-
-    .follow-btn {
-      min-height: 44px;
-      border-radius: 999px;
-      border: 1px solid #d7dce3;
-      background: #fff;
-      color: #20262e;
-      padding: 0 var(--u-3);
-      font-weight: 700;
-      font-size: 12px;
+      padding-left: var(--space-2);
       cursor: pointer;
+      font-size: 12px;
+      font-weight: 700;
     }
 
     .history-item {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-card);
+      padding: var(--space-3) var(--space-4);
       display: grid;
       grid-template-columns: 1fr auto;
-      gap: var(--u-2);
+      gap: var(--space-2);
       align-items: center;
+      background: #ffffff;
     }
 
-    .score-badge {
-      padding: 6px 10px;
+    .history-list > * + * { margin-top: var(--space-3); }
+
+    .badge {
+      min-height: var(--tap-min);
       border-radius: var(--radius-pill);
       border: 1px solid var(--line-strong);
-      background: #fafaf9;
-      color: #4c5564;
+      display: inline-flex;
+      align-items: center;
+      padding: 0 var(--space-3);
       font-size: 12px;
       font-weight: 700;
-      min-height: 28px;
-      display: grid;
-      place-items: center;
+      color: #374151;
+      background: #ffffff;
     }
-
-    .applied-ref {
-      margin-top: var(--u-3);
-      padding: var(--u-2) var(--u-3);
-      background: #f7f7f6;
-      border: 1px dashed var(--line-strong);
-      border-radius: 12px;
-      font-size: 12px;
-      color: #616b78;
-    }
-
-    .applied-ref b { color: #2b3340; }
 
     .bottom-nav {
-      position: absolute;
-      left: var(--u-3);
-      right: var(--u-3);
-      bottom: var(--u-3);
-      border-radius: 18px;
-      border: none;
-      background: #111111;
-      backdrop-filter: none;
-      padding: var(--u-1);
       display: none;
+      position: absolute;
+      left: var(--space-4);
+      right: var(--space-4);
+      bottom: var(--space-4);
+      border: 1px solid #111827;
+      border-radius: 16px;
+      background: #111827;
+      padding: var(--space-1);
       grid-template-columns: repeat(4, 1fr);
-      box-shadow: var(--shadow-lift);
+      gap: var(--space-1);
     }
 
     .bottom-nav.show { display: grid; }
 
     .tab-btn {
-      min-height: 52px;
+      min-height: 48px;
       border: 0;
-      border-radius: 14px;
+      border-radius: 12px;
       background: transparent;
-      color: #9aa0a6;
-      display: grid;
-      place-items: center;
-      gap: 2px;
-      cursor: pointer;
+      color: #9ca3af;
       font-size: 11px;
       font-weight: 700;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      gap: var(--space-1);
     }
-
-    .tab-btn .icon { font-size: 16px; line-height: 1; }
 
     .tab-btn.active {
-      background: #252525;
-      color: #f5f5f5;
-    }
-
-    .muted { color: var(--muted); font-size: 13px; line-height: 1.5; }
-    .mb-2 { margin-bottom: var(--u-2); }
-    .mb-3 { margin-bottom: var(--u-3); }
-    .mt-2 { margin-top: var(--u-2); }
-    .mt-3 { margin-top: var(--u-3); }
-
-    @media (max-width: 390px) {
-      body { padding: var(--u-2); }
-      .phone { min-width: 0; width: 100%; }
-      .title { font-size: 25px; }
-      .screen { padding-left: var(--u-3); padding-right: var(--u-3); }
+      background: #1f2937;
+      color: #f9fafb;
     }
   </style>
 </head>
 <body>
-  <main class="phone" aria-label="CaddyCo mobile mockup">
-    <div class="statusbar">
-      <span>19:53</span>
+  <main class="app" aria-label="CaddyCo mobile prototype">
+    <div class="status">
+      <span>20:44</span>
       <span>CaddyCo</span>
       <span>5G ▰▰▰</span>
     </div>
 
     <section class="screen active" data-screen="login">
-      <div class="hero">
-        <div class="brand-row">
-          <div class="brand-chip"><span class="logo">C</span>CaddyCo</div>
-          <div class="brand-chip">Round OS</div>
-        </div>
-        <h1 class="title">Golf rhythm,<br>captured live.</h1>
-        <p class="sub">Start rounds in two taps, track each hole, then share clean score stories with your foursome.</p>
+      <div class="section-gap">
+        <article class="card">
+          <div class="brand-row">
+            <div class="brand-chip"><span class="logo">C</span><span>CaddyCo</span></div>
+            <div class="brand-chip">ゴルフ記録</div>
+          </div>
+          <h1 class="hero-title">ラウンドを、
+            <br>その場で残す。</h1>
+          <p class="muted" style="margin-top: var(--space-2);">開始・記録・共有をひとつの流れで。4人ラウンドの進行に合わせたモバイル体験です。</p>
+        </article>
+
+        <article class="card">
+          <h2 class="screen-title" style="margin-bottom: var(--space-2);">ログイン</h2>
+          <p class="muted" style="margin-bottom: var(--space-4);">スコア履歴とフィードを同期します。</p>
+          <button class="btn btn-primary" id="googleLoginBtn">Googleでログイン</button>
+        </article>
+
+        <article class="card">
+          <div class="kpi-grid">
+            <div class="kpi"><b>11.2</b><span>ハンディ</span></div>
+            <div class="kpi"><b>62%</b><span>FWキープ率</span></div>
+            <div class="kpi"><b>29.8</b><span>平均パット</span></div>
+          </div>
+          <div class="criteria" style="margin-top: var(--space-4);">
+            <b>適用デザイン基準</b>
+            app-design-system / REF-003 / REF-010 / REF-016
+          </div>
+        </article>
       </div>
-
-      <article class="surface">
-        <h2 class="screen-title mb-2">おかえりなさい</h2>
-        <p class="muted mb-3">Sign in to sync handicap trends, course memories, and social highlights.</p>
-        <button class="btn btn-google" id="googleLoginBtn"><span class="g-dot"></span>Googleで続行</button>
-        <p class="muted mt-2">By continuing, you accept CaddyCo Terms and Privacy.</p>
-      </article>
-
-      <article class="surface">
-        <div class="kpi-row">
-          <div class="kpi"><b>11.2</b><p>HCP Index</p></div>
-          <div class="kpi"><b>62%</b><p>Fairway Hit</p></div>
-          <div class="kpi"><b>29.8</b><p>Putts/Round</p></div>
-        </div>
-        <div class="applied-ref">
-          <b>適用リファレンス</b><br>
-          REF-004 (dark focal card contrast), REF-010 (profile + feed cohesion), REF-016 (history + detail hierarchy)
-        </div>
-      </article>
     </section>
 
-    <section class="screen" data-screen="create">
-      <div class="top">
+    <section class="screen" data-screen="start">
+      <div class="title-row">
         <div>
-          <h2 class="screen-title">Start new round</h2>
-          <p class="muted">Set course, format, and tee in one compact panel.</p>
+          <h2 class="screen-title">ラウンド開始</h2>
+          <p class="muted">コース情報を入力して開始します。</p>
         </div>
-        <span class="chip">Step 1</span>
+        <span class="chip">開始</span>
       </div>
 
-      <article class="surface">
-        <div class="grid-2 mb-2">
+      <article class="card">
+        <div class="form-group grid-2">
           <div>
             <label>コース</label>
             <select>
-              <option>Sakura Hills Golf Club</option>
-              <option>Bayline Country Club</option>
-              <option>Green Harbor Links</option>
+              <option>さくらヒルズGC</option>
+              <option>ベイラインCC</option>
+              <option>グリーンハーバーリンクス</option>
             </select>
           </div>
           <div>
             <label>ホール数</label>
-            <select><option>18</option><option>9</option></select>
+            <select>
+              <option>18</option>
+              <option>9</option>
+            </select>
           </div>
         </div>
 
-        <div class="grid-2 mb-2">
+        <div class="form-group grid-2">
           <div>
             <label>ティー</label>
-            <select><option>Regular</option><option>Back</option><option>Front</option></select>
+            <select>
+              <option>レギュラー</option>
+              <option>バック</option>
+              <option>フロント</option>
+            </select>
           </div>
           <div>
-            <label>Format</label>
-            <select><option>ストロークプレー</option><option>マッチプレー</option></select>
+            <label>形式</label>
+            <select>
+              <option>ストロークプレー</option>
+              <option>マッチプレー</option>
+            </select>
           </div>
         </div>
 
-        <div class="grid-2 mb-3">
-          <div><label>日付</label><input type="date" value="2026-03-20"></div>
-          <div><label>Time</label><input type="time" value="08:10"></div>
+        <div class="form-group grid-2" style="margin-bottom: var(--space-4);">
+          <div>
+            <label>日付</label>
+            <input type="date" value="2026-03-21" />
+          </div>
+          <div>
+            <label>スタート時刻</label>
+            <input type="time" value="08:10" />
+          </div>
         </div>
 
-        <button class="btn btn-primary" id="startRoundBtn">ティー off now</button>
+        <button class="btn btn-primary" id="startRoundBtn">この条件で開始</button>
       </article>
     </section>
 
     <section class="screen" data-screen="score">
-      <div class="top">
+      <div class="title-row">
         <div>
-          <h2 class="screen-title">Live scorecard</h2>
-          <p class="muted">Sakura Hills · ストロークプレー</p>
+          <h2 class="screen-title">スコア入力</h2>
+          <p class="muted">さくらヒルズGC・ストロークプレー</p>
         </div>
-        <span class="chip">Step 2</span>
+        <span class="chip">記録</span>
       </div>
 
-      <article class="surface">
+      <article class="card">
         <div class="meter">
-          <div class="meter-top">
+          <div class="meter-head">
             <span id="progressText">ホール 1 / 18</span>
             <span id="runningTotal">合計 E</span>
           </div>
           <div class="bar"><span id="progressFill"></span></div>
         </div>
 
-        <div class="score-wrap">
-          <div class="hole">現在のホール</div>
+        <div class="score-card">
+          <p class="muted">現在ホール</p>
           <div class="hole-no" id="holeNumber">1</div>
-          <div class="hole-meta" id="holeMeta">Par 4 · 384y</div>
+          <p class="muted" id="holeMeta">Par 4 ・ 384y</p>
         </div>
 
         <div class="controls">
-          <button class="icon-btn" id="minusBtn" aria-label="Decrease stroke">−</button>
+          <button class="icon-btn" id="minusBtn" aria-label="打数を減らす">−</button>
           <div class="counter" id="strokeCount">4</div>
-          <button class="icon-btn" id="plusBtn" aria-label="Increase stroke">+</button>
+          <button class="icon-btn" id="plusBtn" aria-label="打数を増やす">＋</button>
         </div>
 
-        <div class="pills mb-3" id="quickScoreTags"></div>
+        <div class="pill-row" id="quickScoreTags"></div>
 
-        <div class="grid-2 mb-2">
-          <button class="btn btn-secondary" id="prevHoleBtn">Prev</button>
-          <button class="btn btn-primary" id="nextHoleBtn">Save + Next</button>
+        <div class="grid-2" style="margin-bottom: var(--space-2);">
+          <button class="btn btn-secondary" id="prevHoleBtn">前のホール</button>
+          <button class="btn btn-primary" id="nextHoleBtn">保存して次へ</button>
         </div>
-        <button class="btn btn-secondary" id="finishRoundBtn">Finish round</button>
+        <button class="btn btn-secondary" id="finishRoundBtn">ここで終了</button>
       </article>
     </section>
 
     <section class="screen" data-screen="complete">
-      <div class="top">
+      <div class="title-row">
         <div>
-          <h2 class="screen-title">Round complete</h2>
-          <p class="muted">Publish to your feed with one short note.</p>
+          <h2 class="screen-title">ラウンド完了</h2>
+          <p class="muted">ひとこと添えてフィードへ投稿できます。</p>
         </div>
-        <span class="chip">Step 3</span>
+        <span class="chip">完了</span>
       </div>
 
-      <article class="surface">
-        <div class="feed-meta mb-2"><span>Sakura Hills GC</span><span id="finalScorePill">Final +0</span></div>
-        <label>キャプション</label>
-        <textarea placeholder="Best iron day this month. Saved par twice on the back nine."></textarea>
+      <article class="card">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: var(--space-3);">
+          <span class="muted">さくらヒルズGC</span>
+          <span class="badge" id="finalScorePill">最終 E</span>
+        </div>
 
-        <label class="mt-3">Visibility</label>
+        <label>コメント</label>
+        <textarea placeholder="後半は寄せが安定。次回はパットの再現性を上げたい。"></textarea>
+
+        <label style="margin-top: var(--space-4);">公開範囲</label>
         <div class="toggle" id="visibilityToggle">
           <button class="active" data-vis="friends">フレンド</button>
           <button data-vis="private">非公開</button>
         </div>
 
-        <button class="btn btn-primary mt-3" id="publishPostBtn">Publish score story</button>
+        <button class="btn btn-primary" id="publishPostBtn" style="margin-top: var(--space-4);">フィードに投稿</button>
       </article>
     </section>
 
-    <section class="screen" data-screen="timeline">
-      <div class="top">
+    <section class="screen" data-screen="feed">
+      <div class="title-row">
         <div>
-          <h2 class="screen-title">Club feed</h2>
-          <p class="muted">Score stories, reactions, and playing buddies.</p>
+          <h2 class="screen-title">フィード</h2>
+          <p class="muted">Xライクなタイムラインで近況を確認。</p>
         </div>
-        <span class="chip">Step 4</span>
+        <span class="chip">SNS</span>
       </div>
 
-      <div class="toggle mb-3" id="timelineSwitch">
+      <div class="toggle" id="feedSwitch" style="margin-bottom: var(--space-3);">
         <button class="active" data-tab="timeline">タイムライン</button>
         <button data-tab="friends">フレンド</button>
       </div>
 
       <div id="timelinePanel" class="tweet-list">
         <article class="tweet">
-          <div class="tweet-avatar">YOU</div>
+          <div class="avatar">YOU</div>
           <div>
             <div class="tweet-head"><strong>あなた</strong><span>@you</span><span>・今</span></div>
-            <p class="tweet-body">今日のラウンドは +6。後半の寄せは安定、次はパット精度を上げたい。</p>
+            <p class="tweet-body">今日のラウンドは +6。後半で寄せが安定。次はパット精度を詰めます。</p>
             <div class="tweet-actions">
-              <button>💬 4</button>
-              <button>🔁 1</button>
-              <button>♡ 14</button>
-              <button>↗ 共有</button>
+              <button>返信 4</button>
+              <button>再投稿 1</button>
+              <button>いいね 14</button>
+              <button>共有</button>
             </div>
           </div>
         </article>
 
         <article class="tweet">
-          <div class="tweet-avatar">MK</div>
+          <div class="avatar">MK</div>
           <div>
-            <div class="tweet-head"><strong>Mai K.</strong><span>@mai_72</span><span>・2時間</span></div>
-            <p class="tweet-body">18番のバーディーパットが入った。風は強かったけど、締めは最高。</p>
+            <div class="tweet-head"><strong>Mai K.</strong><span>@mai_72</span><span>・2時間前</span></div>
+            <p class="tweet-body">18番のバーディーパットが入った。風は強かったけど締めは最高。</p>
             <div class="tweet-actions">
-              <button>💬 2</button>
-              <button>🔁 0</button>
-              <button>♡ 9</button>
-              <button>↗ 共有</button>
+              <button>返信 2</button>
+              <button>再投稿 0</button>
+              <button>いいね 9</button>
+              <button>共有</button>
             </div>
           </div>
         </article>
       </div>
 
-      <div id="friendsPanel" class="follow-list" style="display:none">
-        <article class="follow-item">
-          <div class="tweet-avatar">MK</div>
-          <div class="follow-meta">
-            <strong>Mai K.</strong>
-            <span>@mai_72 ・ HCP 11</span>
+      <div id="friendsPanel" class="tweet-list" style="display:none;">
+        <article class="tweet">
+          <div class="avatar">RT</div>
+          <div>
+            <div class="tweet-head"><strong>Ryo T.</strong><span>@ryo_t</span><span>・HCP 7</span></div>
+            <p class="tweet-body">次の土曜、午前スタートで回れる方いますか？</p>
+            <div class="tweet-actions">
+              <button>返信</button>
+              <button>見る</button>
+              <button>フォロー中</button>
+              <button>共有</button>
+            </div>
           </div>
-          <button class="follow-btn">フォロー中</button>
-        </article>
-        <article class="follow-item">
-          <div class="tweet-avatar">RT</div>
-          <div class="follow-meta">
-            <strong>Ryo T.</strong>
-            <span>@ryo_t ・ HCP 7</span>
-          </div>
-          <button class="follow-btn">フォロー</button>
         </article>
       </div>
     </section>
 
     <section class="screen" data-screen="history">
-      <div class="top">
+      <div class="title-row">
         <div>
-          <h2 class="screen-title">Round history</h2>
-          <p class="muted">Recent rounds and score trend snapshots.</p>
+          <h2 class="screen-title">履歴</h2>
+          <p class="muted">最近のラウンド結果を一覧で確認。</p>
         </div>
-        <span class="chip">Step 5</span>
+        <span class="chip">履歴</span>
       </div>
 
-      <article class="history-item">
-        <div><strong>Sakura Hills GC</strong><p class="muted">2026-03-20 · Stroke · 18H</p></div>
-        <span class="score-badge">+6</span>
-      </article>
-      <article class="history-item">
-        <div><strong>Bayline Country Club</strong><p class="muted">2026-03-14 · Stroke · 18H</p></div>
-        <span class="score-badge">+8</span>
-      </article>
-      <article class="history-item">
-        <div><strong>Green Harbor Links</strong><p class="muted">2026-03-06 · Match · 18H</p></div>
-        <span class="score-badge">+4</span>
-      </article>
+      <div class="history-list">
+        <article class="history-item">
+          <div>
+            <strong>さくらヒルズGC</strong>
+            <p class="muted">2026-03-21 ・ ストローク ・ 18H</p>
+          </div>
+          <span class="badge">+6</span>
+        </article>
+        <article class="history-item">
+          <div>
+            <strong>ベイラインCC</strong>
+            <p class="muted">2026-03-14 ・ ストローク ・ 18H</p>
+          </div>
+          <span class="badge">+8</span>
+        </article>
+        <article class="history-item">
+          <div>
+            <strong>グリーンハーバーリンクス</strong>
+            <p class="muted">2026-03-06 ・ マッチ ・ 18H</p>
+          </div>
+          <span class="badge">+4</span>
+        </article>
+      </div>
     </section>
 
     <nav class="bottom-nav" id="bottomNav" aria-label="メインナビゲーション">
-      <button class="tab-btn" data-target="create"><span class="icon">⛳</span><span>開始</span></button>
-      <button class="tab-btn" data-target="score"><span class="icon">#</span><span>記録</span></button>
-      <button class="tab-btn" data-target="timeline"><span class="icon">◎</span><span>フィード</span></button>
-      <button class="tab-btn" data-target="history"><span class="icon">☰</span><span>履歴</span></button>
+      <button class="tab-btn" data-target="start"><span>開始</span></button>
+      <button class="tab-btn" data-target="score"><span>記録</span></button>
+      <button class="tab-btn" data-target="feed"><span>フィード</span></button>
+      <button class="tab-btn" data-target="history"><span>履歴</span></button>
     </nav>
   </main>
 
@@ -933,7 +788,7 @@
       const wrap = document.getElementById('quickScoreTags');
 
       wrap.innerHTML = candidates.map(value => {
-        const label = value === par - 1 ? `Birdie ${value}` : value;
+        const label = value === par - 1 ? `バーディー ${value}` : `${value}`;
         const active = appState.strokeInput === value ? 'active' : '';
         return `<button class="pill ${active}" data-score="${value}">${label}</button>`;
       }).join('');
@@ -948,16 +803,16 @@
 
     function renderScoreScreen() {
       const idx = appState.hole - 1;
-      const currentSaved = appState.strokes[idx];
-      if (currentSaved != null) appState.strokeInput = currentSaved;
+      const saved = appState.strokes[idx];
+      if (saved != null) appState.strokeInput = saved;
 
       document.getElementById('holeNumber').textContent = appState.hole;
-      document.getElementById('holeMeta').textContent = `Par ${pars[idx]} · ${yards[idx]}y`;
+      document.getElementById('holeMeta').textContent = `Par ${pars[idx]} ・ ${yards[idx]}y`;
       document.getElementById('strokeCount').textContent = appState.strokeInput;
       document.getElementById('progressText').textContent = `ホール ${appState.hole} / 18`;
 
       const total = totalVsPar();
-      const totalText = total === 0 ? 'E' : total > 0 ? `+${total}` : `${total}`;
+      const totalText = total === 0 ? 'E' : (total > 0 ? `+${total}` : `${total}`);
       document.getElementById('runningTotal').textContent = `合計 ${totalText}`;
       document.getElementById('progressFill').style.width = `${(appState.hole / 18) * 100}%`;
 
@@ -981,12 +836,12 @@
       if (name === 'score') renderScoreScreen();
       if (name === 'complete') {
         const final = totalVsPar();
-        const finalText = final === 0 ? 'E' : final > 0 ? `+${final}` : `${final}`;
-        document.getElementById('finalScorePill').textContent = `Final ${finalText}`;
+        const finalText = final === 0 ? 'E' : (final > 0 ? `+${final}` : `${final}`);
+        document.getElementById('finalScorePill').textContent = `最終 ${finalText}`;
       }
     }
 
-    document.getElementById('googleLoginBtn').addEventListener('click', () => showScreen('create'));
+    document.getElementById('googleLoginBtn').addEventListener('click', () => showScreen('start'));
     document.getElementById('startRoundBtn').addEventListener('click', () => showScreen('score'));
 
     document.getElementById('minusBtn').addEventListener('click', () => {
@@ -1022,7 +877,7 @@
       showScreen('complete');
     });
 
-    document.getElementById('publishPostBtn').addEventListener('click', () => showScreen('timeline'));
+    document.getElementById('publishPostBtn').addEventListener('click', () => showScreen('feed'));
 
     document.getElementById('visibilityToggle').addEventListener('click', (e) => {
       const btn = e.target.closest('button[data-vis]');
@@ -1031,11 +886,10 @@
       document.querySelectorAll('#visibilityToggle button').forEach(b => b.classList.toggle('active', b === btn));
     });
 
-    document.getElementById('timelineSwitch').addEventListener('click', (e) => {
+    document.getElementById('feedSwitch').addEventListener('click', (e) => {
       const btn = e.target.closest('button[data-tab]');
       if (!btn) return;
-      document.querySelectorAll('#timelineSwitch button').forEach(b => b.classList.toggle('active', b === btn));
-
+      document.querySelectorAll('#feedSwitch button').forEach(b => b.classList.toggle('active', b === btn));
       const tab = btn.dataset.tab;
       document.getElementById('timelinePanel').style.display = tab === 'timeline' ? 'block' : 'none';
       document.getElementById('friendsPanel').style.display = tab === 'friends' ? 'block' : 'none';
