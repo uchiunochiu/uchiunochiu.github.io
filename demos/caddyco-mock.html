@@ -2,25 +2,40 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CaddyCo — Mobile App Mock</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>CaddyCo — Mobile Mockup</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Syne:wght@600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #071017;
-      --surface: #0f1f2f;
-      --surface-2: #13283b;
-      --card: #162f45;
-      --line: rgba(255, 255, 255, 0.11);
-      --text: #eff7ff;
-      --muted: #9eb6c8;
-      --green: #21c577;
-      --green-2: #11a65f;
-      --gold: #ffc86b;
-      --blue: #4ea7ff;
-      --danger: #ff6f79;
-      --shadow: 0 18px 45px rgba(0, 0, 0, 0.45);
-      --radius: 22px;
+      /* 4px grid */
+      --u-1: 4px;
+      --u-2: 8px;
+      --u-3: 12px;
+      --u-4: 16px;
+      --u-5: 20px;
+      --u-6: 24px;
+      --u-8: 32px;
+
+      --bg: #f4f5f7;
+      --ink: #111317;
+      --muted: #6b7280;
+      --panel: #ffffff;
+      --line: #e4e8ee;
+      --line-strong: #ccd4df;
+      --accent: #1f7a53;
+      --accent-soft: #e6f5ee;
+      --night: #171b21;
+      --night-2: #212832;
+      --gold: #d59a2a;
+      --danger: #cb5c61;
+
+      --radius-card: 20px;
+      --radius-pill: 999px;
       --radius-sm: 12px;
+      --shadow-soft: 0 16px 36px rgba(20, 30, 45, 0.09);
+      --shadow-lift: 0 22px 42px rgba(13, 24, 38, 0.2);
     }
 
     * { box-sizing: border-box; }
@@ -30,520 +45,525 @@
       min-height: 100vh;
       display: grid;
       place-items: center;
-      color: var(--text);
-      font-family: "Avenir Next", "SF Pro Display", "Segoe UI", sans-serif;
+      font-family: "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
       background:
-        radial-gradient(80vw 80vw at 15% -12%, #1d4f7e 0%, transparent 55%),
-        radial-gradient(55vw 55vw at 102% 106%, #1e6b4f 0%, transparent 58%),
-        linear-gradient(170deg, #03080d 0%, #081421 50%, #060d15 100%);
-      padding: 16px;
+        radial-gradient(80vw 80vw at 100% -10%, rgba(141, 170, 186, 0.25) 0%, transparent 55%),
+        radial-gradient(70vw 70vw at -10% 105%, rgba(155, 187, 146, 0.2) 0%, transparent 60%),
+        linear-gradient(160deg, #eef1f5 0%, #f8f8fb 50%, #eceff3 100%);
+      padding: var(--u-4);
     }
 
     .phone {
-      width: 100%;
-      max-width: 410px;
-      height: min(880px, 95vh);
+      width: min(100%, 390px);
+      min-width: 360px;
+      height: min(860px, 96vh);
       border-radius: 38px;
-      border: 1px solid rgba(255, 255, 255, 0.17);
-      background: linear-gradient(180deg, rgba(8, 20, 33, 0.98) 0%, rgba(7, 16, 24, 0.98) 100%);
-      backdrop-filter: blur(12px);
-      box-shadow: 0 26px 70px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(30, 44, 58, 0.16);
+      background: linear-gradient(180deg, #fcfdff 0%, #f3f5f8 100%);
+      box-shadow: var(--shadow-lift), inset 0 1px 0 rgba(255, 255, 255, 0.86);
       overflow: hidden;
+      position: relative;
       display: flex;
       flex-direction: column;
-      position: relative;
     }
 
     .statusbar {
-      height: 30px;
-      font-size: 12px;
-      color: #b9ccdc;
+      height: 32px;
       display: flex;
-      align-items: center;
+      align-items: end;
       justify-content: space-between;
-      padding: 12px 18px 2px;
+      padding: 0 var(--u-4) var(--u-1);
+      font-size: 12px;
+      font-weight: 700;
+      color: #576173;
     }
 
     .screen {
       display: none;
       flex: 1;
       overflow: auto;
-      padding: 14px 16px 96px;
-      animation: fade 220ms ease;
+      padding: var(--u-4) var(--u-4) 104px;
       scrollbar-width: thin;
-      scrollbar-color: var(--line) transparent;
+      scrollbar-color: #cdd3dc transparent;
+      animation: in 220ms ease;
     }
 
     .screen.active { display: block; }
 
-    @keyframes fade {
-      from { opacity: 0; transform: translateY(10px); }
+    @keyframes in {
+      from { opacity: 0; transform: translateY(8px); }
       to { opacity: 1; transform: translateY(0); }
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      margin-top: 42px;
-      margin-bottom: 16px;
-      font-weight: 700;
-      letter-spacing: 0.6px;
-    }
-
-    .brand-mark {
-      width: 34px;
-      height: 34px;
-      border-radius: 12px;
-      display: grid;
-      place-items: center;
-      background: linear-gradient(145deg, var(--green), #38dea0);
-      color: #072111;
-      font-weight: 800;
-      box-shadow: 0 12px 24px rgba(33, 197, 119, 0.45);
     }
 
     h1, h2, h3, p { margin: 0; }
 
-    h1 {
-      font-size: 26px;
-      line-height: 1.2;
-      margin-bottom: 8px;
-      letter-spacing: -0.3px;
+    .hero {
+      padding: var(--u-4);
+      border-radius: var(--radius-card);
+      background:
+        linear-gradient(150deg, rgba(23, 27, 33, 0.95), rgba(36, 44, 55, 0.96)),
+        url('../../paperclip-design-gallery/assets/ref-004-planning-calendar.jpg') center/cover;
+      color: #f6f8fb;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow-soft);
+      margin-bottom: var(--u-4);
     }
 
-    .subtitle {
-      color: var(--muted);
-      line-height: 1.4;
-      font-size: 14px;
-      margin-bottom: 22px;
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(14, 17, 22, 0.12), rgba(14, 17, 22, 0.55));
+      pointer-events: none;
     }
 
-    .card {
-      background: linear-gradient(145deg, rgba(24, 51, 73, 0.93), rgba(14, 35, 52, 0.95));
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      padding: 15px;
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
-    }
+    .hero > * { position: relative; z-index: 1; }
 
-    .btn {
-      width: 100%;
-      border: none;
-      border-radius: 14px;
-      min-height: 48px;
-      font-weight: 700;
-      cursor: pointer;
-      font-size: 15px;
-      transition: transform 0.14s ease, filter 0.14s ease;
-    }
-
-    .btn:active { transform: scale(0.985); }
-
-    .btn-primary {
-      background: linear-gradient(145deg, var(--green), var(--green-2));
-      color: #042012;
-      box-shadow: 0 12px 20px rgba(17, 166, 95, 0.32);
-    }
-
-    .btn-secondary {
-      background: #193248;
-      border: 1px solid var(--line);
-      color: var(--text);
-    }
-
-    .btn-google {
-      margin-top: 16px;
+    .brand-row {
       display: flex;
       align-items: center;
-      justify-content: center;
-      gap: 9px;
-      background: #fff;
-      color: #1f3b52;
-      border-radius: 14px;
-      min-height: 52px;
-      font-weight: 700;
-      border: none;
-      cursor: pointer;
+      justify-content: space-between;
+      gap: var(--u-2);
+      margin-bottom: var(--u-8);
     }
 
-    .btn-google .g {
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
+    .brand-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--u-2);
+      padding: var(--u-2) var(--u-3);
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      background: rgba(255, 255, 255, 0.1);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .logo {
+      width: 28px;
+      height: 28px;
+      border-radius: 9px;
       display: grid;
       place-items: center;
-      background: conic-gradient(from 210deg, #ea4335 0 25%, #fbbc05 25% 50%, #34a853 50% 75%, #4285f4 75% 100%);
-      color: #fff;
-      font-size: 12px;
-      font-weight: 900;
+      background: linear-gradient(145deg, #35be7a, #1f7a53);
+      font-family: "Syne", sans-serif;
+      font-weight: 700;
     }
 
-    .top-row {
+    .title {
+      font-family: "Syne", sans-serif;
+      font-size: 28px;
+      letter-spacing: -0.03em;
+      margin-bottom: var(--u-2);
+      line-height: 1.12;
+    }
+
+    .sub {
+      color: #c7d0dc;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .surface {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-soft);
+      padding: var(--u-4);
+      margin-bottom: var(--u-3);
+    }
+
+    .top {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 10px;
+      gap: var(--u-3);
+      margin-bottom: var(--u-3);
+    }
+
+    .screen-title {
+      font-size: 20px;
+      font-family: "Syne", sans-serif;
+      letter-spacing: -0.02em;
     }
 
     .chip {
       font-size: 12px;
-      border: 1px solid var(--line);
-      color: var(--muted);
-      padding: 5px 10px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.03);
+      font-weight: 700;
+      color: #4d5a6b;
+      border: 1px solid var(--line-strong);
+      padding: 6px 10px;
+      border-radius: var(--radius-pill);
+      white-space: nowrap;
+      background: #f9fafc;
     }
 
     .grid-2 {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-top: 12px;
+      gap: var(--u-2);
     }
 
     label {
+      display: block;
       font-size: 12px;
       color: var(--muted);
-      display: block;
-      margin-bottom: 5px;
+      margin-bottom: var(--u-1);
+      font-weight: 700;
+    }
+
+    input, select, textarea, button {
+      font-family: inherit;
+      font-size: 14px;
     }
 
     input, select, textarea {
       width: 100%;
-      background: rgba(255, 255, 255, 0.03);
-      color: var(--text);
-      border: 1px solid var(--line);
+      min-height: 44px;
+      border: 1px solid var(--line-strong);
       border-radius: 12px;
-      padding: 11px;
-      font-size: 14px;
+      padding: 10px 12px;
+      background: #fcfdff;
+      color: var(--ink);
       outline: none;
     }
 
     textarea {
-      min-height: 84px;
+      min-height: 88px;
       resize: vertical;
-      font-family: inherit;
     }
 
-    .mt-12 { margin-top: 12px; }
-    .mt-16 { margin-top: 16px; }
-    .mt-20 { margin-top: 20px; }
-
-    .score-shell {
-      text-align: center;
-      margin-top: 6px;
-    }
-
-    .hole-index {
-      font-size: 14px;
-      color: var(--muted);
-      margin-bottom: 5px;
-    }
-
-    .hole-number {
-      font-size: 56px;
+    .btn {
+      width: 100%;
+      min-height: 44px;
+      border-radius: 14px;
+      border: 1px solid transparent;
       font-weight: 800;
-      line-height: 1;
-      margin-bottom: 6px;
+      cursor: pointer;
+      transition: transform .14s ease, filter .14s ease;
     }
 
-    .hole-meta {
-      color: var(--muted);
-      font-size: 13px;
-      margin-bottom: 16px;
+    .btn:active { transform: translateY(1px) scale(.99); }
+
+    .btn-primary {
+      background: linear-gradient(145deg, #2f9f6d, #1f7a53);
+      color: #f6fffb;
+      box-shadow: 0 12px 18px rgba(30, 122, 83, 0.25);
     }
 
-    .score-controls {
-      display: grid;
-      grid-template-columns: 62px 1fr 62px;
-      gap: 10px;
+    .btn-secondary {
+      background: #f7f9fc;
+      color: #2f3e50;
+      border-color: var(--line-strong);
+    }
+
+    .btn-google {
+      background: #fff;
+      border: 1px solid var(--line-strong);
+      display: flex;
       align-items: center;
-      margin-bottom: 14px;
+      justify-content: center;
+      gap: var(--u-2);
     }
 
-    .counter {
-      font-size: 38px;
-      font-weight: 700;
-      min-height: 68px;
+    .g-dot {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: conic-gradient(from 210deg, #ea4335 0 25%, #fbbc05 25% 50%, #34a853 50% 75%, #4285f4 75% 100%);
+    }
+
+    .kpi-row {
       display: grid;
-      place-items: center;
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 16px;
-      border: 1px solid var(--line);
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--u-2);
+      margin-top: var(--u-3);
+    }
+
+    .kpi {
+      border-radius: 14px;
+      background: #f7faf7;
+      border: 1px solid #d6eadf;
+      padding: var(--u-2);
+    }
+
+    .kpi b { font-size: 18px; font-family: "Syne", sans-serif; }
+    .kpi p { margin-top: 2px; color: #5d6b61; font-size: 11px; }
+
+    .score-wrap {
+      text-align: center;
+      padding: var(--u-3);
+      background: linear-gradient(180deg, #19202a, #242f3b);
+      border-radius: 18px;
+      color: #eaf0f8;
+      margin-bottom: var(--u-3);
+    }
+
+    .hole { font-size: 13px; color: #b5c2d2; }
+    .hole-no { font-family: "Syne", sans-serif; font-size: 52px; line-height: 1; margin: var(--u-2) 0; }
+    .hole-meta { font-size: 13px; color: #c8d2de; }
+
+    .controls {
+      display: grid;
+      grid-template-columns: 52px 1fr 52px;
+      gap: var(--u-2);
+      align-items: center;
+      margin-bottom: var(--u-2);
     }
 
     .icon-btn {
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      min-height: 68px;
-      background: rgba(255, 255, 255, 0.04);
-      color: var(--text);
-      font-size: 33px;
+      min-height: 52px;
+      border-radius: 12px;
+      border: 1px solid #d3d8e1;
+      background: #fff;
+      font-size: 24px;
+      font-weight: 700;
       cursor: pointer;
     }
 
-    .mini-row {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-top: 8px;
+    .counter {
+      min-height: 52px;
+      border-radius: 12px;
+      border: 1px solid #2b3a49;
+      background: #10151c;
+      color: #f4f8ff;
+      display: grid;
+      place-items: center;
+      font-size: 28px;
+      font-family: "Syne", sans-serif;
     }
 
-    .mini-pill {
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      padding: 4px 10px;
+    .pills { display: flex; flex-wrap: wrap; gap: var(--u-2); justify-content: center; }
+
+    .pill {
+      min-height: 44px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--line-strong);
+      background: #fff;
+      color: #425166;
+      padding: 10px 12px;
       font-size: 12px;
-      color: var(--muted);
+      font-weight: 700;
+      cursor: pointer;
     }
 
-    .mini-pill.selected {
-      border-color: rgba(33, 197, 119, 0.55);
-      color: #aff0d0;
-      background: rgba(33, 197, 119, 0.15);
+    .pill.active {
+      border-color: #3a9f70;
+      color: #176746;
+      background: #e9f7f0;
     }
 
-    .progress-wrap {
-      margin-top: 10px;
-      margin-bottom: 12px;
+    .meter {
+      margin-bottom: var(--u-3);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: var(--u-2);
+      background: #fbfcff;
     }
 
-    .progress {
-      width: 100%;
-      height: 7px;
-      background: rgba(255, 255, 255, 0.08);
-      border-radius: 999px;
+    .meter-top {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: var(--u-2);
+      font-size: 12px;
+      color: #5b6678;
+      font-weight: 700;
+    }
+
+    .bar {
+      height: 8px;
+      border-radius: var(--radius-pill);
+      background: #dce3ed;
       overflow: hidden;
     }
 
-    .progress > span {
+    .bar > span {
       display: block;
       height: 100%;
       width: 0;
-      background: linear-gradient(90deg, var(--green), #6ef6b8);
-      transition: width 0.25s ease;
-    }
-
-    .media-placeholders {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-top: 12px;
-    }
-
-    .media-box {
-      min-height: 102px;
-      border-radius: 14px;
-      border: 1px dashed rgba(255, 255, 255, 0.24);
-      background: rgba(255, 255, 255, 0.03);
-      display: grid;
-      place-items: center;
-      text-align: center;
-      font-size: 12px;
-      color: var(--muted);
-      padding: 10px;
+      background: linear-gradient(90deg, #2f9f6d, #66c996);
+      transition: width .2s ease;
     }
 
     .toggle {
-      display: flex;
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      padding: 4px;
-      margin-top: 12px;
-      gap: 4px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--u-2);
+      padding: var(--u-1);
+      border-radius: 14px;
+      border: 1px solid var(--line-strong);
+      background: #f6f8fb;
+      margin-top: var(--u-2);
     }
 
     .toggle button {
-      flex: 1;
-      border: none;
-      border-radius: 999px;
-      min-height: 36px;
+      min-height: 44px;
+      border: 0;
+      border-radius: 10px;
       background: transparent;
-      color: var(--muted);
+      color: #607080;
+      font-weight: 800;
       cursor: pointer;
-      font-weight: 600;
     }
 
     .toggle button.active {
-      background: rgba(33, 197, 119, 0.22);
-      color: #cbffe7;
+      background: #fff;
+      color: #223245;
+      box-shadow: 0 6px 16px rgba(22, 35, 50, 0.1);
     }
 
-    .switch-tabs {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      margin-bottom: 14px;
-    }
-
-    .switch-tabs button {
+    .feed-item, .history-item {
+      border-radius: 14px;
       border: 1px solid var(--line);
-      background: rgba(255, 255, 255, 0.03);
-      color: var(--muted);
-      border-radius: 12px;
-      min-height: 40px;
-      font-weight: 700;
-      cursor: pointer;
+      background: #fff;
+      padding: var(--u-3);
+      margin-bottom: var(--u-2);
     }
 
-    .switch-tabs button.active {
-      background: rgba(78, 167, 255, 0.17);
-      border-color: rgba(78, 167, 255, 0.45);
-      color: #d8ecff;
-    }
-
-    .feed-item {
-      border: 1px solid var(--line);
-      background: rgba(255, 255, 255, 0.03);
-      border-radius: 15px;
-      padding: 12px;
-      margin-bottom: 10px;
-    }
-
-    .feed-top {
+    .feed-meta {
       display: flex;
       justify-content: space-between;
-      margin-bottom: 8px;
+      margin-bottom: var(--u-2);
       font-size: 12px;
-      color: var(--muted);
-    }
-
-    .avatar-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .avatar {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      background: linear-gradient(145deg, #4ea7ff, #6ee3ff);
-      color: #05233f;
-      display: grid;
-      place-items: center;
-      font-weight: 800;
-      font-size: 12px;
+      color: #667283;
+      font-weight: 700;
     }
 
     .history-item {
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      padding: 12px;
-      background: rgba(255, 255, 255, 0.03);
       display: grid;
       grid-template-columns: 1fr auto;
-      gap: 10px;
-      margin-bottom: 10px;
+      gap: var(--u-2);
+      align-items: center;
     }
 
     .score-badge {
-      border-radius: 999px;
-      padding: 5px 9px;
+      padding: 6px 10px;
+      border-radius: var(--radius-pill);
+      border: 1px solid #efdbac;
+      background: #fff6df;
+      color: #8b6110;
       font-size: 12px;
-      font-weight: 700;
-      align-self: center;
-      background: rgba(255, 200, 107, 0.16);
-      color: #ffe3b2;
-      border: 1px solid rgba(255, 200, 107, 0.5);
+      font-weight: 800;
+      min-height: 28px;
+      display: grid;
+      place-items: center;
     }
+
+    .applied-ref {
+      margin-top: var(--u-3);
+      padding: var(--u-2) var(--u-3);
+      background: #f3f6fa;
+      border: 1px dashed #bec9d8;
+      border-radius: 12px;
+      font-size: 12px;
+      color: #4f5f73;
+    }
+
+    .applied-ref b { color: #1f2c3b; }
 
     .bottom-nav {
       position: absolute;
-      left: 12px;
-      right: 12px;
-      bottom: 12px;
-      min-height: 70px;
-      border-radius: 22px;
-      border: 1px solid var(--line);
-      background: rgba(11, 26, 39, 0.92);
-      backdrop-filter: blur(12px);
+      left: var(--u-3);
+      right: var(--u-3);
+      bottom: var(--u-3);
+      border-radius: 20px;
+      border: 1px solid rgba(28, 40, 55, 0.16);
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(8px);
+      padding: var(--u-1);
       display: none;
       grid-template-columns: repeat(4, 1fr);
-      align-items: center;
-      padding: 6px;
-      box-shadow: var(--shadow);
+      box-shadow: 0 10px 26px rgba(35, 50, 70, 0.14);
     }
 
     .bottom-nav.show { display: grid; }
 
     .tab-btn {
-      border: none;
+      min-height: 52px;
+      border: 0;
+      border-radius: 14px;
       background: transparent;
-      color: #95adc0;
-      font-size: 11px;
+      color: #64758a;
       display: grid;
       place-items: center;
-      gap: 4px;
+      gap: 2px;
       cursor: pointer;
-      border-radius: 14px;
-      min-height: 56px;
-      font-weight: 700;
+      font-size: 11px;
+      font-weight: 800;
     }
+
+    .tab-btn .icon { font-size: 16px; line-height: 1; }
 
     .tab-btn.active {
-      color: #daefff;
-      background: rgba(78, 167, 255, 0.15);
+      background: #1f7a53;
+      color: #f4fff8;
     }
 
-    .icon {
-      font-size: 17px;
-      line-height: 1;
-    }
+    .muted { color: var(--muted); font-size: 13px; line-height: 1.5; }
+    .mb-2 { margin-bottom: var(--u-2); }
+    .mb-3 { margin-bottom: var(--u-3); }
+    .mt-2 { margin-top: var(--u-2); }
+    .mt-3 { margin-top: var(--u-3); }
 
-    .app-title {
-      font-size: 18px;
-      font-weight: 800;
-      margin-bottom: 2px;
-      letter-spacing: -0.2px;
-    }
-
-    .helper {
-      color: var(--muted);
-      font-size: 12px;
-      margin-top: 8px;
+    @media (max-width: 390px) {
+      body { padding: var(--u-2); }
+      .phone { min-width: 0; width: 100%; }
+      .title { font-size: 25px; }
+      .screen { padding-left: var(--u-3); padding-right: var(--u-3); }
     }
   </style>
 </head>
 <body>
-  <div class="phone" aria-label="CaddyCo app mockup">
+  <main class="phone" aria-label="CaddyCo mobile mockup">
     <div class="statusbar">
-      <span>13:52</span>
-      <span>CaddyCo ⛳︎</span>
+      <span>19:53</span>
+      <span>CaddyCo</span>
       <span>5G ▰▰▰</span>
     </div>
 
-    <section class="screen active" id="screen-login" data-screen="login">
-      <div class="brand">
-        <div class="brand-mark">C</div>
-        <div>
-          <div class="app-title">CaddyCo</div>
-          <div style="font-size:12px;color:var(--muted)">Golf. Friends. Momentum.</div>
+    <section class="screen active" data-screen="login">
+      <div class="hero">
+        <div class="brand-row">
+          <div class="brand-chip"><span class="logo">C</span>CaddyCo</div>
+          <div class="brand-chip">Round OS</div>
         </div>
+        <h1 class="title">Golf rhythm,<br>captured live.</h1>
+        <p class="sub">Start rounds in two taps, track each hole, then share clean score stories with your foursome.</p>
       </div>
-      <h1>Play better together.</h1>
-      <p class="subtitle">Track every hole, share your round instantly, and follow your golf circle in one polished mobile experience.</p>
-      <div class="card">
-        <p style="font-weight:700;margin-bottom:8px">Welcome back</p>
-        <p class="subtitle" style="margin-bottom:12px">Sign in to continue your CaddyCo journey.</p>
-        <button class="btn-google" id="googleLoginBtn"><span class="g">G</span>Continue with Google</button>
-        <p class="helper">By continuing, you agree to CaddyCo Terms & Privacy.</p>
-      </div>
+
+      <article class="surface">
+        <h2 class="screen-title mb-2">Welcome back</h2>
+        <p class="muted mb-3">Sign in to sync handicap trends, course memories, and social highlights.</p>
+        <button class="btn btn-google" id="googleLoginBtn"><span class="g-dot"></span>Continue with Google</button>
+        <p class="muted mt-2">By continuing, you accept CaddyCo Terms and Privacy.</p>
+      </article>
+
+      <article class="surface">
+        <div class="kpi-row">
+          <div class="kpi"><b>11.2</b><p>HCP Index</p></div>
+          <div class="kpi"><b>62%</b><p>Fairway Hit</p></div>
+          <div class="kpi"><b>29.8</b><p>Putts/Round</p></div>
+        </div>
+        <div class="applied-ref">
+          <b>Applied References</b><br>
+          REF-004 (dark focal card contrast), REF-010 (profile + feed cohesion), REF-016 (history + detail hierarchy)
+        </div>
+      </article>
     </section>
 
-    <section class="screen" id="screen-create" data-screen="create">
-      <div class="top-row">
+    <section class="screen" data-screen="create">
+      <div class="top">
         <div>
-          <div class="app-title">Start New Round</div>
-          <p class="subtitle" style="margin:4px 0 0">Set your course and tee off.</p>
+          <h2 class="screen-title">Start new round</h2>
+          <p class="muted">Set course, format, and tee in one compact panel.</p>
         </div>
-        <span class="chip">MVP Screen 2</span>
+        <span class="chip">Step 1</span>
       </div>
-      <div class="card">
-        <div class="grid-2">
+
+      <article class="surface">
+        <div class="grid-2 mb-2">
           <div>
             <label>Course</label>
             <select>
@@ -554,242 +574,199 @@
           </div>
           <div>
             <label>Holes</label>
-            <select>
-              <option selected>18</option>
-              <option>9</option>
-            </select>
+            <select><option>18</option><option>9</option></select>
           </div>
         </div>
 
-        <div class="grid-2 mt-12">
+        <div class="grid-2 mb-2">
           <div>
             <label>Tee</label>
-            <select>
-              <option>Regular</option>
-              <option>Back</option>
-              <option>Front</option>
-            </select>
+            <select><option>Regular</option><option>Back</option><option>Front</option></select>
           </div>
           <div>
-            <label>Mode</label>
-            <select>
-              <option>Stroke Play</option>
-              <option>Match Play</option>
-            </select>
+            <label>Format</label>
+            <select><option>Stroke Play</option><option>Match Play</option></select>
           </div>
         </div>
 
-        <div class="grid-2 mt-12">
-          <div>
-            <label>Date</label>
-            <input type="date" value="2026-03-20" />
-          </div>
-          <div>
-            <label>Start Time</label>
-            <input type="time" value="13:30" />
-          </div>
+        <div class="grid-2 mb-3">
+          <div><label>Date</label><input type="date" value="2026-03-20"></div>
+          <div><label>Time</label><input type="time" value="08:10"></div>
         </div>
 
-        <button class="btn btn-primary mt-16" id="startRoundBtn">Start Round</button>
-      </div>
+        <button class="btn btn-primary" id="startRoundBtn">Tee off now</button>
+      </article>
     </section>
 
-    <section class="screen" id="screen-score" data-screen="score">
-      <div class="top-row">
+    <section class="screen" data-screen="score">
+      <div class="top">
         <div>
-          <div class="app-title">Live Round Tracker</div>
-          <p class="subtitle" style="margin:4px 0 0">Sakura Hills · Stroke Play</p>
+          <h2 class="screen-title">Live scorecard</h2>
+          <p class="muted">Sakura Hills · Stroke Play</p>
         </div>
-        <span class="chip">MVP Screen 3</span>
+        <span class="chip">Step 2</span>
       </div>
 
-      <div class="card">
-        <div class="progress-wrap">
-          <div class="mini-row" style="justify-content:space-between;margin-bottom:7px">
-            <span class="mini-pill" id="progressText">Hole 1 of 18</span>
-            <span class="mini-pill" id="runningTotal">Total +0</span>
+      <article class="surface">
+        <div class="meter">
+          <div class="meter-top">
+            <span id="progressText">Hole 1 of 18</span>
+            <span id="runningTotal">Total E</span>
           </div>
-          <div class="progress"><span id="progressFill"></span></div>
+          <div class="bar"><span id="progressFill"></span></div>
         </div>
 
-        <div class="score-shell">
-          <div class="hole-index">Current Hole</div>
-          <div class="hole-number" id="holeNumber">1</div>
+        <div class="score-wrap">
+          <div class="hole">Current Hole</div>
+          <div class="hole-no" id="holeNumber">1</div>
           <div class="hole-meta" id="holeMeta">Par 4 · 384y</div>
-
-          <div class="score-controls">
-            <button class="icon-btn" id="minusBtn">−</button>
-            <div class="counter" id="strokeCount">4</div>
-            <button class="icon-btn" id="plusBtn">+</button>
-          </div>
-
-          <div class="mini-row" style="justify-content:center" id="quickScoreTags"></div>
-
-          <div class="grid-2 mt-16">
-            <button class="btn btn-secondary" id="prevHoleBtn">Previous Hole</button>
-            <button class="btn btn-primary" id="nextHoleBtn">Save & Next</button>
-          </div>
-
-          <button class="btn btn-secondary mt-12" id="finishRoundBtn">Finish Round</button>
         </div>
-      </div>
+
+        <div class="controls">
+          <button class="icon-btn" id="minusBtn" aria-label="Decrease stroke">−</button>
+          <div class="counter" id="strokeCount">4</div>
+          <button class="icon-btn" id="plusBtn" aria-label="Increase stroke">+</button>
+        </div>
+
+        <div class="pills mb-3" id="quickScoreTags"></div>
+
+        <div class="grid-2 mb-2">
+          <button class="btn btn-secondary" id="prevHoleBtn">Prev</button>
+          <button class="btn btn-primary" id="nextHoleBtn">Save + Next</button>
+        </div>
+        <button class="btn btn-secondary" id="finishRoundBtn">Finish round</button>
+      </article>
     </section>
 
-    <section class="screen" id="screen-complete" data-screen="complete">
-      <div class="top-row">
+    <section class="screen" data-screen="complete">
+      <div class="top">
         <div>
-          <div class="app-title">Round Complete 🎉</div>
-          <p class="subtitle" style="margin:4px 0 0">Now share it with your circle.</p>
+          <h2 class="screen-title">Round complete</h2>
+          <p class="muted">Publish to your feed with one short note.</p>
         </div>
-        <span class="chip">MVP Screen 4</span>
+        <span class="chip">Step 3</span>
       </div>
 
-      <div class="card">
-        <div class="mini-row" style="justify-content:space-between;margin-bottom:6px">
-          <span class="mini-pill">Sakura Hills</span>
-          <span class="mini-pill" id="finalScorePill">Final: +0</span>
-        </div>
+      <article class="surface">
+        <div class="feed-meta mb-2"><span>Sakura Hills GC</span><span id="finalScorePill">Final +0</span></div>
+        <label>Caption</label>
+        <textarea placeholder="Best iron day this month. Saved par twice on the back nine."></textarea>
 
-        <label class="mt-12">Caption</label>
-        <textarea placeholder="Great back nine with smooth putts on 16 and 17."></textarea>
-
-        <div class="media-placeholders">
-          <div class="media-box">📷 Photo placeholder<br/>Add highlight image</div>
-          <div class="media-box">🎬 Video placeholder<br/>Add short clip</div>
-        </div>
-
-        <label class="mt-12">Post visibility</label>
+        <label class="mt-3">Visibility</label>
         <div class="toggle" id="visibilityToggle">
           <button class="active" data-vis="friends">Friends</button>
           <button data-vis="private">Private</button>
         </div>
 
-        <button class="btn btn-primary mt-16" id="publishPostBtn">Publish Post</button>
-      </div>
+        <button class="btn btn-primary mt-3" id="publishPostBtn">Publish score story</button>
+      </article>
     </section>
 
-    <section class="screen" id="screen-timeline" data-screen="timeline">
-      <div class="top-row">
+    <section class="screen" data-screen="timeline">
+      <div class="top">
         <div>
-          <div class="app-title">Community Feed</div>
-          <p class="subtitle" style="margin:4px 0 0">Timeline + Friends tab</p>
+          <h2 class="screen-title">Club feed</h2>
+          <p class="muted">Score stories, reactions, and playing buddies.</p>
         </div>
-        <span class="chip">MVP Screen 5</span>
+        <span class="chip">Step 4</span>
       </div>
 
-      <div class="switch-tabs" id="timelineSwitch">
+      <div class="toggle mb-3" id="timelineSwitch">
         <button class="active" data-tab="timeline">Timeline</button>
         <button data-tab="friends">Friends</button>
       </div>
 
       <div id="timelinePanel">
         <article class="feed-item">
-          <div class="feed-top"><span>@you · now</span><span>+6</span></div>
-          <p style="margin-bottom:8px">First round logged on CaddyCo. Fairway game felt sharp today.</p>
-          <div class="mini-row"><span class="mini-pill selected">12 likes</span><span class="mini-pill">3 comments</span></div>
+          <div class="feed-meta"><span>@you · now</span><span>+6</span></div>
+          <p class="mb-2">First tracked round on CaddyCo. Ball striking felt stable and pace was great.</p>
+          <div class="pills" style="justify-content:flex-start"><span class="pill active">14 likes</span><span class="pill">4 comments</span></div>
         </article>
         <article class="feed-item">
-          <div class="feed-top"><span>@mai_72 · 2h ago</span><span>-1</span></div>
-          <p>Birdie on 18! Wind was brutal but short game delivered.</p>
+          <div class="feed-meta"><span>@mai_72 · 2h</span><span>-1</span></div>
+          <p>Birdie putt dropped on 18. Windy but fun match.</p>
         </article>
       </div>
 
       <div id="friendsPanel" style="display:none">
-        <div class="feed-item">
-          <div class="avatar-row">
-            <div class="avatar">MK</div>
-            <div>
-              <strong>Mai K.</strong>
-              <div class="helper">Handicap 11 · 4 rounds this month</div>
-            </div>
-          </div>
-        </div>
-        <div class="feed-item">
-          <div class="avatar-row">
-            <div class="avatar" style="background:linear-gradient(145deg,#ffc86b,#ffe29f)">RT</div>
-            <div>
-              <strong>Ryo T.</strong>
-              <div class="helper">Handicap 7 · Last played yesterday</div>
-            </div>
-          </div>
-        </div>
+        <article class="feed-item">
+          <div class="feed-meta"><span>Mai K.</span><span>HCP 11</span></div>
+          <p class="muted">4 rounds this month · Last score -1</p>
+        </article>
+        <article class="feed-item">
+          <div class="feed-meta"><span>Ryo T.</span><span>HCP 7</span></div>
+          <p class="muted">Practice day tomorrow at Bayline</p>
+        </article>
       </div>
     </section>
 
-    <section class="screen" id="screen-history" data-screen="history">
-      <div class="top-row">
+    <section class="screen" data-screen="history">
+      <div class="top">
         <div>
-          <div class="app-title">Round History</div>
-          <p class="subtitle" style="margin:4px 0 0">All your recent rounds.</p>
+          <h2 class="screen-title">Round history</h2>
+          <p class="muted">Recent rounds and score trend snapshots.</p>
         </div>
-        <span class="chip">MVP Screen 6</span>
+        <span class="chip">Step 5</span>
       </div>
 
-      <div class="history-item">
-        <div>
-          <strong>Sakura Hills GC</strong>
-          <div class="helper">2026-03-20 · Stroke Play · 18H</div>
-        </div>
+      <article class="history-item">
+        <div><strong>Sakura Hills GC</strong><p class="muted">2026-03-20 · Stroke · 18H</p></div>
         <span class="score-badge">+6</span>
-      </div>
-      <div class="history-item">
-        <div>
-          <strong>Bayline Country Club</strong>
-          <div class="helper">2026-03-14 · Stroke Play · 18H</div>
-        </div>
+      </article>
+      <article class="history-item">
+        <div><strong>Bayline Country Club</strong><p class="muted">2026-03-14 · Stroke · 18H</p></div>
         <span class="score-badge">+8</span>
-      </div>
-      <div class="history-item">
-        <div>
-          <strong>Green Harbor Links</strong>
-          <div class="helper">2026-03-06 · Match Play · 18H</div>
-        </div>
+      </article>
+      <article class="history-item">
+        <div><strong>Green Harbor Links</strong><p class="muted">2026-03-06 · Match · 18H</p></div>
         <span class="score-badge">+4</span>
-      </div>
+      </article>
     </section>
 
     <nav class="bottom-nav" id="bottomNav" aria-label="Main navigation">
-      <button class="tab-btn" data-target="create"><span class="icon">⛳︎</span><span>Start</span></button>
+      <button class="tab-btn" data-target="create"><span class="icon">⛳</span><span>Start</span></button>
       <button class="tab-btn" data-target="score"><span class="icon">#</span><span>Round</span></button>
       <button class="tab-btn" data-target="timeline"><span class="icon">◎</span><span>Feed</span></button>
       <button class="tab-btn" data-target="history"><span class="icon">☰</span><span>History</span></button>
     </nav>
-  </div>
+  </main>
 
   <script>
     const screens = document.querySelectorAll('.screen');
-    const bottomNav = document.getElementById('bottomNav');
-    const navButtons = document.querySelectorAll('.tab-btn');
+    const nav = document.getElementById('bottomNav');
+    const navBtns = document.querySelectorAll('.tab-btn');
 
     const appState = {
-      currentScreen: 'login',
+      screen: 'login',
       hole: 1,
       strokes: Array(18).fill(null),
-      currentStroke: 4,
+      strokeInput: 4,
       visibility: 'friends'
     };
 
-    const holePar = [4, 5, 3, 4, 4, 5, 3, 4, 4, 4, 5, 3, 4, 4, 5, 3, 4, 4];
-    const holeYards = [384, 522, 176, 401, 365, 547, 187, 403, 391, 411, 533, 162, 429, 372, 518, 181, 397, 405];
+    const pars = [4, 5, 3, 4, 4, 5, 3, 4, 4, 4, 5, 3, 4, 4, 5, 3, 4, 4];
+    const yards = [384, 522, 176, 401, 365, 547, 187, 403, 391, 411, 533, 162, 429, 372, 518, 181, 397, 405];
 
-    function totalVsPar() {
-      return appState.strokes.reduce((sum, s, i) => {
-        if (s === null) return sum;
-        return sum + (s - holePar[i]);
-      }, 0);
-    }
+    const totalVsPar = () => appState.strokes.reduce((sum, stroke, i) => {
+      if (stroke == null) return sum;
+      return sum + (stroke - pars[i]);
+    }, 0);
 
-    function renderScoreTags() {
-      const container = document.getElementById('quickScoreTags');
-      const h = appState.hole - 1;
-      const par = holePar[h];
-      const options = [par - 1, par, par + 1, par + 2].filter(v => v >= 1);
-      container.innerHTML = options
-        .map(v => `<button class="mini-pill ${appState.currentStroke === v ? 'selected' : ''}" data-score="${v}">${v === par - 1 ? 'Birdie ' : ''}${v}</button>`)
-        .join('');
-      container.querySelectorAll('[data-score]').forEach(btn => {
+    function renderScoreOptions() {
+      const idx = appState.hole - 1;
+      const par = pars[idx];
+      const candidates = [par - 1, par, par + 1, par + 2].filter(n => n > 0);
+      const wrap = document.getElementById('quickScoreTags');
+
+      wrap.innerHTML = candidates.map(value => {
+        const label = value === par - 1 ? `Birdie ${value}` : value;
+        const active = appState.strokeInput === value ? 'active' : '';
+        return `<button class="pill ${active}" data-score="${value}">${label}</button>`;
+      }).join('');
+
+      wrap.querySelectorAll('[data-score]').forEach(btn => {
         btn.addEventListener('click', () => {
-          appState.currentStroke = Number(btn.dataset.score);
+          appState.strokeInput = Number(btn.dataset.score);
           renderScoreScreen();
         });
       });
@@ -797,69 +774,69 @@
 
     function renderScoreScreen() {
       const idx = appState.hole - 1;
-      const par = holePar[idx];
-      const saved = appState.strokes[idx];
-      if (saved !== null) appState.currentStroke = saved;
+      const currentSaved = appState.strokes[idx];
+      if (currentSaved != null) appState.strokeInput = currentSaved;
 
       document.getElementById('holeNumber').textContent = appState.hole;
-      document.getElementById('holeMeta').textContent = `Par ${par} · ${holeYards[idx]}y`;
-      document.getElementById('strokeCount').textContent = appState.currentStroke;
+      document.getElementById('holeMeta').textContent = `Par ${pars[idx]} · ${yards[idx]}y`;
+      document.getElementById('strokeCount').textContent = appState.strokeInput;
       document.getElementById('progressText').textContent = `Hole ${appState.hole} of 18`;
 
       const total = totalVsPar();
-      const totalText = total > 0 ? `+${total}` : total;
+      const totalText = total === 0 ? 'E' : total > 0 ? `+${total}` : `${total}`;
       document.getElementById('runningTotal').textContent = `Total ${totalText}`;
       document.getElementById('progressFill').style.width = `${(appState.hole / 18) * 100}%`;
-      renderScoreTags();
+
+      renderScoreOptions();
+    }
+
+    function saveHole() {
+      appState.strokes[appState.hole - 1] = appState.strokeInput;
     }
 
     function showScreen(name) {
-      appState.currentScreen = name;
-      screens.forEach(s => s.classList.toggle('active', s.dataset.screen === name));
+      appState.screen = name;
+      screens.forEach(sc => sc.classList.toggle('active', sc.dataset.screen === name));
+      nav.classList.toggle('show', name !== 'login');
 
-      const showNav = name !== 'login';
-      bottomNav.classList.toggle('show', showNav);
-
-      navButtons.forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.target === name || (name === 'complete' && btn.dataset.target === 'score'));
+      navBtns.forEach(btn => {
+        const active = btn.dataset.target === name || (name === 'complete' && btn.dataset.target === 'score');
+        btn.classList.toggle('active', active);
       });
 
       if (name === 'score') renderScoreScreen();
       if (name === 'complete') {
         const final = totalVsPar();
-        document.getElementById('finalScorePill').textContent = `Final: ${final > 0 ? '+' + final : final}`;
+        const finalText = final === 0 ? 'E' : final > 0 ? `+${final}` : `${final}`;
+        document.getElementById('finalScorePill').textContent = `Final ${finalText}`;
       }
-    }
-
-    function saveCurrentHole() {
-      appState.strokes[appState.hole - 1] = appState.currentStroke;
     }
 
     document.getElementById('googleLoginBtn').addEventListener('click', () => showScreen('create'));
     document.getElementById('startRoundBtn').addEventListener('click', () => showScreen('score'));
 
     document.getElementById('minusBtn').addEventListener('click', () => {
-      appState.currentStroke = Math.max(1, appState.currentStroke - 1);
+      appState.strokeInput = Math.max(1, appState.strokeInput - 1);
       renderScoreScreen();
     });
 
     document.getElementById('plusBtn').addEventListener('click', () => {
-      appState.currentStroke = Math.min(12, appState.currentStroke + 1);
+      appState.strokeInput = Math.min(12, appState.strokeInput + 1);
       renderScoreScreen();
     });
 
     document.getElementById('prevHoleBtn').addEventListener('click', () => {
-      saveCurrentHole();
+      saveHole();
       if (appState.hole > 1) appState.hole -= 1;
-      appState.currentStroke = appState.strokes[appState.hole - 1] ?? holePar[appState.hole - 1];
+      appState.strokeInput = appState.strokes[appState.hole - 1] ?? pars[appState.hole - 1];
       renderScoreScreen();
     });
 
     document.getElementById('nextHoleBtn').addEventListener('click', () => {
-      saveCurrentHole();
+      saveHole();
       if (appState.hole < 18) {
         appState.hole += 1;
-        appState.currentStroke = appState.strokes[appState.hole - 1] ?? holePar[appState.hole - 1];
+        appState.strokeInput = appState.strokes[appState.hole - 1] ?? pars[appState.hole - 1];
         renderScoreScreen();
       } else {
         showScreen('complete');
@@ -867,13 +844,11 @@
     });
 
     document.getElementById('finishRoundBtn').addEventListener('click', () => {
-      saveCurrentHole();
+      saveHole();
       showScreen('complete');
     });
 
-    document.getElementById('publishPostBtn').addEventListener('click', () => {
-      showScreen('timeline');
-    });
+    document.getElementById('publishPostBtn').addEventListener('click', () => showScreen('timeline'));
 
     document.getElementById('visibilityToggle').addEventListener('click', (e) => {
       const btn = e.target.closest('button[data-vis]');
@@ -886,12 +861,13 @@
       const btn = e.target.closest('button[data-tab]');
       if (!btn) return;
       document.querySelectorAll('#timelineSwitch button').forEach(b => b.classList.toggle('active', b === btn));
+
       const tab = btn.dataset.tab;
       document.getElementById('timelinePanel').style.display = tab === 'timeline' ? 'block' : 'none';
       document.getElementById('friendsPanel').style.display = tab === 'friends' ? 'block' : 'none';
     });
 
-    navButtons.forEach(btn => btn.addEventListener('click', () => showScreen(btn.dataset.target)));
+    navBtns.forEach(btn => btn.addEventListener('click', () => showScreen(btn.dataset.target)));
 
     showScreen('login');
   </script>
