@@ -18,24 +18,21 @@
       --u-6: 24px;
       --u-8: 32px;
 
-      --bg: #f4f5f7;
-      --ink: #111317;
-      --muted: #6b7280;
+      --bg: #f2f1ef;
       --panel: #ffffff;
-      --line: #e4e8ee;
-      --line-strong: #ccd4df;
-      --accent: #5f56e8;
-      --accent-soft: #efedff;
-      --night: #171b21;
-      --night-2: #212832;
-      --gold: #d59a2a;
-      --danger: #cb5c61;
+      --ink: #1f2328;
+      --muted: #6b7280;
+      --line: #e7e5e4;
+      --line-strong: #d6d3d1;
+      --accent-blue: #7f99ad;
+      --accent-amber: #b9a16f;
+      --accent-green: #8ca58f;
 
       --radius-card: 20px;
       --radius-pill: 999px;
       --radius-sm: 12px;
-      --shadow-soft: 0 16px 36px rgba(20, 30, 45, 0.09);
-      --shadow-lift: 0 22px 42px rgba(13, 24, 38, 0.2);
+      --shadow-soft: 0 1px 2px rgba(15, 23, 42, 0.06);
+      --shadow-lift: 0 6px 16px rgba(15, 23, 42, 0.08);
     }
 
     * { box-sizing: border-box; }
@@ -45,7 +42,7 @@
       min-height: 100vh;
       font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", "Meiryo", sans-serif;
       color: var(--ink);
-      background: #f3f5f8;
+      background: var(--bg);
       padding: 0;
     }
 
@@ -56,7 +53,7 @@
       margin: 0 auto;
       border-radius: 0;
       border: none;
-      background: linear-gradient(180deg, #fcfdff 0%, #f3f5f8 100%);
+      background: var(--bg);
       box-shadow: none;
       overflow: hidden;
       position: relative;
@@ -71,8 +68,8 @@
       justify-content: space-between;
       padding: 0 var(--u-4) var(--u-1);
       font-size: 12px;
-      font-weight: 700;
-      color: #576173;
+      font-weight: 600;
+      color: #6b7280;
     }
 
     .screen {
@@ -81,14 +78,14 @@
       overflow: auto;
       padding: var(--u-4) var(--u-4) 104px;
       scrollbar-width: thin;
-      scrollbar-color: #cdd3dc transparent;
-      animation: in 220ms ease;
+      scrollbar-color: #cfcfcf transparent;
+      animation: in 180ms ease;
     }
 
     .screen.active { display: block; }
 
     @keyframes in {
-      from { opacity: 0; transform: translateY(8px); }
+      from { opacity: 0; transform: translateY(6px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
@@ -97,25 +94,25 @@
     .hero {
       padding: var(--u-4);
       border-radius: var(--radius-card);
-      background:
-        linear-gradient(150deg, rgba(23, 27, 33, 0.95), rgba(36, 44, 55, 0.96)),
-        url('../../paperclip-design-gallery/assets/ref-004-planning-calendar.jpg') center/cover;
-      color: #f6f8fb;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      color: var(--ink);
       position: relative;
-      overflow: hidden;
       box-shadow: var(--shadow-soft);
       margin-bottom: var(--u-4);
     }
 
-    .hero::after {
+    .hero::before {
       content: "";
       position: absolute;
-      inset: 0;
-      background: linear-gradient(180deg, rgba(14, 17, 22, 0.12), rgba(14, 17, 22, 0.55));
-      pointer-events: none;
+      left: var(--u-4);
+      top: var(--u-4);
+      width: 44px;
+      height: 1px;
+      border-radius: 999px;
+      background: #d6d3d1;
+      opacity: 0.9;
     }
-
-    .hero > * { position: relative; z-index: 1; }
 
     .brand-row {
       display: flex;
@@ -123,6 +120,7 @@
       justify-content: space-between;
       gap: var(--u-2);
       margin-bottom: var(--u-8);
+      margin-top: var(--u-2);
     }
 
     .brand-chip {
@@ -131,10 +129,11 @@
       gap: var(--u-2);
       padding: var(--u-2) var(--u-3);
       border-radius: var(--radius-pill);
-      border: 1px solid rgba(255, 255, 255, 0.28);
-      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid var(--line);
+      background: #fafaf9;
       font-size: 12px;
-      font-weight: 700;
+      font-weight: 600;
+      color: #505866;
     }
 
     .logo {
@@ -143,23 +142,26 @@
       border-radius: 9px;
       display: grid;
       place-items: center;
-      background: linear-gradient(145deg, #7b72ff, #5f56e8);
+      background: #111111;
+      color: #ffffff;
       font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", "Meiryo", sans-serif;
       font-weight: 700;
+      font-size: 13px;
     }
 
     .title {
       font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", "Meiryo", sans-serif;
-      font-size: 28px;
-      letter-spacing: -0.03em;
+      font-size: 27px;
+      letter-spacing: -0.02em;
       margin-bottom: var(--u-2);
-      line-height: 1.12;
+      line-height: 1.14;
+      color: #20242b;
     }
 
     .sub {
-      color: #c7d0dc;
+      color: #6b7280;
       font-size: 14px;
-      line-height: 1.5;
+      line-height: 1.55;
     }
 
     .surface {
@@ -182,18 +184,19 @@
     .screen-title {
       font-size: 20px;
       font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", "Meiryo", sans-serif;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.01em;
+      color: #22262c;
     }
 
     .chip {
       font-size: 12px;
-      font-weight: 700;
-      color: #4d5a6b;
-      border: 1px solid var(--line-strong);
+      font-weight: 600;
+      color: #5c6573;
+      border: 1px solid var(--line);
       padding: 6px 10px;
       border-radius: var(--radius-pill);
       white-space: nowrap;
-      background: #f9fafc;
+      background: #fafaf9;
     }
 
     .grid-2 {
@@ -207,7 +210,7 @@
       font-size: 12px;
       color: var(--muted);
       margin-bottom: var(--u-1);
-      font-weight: 700;
+      font-weight: 600;
     }
 
     input, select, textarea, button {
@@ -221,7 +224,7 @@
       border: 1px solid var(--line-strong);
       border-radius: 12px;
       padding: 10px 12px;
-      background: #fcfdff;
+      background: #fcfcfb;
       color: var(--ink);
       outline: none;
     }
@@ -236,22 +239,23 @@
       min-height: 44px;
       border-radius: 14px;
       border: 1px solid transparent;
-      font-weight: 800;
+      font-weight: 700;
       cursor: pointer;
-      transition: transform .14s ease, filter .14s ease;
+      transition: transform .14s ease, background-color .14s ease, border-color .14s ease;
     }
 
     .btn:active { transform: translateY(1px) scale(.99); }
 
     .btn-primary {
-      background: linear-gradient(145deg, #7b72ff, #5f56e8);
-      color: #f6fffb;
-      box-shadow: 0 12px 18px rgba(30, 122, 83, 0.25);
+      background: #16181b;
+      color: #f8f8f8;
+      border-color: #16181b;
+      box-shadow: var(--shadow-soft);
     }
 
     .btn-secondary {
-      background: #f7f9fc;
-      color: #2f3e50;
+      background: #fbfbfa;
+      color: #343b46;
       border-color: var(--line-strong);
     }
 
@@ -262,13 +266,16 @@
       align-items: center;
       justify-content: center;
       gap: var(--u-2);
+      color: #2e3642;
     }
 
     .g-dot {
-      width: 20px;
-      height: 20px;
+      width: 16px;
+      height: 16px;
       border-radius: 50%;
-      background: conic-gradient(from 210deg, #ea4335 0 25%, #fbbc05 25% 50%, #34a853 50% 75%, #4285f4 75% 100%);
+      border: 2px solid #a8adb5;
+      background: transparent;
+      opacity: 0.75;
     }
 
     .kpi-row {
@@ -280,26 +287,41 @@
 
     .kpi {
       border-radius: 14px;
-      background: #f7faf7;
-      border: 1px solid #d6eadf;
+      background: #fafaf9;
+      border: 1px solid var(--line);
       padding: var(--u-2);
+      position: relative;
+      overflow: hidden;
     }
 
-    .kpi b { font-size: 18px; font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", "Meiryo", sans-serif; }
-    .kpi p { margin-top: 2px; color: #5d6b61; font-size: 11px; }
+    .kpi::before {
+      content: "";
+      position: absolute;
+      left: 10px;
+      top: 8px;
+      width: 18px;
+      height: 2px;
+      border-radius: 999px;
+      background: #d6d3d1;
+      opacity: 1;
+    }
+
+    .kpi b { font-size: 18px; display: block; margin-top: 4px; }
+    .kpi p { margin-top: 2px; color: #68707e; font-size: 11px; }
 
     .score-wrap {
       text-align: center;
       padding: var(--u-3);
-      background: linear-gradient(180deg, #19202a, #242f3b);
+      background: #f7f7f6;
+      border: 1px solid var(--line);
       border-radius: 18px;
-      color: #eaf0f8;
+      color: #222831;
       margin-bottom: var(--u-3);
     }
 
-    .hole { font-size: 13px; color: #b5c2d2; }
+    .hole { font-size: 13px; color: #6b7280; }
     .hole-no { font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", "Meiryo", sans-serif; font-size: 52px; line-height: 1; margin: var(--u-2) 0; }
-    .hole-meta { font-size: 13px; color: #c8d2de; }
+    .hole-meta { font-size: 13px; color: #6f7783; }
 
     .controls {
       display: grid;
@@ -312,19 +334,20 @@
     .icon-btn {
       min-height: 52px;
       border-radius: 12px;
-      border: 1px solid #d3d8e1;
+      border: 1px solid var(--line-strong);
       background: #fff;
       font-size: 24px;
-      font-weight: 700;
+      font-weight: 600;
+      color: #2b3340;
       cursor: pointer;
     }
 
     .counter {
       min-height: 52px;
       border-radius: 12px;
-      border: 1px solid #2b3a49;
-      background: #10151c;
-      color: #f4f8ff;
+      border: 1px solid var(--line-strong);
+      background: #fff;
+      color: #1e242d;
       display: grid;
       place-items: center;
       font-size: 28px;
@@ -338,17 +361,17 @@
       border-radius: var(--radius-pill);
       border: 1px solid var(--line-strong);
       background: #fff;
-      color: #425166;
+      color: #4c5564;
       padding: 10px 12px;
       font-size: 12px;
-      font-weight: 700;
+      font-weight: 600;
       cursor: pointer;
     }
 
     .pill.active {
-      border-color: #3a9f70;
-      color: #176746;
-      background: #e9f7f0;
+      border-color: #b7c8d5;
+      color: #304453;
+      background: #f5f8fa;
     }
 
     .meter {
@@ -356,7 +379,7 @@
       border: 1px solid var(--line);
       border-radius: 12px;
       padding: var(--u-2);
-      background: #fbfcff;
+      background: #fafaf9;
     }
 
     .meter-top {
@@ -364,14 +387,14 @@
       justify-content: space-between;
       margin-bottom: var(--u-2);
       font-size: 12px;
-      color: #5b6678;
-      font-weight: 700;
+      color: #646d7b;
+      font-weight: 600;
     }
 
     .bar {
       height: 8px;
       border-radius: var(--radius-pill);
-      background: #dce3ed;
+      background: #e2e4e8;
       overflow: hidden;
     }
 
@@ -379,7 +402,7 @@
       display: block;
       height: 100%;
       width: 0;
-      background: linear-gradient(90deg, #2f9f6d, #66c996);
+      background: #a8adb5;
       transition: width .2s ease;
     }
 
@@ -389,8 +412,8 @@
       gap: var(--u-2);
       padding: var(--u-1);
       border-radius: 14px;
-      border: 1px solid var(--line-strong);
-      background: #f6f8fb;
+      border: 1px solid var(--line);
+      background: #f7f7f6;
       margin-top: var(--u-2);
     }
 
@@ -399,15 +422,15 @@
       border: 0;
       border-radius: 10px;
       background: transparent;
-      color: #607080;
-      font-weight: 800;
+      color: #68707e;
+      font-weight: 700;
       cursor: pointer;
     }
 
     .toggle button.active {
       background: #fff;
-      color: #223245;
-      box-shadow: 0 6px 16px rgba(22, 35, 50, 0.1);
+      color: #232a34;
+      box-shadow: var(--shadow-soft);
     }
 
     .feed-item, .history-item {
@@ -416,15 +439,36 @@
       background: #fff;
       padding: var(--u-3);
       margin-bottom: var(--u-2);
+      position: relative;
+      box-shadow: var(--shadow-soft);
     }
+
+    .feed-item::before,
+    .history-item::before {
+      content: "";
+      position: absolute;
+      left: 10px;
+      top: 11px;
+      width: 3px;
+      height: 18px;
+      border-radius: 999px;
+      opacity: 0.85;
+      background: var(--accent-blue);
+    }
+
+    #timelinePanel .feed-item:nth-child(2)::before { background: var(--accent-amber); }
+    #friendsPanel .feed-item:nth-child(1)::before { background: var(--accent-green); }
+    #friendsPanel .feed-item:nth-child(2)::before { background: var(--accent-blue); }
+    .history-item:nth-of-type(2)::before { background: var(--accent-amber); }
+    .history-item:nth-of-type(3)::before { background: var(--accent-green); }
 
     .feed-meta {
       display: flex;
       justify-content: space-between;
       margin-bottom: var(--u-2);
       font-size: 12px;
-      color: #667283;
-      font-weight: 700;
+      color: #66707d;
+      font-weight: 600;
     }
 
     .history-item {
@@ -437,11 +481,11 @@
     .score-badge {
       padding: 6px 10px;
       border-radius: var(--radius-pill);
-      border: 1px solid #efdbac;
-      background: #fff6df;
-      color: #8b6110;
+      border: 1px solid var(--line-strong);
+      background: #fafaf9;
+      color: #4c5564;
       font-size: 12px;
-      font-weight: 800;
+      font-weight: 700;
       min-height: 28px;
       display: grid;
       place-items: center;
@@ -450,28 +494,28 @@
     .applied-ref {
       margin-top: var(--u-3);
       padding: var(--u-2) var(--u-3);
-      background: #f3f6fa;
-      border: 1px dashed #bec9d8;
+      background: #f7f7f6;
+      border: 1px dashed var(--line-strong);
       border-radius: 12px;
       font-size: 12px;
-      color: #4f5f73;
+      color: #616b78;
     }
 
-    .applied-ref b { color: #1f2c3b; }
+    .applied-ref b { color: #2b3340; }
 
     .bottom-nav {
       position: absolute;
       left: var(--u-3);
       right: var(--u-3);
       bottom: var(--u-3);
-      border-radius: 20px;
-      border: 1px solid rgba(28, 40, 55, 0.16);
-      background: rgba(255, 255, 255, 0.92);
-      backdrop-filter: blur(8px);
+      border-radius: 18px;
+      border: none;
+      background: #111111;
+      backdrop-filter: none;
       padding: var(--u-1);
       display: none;
       grid-template-columns: repeat(4, 1fr);
-      box-shadow: 0 10px 26px rgba(35, 50, 70, 0.14);
+      box-shadow: var(--shadow-lift);
     }
 
     .bottom-nav.show { display: grid; }
@@ -481,20 +525,20 @@
       border: 0;
       border-radius: 14px;
       background: transparent;
-      color: #64758a;
+      color: #9aa0a6;
       display: grid;
       place-items: center;
       gap: 2px;
       cursor: pointer;
       font-size: 11px;
-      font-weight: 800;
+      font-weight: 700;
     }
 
     .tab-btn .icon { font-size: 16px; line-height: 1; }
 
     .tab-btn.active {
-      background: #5f56e8;
-      color: #f4fff8;
+      background: #252525;
+      color: #f5f5f5;
     }
 
     .muted { color: var(--muted); font-size: 13px; line-height: 1.5; }
