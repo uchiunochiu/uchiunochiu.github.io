@@ -43,25 +43,21 @@
     body {
       margin: 0;
       min-height: 100vh;
-      display: grid;
-      place-items: center;
       font-family: "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       color: var(--ink);
-      background:
-        radial-gradient(80vw 80vw at 100% -10%, rgba(141, 170, 186, 0.25) 0%, transparent 55%),
-        radial-gradient(70vw 70vw at -10% 105%, rgba(155, 187, 146, 0.2) 0%, transparent 60%),
-        linear-gradient(160deg, #eef1f5 0%, #f8f8fb 50%, #eceff3 100%);
-      padding: var(--u-4);
+      background: #f3f5f8;
+      padding: 0;
     }
 
     .phone {
-      width: min(100%, 390px);
-      min-width: 360px;
-      height: min(860px, 96vh);
-      border-radius: 38px;
-      border: 1px solid rgba(30, 44, 58, 0.16);
+      width: 100%;
+      max-width: 430px;
+      min-height: 100dvh;
+      margin: 0 auto;
+      border-radius: 0;
+      border: none;
       background: linear-gradient(180deg, #fcfdff 0%, #f3f5f8 100%);
-      box-shadow: var(--shadow-lift), inset 0 1px 0 rgba(255, 255, 255, 0.86);
+      box-shadow: none;
       overflow: hidden;
       position: relative;
       display: flex;
