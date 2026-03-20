@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="en">
+<html lang="ja">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>CaddyCo — Mobile Mockup</title>
+  <title>CaddyCo — モバイルモックアップ</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Syne:wght@600;700&display=swap" rel="stylesheet">
@@ -530,9 +530,9 @@
       </div>
 
       <article class="surface">
-        <h2 class="screen-title mb-2">Welcome back</h2>
+        <h2 class="screen-title mb-2">おかえりなさい</h2>
         <p class="muted mb-3">Sign in to sync handicap trends, course memories, and social highlights.</p>
-        <button class="btn btn-google" id="googleLoginBtn"><span class="g-dot"></span>Continue with Google</button>
+        <button class="btn btn-google" id="googleLoginBtn"><span class="g-dot"></span>Googleで続行</button>
         <p class="muted mt-2">By continuing, you accept CaddyCo Terms and Privacy.</p>
       </article>
 
@@ -543,7 +543,7 @@
           <div class="kpi"><b>29.8</b><p>Putts/Round</p></div>
         </div>
         <div class="applied-ref">
-          <b>Applied References</b><br>
+          <b>適用リファレンス</b><br>
           REF-004 (dark focal card contrast), REF-010 (profile + feed cohesion), REF-016 (history + detail hierarchy)
         </div>
       </article>
@@ -561,7 +561,7 @@
       <article class="surface">
         <div class="grid-2 mb-2">
           <div>
-            <label>Course</label>
+            <label>コース</label>
             <select>
               <option>Sakura Hills Golf Club</option>
               <option>Bayline Country Club</option>
@@ -569,28 +569,28 @@
             </select>
           </div>
           <div>
-            <label>Holes</label>
+            <label>ホール数</label>
             <select><option>18</option><option>9</option></select>
           </div>
         </div>
 
         <div class="grid-2 mb-2">
           <div>
-            <label>Tee</label>
+            <label>ティー</label>
             <select><option>Regular</option><option>Back</option><option>Front</option></select>
           </div>
           <div>
             <label>Format</label>
-            <select><option>Stroke Play</option><option>Match Play</option></select>
+            <select><option>ストロークプレー</option><option>マッチプレー</option></select>
           </div>
         </div>
 
         <div class="grid-2 mb-3">
-          <div><label>Date</label><input type="date" value="2026-03-20"></div>
+          <div><label>日付</label><input type="date" value="2026-03-20"></div>
           <div><label>Time</label><input type="time" value="08:10"></div>
         </div>
 
-        <button class="btn btn-primary" id="startRoundBtn">Tee off now</button>
+        <button class="btn btn-primary" id="startRoundBtn">ティー off now</button>
       </article>
     </section>
 
@@ -598,7 +598,7 @@
       <div class="top">
         <div>
           <h2 class="screen-title">Live scorecard</h2>
-          <p class="muted">Sakura Hills · Stroke Play</p>
+          <p class="muted">Sakura Hills · ストロークプレー</p>
         </div>
         <span class="chip">Step 2</span>
       </div>
@@ -606,14 +606,14 @@
       <article class="surface">
         <div class="meter">
           <div class="meter-top">
-            <span id="progressText">Hole 1 of 18</span>
-            <span id="runningTotal">Total E</span>
+            <span id="progressText">ホール 1 / 18</span>
+            <span id="runningTotal">合計 E</span>
           </div>
           <div class="bar"><span id="progressFill"></span></div>
         </div>
 
         <div class="score-wrap">
-          <div class="hole">Current Hole</div>
+          <div class="hole">現在のホール</div>
           <div class="hole-no" id="holeNumber">1</div>
           <div class="hole-meta" id="holeMeta">Par 4 · 384y</div>
         </div>
@@ -645,13 +645,13 @@
 
       <article class="surface">
         <div class="feed-meta mb-2"><span>Sakura Hills GC</span><span id="finalScorePill">Final +0</span></div>
-        <label>Caption</label>
+        <label>キャプション</label>
         <textarea placeholder="Best iron day this month. Saved par twice on the back nine."></textarea>
 
         <label class="mt-3">Visibility</label>
         <div class="toggle" id="visibilityToggle">
-          <button class="active" data-vis="friends">Friends</button>
-          <button data-vis="private">Private</button>
+          <button class="active" data-vis="friends">フレンド</button>
+          <button data-vis="private">非公開</button>
         </div>
 
         <button class="btn btn-primary mt-3" id="publishPostBtn">Publish score story</button>
@@ -668,8 +668,8 @@
       </div>
 
       <div class="toggle mb-3" id="timelineSwitch">
-        <button class="active" data-tab="timeline">Timeline</button>
-        <button data-tab="friends">Friends</button>
+        <button class="active" data-tab="timeline">タイムライン</button>
+        <button data-tab="friends">フレンド</button>
       </div>
 
       <div id="timelinePanel">
@@ -719,11 +719,11 @@
       </article>
     </section>
 
-    <nav class="bottom-nav" id="bottomNav" aria-label="Main navigation">
-      <button class="tab-btn" data-target="create"><span class="icon">⛳</span><span>Start</span></button>
-      <button class="tab-btn" data-target="score"><span class="icon">#</span><span>Round</span></button>
-      <button class="tab-btn" data-target="timeline"><span class="icon">◎</span><span>Feed</span></button>
-      <button class="tab-btn" data-target="history"><span class="icon">☰</span><span>History</span></button>
+    <nav class="bottom-nav" id="bottomNav" aria-label="メインナビゲーション">
+      <button class="tab-btn" data-target="create"><span class="icon">⛳</span><span>開始</span></button>
+      <button class="tab-btn" data-target="score"><span class="icon">#</span><span>記録</span></button>
+      <button class="tab-btn" data-target="timeline"><span class="icon">◎</span><span>フィード</span></button>
+      <button class="tab-btn" data-target="history"><span class="icon">☰</span><span>履歴</span></button>
     </nav>
   </main>
 
@@ -776,11 +776,11 @@
       document.getElementById('holeNumber').textContent = appState.hole;
       document.getElementById('holeMeta').textContent = `Par ${pars[idx]} · ${yards[idx]}y`;
       document.getElementById('strokeCount').textContent = appState.strokeInput;
-      document.getElementById('progressText').textContent = `Hole ${appState.hole} of 18`;
+      document.getElementById('progressText').textContent = `ホール ${appState.hole} / 18`;
 
       const total = totalVsPar();
       const totalText = total === 0 ? 'E' : total > 0 ? `+${total}` : `${total}`;
-      document.getElementById('runningTotal').textContent = `Total ${totalText}`;
+      document.getElementById('runningTotal').textContent = `合計 ${totalText}`;
       document.getElementById('progressFill').style.width = `${(appState.hole / 18) * 100}%`;
 
       renderScoreOptions();
