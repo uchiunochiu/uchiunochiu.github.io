@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mobile Mockup v2 — Stone Schedule</title>
+  <style>
+    :root {
+      --bg: #f4f1ea;
+      --paper: #fcfaf6;
+      --ink: #1f1f1f;
+      --muted: #726f69;
+      --charcoal: #202020;
+      --charcoal-soft: #2d2d2d;
+      --accent: #f2c85d;
+      --accent-ink: #5e4300;
+      --ok: #2e7a51;
+      --line: #d6d1c8;
+
+      --r-sm: 12px;
+      --r-md: 16px;
+      --r-lg: 20px;
+      --r-pill: 999px;
+
+      --s-1: 4px;
+      --s-2: 8px;
+      --s-3: 12px;
+      --s-4: 16px;
+      --s-5: 20px;
+      --s-6: 24px;
+      --s-7: 28px;
+
+      --shadow-soft: 0 8px 20px rgba(26, 24, 20, 0.08);
+      --shadow-deep: 0 12px 28px rgba(20, 20, 20, 0.18);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      background:
+        radial-gradient(circle at 10% -10%, #fff7d7 0%, transparent 42%),
+        radial-gradient(circle at 92% 10%, #efe9dd 0%, transparent 50%),
+        var(--bg);
+      color: var(--ink);
+      font-family: "Avenir Next", "Nunito Sans", "Helvetica Neue", sans-serif;
+      padding: var(--s-4);
+    }
+
+    .phone {
+      width: min(390px, calc(100vw - 24px));
+      background: linear-gradient(170deg, #fffdf8 0%, #f7f3eb 100%);
+      border-radius: 28px;
+      border: 1px solid rgba(68, 63, 54, 0.15);
+      box-shadow: var(--shadow-deep);
+      overflow: hidden;
+    }
+
+    .header {
+      padding: var(--s-4);
+      border-bottom: 1px dashed var(--line);
+      display: grid;
+      gap: var(--s-2);
+    }
+
+    .top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--s-2);
+    }
+
+    .brand {
+      letter-spacing: 0.08em;
+      font-size: 12px;
+      color: var(--muted);
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .badge {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      padding: 0 var(--s-3);
+      border-radius: var(--r-pill);
+      border: 1px solid #dbcfa4;
+      background: #fff3cb;
+      color: #6d5314;
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    .title {
+      margin: 0;
+      font-size: 28px;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .content {
+      padding: var(--s-4);
+      display: grid;
+      gap: var(--s-4);
+    }
+
+    .calendar-card {
+      background: linear-gradient(185deg, #2b2b2b 0%, #1d1d1d 100%);
+      border-radius: var(--r-lg);
+      padding: var(--s-4);
+      color: #f7f4ee;
+      box-shadow: var(--shadow-soft);
+      display: grid;
+      gap: var(--s-3);
+    }
+
+    .calendar-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--s-2);
+    }
+
+    .month {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+    }
+
+    .chip-row {
+      display: flex;
+      gap: var(--s-2);
+      overflow-x: auto;
+      padding-bottom: var(--s-1);
+    }
+
+    .day-chip {
+      min-height: 44px;
+      min-width: 44px;
+      border: 1px solid #464646;
+      border-radius: var(--r-md);
+      display: grid;
+      place-items: center;
+      padding: var(--s-2);
+      color: #d9d9d9;
+      background: rgba(255, 255, 255, 0.02);
+      font-size: 13px;
+      cursor: pointer;
+      transition: 160ms ease;
+      user-select: none;
+    }
+
+    .day-chip strong {
+      font-size: 15px;
+      line-height: 1;
+    }
+
+    .day-chip.active {
+      background: var(--accent);
+      color: var(--accent-ink);
+      border-color: transparent;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(242, 200, 93, 0.28);
+    }
+
+    .agenda {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--r-md);
+      overflow: hidden;
+    }
+
+    .agenda-item {
+      min-height: 44px;
+      padding: var(--s-3) var(--s-4);
+      display: grid;
+      grid-template-columns: 52px 1fr auto;
+      align-items: center;
+      gap: var(--s-2);
+      border-bottom: 1px solid #ebe6dc;
+    }
+
+    .agenda-item:last-child { border-bottom: 0; }
+
+    .time {
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .task {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #444;
+    }
+
+    .dot.accent { background: var(--accent); }
+
+    .refs, .checklist {
+      background: #fffcf5;
+      border: 1px solid #e4dcc9;
+      border-radius: var(--r-md);
+      padding: var(--s-4);
+      display: grid;
+      gap: var(--s-2);
+    }
+
+    .section-title {
+      margin: 0;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+    }
+
+    .refs p,
+    .checklist li {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    ul {
+      margin: 0;
+      padding-left: 20px;
+      display: grid;
+      gap: var(--s-2);
+    }
+
+    .cta {
+      min-height: 44px;
+      width: 100%;
+      border: 0;
+      border-radius: var(--r-md);
+      background: #222;
+      color: #fff8e6;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      padding: var(--s-3) var(--s-4);
+      cursor: pointer;
+      transition: transform 140ms ease, background 140ms ease;
+    }
+
+    .cta:active {
+      transform: scale(0.99);
+      background: #111;
+    }
+
+    .footer-pad { height: var(--s-2); }
+
+    @media (max-width: 360px) {
+      .title { font-size: 24px; }
+      .agenda-item { grid-template-columns: 48px 1fr auto; padding: var(--s-2) var(--s-3); }
+      .content, .header { padding: var(--s-3); }
+    }
+  </style>
+</head>
+<body>
+  <main class="phone" aria-label="Stone schedule mobile mockup">
+    <header class="header">
+      <div class="top-row">
+        <div class="brand">Studio Planner</div>
+        <div class="badge">Today focus 82%</div>
+      </div>
+      <h1 class="title">Calm Weekboard</h1>
+      <p class="subtitle">Monochrome schedule with warm accent priorities.</p>
+    </header>
+
+    <section class="content">
+      <article class="calendar-card">
+        <div class="calendar-head">
+          <div class="month">March 2026</div>
+          <span aria-hidden="true">◐</span>
+        </div>
+        <div class="chip-row" id="chips" role="listbox" aria-label="Select day">
+          <button class="day-chip" data-day="18"><span>Tue</span><strong>18</strong></button>
+          <button class="day-chip active" data-day="19"><span>Wed</span><strong>19</strong></button>
+          <button class="day-chip" data-day="20"><span>Thu</span><strong>20</strong></button>
+          <button class="day-chip" data-day="21"><span>Fri</span><strong>21</strong></button>
+          <button class="day-chip" data-day="22"><span>Sat</span><strong>22</strong></button>
+        </div>
+      </article>
+
+      <section class="agenda" aria-label="Agenda list">
+        <div class="agenda-item">
+          <div class="time">09:00</div>
+          <div class="task">Design review — mobile nav</div>
+          <div class="dot accent"></div>
+        </div>
+        <div class="agenda-item">
+          <div class="time">11:00</div>
+          <div class="task">Sprint standup + blockers</div>
+          <div class="dot"></div>
+        </div>
+        <div class="agenda-item">
+          <div class="time">15:00</div>
+          <div class="task">Prototype handoff sync</div>
+          <div class="dot accent"></div>
+        </div>
+      </section>
+
+      <section class="refs">
+        <h2 class="section-title">Reference DNA</h2>
+        <p><strong>REF-004</strong>: High-contrast dark calendar block on a light layout.</p>
+        <p><strong>REF-018</strong>: Soft monochrome rhythm for date selection + schedule flow.</p>
+        <p><strong>REF-024</strong>: Warm yellow accent for timeline priorities.</p>
+      </section>
+
+      <section class="checklist" aria-label="Rule compliance checklist">
+        <h2 class="section-title">Checklist</h2>
+        <ul>
+          <li><strong>4px grid:</strong> all spacing tokens are multiples of 4px.</li>
+          <li><strong>Primary spacing:</strong> 8px / 16px used as main padding and gaps.</li>
+          <li><strong>Viewport baseline:</strong> built at 390px and adapted for 360px via media query.</li>
+          <li><strong>Tap targets:</strong> buttons and key rows are at least 44px high.</li>
+          <li><strong>Non-generic style:</strong> stone-paper palette, charcoal card, yellow editorial accent.</li>
+        </ul>
+      </section>
+
+      <button class="cta" type="button">Open detailed day plan</button>
+      <div class="footer-pad" aria-hidden="true"></div>
+    </section>
+  </main>
+
+  <script>
+    const chips = document.querySelectorAll('.day-chip');
+    chips.forEach((chip) => {
+      chip.addEventListener('click', () => {
+        chips.forEach((c) => c.classList.remove('active'));
+        chip.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>

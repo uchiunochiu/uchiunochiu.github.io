@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Paperclip Design Gallery</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0c0f14;
+      --panel: #141922;
+      --panel-2: #1a2230;
+      --line: #2a3448;
+      --text: #e8eefc;
+      --sub: #9fb0d7;
+      --accent: #66d9ef;
+      --ok: #94f7c5;
+      --warn: #ffd37e;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "IBM Plex Sans", sans-serif;
+      background: radial-gradient(1200px 500px at 100% -20%, #1c2844 0%, transparent 65%), var(--bg);
+      color: var(--text);
+    }
+    .wrap { max-width: 1200px; margin: 0 auto; padding: 28px 20px 44px; }
+    .head {
+      display: grid; gap: 10px; margin-bottom: 18px;
+      border: 1px solid var(--line); background: linear-gradient(180deg, #141b26, #10151d); border-radius: 14px;
+      padding: 18px;
+    }
+    .kicker {
+      font: 500 12px "IBM Plex Mono", monospace;
+      color: var(--accent); text-transform: uppercase; letter-spacing: .08em;
+    }
+    h1 { margin: 0; font-size: clamp(22px, 4vw, 34px); }
+    .sub { color: var(--sub); margin: 0; line-height: 1.6; }
+
+    .controls {
+      display: grid; grid-template-columns: 1fr 240px auto; gap: 10px; margin: 14px 0 18px;
+    }
+    input, select, button {
+      width: 100%; border-radius: 10px; border: 1px solid var(--line);
+      background: var(--panel); color: var(--text); padding: 10px 12px;
+      font-family: inherit;
+    }
+    button { cursor: pointer; background: #1c2638; }
+    button:hover { border-color: #3c4f72; }
+
+    .grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 12px;
+    }
+    .card {
+      border: 1px solid var(--line); border-radius: 12px; overflow: hidden;
+      background: linear-gradient(180deg, #151d2a, #121925);
+      display: grid;
+    }
+    .thumb {
+      width: 100%; aspect-ratio: 16/10; object-fit: cover; background: #0d131d;
+    }
+    .meta { padding: 11px; display: grid; gap: 8px; }
+    .title { margin: 0; font-size: 15px; }
+    .note { margin: 0; color: var(--sub); font-size: 13px; line-height: 1.5; }
+    .tags { display: flex; gap: 6px; flex-wrap: wrap; }
+    .tag {
+      font: 500 11px "IBM Plex Mono", monospace;
+      color: #b9c8eb; border: 1px solid #33425f; border-radius: 99px; padding: 2px 7px;
+    }
+
+    .prompt {
+      margin-top: 18px; border: 1px solid var(--line); border-radius: 12px;
+      background: linear-gradient(180deg, #121b2b, #101722);
+      padding: 14px;
+    }
+    .prompt h2 { margin: 0 0 8px; font-size: 16px; }
+    .prompt pre {
+      margin: 0; white-space: pre-wrap; line-height: 1.6; color: #dce7ff;
+      background: #0c131f; border: 1px solid #28334a; border-radius: 10px; padding: 12px;
+      font-family: "IBM Plex Mono", monospace; font-size: 12px;
+    }
+    .hint { margin-top: 8px; color: var(--ok); font-size: 12px; }
+    .empty {
+      border: 1px dashed #3a4b6b; color: #9eb0d8; border-radius: 12px; padding: 18px; text-align: center;
+    }
+    @media (max-width: 780px) {
+      .controls { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="head">
+      <p class="kicker">Reference System</p>
+      <h1>Paperclip Engineer Design Gallery</h1>
+      <p class="sub">このギャラリーを先に読み込ませてから、モックアップ生成を依頼してください。各デザインに「どの参照を使ったか」を明記させる運用です。</p>
+    </section>
+
+    <section class="controls">
+      <input id="search" placeholder="タイトル・メモ・タグで検索" />
+      <select id="tagFilter"><option value="all">すべてのタグ</option></select>
+      <button id="copyPrompt">指示テンプレをコピー</button>
+    </section>
+
+    <section id="gallery" class="grid"></section>
+
+    <section class="prompt">
+      <h2>Paperclipエンジニア向け 指示テンプレ</h2>
+      <pre id="promptText">このタスクでは、先に paperclip-design-gallery/refs.json と画像アセットを読んでください。
+用途: モバイルUIデザインの作成（iOS/Android想定）。
+
+要件:
+1) 参照の視覚ルール（色・余白・タイポ・密度・角丸）を優先して再現。
+2) 提案ごとに「参照ID」を明記（最低2件）。
+3) 余白ルールは4の倍数で統一し、基本は 8px / 16px を採用する（padding / margin 共通）。
+4) モバイル前提で設計（タップ領域44px以上、片手操作、縦スクロール優先）。
+5) 画面幅は390px基準で、必要なら360pxでも崩れないこと。
+6) 参照から外す判断をした場合は、理由を1行で書く。
+7) 最終出力に「適用したルール一覧」を付ける。
+8) 禁止: 汎用テンプレ風UI、根拠のない装飾、参照不在の独断。
+
+出力形式:
+- Design Summary
+- Applied References (id, reason)
+- Mobile Mockup (HTML/CSS/JS or framework code)
+- Rule Checklist</pre>
+      <div class="hint">運用: 画像追加後は refs.json に1件追加するだけで自動反映。</div>
+    </section>
+  </main>
+
+  <script>
+    const gallery = document.getElementById('gallery');
+    const search = document.getElementById('search');
+    const tagFilter = document.getElementById('tagFilter');
+    const copyBtn = document.getElementById('copyPrompt');
+
+    let refs = [];
+
+    function collectTags(items) {
+      const set = new Set();
+      items.forEach(i => (i.tags || []).forEach(t => set.add(t)));
+      return [...set].sort((a, b) => a.localeCompare(b, 'ja'));
+    }
+
+    function render(items) {
+      if (!items.length) {
+        gallery.innerHTML = '<div class="empty">一致する参照がありません。</div>';
+        return;
+      }
+      gallery.innerHTML = items.map(item => `
+        <article class="card">
+          <img class="thumb" src="${item.image}" alt="${item.title}">
+          <div class="meta">
+            <h3 class="title">${item.id} — ${item.title}</h3>
+            <p class="note">${item.note || ''}</p>
+            <div class="tags">${(item.tags || []).map(t => `<span class="tag">#${t}</span>`).join('')}</div>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    function applyFilter() {
+      const q = search.value.trim().toLowerCase();
+      const tag = tagFilter.value;
+      const filtered = refs.filter(item => {
+        const hay = `${item.id} ${item.title} ${item.note || ''} ${(item.tags || []).join(' ')}`.toLowerCase();
+        const searchOk = !q || hay.includes(q);
+        const tagOk = tag === 'all' || (item.tags || []).includes(tag);
+        return searchOk && tagOk;
+      });
+      render(filtered);
+    }
+
+    async function boot() {
+      try {
+        const r = await fetch('./refs.json');
+        refs = await r.json();
+      } catch (e) {
+        refs = [];
+      }
+
+      collectTags(refs).forEach(tag => {
+        const opt = document.createElement('option');
+        opt.value = tag;
+        opt.textContent = tag;
+        tagFilter.appendChild(opt);
+      });
+      applyFilter();
+    }
+
+    search.addEventListener('input', applyFilter);
+    tagFilter.addEventListener('change', applyFilter);
+    copyBtn.addEventListener('click', async () => {
+      const text = document.getElementById('promptText').textContent;
+      try {
+        await navigator.clipboard.writeText(text);
+        copyBtn.textContent = 'コピー済み';
+        setTimeout(() => copyBtn.textContent = '指示テンプレをコピー', 1200);
+      } catch {
+        copyBtn.textContent = 'コピー失敗';
+        setTimeout(() => copyBtn.textContent = '指示テンプレをコピー', 1200);
+      }
+    });
+
+    boot();
+  </script>
+</body>
+</html>

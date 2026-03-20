@@ -1,0 +1,314 @@
+[
+  {
+    "id": "REF-001",
+    "title": "Monochrome finance dashboard (dual device)",
+    "image": "./assets/ref-001-finance-dual.jpg",
+    "tags": [
+      "finance",
+      "monochrome",
+      "dashboard",
+      "cards",
+      "icon-grid"
+    ],
+    "note": "高密度情報でも余白を保つグレースケール設計。"
+  },
+  {
+    "id": "REF-002",
+    "title": "Travel map + POI exploration",
+    "image": "./assets/ref-002-travel-map.jpg",
+    "tags": [
+      "travel",
+      "map",
+      "poi",
+      "overlay",
+      "soft-shadow"
+    ],
+    "note": "地図・検索・スポット詳細の3ビュー分割が明快。"
+  },
+  {
+    "id": "REF-003",
+    "title": "Minimal wallet home",
+    "image": "./assets/ref-003-wallet-minimal.jpg",
+    "tags": [
+      "wallet",
+      "minimal",
+      "light",
+      "transaction",
+      "rounded"
+    ],
+    "note": "薄いトーンと丸みで安心感を出す家計管理UI。"
+  },
+  {
+    "id": "REF-004",
+    "title": "Planning with dark calendar focus",
+    "image": "./assets/ref-004-planning-calendar.jpg",
+    "tags": [
+      "planning",
+      "calendar",
+      "dark-card",
+      "toggle",
+      "mobile"
+    ],
+    "note": "白基調の中に黒カレンダーを置く強いコントラスト。"
+  },
+  {
+    "id": "REF-005",
+    "title": "Logistics tracking status board",
+    "image": "./assets/ref-005-logistics-status.jpg",
+    "tags": [
+      "logistics",
+      "tracking",
+      "status",
+      "neon-accent",
+      "list"
+    ],
+    "note": "進行状況バーとステータスチップの視認性が高い。"
+  },
+  {
+    "id": "REF-006",
+    "title": "AI app marketplace screens",
+    "image": "./assets/ref-006-ai-marketplace.jpg",
+    "tags": [
+      "ai",
+      "marketplace",
+      "catalog",
+      "search",
+      "detail"
+    ],
+    "note": "一覧→詳細への遷移構造が整理された2画面構成。"
+  },
+  {
+    "id": "REF-007",
+    "title": "Account settings simple list",
+    "image": "./assets/ref-007-account-settings.jpg",
+    "tags": [
+      "account",
+      "settings",
+      "list",
+      "profile",
+      "clean"
+    ],
+    "note": "設定画面の定番構造を極限まで簡潔にした例。"
+  },
+  {
+    "id": "REF-008",
+    "title": "Fitness onboarding + pricing",
+    "image": "./assets/ref-008-onboarding-cards.jpg",
+    "tags": [
+      "onboarding",
+      "fitness",
+      "pricing",
+      "wizard",
+      "cards"
+    ],
+    "note": "初期診断から課金誘導までの3ステップ設計。"
+  },
+  {
+    "id": "REF-009",
+    "title": "Task manager + schedule",
+    "image": "./assets/ref-009-task-schedule.jpg",
+    "tags": [
+      "task",
+      "schedule",
+      "productivity",
+      "timeline",
+      "light"
+    ],
+    "note": "タスク一覧と日次スケジュールの並列閲覧が自然。"
+  },
+  {
+    "id": "REF-010",
+    "title": "Social profile + conversation feed",
+    "image": "./assets/ref-010-social-profile.jpg",
+    "tags": [
+      "social",
+      "profile",
+      "feed",
+      "audio",
+      "community"
+    ],
+    "note": "プロフィール導線と会話フィードを1画面に統合。"
+  },
+  {
+    "id": "REF-011",
+    "title": "Light league chat thread",
+    "image": "./assets/ref-011-chat-light.jpg",
+    "tags": [
+      "chat",
+      "community",
+      "light",
+      "thread",
+      "micro-ui"
+    ],
+    "note": "投稿リストに軽いアクションUIを重ねる設計が参考になる。"
+  },
+  {
+    "id": "REF-012",
+    "title": "Budget trackers with pastel bars",
+    "image": "./assets/ref-012-budget-trackers.jpg",
+    "tags": [
+      "budget",
+      "tracker",
+      "pastel",
+      "progress",
+      "finance"
+    ],
+    "note": "カテゴリ行と進捗バーの反復で視認性が高い。"
+  },
+  {
+    "id": "REF-013",
+    "title": "Medication app multi-screen flow",
+    "image": "./assets/ref-013-medication-flow.jpg",
+    "tags": [
+      "healthcare",
+      "medication",
+      "flow",
+      "blue",
+      "cards"
+    ],
+    "note": "オンボーディングから詳細表示まで青系で統一された導線。"
+  },
+  {
+    "id": "REF-014",
+    "title": "Playful social onboarding",
+    "image": "./assets/ref-014-social-onboarding.jpg",
+    "tags": [
+      "onboarding",
+      "social",
+      "playful",
+      "illustration",
+      "hero"
+    ],
+    "note": "大きなキャラクターイラストで初回体験を印象付ける構成。"
+  },
+  {
+    "id": "REF-015",
+    "title": "Invoice detail bottom sheet",
+    "image": "./assets/ref-015-invoice-sheet.jpg",
+    "tags": [
+      "invoice",
+      "bottom-sheet",
+      "actions",
+      "minimal",
+      "billing"
+    ],
+    "note": "詳細確認と操作ボタンを1枚のシートへ整理したUI。"
+  },
+  {
+    "id": "REF-016",
+    "title": "Transaction history with detail overlay",
+    "image": "./assets/ref-016-transaction-detail.jpg",
+    "tags": [
+      "transaction",
+      "history",
+      "overlay",
+      "finance",
+      "comparison"
+    ],
+    "note": "履歴一覧と詳細モーダルの前後状態比較が分かりやすい。"
+  },
+  {
+    "id": "REF-017",
+    "title": "Task creation modal form",
+    "image": "./assets/ref-017-task-modal.jpg",
+    "tags": [
+      "task",
+      "modal",
+      "form",
+      "project",
+      "cta"
+    ],
+    "note": "モーダル内フォームの階層と主ボタン配置が明快。"
+  },
+  {
+    "id": "REF-018",
+    "title": "Monochrome mobile calendar showcase",
+    "image": "./assets/ref-018-mobile-calendar-stone.jpg",
+    "tags": [
+      "calendar",
+      "monochrome",
+      "schedule",
+      "mobile",
+      "showcase"
+    ],
+    "note": "淡色パレットでイベント一覧と日付選択を自然に統合。"
+  },
+  {
+    "id": "REF-019",
+    "title": "Student schedule dual view",
+    "image": "./assets/ref-019-student-schedule.jpg",
+    "tags": [
+      "schedule",
+      "student",
+      "dual-view",
+      "cards",
+      "education"
+    ],
+    "note": "月間表示と詳細日程を2画面で分担する構成。"
+  },
+  {
+    "id": "REF-020",
+    "title": "Event calendar + editor pair",
+    "image": "./assets/ref-020-calendar-editor.jpg",
+    "tags": [
+      "calendar",
+      "editor",
+      "event",
+      "pastel",
+      "productivity"
+    ],
+    "note": "一覧画面とイベント編集画面のペア設計がそのまま使える。"
+  },
+  {
+    "id": "REF-021",
+    "title": "Calendar + discussion + event editor",
+    "image": "./assets/ref-021-calendar-thread-edit.jpg",
+    "tags": [
+      "calendar",
+      "discussion",
+      "editor",
+      "meeting",
+      "tri-view"
+    ],
+    "note": "予定一覧・スレッド・編集画面を横断する3画面導線が参考になる。"
+  },
+  {
+    "id": "REF-022",
+    "title": "Project search with advanced filters",
+    "image": "./assets/ref-022-project-search-filters.jpg",
+    "tags": [
+      "project",
+      "search",
+      "filters",
+      "status",
+      "mobile"
+    ],
+    "note": "検索結果と詳細フィルタの往復がしやすい設計。"
+  },
+  {
+    "id": "REF-023",
+    "title": "Student agenda with soft cards",
+    "image": "./assets/ref-023-student-agenda-soft.jpg",
+    "tags": [
+      "student",
+      "agenda",
+      "soft-ui",
+      "cards",
+      "timetable"
+    ],
+    "note": "淡色UIで授業・タスク・時刻情報を穏やかに整理。"
+  },
+  {
+    "id": "REF-024",
+    "title": "Portfolio dashboard + vertical schedule",
+    "image": "./assets/ref-024-portfolio-schedule.jpg",
+    "tags": [
+      "portfolio",
+      "dashboard",
+      "timeline",
+      "yellow-accent",
+      "worklog"
+    ],
+    "note": "ダッシュボードと縦タイムラインの組み合わせが明快。"
+  }
+]
