@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>モバイルモックカタログ</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=M+PLUS+1p:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&family=Shippori+Mincho:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Zen+Maru+Gothic:wght@400;500;700&display=swap');
+
     :root {
       --space-1: 4px;
       --space-2: 8px;
@@ -815,44 +817,52 @@
     }
 
     .font-hk {
-      font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", -apple-system, "Noto Sans JP", sans-serif;
+      font-family: "Zen Kaku Gothic New", "Hiragino Kaku Gothic ProN", sans-serif;
     }
 
     .font-hs {
-      font-family: "Hiragino Sans", "Hiragino Kaku Gothic ProN", -apple-system, "Yu Gothic", sans-serif;
+      font-family: "M PLUS 1p", "Hiragino Sans", sans-serif;
     }
 
     .font-yu {
-      font-family: "Yu Gothic", "Yu Gothic UI", "Hiragino Sans", "Noto Sans JP", sans-serif;
+      font-family: "Noto Sans JP", "Yu Gothic", sans-serif;
     }
 
     .font-biz {
-      font-family: "BIZ UDPGothic", "Yu Gothic", "Noto Sans JP", sans-serif;
+      font-family: "BIZ UDPGothic", "Noto Sans JP", sans-serif;
+      letter-spacing: 0.01em;
     }
 
     .font-noto {
-      font-family: "Noto Sans JP", "Hiragino Sans", "Yu Gothic", sans-serif;
+      font-family: "Noto Sans JP", "Hiragino Sans", sans-serif;
     }
 
     .font-round {
-      font-family: "Hiragino Maru Gothic ProN", "Hiragino Sans", "Yu Gothic", "Noto Sans JP", sans-serif;
+      font-family: "Zen Maru Gothic", "Hiragino Maru Gothic ProN", sans-serif;
     }
 
     .font-finance {
-      font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic UI", "Noto Sans JP", sans-serif;
+      font-family: "Zen Kaku Gothic New", "Noto Sans JP", sans-serif;
+      font-feature-settings: "tnum" 1;
     }
 
     .font-social {
-      font-family: "Noto Sans JP", "Hiragino Sans", "Hiragino Kaku Gothic ProN", sans-serif;
+      font-family: "M PLUS 1p", "Noto Sans JP", sans-serif;
     }
 
     .font-health {
-      font-family: "BIZ UDPGothic", "Hiragino Sans", "Noto Sans JP", sans-serif;
+      font-family: "BIZ UDPGothic", "Zen Kaku Gothic New", sans-serif;
     }
 
     .font-commerce {
-      font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic", "Meiryo", sans-serif;
+      font-family: "Shippori Mincho", "Noto Sans JP", serif;
     }
+
+    .font-round .jp-title { font-weight: 700; letter-spacing: 0.01em; }
+    .font-biz .jp-title { letter-spacing: 0.015em; }
+    .font-finance .jp-title { font-weight: 700; letter-spacing: -0.005em; }
+    .font-commerce .jp-title { font-weight: 700; letter-spacing: 0.02em; }
+    .font-commerce .jp-body { font-size: 15px; line-height: 1.7; }
 
     @media (max-width: 370px) {
       .catalog,
