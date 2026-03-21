@@ -1577,42 +1577,43 @@
       </div>
       <div class="phone">
         <article class="component">
-          <div class="component-head"><span class="cmp-name">CMP-TWX-01 ホームタイムライン行</span><span class="badge">フィード</span></div>
-          <div class="chat-row"><img class="avatar" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=120&q=80" alt="投稿者" /><div><strong>佐藤 真央</strong><div class="muted">新機能のUI検証メモをスレッド化しました。</div></div><span class="muted">2分</span></div>
+          <div class="component-head"><span class="cmp-name">CMP-TWX-01 ポストコンポーザー</span><span class="badge">composer</span></div>
+          <div class="row"><div class="avatar"></div><input placeholder="いまどうしてる？" /></div>
+          <div class="btn-row"><button class="btn"><svg class="icon"><use href="#i-camera"></use></svg>画像</button><button class="btn"><svg class="icon"><use href="#i-chat"></use></svg>投票</button><button class="btn primary">ポストする</button></div>
         </article>
 
         <article class="component">
-          <div class="component-head"><span class="cmp-name">CMP-TWX-02 メディア付き投稿カード</span><span class="badge">写真</span></div>
-          <div class="social-card">
-            <div class="thumb tall photo p4"></div>
-            <div class="card-body">
-              <div class="row"><strong>展示会ブースの導線ログ</strong><span class="muted">#UX #展示会</span></div>
-              <div class="action-row">
-                <button><svg class="icon"><use href="#i-chat"></use></svg>48</button>
-                <button><svg class="icon"><use href="#i-send"></use></svg>12</button>
-                <button><svg class="icon"><use href="#i-heart"></use></svg>320</button>
-              </div>
-            </div>
+          <div class="component-head"><span class="cmp-name">CMP-TWX-02 ツイートカード</span><span class="badge">tweet</span></div>
+          <div class="chat-row"><img class="avatar" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=120&q=80" alt="投稿者" /><div><strong>@mao_sato</strong><div class="muted">新しいオンボーディング案、3パターンで比較しました。</div></div><span class="muted">5分</span></div>
+          <div class="action-row">
+            <button><svg class="icon"><use href="#i-chat"></use></svg>24</button>
+            <button><svg class="icon"><use href="#i-send"></use></svg>8</button>
+            <button><svg class="icon"><use href="#i-heart"></use></svg>132</button>
+            <button><svg class="icon"><use href="#i-bookmark"></use></svg>保存</button>
           </div>
         </article>
 
         <article class="component">
-          <div class="component-head"><span class="cmp-name">CMP-TWX-03 話題トレンドチップ</span><span class="badge">トレンド</span></div>
-          <div class="chips">
-            <button class="chip active">#プロダクト開発</button>
-            <button class="chip">#デザインレビュー</button>
-            <button class="chip">#週次ふりかえり</button>
+          <div class="component-head"><span class="cmp-name">CMP-TWX-03 返信スレッドブロック</span><span class="badge">thread</span></div>
+          <div class="list">
+            <div class="chat-row"><div class="avatar"></div><div><strong>@yui_pm</strong><div class="muted">比較軸に初回完了率も追加しませんか？</div></div><span class="muted">返信</span></div>
+            <div class="chat-row"><div class="avatar"></div><div><strong>@mao_sato</strong><div class="muted">了解です。明日の朝に更新版を出します。</div></div><span class="muted">返信</span></div>
           </div>
         </article>
 
         <article class="component">
-          <div class="component-head"><span class="cmp-name">CMP-TWX-04 スペース告知カード</span><span class="badge">音声</span></div>
-          <div class="list-row"><div><strong>今夜 21:00 デザイン談義スペース</strong><p class="muted">参加予定 86人 ・ ホスト 2名</p></div><button class="btn">リマインド</button></div>
+          <div class="component-head"><span class="cmp-name">CMP-TWX-04 トレンドリスト</span><span class="badge">trending</span></div>
+          <div class="list">
+            <div class="list-row"><div><strong>1. #プロダクト開発</strong><p class="muted">8,420 posts</p></div><span class="muted">日本のトレンド</span></div>
+            <div class="list-row"><div><strong>2. #デザインレビュー</strong><p class="muted">2,103 posts</p></div><span class="muted">テクノロジー</span></div>
+            <div class="list-row"><div><strong>3. #週次ふりかえり</strong><p class="muted">1,288 posts</p></div><span class="muted">ビジネス</span></div>
+          </div>
         </article>
 
         <article class="component">
-          <div class="component-head"><span class="cmp-name">CMP-TWX-05 返信入力バー</span><span class="badge">入力</span></div>
-          <div class="row"><input placeholder="いまどうしてる？" /><button class="btn primary">投稿</button></div>
+          <div class="component-head"><span class="cmp-name">CMP-TWX-05 プロフィールミニカード</span><span class="badge">profile</span></div>
+          <div class="list-row"><div class="row"><div class="avatar"></div><div><strong>佐藤 真央</strong><p class="muted">@mao_sato ・ Product Designer</p></div></div><button class="btn">フォロー</button></div>
+          <p class="muted">UX / IA / Design Ops のメモを毎日投稿</p>
         </article>
       </div>
     </section>
@@ -1624,45 +1625,55 @@
       </div>
       <div class="phone">
         <article class="component">
-          <div class="component-head"><span class="cmp-name">CMP-IGM-01 ストーリーリング列</span><span class="badge">写真</span></div>
+          <div class="component-head"><span class="cmp-name">CMP-IGM-01 ストーリーリング行</span><span class="badge">story</span></div>
           <div class="story-strip">
-            <div class="story-item"><div class="story-photo photo p1"></div><span>朝景色</span></div>
-            <div class="story-item"><div class="story-photo photo p6"></div><span>カフェ</span></div>
-            <div class="story-item"><div class="story-photo photo p12"></div><span>制作中</span></div>
-            <div class="story-item"><div class="story-photo photo p14"></div><span>移動</span></div>
+            <div class="story-item"><div class="story-photo photo p1"></div><span>あなた</span></div>
+            <div class="story-item"><div class="story-photo photo p6"></div><span>nao</span></div>
+            <div class="story-item"><div class="story-photo photo p12"></div><span>cafe_tokyo</span></div>
+            <div class="story-item"><div class="story-photo photo p14"></div><span>travel.jp</span></div>
           </div>
         </article>
 
         <article class="component">
-          <div class="component-head"><span class="cmp-name">CMP-IGM-02 リール縦動画カード</span><span class="badge">動画</span></div>
-          <div class="destination-card"><div class="thumb tall photo p9"></div><div class="card-body"><strong>15秒ルームツアー</strong><div class="row"><span class="muted">再生 24.8K</span><button class="icon-btn"><svg class="icon"><use href="#i-send"></use></svg></button></div></div></div>
+          <div class="component-head"><span class="cmp-name">CMP-IGM-02 投稿カード（メディア＋アクション）</span><span class="badge">post</span></div>
+          <div class="social-card">
+            <div class="thumb tall photo p9"></div>
+            <div class="card-body">
+              <div class="row"><strong>@mao_journal</strong><span class="muted">東京</span></div>
+              <div class="action-row">
+                <button><svg class="icon"><use href="#i-heart"></use></svg>1,248</button>
+                <button><svg class="icon"><use href="#i-chat"></use></svg>84</button>
+                <button><svg class="icon"><use href="#i-send"></use></svg>送信</button>
+                <button><svg class="icon"><use href="#i-bookmark"></use></svg>保存</button>
+              </div>
+              <p class="muted">夜景スポットを3つ回ってきました。</p>
+            </div>
+          </div>
         </article>
 
         <article class="component">
-          <div class="component-head"><span class="cmp-name">CMP-IGM-03 発見グリッド</span><span class="badge">写真</span></div>
+          <div class="component-head"><span class="cmp-name">CMP-IGM-03 リールストリップ</span><span class="badge">reels</span></div>
+          <div class="story-strip">
+            <div class="story-item"><div class="story-photo photo p3"></div><span>12.4万回</span></div>
+            <div class="story-item"><div class="story-photo photo p8"></div><span>8.1万回</span></div>
+            <div class="story-item"><div class="story-photo photo p10"></div><span>5.6万回</span></div>
+          </div>
+        </article>
+
+        <article class="component">
+          <div class="component-head"><span class="cmp-name">CMP-IGM-04 プロフィールグリッド</span><span class="badge">grid</span></div>
           <div class="photo-grid">
-            <div class="photo-tile"><div class="thumb photo p3"></div><span class="muted">街角</span></div>
-            <div class="photo-tile"><div class="thumb photo p8"></div><span class="muted">ランチ</span></div>
-            <div class="photo-tile"><div class="thumb photo p10"></div><span class="muted">ホテル</span></div>
-            <div class="photo-tile"><div class="thumb photo p15"></div><span class="muted">作業机</span></div>
+            <div class="photo-tile"><div class="thumb photo p5"></div><span class="muted">投稿</span></div>
+            <div class="photo-tile"><div class="thumb photo p7"></div><span class="muted">投稿</span></div>
+            <div class="photo-tile"><div class="thumb photo p11"></div><span class="muted">投稿</span></div>
+            <div class="photo-tile"><div class="thumb photo p15"></div><span class="muted">投稿</span></div>
           </div>
         </article>
 
         <article class="component">
-          <div class="component-head"><span class="cmp-name">CMP-IGM-04 投稿アクション列</span><span class="badge">アクション</span></div>
-          <div class="action-row">
-            <button><svg class="icon"><use href="#i-heart"></use></svg>いいね</button>
-            <button><svg class="icon"><use href="#i-chat"></use></svg>コメント</button>
-            <button><svg class="icon"><use href="#i-send"></use></svg>シェア</button>
-            <button><svg class="icon"><use href="#i-bookmark"></use></svg>保存</button>
-          </div>
-        </article>
-
-        <article class="component">
-          <div class="component-head"><span class="cmp-name">CMP-IGM-05 クリエイター統計カード</span><span class="badge">分析</span></div>
-          <div class="row"><span class="muted">リーチ</span><strong>12,480</strong></div>
-          <div class="row"><span class="muted">プロフィール遷移</span><strong>684</strong></div>
-          <div class="progress"><span style="width:74%"></span></div>
+          <div class="component-head"><span class="cmp-name">CMP-IGM-05 DMプレビューリスト</span><span class="badge">dm</span></div>
+          <div class="chat-row"><div class="avatar"></div><div><strong>haru_photo</strong><div class="muted">撮影データ、共有しました！</div></div><span class="muted">19:42</span></div>
+          <div class="chat-row"><div class="avatar"></div><div><strong>studio_mii</strong><div class="muted">明日の集合は10:00でOK？</div></div><span class="badge">2</span></div>
         </article>
       </div>
     </section>
@@ -1674,39 +1685,32 @@
       </div>
       <div class="phone">
         <article class="component">
-          <div class="component-head"><span class="cmp-name">CMP-YTB-01 大型サムネカード</span><span class="badge">動画</span></div>
-          <div class="support-card"><div class="thumb tall photo p13"></div><div class="card-body"><strong>UIレビュー実況: 失敗しない情報設計</strong><p class="muted">22万回視聴 ・ 3日前</p></div></div>
+          <div class="component-head"><span class="cmp-name">CMP-YTB-01 動画フィードカード（サムネ＋尺＋メタ）</span><span class="badge">feed</span></div>
+          <div class="support-card"><div class="thumb tall photo p13"></div><div class="card-body"><div class="row"><strong>情報設計レビュー完全版</strong><span class="badge">12:48</span></div><p class="muted">Design Lab ・ 22万回視聴 ・ 3日前</p></div></div>
         </article>
 
         <article class="component">
-          <div class="component-head"><span class="cmp-name">CMP-YTB-02 ショート動画ストリップ</span><span class="badge">ショート</span></div>
+          <div class="component-head"><span class="cmp-name">CMP-YTB-02 Shortsレール</span><span class="badge">shorts</span></div>
           <div class="story-strip">
-            <div class="story-item"><div class="story-photo photo p7"></div><span>30秒Tips</span></div>
-            <div class="story-item"><div class="story-photo photo p11"></div><span>速報</span></div>
-            <div class="story-item"><div class="story-photo photo p2"></div><span>比較</span></div>
+            <div class="story-item"><div class="story-photo photo p7"></div><span>1.2M</span></div>
+            <div class="story-item"><div class="story-photo photo p11"></div><span>842K</span></div>
+            <div class="story-item"><div class="story-photo photo p2"></div><span>603K</span></div>
           </div>
         </article>
 
-        <article class="component tab-group" data-tab-group>
-          <div class="component-head"><span class="cmp-name">CMP-YTB-03 チャンネルタブ</span><span class="badge">タブ</span></div>
-          <div class="tabs">
-            <button class="tab active" data-tab="yt-home">ホーム</button>
-            <button class="tab" data-tab="yt-videos">動画</button>
-            <button class="tab" data-tab="yt-live">ライブ</button>
-          </div>
-          <div class="tab-panel active" data-panel="yt-home"><p class="muted">おすすめ順</p></div>
-          <div class="tab-panel" data-panel="yt-videos"><p class="muted">新着動画順</p></div>
-          <div class="tab-panel" data-panel="yt-live"><p class="muted">次回配信: 20:00</p></div>
+        <article class="component">
+          <div class="component-head"><span class="cmp-name">CMP-YTB-03 チャンネルヘッダー</span><span class="badge">channel</span></div>
+          <div class="list-row"><div class="row"><div class="avatar"></div><div><strong>Design Lab</strong><p class="muted">@designlab ・ 登録者 18.4万人</p></div></div><button class="btn primary">登録</button></div>
         </article>
 
         <article class="component">
-          <div class="component-head"><span class="cmp-name">CMP-YTB-04 再生キュー行</span><span class="badge">プレイリスト</span></div>
-          <div class="list-row"><div><strong>次の動画: アクセシビリティ実装</strong><p class="muted">再生まで 4分12秒</p></div><button class="btn">先に見る</button></div>
+          <div class="component-head"><span class="cmp-name">CMP-YTB-04 コメントプレビュー</span><span class="badge">comment</span></div>
+          <div class="chat-row"><div class="avatar"></div><div><strong>@ux_nori</strong><div class="muted">この比較表、実務でそのまま使えました。ありがとうございます！</div></div><span class="muted">2時間前</span></div>
         </article>
 
         <article class="component">
-          <div class="component-head"><span class="cmp-name">CMP-YTB-05 登録CTAヘッダー</span><span class="badge">CTA</span></div>
-          <div class="row"><div><strong>デザイン検証ラボ</strong><p class="muted">登録者 18.4万人</p></div><button class="btn primary">登録する</button></div>
+          <div class="component-head"><span class="cmp-name">CMP-YTB-05 再生アクションバー</span><span class="badge">actions</span></div>
+          <div class="btn-row"><button class="btn"><svg class="icon"><use href="#i-heart"></use></svg>高評価</button><button class="btn"><svg class="icon"><use href="#i-send"></use></svg>共有</button><button class="btn"><svg class="icon"><use href="#i-bookmark"></use></svg>保存</button></div>
         </article>
       </div>
     </section>
@@ -1718,32 +1722,37 @@
       </div>
       <div class="phone">
         <article class="component">
-          <div class="component-head"><span class="cmp-name">CMP-SLK-01 チャンネルサイドリスト</span><span class="badge">ナビ</span></div>
-          <div class="list">
-            <div class="list-row"><span># 企画-進行</span><span class="badge">8</span></div>
-            <div class="list-row"><span># デザインレビュー</span><span class="badge">3</span></div>
-            <div class="list-row"><span># リリース連絡</span><span class="muted">既読</span></div>
+          <div class="component-head"><span class="cmp-name">CMP-SLK-01 ワークスペーススイッチャー行</span><span class="badge">workspace</span></div>
+          <div class="chips">
+            <button class="chip active">PJT-A</button>
+            <button class="chip">Corp</button>
+            <button class="chip">Design</button>
+            <button class="chip">＋</button>
           </div>
         </article>
 
         <article class="component">
-          <div class="component-head"><span class="cmp-name">CMP-SLK-02 スレッド要約カード</span><span class="badge">スレッド</span></div>
-          <div class="chat-row"><img class="avatar" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=120&q=80" alt="メンバー" /><div><strong>山岸 翼</strong><div class="muted">仕様確認完了。残りは文言最終調整です。</div></div><span class="muted">1件</span></div>
+          <div class="component-head"><span class="cmp-name">CMP-SLK-02 チャンネルリスト（未読バッジ）</span><span class="badge">channels</span></div>
+          <div class="list">
+            <div class="list-row"><span># 企画-進行</span><span class="badge">8</span></div>
+            <div class="list-row"><span># デザインレビュー</span><span class="badge">3</span></div>
+            <div class="list-row"><span># random</span><span class="muted">既読</span></div>
+          </div>
         </article>
 
         <article class="component">
-          <div class="component-head"><span class="cmp-name">CMP-SLK-03 ハドル開始バー</span><span class="badge">通話</span></div>
-          <div class="btn-row"><button class="btn"><svg class="icon"><use href="#i-chat"></use></svg>メモ共有</button><button class="btn primary"><svg class="icon"><use href="#i-send"></use></svg>ハドル開始</button></div>
+          <div class="component-head"><span class="cmp-name">CMP-SLK-03 スレッドプレビュー</span><span class="badge">thread</span></div>
+          <div class="chat-row"><img class="avatar" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=120&q=80" alt="メンバー" /><div><strong>山岸 翼</strong><div class="muted">仕様確認完了。残りは文言最終調整です。</div></div><span class="badge">7</span></div>
         </article>
 
         <article class="component">
-          <div class="component-head"><span class="cmp-name">CMP-SLK-04 添付ファイルプレビュー</span><span class="badge">ファイル</span></div>
-          <div class="support-card"><div class="thumb photo p15"></div><div class="card-body"><strong>release-checklist-v3.pdf</strong><p class="muted">コメント 12件 ・ 更新 5分前</p></div></div>
+          <div class="component-head"><span class="cmp-name">CMP-SLK-04 メッセージコンポーザー</span><span class="badge">composer</span></div>
+          <div class="row"><button class="btn">＋</button><input placeholder="#デザインレビュー にメッセージ" /><button class="btn primary">送信</button></div>
         </article>
 
         <article class="component">
-          <div class="component-head"><span class="cmp-name">CMP-SLK-05 メッセージ入力バー</span><span class="badge">入力</span></div>
-          <div class="row"><input placeholder="#デザインレビュー にメッセージ" /><button class="btn primary">送信</button></div>
+          <div class="component-head"><span class="cmp-name">CMP-SLK-05 ハドル／ステータスブロック</span><span class="badge">huddle</span></div>
+          <div class="list-row"><div><strong>ハドル: #企画-進行</strong><p class="muted">参加中 3人 ・ あなたのステータス: 取り込み中</p></div><button class="btn">参加</button></div>
         </article>
       </div>
     </section>
@@ -1755,36 +1764,36 @@
       </div>
       <div class="phone">
         <article class="component">
-          <div class="component-head"><span class="cmp-name">CMP-LIN-01 トークリスト行</span><span class="badge">チャット</span></div>
+          <div class="component-head"><span class="cmp-name">CMP-LIN-01 チャットリスト行</span><span class="badge">chat list</span></div>
           <div class="chat-row"><div class="avatar"></div><div><strong>家族グループ</strong><div class="muted">夕飯の買い物、お願いできますか？</div></div><span class="muted">20:18</span></div>
           <div class="chat-row"><div class="avatar"></div><div><strong>田中 亮</strong><div class="muted">資料ありがとう！確認します。</div></div><span class="badge">2</span></div>
         </article>
 
         <article class="component">
-          <div class="component-head"><span class="cmp-name">CMP-LIN-02 写真共有バブル</span><span class="badge">写真</span></div>
-          <div class="photo-grid">
-            <div class="photo-tile"><div class="thumb photo p5"></div><span class="muted">公園</span></div>
-            <div class="photo-tile"><div class="thumb photo p6"></div><span class="muted">カフェ</span></div>
-          </div>
+          <div class="component-head"><span class="cmp-name">CMP-LIN-02 トーク画面バブルセット</span><span class="badge">talk</span></div>
+          <div class="list-row"><span class="chip">おつかれさま！</span><span class="muted">19:04</span></div>
+          <div class="list-row" style="justify-content:flex-end"><span class="chip active">今向かってます</span><span class="muted">19:05</span></div>
+          <div class="list-row"><span class="chip">了解、駅前で待ってるね</span><span class="muted">19:06</span></div>
         </article>
 
         <article class="component">
-          <div class="component-head"><span class="cmp-name">CMP-LIN-03 スタンプクイックパネル</span><span class="badge">スタンプ</span></div>
+          <div class="component-head"><span class="cmp-name">CMP-LIN-03 スタンプパネルプレビュー</span><span class="badge">sticker</span></div>
           <div class="chips">
-            <button class="chip active"><svg class="icon"><use href="#i-heart"></use></svg>ありがとう</button>
-            <button class="chip">了解です</button>
+            <button class="chip active">ありがとう</button>
+            <button class="chip">了解</button>
             <button class="chip">おつかれさま</button>
+            <button class="chip">笑</button>
           </div>
         </article>
 
         <article class="component">
-          <div class="component-head"><span class="cmp-name">CMP-LIN-04 公式通知カード</span><span class="badge">通知</span></div>
+          <div class="component-head"><span class="cmp-name">CMP-LIN-04 公式アカウントカード</span><span class="badge">official</span></div>
           <div class="list-row"><div><strong>配送通知: 荷物をお届けしました</strong><p class="muted">LINE公式アカウント ・ 18:42</p></div><button class="btn">確認</button></div>
         </article>
 
         <article class="component">
-          <div class="component-head"><span class="cmp-name">CMP-LIN-05 トーク入力フッター</span><span class="badge">入力</span></div>
-          <div class="row"><input placeholder="メッセージ" /><button class="btn primary"><svg class="icon"><use href="#i-send"></use></svg>送信</button></div>
+          <div class="component-head"><span class="cmp-name">CMP-LIN-05 ウォレット／サービスショートカット</span><span class="badge">services</span></div>
+          <div class="btn-row"><button class="btn">ウォレット</button><button class="btn">Pay</button><button class="btn">クーポン</button><button class="btn">ニュース</button></div>
         </article>
       </div>
     </section>
@@ -1796,40 +1805,37 @@
       </div>
       <div class="phone">
         <article class="component">
-          <div class="component-head"><span class="cmp-name">CMP-ABN-01 エリア検索バー</span><span class="badge">検索</span></div>
-          <div class="row"><input value="大阪・2名・4月上旬" /><button class="btn"><svg class="icon"><use href="#i-filter"></use></svg>絞り込み</button></div>
+          <div class="component-head"><span class="cmp-name">CMP-ABN-01 目的地検索ヒーロー</span><span class="badge">search hero</span></div>
+          <div class="row"><input value="大阪・2名・4月上旬" /><button class="btn primary"><svg class="icon"><use href="#i-search"></use></svg>検索</button></div>
+          <div class="chips"><span class="chip active">日付を追加</span><span class="chip">ゲスト</span><span class="chip">フィルター</span></div>
         </article>
 
         <article class="component" data-carousel="abn-main">
-          <div class="component-head"><span class="cmp-name">CMP-ABN-02 物件フォトカルーセル</span><span class="badge">写真</span></div>
+          <div class="component-head"><span class="cmp-name">CMP-ABN-02 リスティングカード（写真＋料金＋評価）</span><span class="badge">listing</span></div>
           <div class="carousel-controls">
             <button class="icon-btn" data-carousel-prev="abn-main"><svg class="icon"><use href="#i-search"></use></svg></button>
             <button class="icon-btn" data-carousel-next="abn-main"><svg class="icon"><use href="#i-send"></use></svg></button>
           </div>
           <div class="carousel-track" id="abn-main">
-            <div class="estate-card"><div class="thumb tall photo p10"></div><div class="card-body"><strong>梅田 モダンロフト</strong><div class="row"><span class="muted">4.86 ・ 2泊</span><strong>¥24,000</strong></div></div></div>
-            <div class="estate-card"><div class="thumb tall photo p11"></div><div class="card-body"><strong>中崎町 デザイン宿</strong><div class="row"><span class="muted">4.91 ・ 2泊</span><strong>¥28,400</strong></div></div></div>
-            <div class="estate-card"><div class="thumb tall photo p12"></div><div class="card-body"><strong>難波 シティビュー</strong><div class="row"><span class="muted">4.75 ・ 2泊</span><strong>¥21,900</strong></div></div></div>
+            <div class="estate-card"><div class="thumb tall photo p10"></div><div class="card-body"><strong>梅田 モダンロフト</strong><div class="row"><span class="muted">★4.86 ・ 2泊</span><strong>¥24,000</strong></div></div></div>
+            <div class="estate-card"><div class="thumb tall photo p11"></div><div class="card-body"><strong>中崎町 デザイン宿</strong><div class="row"><span class="muted">★4.91 ・ 2泊</span><strong>¥28,400</strong></div></div></div>
+            <div class="estate-card"><div class="thumb tall photo p12"></div><div class="card-body"><strong>難波 シティビュー</strong><div class="row"><span class="muted">★4.75 ・ 2泊</span><strong>¥21,900</strong></div></div></div>
           </div>
         </article>
 
         <article class="component">
-          <div class="component-head"><span class="cmp-name">CMP-ABN-03 お気に入り登録カード</span><span class="badge">保存</span></div>
+          <div class="component-head"><span class="cmp-name">CMP-ABN-03 マップ切替バー</span><span class="badge">map toggle</span></div>
+          <div class="btn-row"><button class="btn active">リスト</button><button class="btn">マップを表示</button></div>
+        </article>
+
+        <article class="component">
+          <div class="component-head"><span class="cmp-name">CMP-ABN-04 ウィッシュリストカード</span><span class="badge">wishlist</span></div>
           <div class="destination-card"><div class="thumb tall photo p3"></div><div class="card-body"><strong>川沿いテラスハウス</strong><div class="row"><span class="muted">駅徒歩7分</span><button class="icon-btn"><svg class="icon"><use href="#i-heart"></use></svg></button></div></div></div>
         </article>
 
         <article class="component">
-          <div class="component-head"><span class="cmp-name">CMP-ABN-04 アメニティチップ群</span><span class="badge">設備</span></div>
-          <div class="chips">
-            <span class="chip"><svg class="icon"><use href="#i-home"></use></svg>まるまる貸切</span>
-            <span class="chip"><svg class="icon"><use href="#i-camera"></use></svg>高速Wi-Fi</span>
-            <span class="chip"><svg class="icon"><use href="#i-bed"></use></svg>ベッド2台</span>
-          </div>
-        </article>
-
-        <article class="component">
-          <div class="component-head"><span class="cmp-name">CMP-ABN-05 予約確定フッター</span><span class="badge">CTA</span></div>
-          <div class="row"><div><strong>合計 ¥28,400</strong><p class="muted">清掃料・サービス料込み</p></div><button class="btn primary">予約へ進む</button></div>
+          <div class="component-head"><span class="cmp-name">CMP-ABN-05 予約サマリーカード</span><span class="badge">booking</span></div>
+          <div class="list-row"><div><strong>合計 ¥28,400</strong><p class="muted">宿泊 ¥24,000 ・ 清掃料 ¥2,400 ・ サービス料 ¥2,000</p></div><button class="btn primary">予約へ進む</button></div>
         </article>
       </div>
     </section>
