@@ -6,26 +6,28 @@
   <title>CaddyCo モバイルプロトタイプ</title>
   <style>
     :root {
-      /* 4pt Grid */
       --space-1: 4px;
       --space-2: 8px;
       --space-3: 12px;
       --space-4: 16px;
+      --space-5: 20px;
       --space-6: 24px;
 
       --bg: #ffffff;
       --surface: #ffffff;
-      --text: #1f2328;
+      --text: #20242a;
       --muted: #66707c;
-      --line: #e5e7eb;
-      --line-strong: #d1d5db;
-      --soft: #f8fafc;
+      --line: #e4e8ee;
+      --line-strong: #cfd6df;
+      --soft: #f7f9fb;
+      --accent: #1f2937;
+      --accent-soft: #eef2f6;
 
       --radius-card: 12px;
       --radius-control: 12px;
       --radius-pill: 999px;
 
-      --shadow-soft: 0 1px 2px rgba(15, 23, 42, 0.06);
+      --shadow-soft: 0 10px 24px -18px rgba(15, 23, 42, 0.18);
 
       --tap-min: 44px;
     }
@@ -41,7 +43,7 @@
     }
 
     .app {
-      max-width: 430px;
+      max-width: 440px;
       margin: 0 auto;
       min-height: 100dvh;
       background: var(--bg);
@@ -50,29 +52,57 @@
       flex-direction: column;
     }
 
-    .status {
-      height: 32px;
-      padding: 0 var(--space-4) var(--space-1);
+    .app-head {
+      padding: var(--space-3) var(--space-4) 0;
+    }
+
+    .masthead {
+      border-bottom: 1px solid var(--line);
+      padding: 0 0 var(--space-4);
       display: flex;
-      align-items: end;
       justify-content: space-between;
-      color: var(--muted);
+      align-items: flex-start;
+      gap: var(--space-3);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 0 var(--space-2);
+      border-radius: var(--radius-pill);
+      background: var(--accent-soft);
+      color: var(--accent);
       font-size: 12px;
-      font-weight: 600;
+      font-weight: 700;
+      margin-bottom: var(--space-2);
+    }
+
+    .masthead-title {
+      font-size: 18px;
+      line-height: 1.4;
+      margin: 0;
+      letter-spacing: 0;
+    }
+
+    .masthead-meta {
+      font-size: 12px;
+      line-height: 1.5;
+      color: var(--muted);
     }
 
     .screen {
       display: none;
       flex: 1;
       overflow: auto;
-      padding: var(--space-4) var(--space-4) 96px;
-      animation: fade-in 140ms ease;
+      padding: var(--space-4) var(--space-4) 104px;
+      animation: fade-in 120ms ease;
     }
 
     .screen.active { display: block; }
 
     @keyframes fade-in {
-      from { opacity: 0; transform: translateY(4px); }
+      from { opacity: 0; transform: translateY(2px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
@@ -87,8 +117,8 @@
     }
 
     .hero-title {
-      font-size: 28px;
-      line-height: 1.25;
+      font-size: 30px;
+      line-height: 1.3;
       margin: 0;
       letter-spacing: 0;
     }
@@ -110,7 +140,7 @@
       align-items: center;
       gap: var(--space-2);
       font-size: 12px;
-      color: #4b5563;
+      color: #44505d;
       background: #ffffff;
     }
 
@@ -136,8 +166,8 @@
       margin-bottom: var(--space-4);
     }
 
-    .screen-title { font-size: 20px; line-height: 1.4; }
-    .muted { color: var(--muted); font-size: 13px; line-height: 1.5; }
+    .screen-title { font-size: 22px; line-height: 1.4; }
+    .muted { color: var(--muted); font-size: 13px; line-height: 1.6; }
 
     .chip {
       border: 1px solid var(--line);
@@ -150,6 +180,7 @@
       font-weight: 700;
       color: #4b5563;
       white-space: nowrap;
+      background: var(--accent-soft);
     }
 
     .form-group + .form-group { margin-top: var(--space-3); }
@@ -166,6 +197,13 @@
       font-size: 12px;
       color: var(--muted);
       font-weight: 700;
+    }
+
+    .helper {
+      margin-top: var(--space-2);
+      font-size: 12px;
+      line-height: 1.5;
+      color: var(--muted);
     }
 
     input, select, textarea, button {
@@ -199,13 +237,20 @@
       cursor: pointer;
       background: #ffffff;
       color: var(--text);
+      transition: transform 120ms ease, background-color 120ms ease, border-color 120ms ease;
     }
 
     .btn + .btn { margin-top: var(--space-2); }
+    .btn:active,
+    .icon-btn:active,
+    .pill:active,
+    .tab-btn:active,
+    .tweet-actions button:active,
+    .toggle button:active { transform: scale(0.985); }
 
     .btn-primary {
-      background: #111827;
-      border-color: #111827;
+      background: var(--accent);
+      border-color: var(--accent);
       color: #ffffff;
     }
 
@@ -225,7 +270,7 @@
       border: 1px solid var(--line);
       border-radius: var(--radius-card);
       background: var(--soft);
-      padding: var(--space-2);
+      padding: var(--space-3);
     }
 
     .kpi b { display: block; font-size: 18px; margin-bottom: var(--space-1); }
@@ -234,14 +279,19 @@
     .criteria {
       border: 1px dashed var(--line-strong);
       border-radius: var(--radius-card);
-      padding: var(--space-3);
-      background: #ffffff;
+      padding: var(--space-4);
+      background: var(--soft);
       font-size: 12px;
       color: #374151;
       line-height: 1.5;
     }
 
     .criteria b { display: block; margin-bottom: var(--space-1); }
+    .criteria ul {
+      margin: var(--space-2) 0 0;
+      padding-left: 18px;
+    }
+    .criteria li + li { margin-top: var(--space-1); }
 
     .meter {
       border: 1px solid var(--line);
@@ -271,7 +321,7 @@
       display: block;
       height: 100%;
       width: 0;
-      background: #9ca3af;
+      background: #7b8795;
       transition: width 160ms ease;
     }
 
@@ -285,7 +335,7 @@
     }
 
     .hole-no {
-      font-size: 52px;
+      font-size: 48px;
       line-height: 1;
       margin: var(--space-2) 0;
     }
@@ -327,8 +377,8 @@
     }
 
     .pill.active {
-      border-color: #9ca3af;
-      background: #f3f4f6;
+      border-color: #94a3b8;
+      background: var(--accent-soft);
       color: #111827;
     }
 
@@ -449,7 +499,7 @@
       font-size: 12px;
       font-weight: 700;
       color: #374151;
-      background: #ffffff;
+      background: var(--accent-soft);
     }
 
     .bottom-nav {
@@ -458,12 +508,13 @@
       left: var(--space-4);
       right: var(--space-4);
       bottom: var(--space-4);
-      border: 1px solid #111827;
+      border: 1px solid var(--line);
       border-radius: 16px;
-      background: #111827;
+      background: rgba(255, 255, 255, 0.96);
       padding: var(--space-1);
       grid-template-columns: repeat(4, 1fr);
       gap: var(--space-1);
+      box-shadow: 0 16px 32px -24px rgba(15, 23, 42, 0.32);
     }
 
     .bottom-nav.show { display: grid; }
@@ -473,7 +524,7 @@
       border: 0;
       border-radius: 12px;
       background: transparent;
-      color: #9ca3af;
+      color: #6b7280;
       font-size: 11px;
       font-weight: 700;
       cursor: pointer;
@@ -483,17 +534,43 @@
     }
 
     .tab-btn.active {
-      background: #1f2937;
-      color: #f9fafb;
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+
+    .stack > * + * {
+      margin-top: var(--space-3);
+    }
+
+    @media (max-width: 480px) {
+      .app-head {
+        padding-top: var(--space-2);
+      }
+
+      .hero-title {
+        font-size: 28px;
+      }
+
+      .screen-title {
+        font-size: 20px;
+      }
+
+      .hole-no {
+        font-size: 44px;
+      }
     }
   </style>
 </head>
 <body>
   <main class="app" aria-label="CaddyCo mobile prototype">
-    <div class="status">
-      <span>20:44</span>
-      <span>CaddyCo</span>
-      <span>5G ▰▰▰</span>
+    <div class="app-head">
+      <div class="masthead">
+        <div>
+          <div class="eyebrow">CaddyCo</div>
+          <p class="masthead-title">ラウンド記録と共有を、白基調の実用UIで一貫させたモバイルモック</p>
+        </div>
+        <p class="masthead-meta">Login → Start → Score → Complete / Share → Feed → History</p>
+      </div>
     </div>
 
     <section class="screen active" data-screen="login">
@@ -505,13 +582,14 @@
           </div>
           <h1 class="hero-title">ラウンドを、
             <br>その場で残す。</h1>
-          <p class="muted" style="margin-top: var(--space-2);">開始・記録・共有をひとつの流れで。4人ラウンドの進行に合わせたモバイル体験です。</p>
+          <p class="muted" style="margin-top: var(--space-2);">開始、記録、共有、振り返りまでを一つの流れにまとめた、日本語UIのモバイル体験です。</p>
         </article>
 
         <article class="card">
           <h2 class="screen-title" style="margin-bottom: var(--space-2);">ログイン</h2>
           <p class="muted" style="margin-bottom: var(--space-4);">スコア履歴とフィードを同期します。</p>
           <button class="btn btn-primary" id="googleLoginBtn">Googleでログイン</button>
+          <p class="helper">ボタン高 44px 以上、白背景、端末フレームなしで表示します。</p>
         </article>
 
         <article class="card">
@@ -522,10 +600,12 @@
           </div>
           <div class="criteria" style="margin-top: var(--space-4);">
             <b>適用デザイン基準</b>
-            design-taste-frontend / app-design-system<br>
-            Spacing: 4pt grid（8/16主軸, 12/24補助）<br>
-            Components: 入力44px+, ボタン44-48px, カード余白16px<br>
-            Compliance: Grid=Pass / Tap Target=Pass / White Base=Pass / No Neon=Pass
+            <ul>
+              <li>適用スキル: `design-taste-frontend` / `app-design-system`</li>
+              <li>Spacing tokens: 4pt grid, 8px・16px主軸, 12px・24px補助</li>
+              <li>Component rhythm: カード余白16px / フィールド間12px / 入力・ボタン44px以上 / ナビ48px</li>
+              <li>Compliance: White Base=Pass / No Device Frame=Pass / Calm Motion=Pass / Flow 유지=Pass</li>
+            </ul>
           </div>
         </article>
       </div>
@@ -549,6 +629,7 @@
               <option>ベイラインCC</option>
               <option>グリーンハーバーリンクス</option>
             </select>
+            <p class="helper">最近選択したコースを優先表示。</p>
           </div>
           <div>
             <label>ホール数</label>
@@ -556,6 +637,7 @@
               <option>18</option>
               <option>9</option>
             </select>
+            <p class="helper">通常ラウンドは 18 ホール。</p>
           </div>
         </div>
 
@@ -574,6 +656,7 @@
               <option>ストロークプレー</option>
               <option>マッチプレー</option>
             </select>
+            <p class="helper">フィード表示文言にも反映されます。</p>
           </div>
         </div>
 
@@ -623,6 +706,7 @@
         </div>
 
         <div class="pill-row" id="quickScoreTags"></div>
+        <p class="helper" style="margin-bottom: var(--space-3);">よく使う打数候補を先に並べ、片手操作でも入力しやすくしています。</p>
 
         <div class="grid-2" style="margin-bottom: var(--space-2);">
           <button class="btn btn-secondary" id="prevHoleBtn">前のホール</button>
@@ -649,6 +733,7 @@
 
         <label>コメント</label>
         <textarea placeholder="後半は寄せが安定。次回はパットの再現性を上げたい。"></textarea>
+        <p class="helper">公開前に一言だけ残せる、静かな共有画面にしています。</p>
 
         <label style="margin-top: var(--space-4);">公開範囲</label>
         <div class="toggle" id="visibilityToggle">
