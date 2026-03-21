@@ -8,41 +8,52 @@
     :root {
       --space-1: 4px;
       --space-2: 8px;
+      --space-3: 12px;
       --space-4: 16px;
+      --space-5: 20px;
       --space-6: 24px;
       --space-8: 32px;
       --space-10: 40px;
       --space-12: 48px;
       --space-16: 64px;
-      --bg: #efefec;
-      --bg-soft: rgba(255, 255, 255, 0.6);
-      --panel: rgba(248, 248, 245, 0.84);
-      --panel-strong: rgba(255, 255, 255, 0.88);
-      --line: rgba(84, 88, 84, 0.11);
-      --line-strong: rgba(84, 88, 84, 0.18);
-      --text: #1f2421;
-      --muted: #70756f;
-      --shadow: 0 40px 90px -58px rgba(38, 42, 39, 0.3);
-      --panel-shadow: 0 32px 80px -52px rgba(38, 42, 39, 0.24);
-      --radius-panel: 36px;
-      --radius-device: 28px;
-      --radius-screen: 22px;
+      --space-20: 80px;
+      --bg: #eeeeeb;
+      --panel: #f5f4f1;
+      --panel-soft: rgba(255, 255, 255, 0.56);
+      --line: rgba(43, 43, 40, 0.085);
+      --line-soft: rgba(43, 43, 40, 0.06);
+      --ink: #2b2b28;
+      --muted: #7e7d78;
+      --device: #d8d4ca;
+      --device-dark: #191815;
+      --screen: #fcfbf8;
+      --screen-soft: #f1efea;
+      --shadow: 0 22px 44px -28px rgba(38, 37, 34, 0.22);
+      --panel-shadow: 0 28px 60px -40px rgba(38, 37, 34, 0.16);
+      --radius-panel: 40px;
+      --radius-device: 42px;
+      --radius-screen: 34px;
     }
 
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
-    html, body {
+    html,
+    body {
       margin: 0;
       min-height: 100%;
+      font-family: "SF Pro Display", "SF Pro Text", "Hiragino Sans", "Yu Gothic", sans-serif;
+      color: var(--ink);
       background:
-        linear-gradient(var(--line) 1px, transparent 1px),
-        linear-gradient(90deg, var(--line) 1px, transparent 1px),
-        radial-gradient(circle at top, rgba(255, 255, 255, 0.72), transparent 34%),
-        linear-gradient(180deg, #f6f6f3 0%, var(--bg) 52%, #ebebe8 100%);
-      background-size: 40px 40px, 40px 40px, auto, auto;
-      color: var(--text);
-      font-family: "Hiragino Sans", "Yu Gothic", "Meiryo", sans-serif;
+        linear-gradient(var(--line-soft) 1px, transparent 1px),
+        linear-gradient(90deg, var(--line-soft) 1px, transparent 1px),
+        radial-gradient(circle at 50% 12%, rgba(255, 255, 255, 0.7), transparent 26%),
+        radial-gradient(circle at 72% 26%, rgba(255, 255, 255, 0.38), transparent 22%),
+        var(--bg);
+      background-size: 36px 36px, 36px 36px, auto, auto, auto;
       -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
     }
 
     body {
@@ -51,610 +62,692 @@
     }
 
     .page {
-      min-height: calc(100dvh - var(--space-12));
+      width: min(100%, 1440px);
+      min-height: calc(100dvh - 48px);
+      margin: 0 auto;
       display: grid;
       grid-template-rows: auto 1fr;
-      gap: var(--space-8);
-      max-width: 1440px;
-      margin: 0 auto;
+      gap: var(--space-10);
     }
 
     .topline {
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
       gap: var(--space-4);
-      padding: var(--space-2) var(--space-1);
-      font-size: 12px;
+      padding: var(--space-2) 0;
+      font-size: 11px;
+      line-height: 1;
       letter-spacing: 0.08em;
       text-transform: uppercase;
       color: var(--muted);
     }
 
-    .topline-label,
-    .topline-handle {
-      display: inline-flex;
-      align-items: center;
-      gap: var(--space-2);
-      white-space: nowrap;
-    }
-
-    .topline-label::before {
-      content: "";
-      width: 8px;
-      height: 8px;
-      border-radius: 999px;
-      background: rgba(50, 56, 51, 0.24);
-      box-shadow: 0 0 0 4px rgba(50, 56, 51, 0.06);
-    }
-
-    .hero-shell {
-      position: relative;
+    .hero {
       display: grid;
       place-items: center;
-      padding: var(--space-4);
+      padding: var(--space-2);
     }
 
-    .hero-panel {
+    .panel {
       position: relative;
-      width: min(100%, 1200px);
-      min-height: 760px;
+      width: min(100%, 1220px);
+      min-height: 780px;
       border-radius: var(--radius-panel);
-      padding: var(--space-10);
-      overflow: hidden;
+      border: 1px solid rgba(74, 72, 66, 0.12);
       background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.8), rgba(244, 244, 241, 0.82)),
+        linear-gradient(var(--line-soft) 1px, transparent 1px),
+        linear-gradient(90deg, var(--line-soft) 1px, transparent 1px),
+        radial-gradient(circle at 44% 16%, rgba(255, 255, 255, 0.64), transparent 26%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.5), rgba(243, 241, 236, 0.9)),
         var(--panel);
-      border: 1px solid rgba(255, 255, 255, 0.82);
+      background-size: 72px 72px, 72px 72px, auto, auto, auto;
       box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.85),
-        inset 0 -1px 0 rgba(255, 255, 255, 0.36),
+        inset 0 1px 0 rgba(255, 255, 255, 0.72),
         var(--panel-shadow);
-      display: grid;
-      grid-template-rows: auto 1fr;
-      gap: var(--space-10);
+      overflow: hidden;
       isolation: isolate;
     }
 
-    .hero-panel::before,
-    .hero-panel::after {
+    .panel::after {
       content: "";
       position: absolute;
       inset: 0;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.12), transparent 22%, transparent 78%, rgba(255, 255, 255, 0.18));
       pointer-events: none;
     }
 
-    .hero-panel::before {
-      background:
-        linear-gradient(var(--line) 1px, transparent 1px),
-        linear-gradient(90deg, var(--line) 1px, transparent 1px);
-      background-size: 80px 80px;
-      mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.24));
-      opacity: 0.52;
-    }
-
-    .hero-panel::after {
-      background:
-        radial-gradient(circle at 18% 20%, rgba(255, 255, 255, 0.72), transparent 26%),
-        radial-gradient(circle at 80% 18%, rgba(225, 228, 223, 0.6), transparent 24%),
-        linear-gradient(180deg, transparent 0%, rgba(255, 255, 255, 0.26) 100%);
-      z-index: -1;
-    }
-
-    .panel-head {
+    .stage {
       position: relative;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: var(--space-8);
-      z-index: 1;
+      width: 100%;
+      height: 100%;
+      min-height: 780px;
     }
 
-    .panel-copy {
-      display: grid;
-      gap: var(--space-4);
-      max-width: 560px;
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      width: fit-content;
-      min-height: 28px;
-      padding: 0 var(--space-2);
-      border-radius: 999px;
-      border: 1px solid var(--line-strong);
-      color: #525852;
-      background: rgba(255, 255, 255, 0.5);
-      font-size: 11px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    h1 {
-      margin: 0;
-      font-size: clamp(36px, 5vw, 72px);
-      line-height: 1.04;
-      letter-spacing: -0.04em;
-      font-weight: 500;
-    }
-
-    .lead {
-      margin: 0;
-      max-width: 38ch;
-      color: var(--muted);
-      font-size: 15px;
-      line-height: 1.8;
-    }
-
-    .panel-note {
-      padding-top: var(--space-2);
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.7;
-      text-align: right;
-      max-width: 220px;
-    }
-
-    .device-stage {
-      position: relative;
-      min-height: 0;
-      display: grid;
-      align-items: end;
-      z-index: 1;
-    }
-
-    .device-stage::before {
-      content: "";
+    .ground-shadow {
       position: absolute;
-      left: 8%;
-      right: 8%;
-      bottom: 7%;
+      left: 50%;
+      bottom: 88px;
+      width: min(74vw, 860px);
       height: 120px;
-      border-radius: 999px;
-      background: radial-gradient(circle, rgba(61, 65, 61, 0.14), transparent 68%);
-      filter: blur(18px);
-      opacity: 0.65;
-    }
-
-    .device-layout {
-      position: relative;
-      display: grid;
-      grid-template-columns: minmax(260px, 0.84fr) minmax(320px, 1fr);
-      gap: var(--space-8);
-      align-items: end;
-      width: min(100%, 980px);
-      margin: 0 auto;
+      transform: translateX(-50%);
+      background: radial-gradient(circle, rgba(40, 38, 35, 0.15), transparent 68%);
+      filter: blur(16px);
+      opacity: 0.55;
+      pointer-events: none;
     }
 
     .device {
-      position: relative;
+      position: absolute;
       border-radius: var(--radius-device);
-      border: 1px solid rgba(255, 255, 255, 0.92);
-      background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(236, 237, 233, 0.94));
+      background: linear-gradient(180deg, #d9d4ca 0%, #bbb5aa 100%);
       box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.96),
-        inset 0 -1px 0 rgba(136, 141, 136, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.72),
+        inset 0 -1px 0 rgba(70, 64, 57, 0.14),
         var(--shadow);
     }
 
-    .device-left {
-      width: min(100%, 348px);
-      padding: 12px;
-      justify-self: end;
-      transform: translateX(44px) translateY(12px);
+    .device::before {
+      content: "";
+      position: absolute;
+      inset: 1px;
+      border-radius: calc(var(--radius-device) - 1px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      pointer-events: none;
+    }
+
+    .device.left {
+      left: 19%;
+      bottom: 116px;
+      width: 284px;
+      height: 580px;
+      transform: rotate(-8deg);
       z-index: 1;
     }
 
-    .device-right {
-      width: min(100%, 520px);
-      padding: 14px;
-      justify-self: start;
+    .device.right {
+      right: 16%;
+      bottom: 72px;
+      width: 360px;
+      height: 732px;
       z-index: 2;
     }
 
+    .button,
+    .mute,
+    .camera {
+      position: absolute;
+      background: rgba(119, 112, 100, 0.62);
+      border-radius: 999px;
+    }
+
+    .device.left .button,
+    .device.right .button {
+      left: -2px;
+      top: 126px;
+      width: 3px;
+      height: 64px;
+    }
+
+    .device.right .mute {
+      left: -2px;
+      top: 96px;
+      width: 3px;
+      height: 28px;
+    }
+
+    .device.right .camera {
+      right: -2px;
+      top: 152px;
+      width: 3px;
+      height: 78px;
+    }
+
     .screen {
+      position: absolute;
+      inset: 10px;
       border-radius: var(--radius-screen);
       overflow: hidden;
-      border: 1px solid rgba(105, 110, 105, 0.1);
+      border: 1px solid rgba(92, 88, 82, 0.08);
       background:
-        linear-gradient(180deg, rgba(252, 252, 250, 0.96), rgba(241, 242, 238, 0.94));
-      min-height: 100%;
+        linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(243, 241, 236, 0.95)),
+        var(--screen);
+    }
+
+    .screen::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.36), transparent 24%);
+      pointer-events: none;
+    }
+
+    .island {
+      position: absolute;
+      left: 50%;
+      top: 10px;
+      width: 124px;
+      height: 26px;
+      transform: translateX(-50%);
+      border-radius: 999px;
+      background: rgba(13, 13, 12, 0.96);
+      z-index: 2;
     }
 
     .screen-inner {
+      position: relative;
+      height: 100%;
+      padding: 18px 16px 16px;
       display: grid;
-      gap: var(--space-4);
-      padding: var(--space-4);
-      min-height: 100%;
+      grid-template-rows: auto auto 1fr;
+      gap: 14px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.28), transparent 28%),
+        var(--screen);
     }
 
-    .toolbar,
-    .mini-row,
-    .thread-head,
-    .chat-row,
-    .dock {
+    .statusbar {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: var(--space-2);
-    }
-
-    .toolbar {
-      min-height: 32px;
-      color: var(--muted);
+      padding: 4px 2px 0;
       font-size: 11px;
-      letter-spacing: 0.04em;
+      font-weight: 600;
+      letter-spacing: 0.01em;
     }
 
-    .toolbar .dots,
-    .icon-set {
+    .status-icons {
       display: inline-flex;
-      gap: 6px;
+      align-items: center;
+      gap: 5px;
     }
 
-    .toolbar .dots span,
-    .icon-set span {
+    .status-icons span {
       display: block;
-      width: 8px;
-      height: 8px;
       border-radius: 999px;
-      background: rgba(85, 90, 85, 0.18);
+      background: rgba(26, 25, 24, 0.9);
     }
 
-    .mini-card,
-    .message,
-    .composer {
-      border: 1px solid rgba(100, 105, 100, 0.08);
-      background: var(--panel-strong);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.92);
+    .status-icons span:nth-child(1) {
+      width: 11px;
+      height: 7px;
+      background: transparent;
+      border: 1.5px solid rgba(26, 25, 24, 0.9);
     }
 
-    .mini-card {
-      display: grid;
-      gap: var(--space-2);
-      border-radius: 18px;
-      padding: 14px;
+    .status-icons span:nth-child(2) {
+      width: 10px;
+      height: 7px;
     }
 
-    .line,
-    .pill-line {
-      display: block;
+    .status-icons span:nth-child(3) {
+      width: 18px;
       height: 8px;
-      border-radius: 999px;
-      background: rgba(90, 96, 91, 0.12);
+      border-radius: 3px;
     }
 
-    .line.short { width: 38%; }
-    .line.mid { width: 58%; }
-    .line.long { width: 84%; }
-    .line.longer { width: 92%; }
-    .pill-line {
-      width: 92px;
-      height: 24px;
-      background: rgba(255, 255, 255, 0.92);
-      border: 1px solid rgba(90, 96, 91, 0.08);
-    }
-
-    .mini-stack {
+    .screen-top {
       display: grid;
       gap: 12px;
-      padding-top: var(--space-2);
     }
 
-    .mini-row {
-      padding: 10px 12px;
-      border-radius: 16px;
-      background: rgba(255, 255, 255, 0.54);
-      border: 1px solid rgba(100, 105, 100, 0.08);
-      min-height: 52px;
+    .close-row {
+      display: flex;
+      justify-content: flex-end;
     }
 
-    .mini-row .avatar,
-    .thread-head .avatar {
-      flex: 0 0 auto;
-      width: 28px;
+    .close-chip {
+      width: 34px;
       height: 28px;
-      border-radius: 12px;
-      background: linear-gradient(180deg, rgba(110, 116, 110, 0.2), rgba(110, 116, 110, 0.1));
-    }
-
-    .mini-copy,
-    .thread-copy {
+      border-radius: 14px;
+      border: 1px solid rgba(79, 76, 69, 0.08);
+      background: rgba(245, 243, 238, 0.86);
+      color: rgba(70, 67, 61, 0.75);
       display: grid;
-      gap: 8px;
-      flex: 1;
+      place-items: center;
+      font-size: 18px;
+      line-height: 1;
     }
 
-    .device-left .screen {
-      min-height: 520px;
-    }
-
-    .device-right .screen {
-      min-height: 620px;
-    }
-
-    .thread {
+    .tabs {
       display: grid;
-      gap: var(--space-4);
-      min-height: 100%;
-      grid-template-rows: auto auto 1fr auto;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 4px;
+      padding: 4px;
+      border-radius: 18px;
+      background: rgba(241, 239, 234, 0.95);
+      border: 1px solid rgba(80, 76, 69, 0.06);
     }
 
-    .thread-head {
-      min-height: 40px;
-      padding-bottom: 4px;
-      border-bottom: 1px solid rgba(100, 105, 100, 0.08);
-    }
-
-    .thread-body {
+    .tab {
+      height: 34px;
+      border-radius: 14px;
       display: grid;
-      gap: 12px;
+      place-items: center;
+      font-size: 11px;
+      color: rgba(84, 81, 76, 0.72);
+      background: transparent;
+    }
+
+    .tab.active {
+      background: rgba(255, 255, 255, 0.9);
+      color: rgba(34, 33, 31, 0.92);
+      box-shadow: 0 6px 12px -10px rgba(40, 37, 33, 0.3);
+    }
+
+    .chat-stream {
+      display: grid;
+      gap: 10px;
       align-content: start;
     }
 
-    .message {
+    .bubble,
+    .system-line {
+      border-radius: 18px;
+      border: 1px solid rgba(85, 82, 76, 0.06);
+      background: rgba(250, 248, 244, 0.94);
+    }
+
+    .bubble {
       display: grid;
-      gap: 10px;
-      max-width: 72%;
-      padding: 14px;
-      border-radius: 20px;
+      gap: 8px;
+      padding: 10px 10px 8px;
+      box-shadow: 0 8px 20px -18px rgba(35, 33, 30, 0.28);
     }
 
-    .message.assistant {
-      justify-self: start;
-      border-top-left-radius: 10px;
-      background: rgba(255, 255, 255, 0.7);
-    }
-
-    .message.user {
-      justify-self: end;
-      border-top-right-radius: 10px;
-      background: rgba(231, 234, 228, 0.9);
-    }
-
-    .composer {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: var(--space-2);
+    .meta {
+      display: flex;
       align-items: center;
-      min-height: 60px;
-      padding: 10px;
-      border-radius: 20px;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 10px;
+      color: rgba(105, 101, 95, 0.72);
     }
 
-    .composer-field {
-      height: 40px;
-      border-radius: 14px;
-      background: rgba(243, 244, 241, 0.95);
-      border: 1px solid rgba(100, 105, 100, 0.06);
+    .author {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 10px;
+      color: rgba(95, 91, 84, 0.9);
     }
 
-    .composer-action {
-      width: 40px;
-      height: 40px;
-      border-radius: 14px;
-      background: rgba(82, 88, 83, 0.14);
-    }
-
-    .dock {
-      justify-content: center;
-      gap: 10px;
-      padding-top: var(--space-2);
-    }
-
-    .dock span {
-      width: 36px;
-      height: 8px;
+    .avatar {
+      width: 18px;
+      height: 18px;
       border-radius: 999px;
-      background: rgba(85, 90, 85, 0.12);
+      background: linear-gradient(180deg, rgba(136, 124, 103, 0.44), rgba(136, 124, 103, 0.16));
+      overflow: hidden;
+      flex: 0 0 auto;
     }
 
-    @media (max-width: 980px) {
-      body { padding: var(--space-4); }
+    .avatar.yellow {
+      background: linear-gradient(180deg, #f1d746, #dabf2e);
+    }
 
-      .hero-panel {
-        min-height: auto;
-        padding: var(--space-8);
+    .message {
+      margin: 0;
+      font-size: 10px;
+      line-height: 1.55;
+      color: rgba(50, 48, 44, 0.94);
+    }
+
+    .bubble-foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .reactions {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: rgba(123, 118, 111, 0.72);
+      font-size: 11px;
+    }
+
+    .reactions span,
+    .counter {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 22px;
+      height: 18px;
+      padding: 0 6px;
+      border-radius: 999px;
+      background: rgba(243, 241, 236, 0.96);
+      border: 1px solid rgba(85, 82, 76, 0.06);
+    }
+
+    .counter {
+      color: #ffffff;
+      background: #f08f22;
+      border-color: rgba(240, 143, 34, 0.34);
+      font-size: 10px;
+      font-weight: 600;
+    }
+
+    .system-line {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      background: rgba(248, 246, 241, 0.76);
+      color: rgba(88, 84, 78, 0.86);
+      font-size: 10px;
+    }
+
+    .system-icon {
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      font-size: 10px;
+      flex: 0 0 auto;
+    }
+
+    .system-icon.green {
+      color: #30b05f;
+      background: rgba(48, 176, 95, 0.1);
+    }
+
+    .system-icon.red {
+      color: #d36a5f;
+      background: rgba(211, 106, 95, 0.11);
+    }
+
+    .left .screen-inner {
+      padding: 18px 14px 14px;
+      gap: 12px;
+    }
+
+    .left .tabs {
+      transform: scale(0.97);
+      transform-origin: top center;
+    }
+
+    .left .chat-stream {
+      gap: 8px;
+    }
+
+    .left .bubble,
+    .left .system-line {
+      border-radius: 16px;
+    }
+
+    .left .message,
+    .left .meta,
+    .left .author,
+    .left .system-line {
+      font-size: 9px;
+    }
+
+    .left .bubble {
+      padding: 9px 9px 7px;
+    }
+
+    .left .close-chip {
+      width: 30px;
+      height: 24px;
+      font-size: 16px;
+    }
+
+    @media (max-width: 1100px) {
+      .panel {
+        min-height: 980px;
       }
 
-      .panel-head {
-        grid-template-columns: 1fr;
-        display: grid;
+      .stage {
+        min-height: 980px;
       }
 
-      .panel-note {
-        text-align: left;
-        max-width: none;
+      .device.left {
+        left: 10%;
+        bottom: 340px;
       }
 
-      .device-layout {
-        grid-template-columns: 1fr;
-        gap: var(--space-6);
-        width: min(100%, 560px);
+      .device.right {
+        right: 10%;
+        bottom: 84px;
       }
 
-      .device-left,
-      .device-right {
-        width: 100%;
-        justify-self: center;
-        transform: none;
+      .ground-shadow {
+        bottom: 56px;
+        width: min(86vw, 760px);
       }
     }
 
-    @media (max-width: 640px) {
+    @media (max-width: 720px) {
+      body {
+        padding: var(--space-4);
+      }
+
       .page {
+        min-height: calc(100dvh - 32px);
         gap: var(--space-6);
-        min-height: auto;
       }
 
       .topline {
-        font-size: 11px;
-        letter-spacing: 0.05em;
+        font-size: 10px;
       }
 
-      .hero-shell {
-        padding: 0;
+      .panel {
+        min-height: 1040px;
+        border-radius: 32px;
       }
 
-      .hero-panel {
-        padding: var(--space-6);
-        border-radius: 28px;
-        gap: var(--space-8);
+      .stage {
+        min-height: 1040px;
       }
 
-      h1 {
-        font-size: 34px;
-        line-height: 1.1;
+      .device.left {
+        left: 50%;
+        bottom: 446px;
+        width: 238px;
+        height: 486px;
+        transform: translateX(-56%) rotate(-7deg);
       }
 
-      .lead {
-        font-size: 14px;
+      .device.right {
+        left: 50%;
+        right: auto;
+        bottom: 88px;
+        width: 312px;
+        height: 636px;
+        transform: translateX(-44%);
       }
 
-      .device-left .screen {
-        min-height: 448px;
-      }
-
-      .device-right .screen {
-        min-height: 540px;
+      .ground-shadow {
+        bottom: 44px;
+        width: 92%;
       }
     }
   </style>
 </head>
 <body>
   <main class="page">
-    <header class="topline" aria-label="ページ見出し">
-      <div class="topline-label">chat design study</div>
-      <div class="topline-handle">@uchiunochiu / visual-note</div>
+    <header class="topline" aria-label="page meta">
+      <div>Product design preview</div>
+      <div>@cmp-5 / 011</div>
     </header>
 
-    <section class="hero-shell" aria-labelledby="page-title">
-      <div class="hero-panel">
-        <div class="panel-head">
-          <div class="panel-copy">
-            <div class="eyebrow">静的ランディング検証</div>
-            <h1 id="page-title">背景の密度と面の静けさで見せる、チャット画面の探索。</h1>
-            <p class="lead">薄いグレーの下地に、細いグリッドと大きなラウンドパネルを重ね、装飾を削いだまま端末モックを主役に置いた一枚構成です。</p>
-          </div>
-          <p class="panel-note">ボタンや強い配色は使わず、余白と輪郭で全体の温度を整えています。</p>
-        </div>
+    <section class="hero" aria-label="chat mockup showcase">
+      <div class="panel">
+        <div class="stage">
+          <div class="ground-shadow" aria-hidden="true"></div>
 
-        <div class="device-stage">
-          <div class="device-layout">
-            <article class="device device-left" aria-label="一覧モック">
-              <div class="screen">
-                <div class="screen-inner">
-                  <div class="toolbar">
-                    <span>overview</span>
-                    <div class="dots" aria-hidden="true">
-                      <span></span>
-                      <span></span>
-                      <span></span>
-                    </div>
-                  </div>
-
-                  <div class="mini-card">
-                    <span class="pill-line"></span>
-                    <span class="line long"></span>
-                    <span class="line mid"></span>
-                  </div>
-
-                  <div class="mini-stack">
-                    <div class="mini-row">
-                      <span class="avatar" aria-hidden="true"></span>
-                      <div class="mini-copy">
-                        <span class="line mid"></span>
-                        <span class="line short"></span>
-                      </div>
-                      <span class="line short"></span>
-                    </div>
-                    <div class="mini-row">
-                      <span class="avatar" aria-hidden="true"></span>
-                      <div class="mini-copy">
-                        <span class="line long"></span>
-                        <span class="line mid"></span>
-                      </div>
-                      <span class="line short"></span>
-                    </div>
-                    <div class="mini-row">
-                      <span class="avatar" aria-hidden="true"></span>
-                      <div class="mini-copy">
-                        <span class="line mid"></span>
-                        <span class="line short"></span>
-                      </div>
-                      <span class="line short"></span>
-                    </div>
-                    <div class="mini-row">
-                      <span class="avatar" aria-hidden="true"></span>
-                      <div class="mini-copy">
-                        <span class="line long"></span>
-                        <span class="line short"></span>
-                      </div>
-                      <span class="line short"></span>
-                    </div>
-                  </div>
-
-                  <div class="dock" aria-hidden="true">
+          <article class="device left" aria-label="secondary chat mockup">
+            <span class="button" aria-hidden="true"></span>
+            <div class="screen">
+              <div class="island" aria-hidden="true"></div>
+              <div class="screen-inner">
+                <div class="statusbar">
+                  <span>9:41</span>
+                  <div class="status-icons" aria-hidden="true">
                     <span></span>
                     <span></span>
                     <span></span>
                   </div>
                 </div>
-              </div>
-            </article>
 
-            <article class="device device-right" aria-label="チャットモック">
-              <div class="screen">
-                <div class="screen-inner thread">
-                  <div class="toolbar">
-                    <span>conversation</span>
-                    <div class="icon-set" aria-hidden="true">
-                      <span></span>
-                      <span></span>
+                <div class="screen-top">
+                  <div class="close-row">
+                    <div class="close-chip">×</div>
+                  </div>
+                  <div class="tabs">
+                    <div class="tab active">League chat</div>
+                    <div class="tab">Direct messages</div>
+                  </div>
+                </div>
+
+                <div class="chat-stream">
+                  <div class="bubble">
+                    <div class="meta">
+                      <div class="author">
+                        <span class="avatar"></span>
+                        <span>@rachel</span>
+                      </div>
+                      <span>10.55</span>
+                    </div>
+                    <p class="message">The league is great, I’m wondering if I could join other leagues as well, any recommendation?</p>
+                    <div class="bubble-foot">
+                      <div class="reactions"><span>↑</span><span>↓</span></div>
+                      <div class="reactions"><span>24</span><span>⌄</span></div>
                     </div>
                   </div>
 
-                  <div class="thread-head">
-                    <span class="avatar" aria-hidden="true"></span>
-                    <div class="thread-copy">
-                      <span class="line short"></span>
-                      <span class="line mid"></span>
-                    </div>
-                    <span class="line short"></span>
+                  <div class="system-line">
+                    <span class="system-icon green">↺</span>
+                    <span>@amanda has join the chat!</span>
                   </div>
 
-                  <div class="thread-body">
-                    <div class="message assistant">
-                      <span class="line longer"></span>
-                      <span class="line long"></span>
-                      <span class="line mid"></span>
-                    </div>
-                    <div class="message user">
-                      <span class="line long"></span>
-                      <span class="line short"></span>
-                    </div>
-                    <div class="message assistant">
-                      <span class="line longer"></span>
-                      <span class="line long"></span>
-                      <span class="line long"></span>
-                      <span class="line mid"></span>
-                    </div>
-                    <div class="message user">
-                      <span class="line mid"></span>
-                      <span class="line short"></span>
-                    </div>
+                  <div class="system-line">
+                    <span class="system-icon red">↻</span>
+                    <span>@arda has left the chat!</span>
                   </div>
 
-                  <div class="composer">
-                    <div class="composer-field" aria-hidden="true"></div>
-                    <div class="composer-action" aria-hidden="true"></div>
+                  <div class="bubble">
+                    <div class="meta">
+                      <div class="author">
+                        <span class="avatar yellow"></span>
+                        <span>@alicorak</span>
+                      </div>
+                      <span>11.05</span>
+                    </div>
+                    <p class="message">Guys, am I bothering you by constantly sharing dark and light mode designs?</p>
+                    <div class="bubble-foot">
+                      <div class="reactions"><span>↑</span><span>↓</span></div>
+                      <div class="reactions"><span class="counter">3</span><span>⌃</span></div>
+                    </div>
                   </div>
                 </div>
               </div>
-            </article>
-          </div>
+            </div>
+          </article>
+
+          <article class="device right" aria-label="primary chat mockup">
+            <span class="button" aria-hidden="true"></span>
+            <span class="mute" aria-hidden="true"></span>
+            <span class="camera" aria-hidden="true"></span>
+            <div class="screen">
+              <div class="island" aria-hidden="true"></div>
+              <div class="screen-inner">
+                <div class="statusbar">
+                  <span>9:41</span>
+                  <div class="status-icons" aria-hidden="true">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                  </div>
+                </div>
+
+                <div class="screen-top">
+                  <div class="close-row">
+                    <div class="close-chip">×</div>
+                  </div>
+                  <div class="tabs">
+                    <div class="tab active">League chat</div>
+                    <div class="tab">Direct messages</div>
+                  </div>
+                </div>
+
+                <div class="chat-stream">
+                  <div class="bubble">
+                    <div class="meta">
+                      <div class="author">
+                        <span class="avatar"></span>
+                        <span>@rachel</span>
+                      </div>
+                      <span>10.55</span>
+                    </div>
+                    <p class="message">The league is great, I’m wondering if I could join other leagues as well, any recommendation?</p>
+                    <div class="bubble-foot">
+                      <div class="reactions"><span>↑</span><span>↓</span></div>
+                      <div class="reactions"><span>24</span><span>⌄</span></div>
+                    </div>
+                  </div>
+
+                  <div class="system-line">
+                    <span class="system-icon green">↺</span>
+                    <span>@amanda has join the chat!</span>
+                  </div>
+
+                  <div class="system-line">
+                    <span class="system-icon red">↻</span>
+                    <span>@arda has left the chat!</span>
+                  </div>
+
+                  <div class="bubble">
+                    <div class="meta">
+                      <div class="author">
+                        <span class="avatar yellow"></span>
+                        <span>@alicorak</span>
+                      </div>
+                      <span>11.05</span>
+                    </div>
+                    <p class="message">Guys, am I bothering you by constantly sharing dark and light mode designs?</p>
+                    <div class="bubble-foot">
+                      <div class="reactions"><span>↑</span><span>↓</span></div>
+                      <div class="reactions"><span class="counter">3</span><span>⌃</span></div>
+                    </div>
+                  </div>
+
+                  <div class="bubble">
+                    <div class="meta">
+                      <div class="author">
+                        <span class="avatar"></span>
+                        <span>@lara</span>
+                      </div>
+                      <span>11.08</span>
+                    </div>
+                    <p class="message">Yes! Someone had to say it. What kind of screens are you refining next?</p>
+                    <div class="bubble-foot">
+                      <div class="reactions"><span>↑</span><span>↓</span></div>
+                      <div class="reactions"><span>12</span><span>⌄</span></div>
+                    </div>
+                  </div>
+
+                  <div class="bubble">
+                    <div class="meta">
+                      <div class="author">
+                        <span class="avatar"></span>
+                        <span>@jonathan</span>
+                      </div>
+                      <span>11.12</span>
+                    </div>
+                    <p class="message">Share the light mode first. The spacing and muted palette feel right for this thread.</p>
+                    <div class="bubble-foot">
+                      <div class="reactions"><span>↑</span><span>↓</span></div>
+                      <div class="reactions"><span>9</span><span>⌄</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
         </div>
       </div>
     </section>
