@@ -32,10 +32,11 @@
 
     body {
       margin: 0;
-      background: var(--bg);
+      background: linear-gradient(180deg, #dbeafe 0%, #eef6ff 35%, #ffffff 100%);
       color: var(--text);
       font-family: "Satoshi", "Noto Sans JP", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       line-height: 1.45;
+      background-attachment: fixed;
     }
 
     .catalog {
@@ -58,13 +59,7 @@
       display: grid;
     }
 
-    .hero {
-      gap: var(--space-3);
-      padding: var(--space-4);
-      border-radius: var(--radius-l);
-      background: linear-gradient(180deg, #dbeafe 0%, #eef6ff 40%, #ffffff 100%);
-      border: 1px solid #dbe7f7;
-    }
+    .hero { gap: var(--space-3); }
 
     .hero h1 {
       margin: 0;
