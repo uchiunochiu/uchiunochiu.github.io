@@ -12,16 +12,22 @@
       --space-4: 16px;
       --space-5: 20px;
       --space-6: 24px;
-      --bg: #ffffff;
-      --surface: #ffffff;
-      --surface-soft: #f7f8fa;
-      --text: #18202a;
-      --muted: #66707c;
-      --line: #e3e7ec;
-      --line-strong: #ced5de;
-      --accent: #1f6b43;
-      --accent-soft: #eef6f1;
-      --shadow-soft: 0 16px 32px -28px rgba(15, 23, 42, 0.28);
+      --bg: #f5f5f3;
+      --bg-grad-a: rgba(255, 255, 255, 0.9);
+      --bg-grad-b: rgba(229, 233, 230, 0.7);
+      --surface: rgba(255, 255, 255, 0.82);
+      --surface-strong: rgba(255, 255, 255, 0.94);
+      --surface-soft: #f0f1ef;
+      --surface-muted: #eceeeb;
+      --text: #1d2120;
+      --muted: #656c69;
+      --line: rgba(102, 108, 105, 0.14);
+      --line-strong: rgba(93, 100, 96, 0.22);
+      --accent: #586a63;
+      --accent-soft: rgba(88, 106, 99, 0.08);
+      --accent-line: rgba(88, 106, 99, 0.22);
+      --shadow-soft: 0 18px 36px -30px rgba(34, 39, 37, 0.24);
+      --shadow-glass: 0 14px 30px -26px rgba(34, 39, 37, 0.22);
       --radius-card: 16px;
       --radius-control: 12px;
       --radius-pill: 999px;
@@ -32,12 +38,17 @@
 
     html, body {
       margin: 0;
-      background: var(--bg);
+      background:
+        radial-gradient(circle at top left, var(--bg-grad-a), transparent 36%),
+        linear-gradient(180deg, #fbfbfa 0%, var(--bg) 48%, #f1f2f0 100%);
       color: var(--text);
       font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", "Meiryo", sans-serif;
     }
 
-    body { min-height: 100vh; }
+    body {
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
 
     h1, h2, h3, p { margin: 0; }
 
@@ -50,7 +61,7 @@
       max-width: 430px;
       min-height: 100dvh;
       margin: 0 auto;
-      background: var(--bg);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.62) 0%, rgba(245, 245, 243, 0.72) 100%);
       position: relative;
     }
 
@@ -58,14 +69,18 @@
       padding: var(--space-3) var(--space-4) 0;
       position: sticky;
       top: 0;
-      background: rgba(255, 255, 255, 0.96);
-      backdrop-filter: blur(10px);
+      background: rgba(245, 245, 243, 0.74);
+      backdrop-filter: blur(14px);
       z-index: 10;
     }
 
     .masthead {
-      padding-bottom: var(--space-4);
-      border-bottom: 1px solid var(--line);
+      padding: var(--space-3) var(--space-4) var(--space-4);
+      border: 1px solid rgba(255, 255, 255, 0.72);
+      border-bottom-color: var(--line);
+      border-radius: 0 0 20px 20px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.82) 0%, rgba(249, 250, 248, 0.7) 100%);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.72), var(--shadow-glass);
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
@@ -79,7 +94,8 @@
       min-height: 28px;
       padding: 0 var(--space-2);
       border-radius: var(--radius-pill);
-      background: var(--accent-soft);
+      border: 1px solid var(--accent-line);
+      background: rgba(255, 255, 255, 0.72);
       font-size: 12px;
       font-weight: 700;
       color: var(--accent);
@@ -92,9 +108,10 @@
       border-radius: 8px;
       display: grid;
       place-items: center;
-      background: var(--accent);
-      color: #fff;
+      background: linear-gradient(180deg, #6d7d76 0%, #586a63 100%);
+      color: #f8faf9;
       font-size: 11px;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22);
     }
 
     .masthead-title {
@@ -148,17 +165,17 @@
       padding: 0 var(--space-3);
       border-radius: var(--radius-pill);
       border: 1px solid var(--line);
-      background: var(--surface-soft);
+      background: rgba(255, 255, 255, 0.72);
       display: inline-flex;
       align-items: center;
       white-space: nowrap;
       font-size: 12px;
       font-weight: 700;
-      color: #405163;
+      color: #48514e;
     }
 
     .card {
-      background: var(--surface);
+      background: var(--surface-strong);
       border: 1px solid var(--line);
       border-radius: var(--radius-card);
       padding: var(--space-4);
@@ -166,21 +183,38 @@
     }
 
     .card-subtle {
-      background: var(--surface-soft);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.72) 0%, rgba(244, 245, 243, 0.92) 100%);
       border: 1px solid var(--line);
       border-radius: var(--radius-card);
       padding: var(--space-4);
     }
 
+    .glass-card {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.78) 0%, rgba(248, 249, 247, 0.68) 100%);
+      border-color: rgba(255, 255, 255, 0.74);
+      backdrop-filter: blur(14px);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.72), var(--shadow-glass);
+    }
+
     .hero {
       display: grid;
-      gap: var(--space-4);
+      gap: var(--space-5);
     }
 
     .hero-title {
-      font-size: 30px;
-      line-height: 1.25;
+      font-size: 29px;
+      line-height: 1.32;
       letter-spacing: -0.02em;
+    }
+
+    .style-note {
+      padding: var(--space-3);
+      border: 1px dashed var(--accent-line);
+      border-radius: 14px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.78) 0%, rgba(241, 243, 240, 0.78) 100%);
+      font-size: 12px;
+      line-height: 1.7;
+      color: #48514e;
     }
 
     .hero-grid {
@@ -193,7 +227,7 @@
       border: 1px solid var(--line);
       border-radius: 14px;
       padding: var(--space-3);
-      background: #fff;
+      background: rgba(255, 255, 255, 0.72);
     }
 
     .metric strong {
@@ -217,10 +251,10 @@
       min-height: 48px;
       border-radius: var(--radius-control);
       border: 1px solid transparent;
-      background: #fff;
+      background: rgba(255, 255, 255, 0.92);
       font-weight: 700;
       cursor: pointer;
-      transition: transform 120ms ease, background-color 120ms ease, border-color 120ms ease;
+      transition: transform 120ms ease, background-color 120ms ease, border-color 120ms ease, box-shadow 120ms ease;
     }
 
     .btn:active,
@@ -232,14 +266,15 @@
     .hole-pill:active { transform: scale(0.985); }
 
     .btn-primary {
-      background: var(--accent);
-      border-color: var(--accent);
-      color: #fff;
+      background: linear-gradient(180deg, #677871 0%, #586a63 100%);
+      border-color: #586a63;
+      color: #f8faf9;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
     }
 
     .btn-secondary {
       border-color: var(--line-strong);
-      color: #394655;
+      color: #394442;
     }
 
     .helper {
@@ -270,7 +305,7 @@
       min-height: 44px;
       border-radius: var(--radius-control);
       border: 1px solid var(--line-strong);
-      background: #fff;
+      background: rgba(255, 255, 255, 0.82);
       padding: 0 var(--space-3);
       outline: none;
     }
@@ -293,15 +328,15 @@
       padding: 0 var(--space-3);
       border: 1px solid var(--line);
       border-radius: var(--radius-pill);
-      background: #fff;
+      background: rgba(255, 255, 255, 0.82);
       cursor: pointer;
       font-size: 12px;
       font-weight: 700;
-      color: #394655;
+      color: #414846;
     }
 
     .tag.active {
-      border-color: #9ec7ae;
+      border-color: var(--accent-line);
       background: var(--accent-soft);
       color: var(--accent);
     }
@@ -316,7 +351,7 @@
       border: 1px solid var(--line);
       border-radius: 14px;
       padding: var(--space-3);
-      background: var(--surface-soft);
+      background: rgba(255, 255, 255, 0.62);
     }
 
     .summary-tile strong {
@@ -340,7 +375,7 @@
 
     .progress-bar {
       height: 8px;
-      background: #e9edf2;
+      background: #e4e7e4;
       border-radius: var(--radius-pill);
       overflow: hidden;
       margin-top: var(--space-2);
@@ -350,7 +385,7 @@
       display: block;
       height: 100%;
       width: 0;
-      background: var(--accent);
+      background: linear-gradient(90deg, #6d7d76 0%, #586a63 100%);
       transition: width 160ms ease;
     }
 
@@ -370,7 +405,7 @@
       min-height: 52px;
       border-radius: 16px;
       border: 1px solid var(--line);
-      background: #fff;
+      background: rgba(255, 255, 255, 0.82);
       cursor: pointer;
       display: grid;
       place-items: center;
@@ -385,7 +420,7 @@
     }
 
     .hole-pill.active {
-      border-color: #9ec7ae;
+      border-color: var(--accent-line);
       background: var(--accent-soft);
       color: var(--accent);
     }
@@ -397,7 +432,9 @@
       border: 1px solid var(--line);
       border-radius: 20px;
       padding: var(--space-4);
-      background: #fff;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.78) 0%, rgba(248, 249, 247, 0.86) 100%);
+      backdrop-filter: blur(14px);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.72), var(--shadow-glass);
     }
 
     .hole-card {
@@ -421,7 +458,7 @@
       display: grid;
       place-items: center;
       border: 1px solid var(--line);
-      background: var(--surface-soft);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.78) 0%, rgba(240, 242, 239, 0.92) 100%);
       font-size: 12px;
       font-weight: 700;
       color: var(--muted);
@@ -440,7 +477,7 @@
       min-height: 56px;
       border-radius: 16px;
       border: 1px solid var(--line-strong);
-      background: #fff;
+      background: rgba(255, 255, 255, 0.88);
     }
 
     .icon-btn {
@@ -466,7 +503,7 @@
       min-height: 52px;
       border-radius: 16px;
       border: 1px solid var(--line);
-      background: #fff;
+      background: rgba(255, 255, 255, 0.86);
       padding: 0 var(--space-3);
       cursor: pointer;
       text-align: left;
@@ -486,7 +523,7 @@
     }
 
     .score-option.active {
-      border-color: #9ec7ae;
+      border-color: var(--accent-line);
       background: var(--accent-soft);
     }
 
@@ -497,7 +534,7 @@
       padding: var(--space-1);
       border: 1px solid var(--line);
       border-radius: 14px;
-      background: var(--surface-soft);
+      background: rgba(238, 240, 237, 0.92);
     }
 
     .toggle button {
@@ -511,9 +548,9 @@
     }
 
     .toggle button.active {
-      background: #fff;
+      background: rgba(255, 255, 255, 0.94);
       color: var(--text);
-      box-shadow: var(--shadow-soft);
+      box-shadow: 0 10px 18px -16px rgba(34, 39, 37, 0.28);
     }
 
     .panel {
@@ -532,7 +569,7 @@
       border: 1px solid var(--line);
       border-radius: 14px;
       padding: var(--space-3);
-      background: var(--surface-soft);
+      background: rgba(255, 255, 255, 0.66);
     }
 
     .stat-card strong {
@@ -563,14 +600,16 @@
       border: 1px solid var(--line);
       border-radius: 16px;
       padding: var(--space-4);
-      background: var(--surface-soft);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.76) 0%, rgba(241, 243, 240, 0.84) 100%);
+      backdrop-filter: blur(12px);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7), var(--shadow-glass);
     }
 
     .post-card,
     .feed-card {
       border: 1px solid var(--line);
       border-radius: 16px;
-      background: #fff;
+      background: rgba(255, 255, 255, 0.9);
       padding: var(--space-4);
     }
 
@@ -596,7 +635,7 @@
       min-height: 44px;
       border-radius: 10px;
       border: 0;
-      background: #fff;
+      background: rgba(255, 255, 255, 0.72);
       color: var(--muted);
       text-align: left;
       padding-left: var(--space-2);
@@ -616,7 +655,7 @@
       border: 1px solid var(--line);
       border-radius: 16px;
       padding: var(--space-4);
-      background: #fff;
+      background: rgba(255, 255, 255, 0.88);
     }
 
     .history-top {
@@ -639,7 +678,7 @@
       padding: 0 var(--space-2);
       border-radius: var(--radius-pill);
       border: 1px solid var(--line);
-      background: var(--surface-soft);
+      background: rgba(255, 255, 255, 0.72);
       display: inline-flex;
       align-items: center;
       font-size: 11px;
@@ -650,7 +689,7 @@
       border: 1px dashed var(--line-strong);
       border-radius: 16px;
       padding: var(--space-4);
-      background: var(--surface-soft);
+      background: rgba(248, 249, 247, 0.84);
       font-size: 12px;
       line-height: 1.6;
       color: #314152;
@@ -671,10 +710,11 @@
       transform: translateX(-50%);
       width: min(398px, calc(100vw - 32px));
       padding: var(--space-1);
-      border: 1px solid var(--line);
+      border: 1px solid rgba(255, 255, 255, 0.76);
       border-radius: 18px;
-      background: rgba(255, 255, 255, 0.98);
-      box-shadow: 0 18px 32px -24px rgba(15, 23, 42, 0.24);
+      background: rgba(248, 249, 247, 0.82);
+      backdrop-filter: blur(14px);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.72), var(--shadow-glass);
       grid-template-columns: repeat(4, 1fr);
       gap: var(--space-1);
     }
@@ -717,7 +757,7 @@
       <div class="masthead">
         <div>
           <div class="brand"><span class="brand-mark">C</span><span>CaddyCo</span></div>
-          <p class="masthead-title">競合の実用パターンを取り込み、記録速度と振り返りを強めたゴルフスコア管理UI</p>
+          <p class="masthead-title">記録速度と振り返りを、静かな白基調で整えたゴルフスコア管理UI</p>
         </div>
         <p class="masthead-meta">login → start round → score → complete/share → feed → history</p>
       </div>
@@ -725,12 +765,13 @@
 
     <section class="screen active" data-screen="login">
       <div class="stack">
-        <article class="card hero">
+        <article class="card glass-card hero">
           <div>
             <p class="chip" style="display:inline-flex;">白基調 / 4ptグリッド / 端末フレームなし</p>
             <h1 class="hero-title" style="margin-top: var(--space-4);">ラウンド記録を、<br>最短の操作で。</h1>
-            <p class="muted" style="margin-top: var(--space-2);">入力速度、統計の見え方、共有導線、履歴探索を再設計し、競合アプリで定着している操作感に寄せています。</p>
+            <p class="muted" style="margin-top: var(--space-2);">白と薄グレーを基調に、線と状態表示だけへ差し色を絞り、落ち着いて読み切れる画面密度に調整しています。</p>
           </div>
+          <div class="style-note"><strong>style-note</strong><br>無彩色ベース / 微細グラデ差し色 / 控えめグラス / 軽い立体感 / 余白広め</div>
           <div class="hero-grid">
             <div class="metric">
               <strong>3タップ</strong>
@@ -852,7 +893,7 @@
           </div>
         </article>
 
-        <article class="card-subtle">
+        <article class="card-subtle glass-card">
           <div class="summary-grid">
             <div class="summary-tile">
               <strong>+5.8</strong>
@@ -881,7 +922,7 @@
       </div>
 
       <div class="stack">
-        <article class="card">
+        <article class="card glass-card">
           <div class="round-strip">
             <div>
               <strong id="progressText">ホール 1 / 18</strong>
@@ -1031,7 +1072,7 @@
       </div>
 
       <div class="stack">
-        <article class="post-card">
+        <article class="post-card glass-card">
           <div class="post-head">
             <div>
               <strong>今のラウンド結果を投稿</strong>
@@ -1110,7 +1151,7 @@
       </div>
 
       <div class="stack">
-        <article class="card history-toolbar">
+        <article class="card glass-card history-toolbar">
           <div>
             <label for="historySearch">履歴検索</label>
             <input id="historySearch" type="search" placeholder="コース名で検索" />
