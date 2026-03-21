@@ -21,11 +21,9 @@
       --bg-soft: #f8fafc;
       --text: #111827;
       --text-sub: #4b5563;
-      --accent: #0f766e;
-      --accent-soft: #ecfeff;
-      --warn: #b45309;
-      --danger: #b91c1c;
-      --shadow: 0 8px 24px -18px rgba(15, 23, 42, 0.3);
+      --accent: #2563eb;
+      --accent-soft: #eff6ff;
+      --shadow: 0 12px 24px -20px rgba(17, 24, 39, 0.45);
     }
 
     * { box-sizing: border-box; }
@@ -46,10 +44,19 @@
       gap: var(--space-6);
     }
 
-    .hero {
+    .hero,
+    .showcase-section,
+    .section-head,
+    .phone,
+    .component,
+    .field,
+    .list,
+    .timeline,
+    .tab-group {
       display: grid;
-      gap: var(--space-3);
     }
+
+    .hero { gap: var(--space-3); }
 
     .hero h1 {
       margin: 0;
@@ -57,10 +64,12 @@
       letter-spacing: -0.01em;
     }
 
-    .hero p {
+    .hero p,
+    .section-head p,
+    .muted {
       margin: 0;
-      font-size: 14px;
       color: var(--text-sub);
+      font-size: 12px;
     }
 
     .index {
@@ -73,10 +82,14 @@
       gap: var(--space-3);
     }
 
-    .index h2 {
+    .index h2,
+    .section-head h3,
+    .title,
+    .cmp-name {
       margin: 0;
-      font-size: 15px;
     }
+
+    .index h2 { font-size: 15px; }
 
     .index-list {
       display: flex;
@@ -88,41 +101,26 @@
       min-height: 44px;
       display: inline-flex;
       align-items: center;
-      padding: 0 12px;
+      gap: var(--space-2);
+      padding: 0 var(--space-3);
       border: 1px solid var(--line);
       border-radius: 999px;
       text-decoration: none;
       color: var(--text);
       background: #fff;
-      font-size: 13px;
-      transition: transform 0.2s ease, background 0.2s ease;
+      font-size: 12px;
     }
 
-    .index-list a:active { transform: scale(0.98); }
     .index-list a:hover { background: var(--bg-soft); }
+    .index-list a:active { transform: scale(0.98); }
 
     .showcase-section {
-      display: grid;
       gap: var(--space-3);
-      scroll-margin-top: 16px;
+      scroll-margin-top: var(--space-4);
     }
 
-    .section-head {
-      display: grid;
-      gap: var(--space-2);
-    }
-
-    .section-head h3 {
-      margin: 0;
-      font-size: 18px;
-      letter-spacing: -0.01em;
-    }
-
-    .section-head p {
-      margin: 0;
-      font-size: 13px;
-      color: var(--text-sub);
-    }
+    .section-head { gap: var(--space-2); }
+    .section-head h3 { font-size: 18px; letter-spacing: -0.01em; }
 
     .phone {
       border: 0;
@@ -130,27 +128,38 @@
       padding: 0;
       background: transparent;
       box-shadow: none;
-      display: grid;
       gap: var(--space-3);
       overflow: visible;
     }
-
-    .phone-top { display: none; }
 
     .component {
       border: 1px solid var(--line);
       border-radius: var(--radius-s);
       padding: var(--space-4);
-      display: grid;
       gap: var(--space-2);
       background: #fff;
     }
 
-    .component-head {
+    .component-head,
+    .row,
+    .chip,
+    .story-item,
+    .action-row button,
+    .bottom-nav button,
+    .icon-btn,
+    .property-meta,
+    .reel-meta {
       display: flex;
-      justify-content: space-between;
       align-items: center;
       gap: var(--space-2);
+    }
+
+    .component-head,
+    .row {
+      justify-content: space-between;
+    }
+
+    .component-head {
       font-size: 12px;
       color: var(--text-sub);
     }
@@ -159,58 +168,69 @@
       font-weight: 600;
       color: var(--text);
       font-size: 13px;
+      letter-spacing: 0;
     }
 
     .badge {
       border: 1px solid var(--line);
       border-radius: 999px;
-      padding: 0 8px;
+      padding: 0 var(--space-2);
       min-height: 24px;
       display: inline-flex;
       align-items: center;
       background: var(--bg-soft);
       font-size: 11px;
+      white-space: nowrap;
     }
 
-    .row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: var(--space-2);
-    }
-
-    .muted { color: var(--text-sub); font-size: 12px; }
-
-    .title { font-size: 15px; font-weight: 600; margin: 0; }
-
-    .big-number { font-size: 28px; font-weight: 700; letter-spacing: -0.02em; margin: 0; }
+    .title { font-size: 15px; font-weight: 600; }
+    .big-number { margin: 0; font-size: 28px; font-weight: 700; letter-spacing: -0.02em; }
 
     .btn,
     .chip,
     .tab,
     input,
-    select {
+    select,
+    .index-list a,
+    .action-row button,
+    .bottom-nav button,
+    .icon-btn,
+    textarea {
       min-height: 44px;
     }
 
-    .btn {
+    .btn,
+    .tab,
+    input,
+    select,
+    textarea {
       border: 1px solid var(--line-strong);
       border-radius: 12px;
       background: #fff;
-      padding: 0 var(--space-4);
-      font-size: 13px;
       color: var(--text);
+      font-size: 13px;
+    }
+
+    .btn,
+    .tab {
+      padding: 0 var(--space-4);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
     }
 
     .btn.primary {
-      background: #0f766e;
+      background: var(--accent);
       color: #fff;
-      border-color: #0f766e;
+      border-color: var(--accent);
     }
 
     .btn.ghost { background: var(--bg-soft); }
-
-    .btn:active { transform: scale(0.98); }
+    .btn:active,
+    .tab:active,
+    .icon-btn:active,
+    .action-row button:active { transform: scale(0.98); }
 
     .btn-row {
       display: grid;
@@ -218,51 +238,66 @@
       gap: var(--space-2);
     }
 
-    .chips { display: flex; gap: var(--space-2); overflow: auto; padding-bottom: var(--space-1); }
+    .chips,
+    .story-strip,
+    .carousel-track {
+      display: flex;
+      gap: var(--space-2);
+      overflow: auto;
+      padding-bottom: var(--space-1);
+      scrollbar-width: thin;
+    }
 
     .chip {
       border: 1px solid var(--line);
       border-radius: 999px;
-      padding: 0 12px;
+      padding: 0 var(--space-3);
       background: #fff;
       color: var(--text);
       font-size: 12px;
       white-space: nowrap;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
       flex: 0 0 auto;
+      justify-content: center;
     }
 
-    .chip.active {
-      border-color: #115e59;
+    .chip.active,
+    .tab.active {
+      border-color: var(--accent);
       background: var(--accent-soft);
-      color: #115e59;
+      color: var(--accent);
       font-weight: 600;
     }
 
-    .list {
-      display: grid;
-      gap: var(--space-2);
-    }
+    .list { gap: var(--space-2); }
 
     .list-row {
       border: 1px solid var(--line);
       border-radius: 12px;
-      padding: 12px;
+      padding: var(--space-3);
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: var(--space-2);
       min-height: 48px;
+      background: #fff;
     }
 
     .avatar {
-      width: 36px;
-      height: 36px;
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
       background: #e2e8f0;
+      border: 1px solid #cbd5e1;
       flex: 0 0 auto;
+      object-fit: cover;
+    }
+
+    .avatar.lg {
+      width: 64px;
+      height: 64px;
+      border: 2px solid #fff;
+      margin-top: -32px;
+      box-shadow: var(--shadow);
     }
 
     .progress {
@@ -277,7 +312,7 @@
       display: block;
       height: 100%;
       border-radius: inherit;
-      background: #0f766e;
+      background: var(--accent);
     }
 
     .bars {
@@ -292,11 +327,9 @@
     .bars span {
       display: block;
       border-radius: 8px 8px 4px 4px;
-      background: #99f6e4;
-      border: 1px solid #5eead4;
+      background: #dbeafe;
+      border: 1px solid #93c5fd;
     }
-
-    .tab-group { display: grid; gap: var(--space-2); }
 
     .tabs {
       display: grid;
@@ -304,47 +337,29 @@
       gap: var(--space-2);
     }
 
-    .tab {
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      background: #fff;
-      font-size: 12px;
-      padding: 0 8px;
-      color: var(--text-sub);
-    }
-
-    .tab.active {
-      color: #115e59;
-      border-color: #115e59;
-      background: var(--accent-soft);
-      font-weight: 600;
-    }
-
     .tab-panel { display: none; }
-    .tab-panel.active { display: grid; gap: var(--space-2); }
-
-    .field {
+    .tab-panel.active {
       display: grid;
       gap: var(--space-2);
     }
 
-    label { font-size: 12px; color: var(--text-sub); }
+    .field { gap: var(--space-2); }
+
+    label {
+      font-size: 12px;
+      color: var(--text-sub);
+    }
 
     input,
-    select,
-    textarea {
-      border: 1px solid var(--line-strong);
-      border-radius: 12px;
-      background: #fff;
-      padding: 0 12px;
-      font-size: 14px;
+    select {
       width: 100%;
-      color: var(--text);
+      padding: 0 var(--space-3);
     }
 
     textarea {
-      min-height: 92px;
-      padding: 12px;
+      width: 100%;
+      min-height: 96px;
+      padding: var(--space-3);
       resize: vertical;
     }
 
@@ -358,9 +373,8 @@
     .accordion-btn {
       width: 100%;
       min-height: 44px;
-      padding: 0 12px;
+      padding: 0 var(--space-3);
       border: 0;
-      border-bottom: 1px solid transparent;
       background: #fff;
       text-align: left;
       font-size: 13px;
@@ -368,11 +382,12 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: var(--space-2);
     }
 
     .accordion-content {
       display: none;
-      padding: 12px;
+      padding: var(--space-3);
       font-size: 12px;
       color: var(--text-sub);
       border-top: 1px solid var(--line);
@@ -383,7 +398,7 @@
     .calendar {
       border: 1px solid var(--line);
       border-radius: 12px;
-      padding: 12px;
+      padding: var(--space-3);
       display: grid;
       gap: var(--space-2);
     }
@@ -392,7 +407,6 @@
       display: grid;
       grid-template-columns: repeat(7, 1fr);
       gap: var(--space-1);
-      font-size: 11px;
       text-align: center;
     }
 
@@ -404,16 +418,17 @@
       align-items: center;
       justify-content: center;
       background: #fff;
+      font-size: 12px;
     }
 
     .date.active {
-      border-color: #115e59;
+      border-color: var(--accent);
       background: var(--accent-soft);
       font-weight: 600;
-      color: #115e59;
+      color: var(--accent);
     }
 
-    .timeline { display: grid; gap: var(--space-2); }
+    .timeline { gap: var(--space-2); }
 
     .timeline-item {
       display: grid;
@@ -431,7 +446,7 @@
     .timeline-card {
       border: 1px solid var(--line);
       border-radius: 12px;
-      padding: 12px;
+      padding: var(--space-3);
       background: #fff;
       font-size: 12px;
     }
@@ -439,7 +454,7 @@
     .bottom-nav {
       border: 1px solid var(--line);
       border-radius: 14px;
-      padding: 12px;
+      padding: var(--space-3);
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: var(--space-2);
@@ -449,55 +464,217 @@
     .bottom-nav button {
       border: 0;
       background: transparent;
-      min-height: 44px;
-      display: grid;
-      place-items: center;
-      gap: var(--space-1);
+      justify-content: center;
+      flex-direction: column;
       font-size: 11px;
       color: var(--text-sub);
     }
 
-    .bottom-nav button.active { color: #115e59; font-weight: 600; }
+    .bottom-nav button.active {
+      color: var(--accent);
+      font-weight: 600;
+    }
 
     .chat-row {
       display: grid;
-      grid-template-columns: 36px 1fr auto;
+      grid-template-columns: 40px 1fr auto;
       gap: var(--space-2);
       align-items: center;
       border: 1px solid var(--line);
       border-radius: 12px;
-      padding: 10px 12px;
+      padding: var(--space-3);
       min-height: 56px;
+      background: #fff;
     }
 
     .dot {
       width: 8px;
       height: 8px;
       border-radius: 50%;
-      background: #10b981;
+      background: #22c55e;
       flex: 0 0 auto;
     }
 
-    .product-grid {
+    .product-grid,
+    .photo-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: var(--space-2);
     }
 
-    .product {
+    .product,
+    .photo-tile {
       border: 1px solid var(--line);
       border-radius: 12px;
-      padding: 10px;
+      padding: var(--space-2);
       display: grid;
       gap: var(--space-2);
       background: #fff;
     }
 
-    .thumb {
-      border-radius: 10px;
-      height: 72px;
-      background: #f1f5f9;
+    .hero-cover,
+    .thumb,
+    .photo,
+    .photo-banner {
+      border-radius: 12px;
       border: 1px solid var(--line);
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    .thumb { height: 88px; }
+    .thumb.tall { height: 120px; }
+
+    .hero-cover {
+      min-height: 176px;
+      padding: var(--space-4);
+      display: flex;
+      align-items: flex-end;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .hero-cover::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(17, 24, 39, 0.68), rgba(17, 24, 39, 0.12));
+    }
+
+    .hero-cover > div {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: var(--space-2);
+    }
+
+    .story-strip { padding-bottom: var(--space-1); }
+
+    .story-item {
+      width: 84px;
+      min-width: 84px;
+      flex-direction: column;
+      justify-content: flex-start;
+      gap: var(--space-1);
+      font-size: 11px;
+      color: var(--text-sub);
+      text-align: center;
+    }
+
+    .story-photo {
+      width: 84px;
+      height: 112px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background-size: cover;
+      background-position: center;
+    }
+
+    .profile-header {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .photo-banner {
+      height: 120px;
+      border-radius: 0;
+      border: 0;
+    }
+
+    .profile-body {
+      padding: 0 var(--space-3) var(--space-3);
+      margin-top: -8px;
+      display: grid;
+      gap: var(--space-2);
+    }
+
+    .destination-card,
+    .room-card,
+    .support-card,
+    .social-card,
+    .estate-card {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      overflow: hidden;
+      background: #fff;
+      display: grid;
+      gap: 0;
+    }
+
+    .card-body {
+      padding: var(--space-3);
+      display: grid;
+      gap: var(--space-2);
+    }
+
+    .menu-grid,
+    .support-grid,
+    .social-grid,
+    .estate-grid,
+    .room-grid {
+      display: grid;
+      gap: var(--space-2);
+    }
+
+    .menu-grid,
+    .room-grid,
+    .support-grid,
+    .estate-grid { grid-template-columns: 1fr; }
+
+    .social-grid,
+    .destination-grid { display: grid; gap: var(--space-2); }
+
+    .amenities {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+    }
+
+    .amenities .chip { min-height: 32px; padding: 0 var(--space-2); font-size: 11px; }
+
+    .action-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-2);
+    }
+
+    .action-row button {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fff;
+      justify-content: center;
+      color: var(--text-sub);
+      font-size: 12px;
+      padding: 0 var(--space-2);
+    }
+
+    .icon {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.8;
+      flex: 0 0 auto;
+    }
+
+    .icon.fill {
+      fill: currentColor;
+      stroke: none;
+    }
+
+    .icon-btn {
+      justify-content: center;
+      min-width: 44px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fff;
+      color: var(--text-sub);
+      padding: 0 var(--space-2);
     }
 
     .sheet,
@@ -511,9 +688,7 @@
     }
 
     .sheet.open,
-    .modal.open {
-      display: flex;
-    }
+    .modal.open { display: flex; }
 
     .overlay {
       position: absolute;
@@ -543,38 +718,93 @@
       z-index: 1;
       display: grid;
       gap: var(--space-3);
-      box-shadow: 0 16px 48px -20px rgba(15, 23, 42, 0.45);
+      box-shadow: 0 20px 48px -24px rgba(15, 23, 42, 0.5);
     }
 
+    .carousel-controls {
+      display: flex;
+      justify-content: flex-end;
+      gap: var(--space-2);
+    }
+
+    .carousel-track {
+      scroll-snap-type: x mandatory;
+      padding-bottom: var(--space-2);
+    }
+
+    .carousel-track .estate-card {
+      min-width: 280px;
+      scroll-snap-align: start;
+      flex: 0 0 280px;
+    }
+
+    .photo.p1 { background-image: url('https://images.unsplash.com/photo-1512813382947-4ce5f2f5f6f7?auto=format&fit=crop&w=900&q=80'); }
+    .photo.p2 { background-image: url('https://images.unsplash.com/photo-1489515217757-5fd1be406fef?auto=format&fit=crop&w=900&q=80'); }
+    .photo.p3 { background-image: url('https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=900&q=80'); }
+    .photo.p4 { background-image: url('https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=900&q=80'); }
+    .photo.p5 { background-image: url('https://images.unsplash.com/photo-1467269204594-9661b134dd2b?auto=format&fit=crop&w=900&q=80'); }
+    .photo.p6 { background-image: url('https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?auto=format&fit=crop&w=900&q=80'); }
+    .photo.p7 { background-image: url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=900&q=80'); }
+    .photo.p8 { background-image: url('https://images.unsplash.com/photo-1473093295043-cdd812d0e601?auto=format&fit=crop&w=900&q=80'); }
+    .photo.p9 { background-image: url('https://images.unsplash.com/photo-1491553895911-0055eca6402d?auto=format&fit=crop&w=900&q=80'); }
+    .photo.p10 { background-image: url('https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=900&q=80'); }
+    .photo.p11 { background-image: url('https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=900&q=80'); }
+    .photo.p12 { background-image: url('https://images.unsplash.com/photo-1472224371017-08207f84aaae?auto=format&fit=crop&w=900&q=80'); }
+    .photo.p13 { background-image: url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=900&q=80'); }
+    .photo.p14 { background-image: url('https://images.unsplash.com/photo-1489515217757-5fd1be406fef?auto=format&fit=crop&w=900&q=80'); }
+    .photo.p15 { background-image: url('https://images.unsplash.com/photo-1517487881594-2787fef5ebf7?auto=format&fit=crop&w=900&q=80'); }
+
     @media (max-width: 370px) {
-      .catalog { padding: 12px; }
-      .component { padding: 12px; }
+      .catalog,
+      .component,
+      .index { padding: var(--space-3); }
       .big-number { font-size: 24px; }
+      .story-item,
+      .story-photo { width: 76px; min-width: 76px; }
+      .story-photo { height: 104px; }
+      .carousel-track .estate-card { min-width: 260px; flex-basis: 260px; }
     }
   </style>
 </head>
 <body>
+  <svg width="0" height="0" style="position:absolute;left:-9999px;overflow:hidden" aria-hidden="true" focusable="false">
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5v9a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 19.5z"/><path d="M9 21v-6h6v6"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V6"/><path d="M10 20v-9"/><path d="M16 20v-5"/><path d="M22 20v-12"/></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24"><path d="m3 11 17-8-4 18-3-7z"/><path d="m20 3-7 11"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20s-7-4.8-9-9c-1.2-2.7.5-6 3.8-6 2 0 3.3 1.1 4.2 2.5C11.9 6.1 13.2 5 15.2 5 18.5 5 20.2 8.3 19 11c-2 4.2-7 9-7 9z"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M4 5h16v11H8l-4 4z"/></symbol>
+    <symbol id="i-bookmark" viewBox="0 0 24 24"><path d="M6 4h12v16l-6-4-6 4z"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s6-5.8 6-11a6 6 0 1 0-12 0c0 5.2 6 11 6 11z"/><circle cx="12" cy="10" r="2.5"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3 2.8 5.8 6.4.9-4.6 4.5 1.1 6.4L12 17.6 6.3 20.6l1.1-6.4L2.8 9.7l6.4-.9z"/></symbol>
+    <symbol id="i-bed" viewBox="0 0 24 24"><path d="M3 19v-8h18v8"/><path d="M3 14h18"/><path d="M7 11V8h4v3"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
+    <symbol id="i-filter" viewBox="0 0 24 24"><path d="M4 6h16"/><path d="M7 12h10"/><path d="M10 18h4"/></symbol>
+    <symbol id="i-camera" viewBox="0 0 24 24"><path d="M4 7h4l2-3h4l2 3h4v13H4z"/><circle cx="12" cy="13" r="4"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  </svg>
+
   <main class="catalog">
     <header class="hero">
       <h1>モバイルUIモックカタログ</h1>
-      <p>部品名付きで比較できるよう、業種ごとの画面断片を1ページに集約しています。気に入ったコンポーネント名を指定して再利用できます。</p>
+      <p>部品名付きで比較できるよう、業種ごとの画面断片を1ページに集約しています。写真ベースの要素を増やし、再利用しやすい構成に整理しました。</p>
     </header>
 
     <nav class="index" aria-label="セクション目次">
       <h2>セクション目次（タップでジャンプ）</h2>
       <div class="index-list">
-        <a href="#sec-fintech">01 FinTech</a>
-        <a href="#sec-food">02 フードデリバリー</a>
-        <a href="#sec-travel">03 旅行</a>
-        <a href="#sec-health">04 ヘルスケア</a>
-        <a href="#sec-fitness">05 フィットネス</a>
-        <a href="#sec-social">06 ソーシャル</a>
-        <a href="#sec-ecom">07 EC</a>
-        <a href="#sec-education">08 教育</a>
-        <a href="#sec-productivity">09 生産性</a>
-        <a href="#sec-booking">10 予約</a>
-        <a href="#sec-support">11 サポート</a>
-        <a href="#sec-realestate">12 不動産</a>
+        <a href="#sec-fintech"><svg class="icon"><use href="#i-chart"></use></svg>01 FinTech</a>
+        <a href="#sec-food"><svg class="icon"><use href="#i-star"></use></svg>02 フードデリバリー</a>
+        <a href="#sec-travel"><svg class="icon"><use href="#i-pin"></use></svg>03 旅行</a>
+        <a href="#sec-health"><svg class="icon"><use href="#i-user"></use></svg>04 ヘルスケア</a>
+        <a href="#sec-fitness"><svg class="icon"><use href="#i-heart"></use></svg>05 フィットネス</a>
+        <a href="#sec-social"><svg class="icon"><use href="#i-chat"></use></svg>06 ソーシャル</a>
+        <a href="#sec-ecom"><svg class="icon"><use href="#i-camera"></use></svg>07 EC</a>
+        <a href="#sec-education"><svg class="icon"><use href="#i-bookmark"></use></svg>08 教育</a>
+        <a href="#sec-productivity"><svg class="icon"><use href="#i-clock"></use></svg>09 生産性</a>
+        <a href="#sec-booking"><svg class="icon"><use href="#i-bed"></use></svg>10 予約</a>
+        <a href="#sec-support"><svg class="icon"><use href="#i-chat"></use></svg>11 サポート</a>
+        <a href="#sec-realestate"><svg class="icon"><use href="#i-home"></use></svg>12 不動産</a>
       </div>
     </nav>
 
@@ -584,7 +814,6 @@
         <p>残高・支出・送金導線を短くまとめた、日次確認向けの金融ホーム。</p>
       </div>
       <div class="phone">
-
         <article class="component">
           <div class="component-head"><span class="cmp-name">CMP-FIN-01 残高カード</span><span class="badge">カード</span></div>
           <p class="muted">普通預金</p>
@@ -594,48 +823,87 @@
 
         <article class="component">
           <div class="component-head"><span class="cmp-name">CMP-FIN-02 週間支出チャート</span><span class="badge">チャート</span></div>
-          <div class="bars">
-            <span style="height:36%"></span><span style="height:66%"></span><span style="height:48%"></span><span style="height:78%"></span><span style="height:58%"></span>
-          </div>
+          <div class="bars"><span style="height:36%"></span><span style="height:66%"></span><span style="height:48%"></span><span style="height:78%"></span><span style="height:58%"></span></div>
           <div class="row muted"><span>月</span><span>火</span><span>水</span><span>木</span><span>金</span></div>
         </article>
 
         <article class="component">
           <div class="component-head"><span class="cmp-name">CMP-FIN-03 送金アクション</span><span class="badge">アクション</span></div>
-          <div class="btn-row"><button class="btn primary">振込する</button><button class="btn">明細を見る</button></div>
+          <div class="btn-row">
+            <button class="btn primary"><svg class="icon"><use href="#i-send"></use></svg>振込する</button>
+            <button class="btn"><svg class="icon"><use href="#i-search"></use></svg>明細を見る</button>
+          </div>
         </article>
 
-        <nav class="bottom-nav" aria-label="FinTech ナビ">
-          <button class="active">ホーム</button><button>入出金</button><button>分析</button><button>設定</button>
-        </nav>
+        <article class="component">
+          <div class="component-head"><span class="cmp-name">CMP-FIN-04 カードヒーローカバー</span><span class="badge">写真</span></div>
+          <div class="hero-cover photo p1">
+            <div>
+              <strong>資産レビュー 3月号</strong>
+              <span class="muted" style="color:#e5e7eb">将来設計に合わせた積立プランを確認</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="component">
+          <div class="component-head"><span class="cmp-name">CMP-FIN-05 取引先ショートカット</span><span class="badge">クイック</span></div>
+          <div class="chips">
+            <button class="chip active"><svg class="icon"><use href="#i-user"></use></svg>山本 梓</button>
+            <button class="chip"><svg class="icon"><use href="#i-user"></use></svg>小泉 航</button>
+            <button class="chip"><svg class="icon"><use href="#i-user"></use></svg>高橋 凪</button>
+          </div>
+        </article>
+
+        <article class="component">
+          <div class="component-head"><span class="cmp-name">CMP-FIN-06 ボトムナビゲーション</span><span class="badge">ナビ</span></div>
+          <nav class="bottom-nav" aria-label="FinTech ナビ">
+            <button class="active"><svg class="icon"><use href="#i-home"></use></svg>ホーム</button>
+            <button><svg class="icon"><use href="#i-send"></use></svg>入出金</button>
+            <button><svg class="icon"><use href="#i-chart"></use></svg>分析</button>
+            <button><svg class="icon"><use href="#i-user"></use></svg>設定</button>
+          </nav>
+        </article>
       </div>
     </section>
 
     <section id="sec-food" class="showcase-section">
       <div class="section-head">
         <h3>02. フードデリバリー</h3>
-        <p>カテゴリフィルタと店舗比較を主軸にした、注文前の探索UI。</p>
+        <p>カテゴリフィルタと写真付きメニューで比較しやすい、注文前の探索UI。</p>
       </div>
       <div class="phone">
-
         <article class="component">
           <div class="component-head"><span class="cmp-name">CMP-FOD-01 カテゴリフィルタ</span><span class="badge">フィルタ</span></div>
           <div class="chips">
-            <button class="chip active">おすすめ</button><button class="chip">和食</button><button class="chip">ヘルシー</button><button class="chip">30分以内</button>
+            <button class="chip active"><svg class="icon"><use href="#i-star"></use></svg>おすすめ</button>
+            <button class="chip">和食</button><button class="chip">ヘルシー</button><button class="chip">30分以内</button>
           </div>
         </article>
 
         <article class="component">
-          <div class="component-head"><span class="cmp-name">CMP-FOD-02 店舗リスト行</span><span class="badge">リスト</span></div>
+          <div class="component-head"><span class="cmp-name">CMP-FOD-02 店舗フォトリスト</span><span class="badge">写真</span></div>
           <div class="list">
-            <div class="list-row"><div><strong>旬彩キッチン 銀木犀</strong><p class="muted">配達 18-32分 ・ 配送料 ¥120</p></div><span>★4.7</span></div>
-            <div class="list-row"><div><strong>炙り鶏 とりまる</strong><p class="muted">配達 22-35分 ・ 配送料 ¥90</p></div><span>★4.5</span></div>
+            <div class="list-row"><div class="thumb photo p7" style="width:88px;min-width:88px"></div><div><strong>旬彩キッチン 銀木犀</strong><p class="muted">配達 18-32分 ・ 配送料 ¥120</p></div><span>★4.7</span></div>
+            <div class="list-row"><div class="thumb photo p8" style="width:88px;min-width:88px"></div><div><strong>炙り鶏 とりまる</strong><p class="muted">配達 22-35分 ・ 配送料 ¥90</p></div><span>★4.5</span></div>
           </div>
         </article>
 
         <article class="component">
-          <div class="component-head"><span class="cmp-name">CMP-FOD-03 カート呼び出しバー</span><span class="badge">ボトムシート</span></div>
-          <button class="btn primary" data-open-sheet>注文内容を確認（2点）</button>
+          <div class="component-head"><span class="cmp-name">CMP-FOD-03 メニュー写真カード</span><span class="badge">写真</span></div>
+          <div class="menu-grid">
+            <div class="destination-card"><div class="thumb tall photo p7"></div><div class="card-body"><strong>鶏だし塩うどん</strong><div class="row"><span class="muted">人気No.1</span><strong>¥920</strong></div></div></div>
+            <div class="destination-card"><div class="thumb tall photo p8"></div><div class="card-body"><strong>炙りサーモンサラダ</strong><div class="row"><span class="muted">高たんぱく</span><strong>¥780</strong></div></div></div>
+          </div>
+        </article>
+
+        <article class="component">
+          <div class="component-head"><span class="cmp-name">CMP-FOD-04 日替わりヒーロー</span><span class="badge">カバー</span></div>
+          <div class="hero-cover photo p6"><div><strong>本日の限定プレート</strong><span class="muted" style="color:#e5e7eb">20:00まで送料無料</span></div></div>
+        </article>
+
+        <article class="component">
+          <div class="component-head"><span class="cmp-name">CMP-FOD-05 カート呼び出しバー</span><span class="badge">ボトムシート</span></div>
+          <button class="btn primary" data-open-sheet><svg class="icon"><use href="#i-bed"></use></svg>注文内容を確認（2点）</button>
         </article>
       </div>
     </section>
@@ -643,19 +911,31 @@
     <section id="sec-travel" class="showcase-section">
       <div class="section-head">
         <h3>03. 旅行</h3>
-        <p>検索フォーム、行程タイムライン、搭乗情報のカード化例。</p>
+        <p>検索フォーム、目的地写真、行程タイムラインの組み合わせ例。</p>
       </div>
       <div class="phone">
-
         <article class="component">
           <div class="component-head"><span class="cmp-name">CMP-TRV-01 目的地検索フォーム</span><span class="badge">フォーム</span></div>
           <div class="field"><label>出発地</label><input value="東京" /></div>
           <div class="field"><label>目的地</label><input value="福岡" /></div>
-          <div class="btn-row"><button class="btn">日程</button><button class="btn primary">検索</button></div>
+          <div class="btn-row"><button class="btn"><svg class="icon"><use href="#i-clock"></use></svg>日程</button><button class="btn primary"><svg class="icon"><use href="#i-search"></use></svg>検索</button></div>
         </article>
 
         <article class="component">
-          <div class="component-head"><span class="cmp-name">CMP-TRV-02 旅程タイムライン</span><span class="badge">タイムライン</span></div>
+          <div class="component-head"><span class="cmp-name">CMP-TRV-02 旅先ヒーローカバー</span><span class="badge">写真</span></div>
+          <div class="hero-cover photo p3"><div><strong>初夏の阿蘇トリップ</strong><span class="muted" style="color:#e5e7eb">自然と温泉を巡る2泊3日プラン</span></div></div>
+        </article>
+
+        <article class="component">
+          <div class="component-head"><span class="cmp-name">CMP-TRV-03 目的地大型カード</span><span class="badge">写真</span></div>
+          <div class="destination-grid">
+            <div class="destination-card"><div class="thumb tall photo p4"></div><div class="card-body"><strong>福岡・糸島</strong><div class="row"><span class="muted">海沿いドライブ</span><span class="badge">人気</span></div></div></div>
+            <div class="destination-card"><div class="thumb tall photo p5"></div><div class="card-body"><strong>熊本・黒川温泉</strong><div class="row"><span class="muted">露天風呂巡り</span><span class="badge">静か</span></div></div></div>
+          </div>
+        </article>
+
+        <article class="component">
+          <div class="component-head"><span class="cmp-name">CMP-TRV-04 旅程タイムライン</span><span class="badge">タイムライン</span></div>
           <div class="timeline">
             <div class="timeline-item"><div class="timeline-time">08:10</div><div class="timeline-card"><strong>空港へ移動</strong><div class="muted">羽田第2ターミナル</div></div></div>
             <div class="timeline-item"><div class="timeline-time">10:00</div><div class="timeline-card"><strong>搭乗開始</strong><div class="muted">便名 NH257</div></div></div>
@@ -663,7 +943,7 @@
         </article>
 
         <article class="component">
-          <div class="component-head"><span class="cmp-name">CMP-TRV-03 チケットサマリー</span><span class="badge">カード</span></div>
+          <div class="component-head"><span class="cmp-name">CMP-TRV-05 チケットサマリー</span><span class="badge">カード</span></div>
           <p class="title">東京 → 福岡</p>
           <div class="row"><span class="muted">座席</span><strong>14A</strong></div>
           <div class="row"><span class="muted">搭乗口</span><strong>62</strong></div>
@@ -677,7 +957,6 @@
         <p>診察管理で使いやすい、タブ切替とFAQ展開の組み合わせ。</p>
       </div>
       <div class="phone">
-
         <article class="component tab-group" data-tab-group>
           <div class="component-head"><span class="cmp-name">CMP-HLT-01 予約タブ</span><span class="badge">タブ</span></div>
           <div class="tabs">
@@ -701,18 +980,34 @@
             <div class="accordion-content">手持ちの薬一覧を入力して、オンライン薬剤相談を利用してください。</div>
           </div>
         </article>
+
+        <article class="component">
+          <div class="component-head"><span class="cmp-name">CMP-HLT-03 医師プロフィールヘッダー</span><span class="badge">写真</span></div>
+          <div class="profile-header">
+            <div class="photo-banner photo p12"></div>
+            <div class="profile-body">
+              <img class="avatar lg" src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=240&q=80" alt="医師プロフィール" />
+              <strong>院長 佐伯 由香</strong>
+              <div class="row"><span class="muted">総合内科・生活習慣病</span><span class="badge">オンライン可</span></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="component">
+          <div class="component-head"><span class="cmp-name">CMP-HLT-04 健康記事サムネカード</span><span class="badge">写真</span></div>
+          <div class="support-card"><div class="thumb photo p15"></div><div class="card-body"><strong>睡眠の質を上げる夜の習慣</strong><p class="muted">就寝1時間前の行動を見直すチェックリスト</p></div></div>
+        </article>
       </div>
     </section>
 
     <section id="sec-fitness" class="showcase-section">
       <div class="section-head">
         <h3>05. フィットネス</h3>
-        <p>進捗可視化と今日の運動提案をセットで見せる活動管理画面。</p>
+        <p>進捗可視化と動画風リールで、今日の運動導線を短縮。</p>
       </div>
       <div class="phone">
-
         <article class="component">
-          <div class="component-head"><span class="cmp-name">CMP-FIT-01 今日の進捗リング代替</span><span class="badge">進捗</span></div>
+          <div class="component-head"><span class="cmp-name">CMP-FIT-01 今日の進捗</span><span class="badge">進捗</span></div>
           <div class="row"><span>歩数</span><strong>7,420 / 9,000</strong></div>
           <div class="progress"><span style="width:82%"></span></div>
           <div class="row"><span>睡眠</span><strong>6.8h / 7.5h</strong></div>
@@ -724,32 +1019,80 @@
           <div class="list-row"><div><strong>体幹サーキット 18分</strong><p class="muted">中強度 ・ 自宅</p></div><button class="btn">開始</button></div>
           <div class="list-row"><div><strong>ストレッチ 8分</strong><p class="muted">回復 ・ 就寝前</p></div><button class="btn">開始</button></div>
         </article>
+
+        <article class="component">
+          <div class="component-head"><span class="cmp-name">CMP-FIT-03 リールストリップ</span><span class="badge">写真</span></div>
+          <div class="story-strip">
+            <div class="story-item"><div class="story-photo photo p9"></div><span>朝ラン</span></div>
+            <div class="story-item"><div class="story-photo photo p14"></div><span>ヨガ</span></div>
+            <div class="story-item"><div class="story-photo photo p6"></div><span>筋トレ</span></div>
+            <div class="story-item"><div class="story-photo photo p7"></div><span>食事</span></div>
+          </div>
+        </article>
+
+        <article class="component">
+          <div class="component-head"><span class="cmp-name">CMP-FIT-04 トレーナー写真カード</span><span class="badge">写真</span></div>
+          <div class="destination-card"><div class="thumb tall photo p2"></div><div class="card-body"><strong>今週のトレーナー: 木村 彩</strong><div class="row"><span class="muted">姿勢改善プログラム</span><button class="icon-btn"><svg class="icon"><use href="#i-send"></use></svg></button></div></div></div>
+        </article>
       </div>
     </section>
 
     <section id="sec-social" class="showcase-section">
       <div class="section-head">
         <h3>06. ソーシャル</h3>
-        <p>ストーリー、投稿、メッセージを同一文脈で切り替える例。</p>
+        <p>ストーリー、プロフィール、投稿、メッセージの写真UIを統合。</p>
       </div>
       <div class="phone">
-
         <article class="component">
-          <div class="component-head"><span class="cmp-name">CMP-SOC-01 ストーリー行</span><span class="badge">横スクロール</span></div>
-          <div class="chips">
-            <div class="chip">朝の景色</div><div class="chip">新作カフェ</div><div class="chip">ランニング</div><div class="chip">制作メモ</div>
+          <div class="component-head"><span class="cmp-name">CMP-SOC-01 ストーリーリール</span><span class="badge">写真</span></div>
+          <div class="story-strip">
+            <div class="story-item"><div class="story-photo photo p3"></div><span>海辺</span></div>
+            <div class="story-item"><div class="story-photo photo p4"></div><span>街歩き</span></div>
+            <div class="story-item"><div class="story-photo photo p5"></div><span>夕景</span></div>
+            <div class="story-item"><div class="story-photo photo p1"></div><span>読書</span></div>
           </div>
         </article>
 
         <article class="component">
-          <div class="component-head"><span class="cmp-name">CMP-SOC-02 フィードカード</span><span class="badge">カード</span></div>
-          <div class="row"><div class="row"><div class="avatar"></div><strong>相田 澪</strong></div><span class="muted">12分前</span></div>
-          <p class="muted">週末の展示会、導線がすごく見やすかった。入口の案内を真似したい。</p>
-          <div class="row"><span>♥ 128</span><span>コメント 14</span></div>
+          <div class="component-head"><span class="cmp-name">CMP-SOC-02 プロフィールヘッダー</span><span class="badge">写真</span></div>
+          <div class="profile-header">
+            <div class="photo-banner photo p13"></div>
+            <div class="profile-body">
+              <img class="avatar lg" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=240&q=80" alt="ユーザーアイコン" />
+              <strong>相田 澪</strong>
+              <div class="row"><span class="muted">UIデザイナー / 東京</span><span class="badge">フォロー中</span></div>
+            </div>
+          </div>
         </article>
 
         <article class="component">
-          <div class="component-head"><span class="cmp-name">CMP-SOC-03 チャット行</span><span class="badge">チャット</span></div>
+          <div class="component-head"><span class="cmp-name">CMP-SOC-03 写真投稿カード</span><span class="badge">写真</span></div>
+          <div class="social-card">
+            <div class="thumb tall photo p12"></div>
+            <div class="card-body">
+              <div class="row"><div class="row"><img class="avatar" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=120&q=80" alt="投稿者" /><strong>相田 澪</strong></div><span class="muted">12分前</span></div>
+              <p class="muted">週末の展示会、導線がとても見やすかったのでメモ。</p>
+              <div class="action-row">
+                <button><svg class="icon"><use href="#i-heart"></use></svg>128</button>
+                <button><svg class="icon"><use href="#i-chat"></use></svg>14</button>
+                <button><svg class="icon"><use href="#i-bookmark"></use></svg>保存</button>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="component">
+          <div class="component-head"><span class="cmp-name">CMP-SOC-04 ギャラリーグリッド</span><span class="badge">写真</span></div>
+          <div class="photo-grid">
+            <div class="photo-tile"><div class="thumb photo p3"></div><span class="muted">海沿いカフェ</span></div>
+            <div class="photo-tile"><div class="thumb photo p8"></div><span class="muted">ランチ記録</span></div>
+            <div class="photo-tile"><div class="thumb photo p9"></div><span class="muted">ランニング</span></div>
+            <div class="photo-tile"><div class="thumb photo p4"></div><span class="muted">旅のメモ</span></div>
+          </div>
+        </article>
+
+        <article class="component">
+          <div class="component-head"><span class="cmp-name">CMP-SOC-05 チャット行</span><span class="badge">チャット</span></div>
           <div class="chat-row"><div class="avatar"></div><div><strong>小宮 迅</strong><div class="muted">資料、先ほど共有しました</div></div><div class="dot"></div></div>
           <div class="chat-row"><div class="avatar"></div><div><strong>瀬戸 夏希</strong><div class="muted">19:40に集合でお願いします</div></div><span class="muted">既読</span></div>
         </article>
@@ -759,10 +1102,9 @@
     <section id="sec-ecom" class="showcase-section">
       <div class="section-head">
         <h3>07. EC</h3>
-        <p>商品カテゴリ、カードグリッド、クイックビュー導線を収録。</p>
+        <p>カテゴリ切替、写真グリッド、コレクション訴求をまとめた販促UI。</p>
       </div>
       <div class="phone">
-
         <article class="component tab-group" data-tab-group>
           <div class="component-head"><span class="cmp-name">CMP-ECM-01 カテゴリタブ</span><span class="badge">タブ</span></div>
           <div class="tabs">
@@ -776,16 +1118,31 @@
         </article>
 
         <article class="component">
-          <div class="component-head"><span class="cmp-name">CMP-ECM-02 商品カードグリッド</span><span class="badge">グリッド</span></div>
+          <div class="component-head"><span class="cmp-name">CMP-ECM-02 商品写真グリッド</span><span class="badge">写真</span></div>
           <div class="product-grid">
-            <div class="product"><div class="thumb"></div><strong>耐水ノート A6</strong><span class="muted">¥1,480</span></div>
-            <div class="product"><div class="thumb"></div><strong>薄型マグカップ</strong><span class="muted">¥2,200</span></div>
+            <div class="product"><div class="thumb photo p1"></div><strong>耐水ノート A6</strong><span class="muted">¥1,480</span></div>
+            <div class="product"><div class="thumb photo p2"></div><strong>薄型マグカップ</strong><span class="muted">¥2,200</span></div>
           </div>
         </article>
 
         <article class="component">
-          <div class="component-head"><span class="cmp-name">CMP-ECM-03 クイックビューモーダル導線</span><span class="badge">モーダル</span></div>
-          <button class="btn primary" data-open-modal>商品をクイック確認</button>
+          <div class="component-head"><span class="cmp-name">CMP-ECM-03 ギャラリーサムネ一覧</span><span class="badge">写真</span></div>
+          <div class="photo-grid">
+            <div class="photo-tile"><div class="thumb photo p10"></div><span class="muted">ルームセット</span></div>
+            <div class="photo-tile"><div class="thumb photo p13"></div><span class="muted">ワークセット</span></div>
+            <div class="photo-tile"><div class="thumb photo p7"></div><span class="muted">キッチン</span></div>
+            <div class="photo-tile"><div class="thumb photo p8"></div><span class="muted">ダイニング</span></div>
+          </div>
+        </article>
+
+        <article class="component">
+          <div class="component-head"><span class="cmp-name">CMP-ECM-04 コレクションヒーロー</span><span class="badge">カバー</span></div>
+          <div class="hero-cover photo p10"><div><strong>春の新生活コレクション</strong><span class="muted" style="color:#e5e7eb">部屋づくりをまとめて提案</span></div></div>
+        </article>
+
+        <article class="component">
+          <div class="component-head"><span class="cmp-name">CMP-ECM-05 クイックビューモーダル導線</span><span class="badge">モーダル</span></div>
+          <button class="btn primary" data-open-modal><svg class="icon"><use href="#i-search"></use></svg>商品をクイック確認</button>
         </article>
       </div>
     </section>
@@ -793,10 +1150,9 @@
     <section id="sec-education" class="showcase-section">
       <div class="section-head">
         <h3>08. 教育</h3>
-        <p>講座進捗と単元展開を短時間で確認できる学習UI。</p>
+        <p>進捗管理と写真サムネ講義カードで学習導線を明確化。</p>
       </div>
       <div class="phone">
-
         <article class="component">
           <div class="component-head"><span class="cmp-name">CMP-EDU-01 コース進捗カード</span><span class="badge">進捗</span></div>
           <p class="title">プロダクト設計基礎</p>
@@ -816,16 +1172,32 @@
             <div class="accordion-content">仮説立案、テスト設計、改善サイクルを実施します。</div>
           </div>
         </article>
+
+        <article class="component">
+          <div class="component-head"><span class="cmp-name">CMP-EDU-03 講義サムネカード</span><span class="badge">写真</span></div>
+          <div class="support-grid">
+            <div class="support-card"><div class="thumb photo p13"></div><div class="card-body"><strong>Lesson 05 プロトタイプの磨き方</strong><span class="muted">18分</span></div></div>
+            <div class="support-card"><div class="thumb photo p12"></div><div class="card-body"><strong>Lesson 06 検証設計の基本</strong><span class="muted">22分</span></div></div>
+          </div>
+        </article>
+
+        <article class="component">
+          <div class="component-head"><span class="cmp-name">CMP-EDU-04 学習リール</span><span class="badge">写真</span></div>
+          <div class="story-strip">
+            <div class="story-item"><div class="story-photo photo p1"></div><span>ノート術</span></div>
+            <div class="story-item"><div class="story-photo photo p2"></div><span>発表練習</span></div>
+            <div class="story-item"><div class="story-photo photo p13"></div><span>資料作成</span></div>
+          </div>
+        </article>
       </div>
     </section>
 
     <section id="sec-productivity" class="showcase-section">
       <div class="section-head">
         <h3>09. 生産性</h3>
-        <p>タスク抽出、優先順位、入力導線を集約した業務画面。</p>
+        <p>優先タスクと写真付きワークコンテキストを同時に扱う業務UI。</p>
       </div>
       <div class="phone">
-
         <article class="component">
           <div class="component-head"><span class="cmp-name">CMP-PDT-01 優先タスク一覧</span><span class="badge">リスト</span></div>
           <div class="list-row"><div><strong>提案書の最終確認</strong><p class="muted">締切 今日 21:00</p></div><span class="badge">高</span></div>
@@ -838,16 +1210,28 @@
           <div class="field"><label>期限</label><select><option>今日</option><option>明日</option><option>今週</option></select></div>
           <button class="btn primary">追加する</button>
         </article>
+
+        <article class="component">
+          <div class="component-head"><span class="cmp-name">CMP-PDT-03 ワークスペース写真カード</span><span class="badge">写真</span></div>
+          <div class="destination-card"><div class="thumb tall photo p13"></div><div class="card-body"><strong>集中ブロック 14:00-16:00</strong><div class="row"><span class="muted">通知オフ・会議なし</span><button class="icon-btn"><svg class="icon"><use href="#i-clock"></use></svg></button></div></div></div>
+        </article>
+
+        <article class="component">
+          <div class="component-head"><span class="cmp-name">CMP-PDT-04 ドキュメントギャラリー</span><span class="badge">写真</span></div>
+          <div class="photo-grid">
+            <div class="photo-tile"><div class="thumb photo p1"></div><span class="muted">提案資料</span></div>
+            <div class="photo-tile"><div class="thumb photo p15"></div><span class="muted">議事録</span></div>
+          </div>
+        </article>
       </div>
     </section>
 
     <section id="sec-booking" class="showcase-section">
       <div class="section-head">
         <h3>10. 予約</h3>
-        <p>日付選択と時間枠比較を中心にした施設予約フロー。</p>
+        <p>日付選択、部屋写真、設備チップをまとめた予約フロー。</p>
       </div>
       <div class="phone">
-
         <article class="component">
           <div class="component-head"><span class="cmp-name">CMP-BKG-01 カレンダーブロック</span><span class="badge">カレンダー</span></div>
           <div class="calendar">
@@ -859,14 +1243,29 @@
         </article>
 
         <article class="component">
-          <div class="component-head"><span class="cmp-name">CMP-BKG-02 時間スロットリスト</span><span class="badge">スロット</span></div>
+          <div class="component-head"><span class="cmp-name">CMP-BKG-02 客室写真＋設備チップ</span><span class="badge">写真</span></div>
+          <div class="room-card">
+            <div class="thumb tall photo p10"></div>
+            <div class="card-body">
+              <strong>オーシャンビュー ツイン</strong>
+              <div class="amenities">
+                <span class="chip"><svg class="icon"><use href="#i-bed"></use></svg>禁煙</span>
+                <span class="chip"><svg class="icon"><use href="#i-camera"></use></svg>Wi-Fi</span>
+                <span class="chip"><svg class="icon"><use href="#i-star"></use></svg>朝食付き</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="component">
+          <div class="component-head"><span class="cmp-name">CMP-BKG-03 時間スロットリスト</span><span class="badge">スロット</span></div>
           <div class="btn-row"><button class="btn">10:00</button><button class="btn primary">11:30</button></div>
           <div class="btn-row"><button class="btn">14:00</button><button class="btn">16:30</button></div>
         </article>
 
         <article class="component">
-          <div class="component-head"><span class="cmp-name">CMP-BKG-03 予約確定フッター</span><span class="badge">CTA</span></div>
-          <button class="btn primary">この内容で予約する</button>
+          <div class="component-head"><span class="cmp-name">CMP-BKG-04 予約確定フッター</span><span class="badge">CTA</span></div>
+          <button class="btn primary"><svg class="icon"><use href="#i-send"></use></svg>この内容で予約する</button>
         </article>
       </div>
     </section>
@@ -874,23 +1273,30 @@
     <section id="sec-support" class="showcase-section">
       <div class="section-head">
         <h3>11. サポート</h3>
-        <p>問い合わせ導線とチャットログを合わせた自己解決支援画面。</p>
+        <p>自己解決ナレッジと問い合わせ導線を同一画面に整理。</p>
       </div>
       <div class="phone">
-
         <article class="component">
           <div class="component-head"><span class="cmp-name">CMP-SPT-01 問い合わせカテゴリ</span><span class="badge">フィルタ</span></div>
           <div class="chips"><button class="chip active">配送</button><button class="chip">決済</button><button class="chip">返品</button><button class="chip">アカウント</button></div>
         </article>
 
         <article class="component">
-          <div class="component-head"><span class="cmp-name">CMP-SPT-02 チャット履歴行</span><span class="badge">チャット</span></div>
+          <div class="component-head"><span class="cmp-name">CMP-SPT-02 ナレッジ写真カード</span><span class="badge">写真</span></div>
+          <div class="support-grid">
+            <div class="support-card"><div class="thumb photo p11"></div><div class="card-body"><strong>配送状況の確認方法</strong><p class="muted">追跡番号の入力から反映まで</p></div></div>
+            <div class="support-card"><div class="thumb photo p1"></div><div class="card-body"><strong>返品申請の手順</strong><p class="muted">申請条件と返送ラベル発行</p></div></div>
+          </div>
+        </article>
+
+        <article class="component">
+          <div class="component-head"><span class="cmp-name">CMP-SPT-03 チャット履歴行</span><span class="badge">チャット</span></div>
           <div class="chat-row"><div class="avatar"></div><div><strong>サポート担当: 水島</strong><div class="muted">返金処理は本日中に完了予定です。</div></div><span class="muted">19:11</span></div>
           <div class="chat-row"><div class="avatar"></div><div><strong>あなた</strong><div class="muted">ありがとうございます。確認します。</div></div><span class="muted">19:12</span></div>
         </article>
 
         <article class="component">
-          <div class="component-head"><span class="cmp-name">CMP-SPT-03 返信入力バー</span><span class="badge">フォーム</span></div>
+          <div class="component-head"><span class="cmp-name">CMP-SPT-04 返信入力バー</span><span class="badge">フォーム</span></div>
           <div class="row"><input placeholder="メッセージを入力" /><button class="btn primary">送信</button></div>
         </article>
       </div>
@@ -899,25 +1305,49 @@
     <section id="sec-realestate" class="showcase-section">
       <div class="section-head">
         <h3>12. 不動産</h3>
-        <p>条件絞り込み、物件カード、内見予約までの導線を一画面で整理。</p>
+        <p>条件絞り込み、写真カルーセル、内見予約までを一画面で整理。</p>
       </div>
       <div class="phone">
-
         <article class="component">
           <div class="component-head"><span class="cmp-name">CMP-REA-01 条件フィルタ行</span><span class="badge">フィルタ</span></div>
           <div class="chips"><button class="chip active">1LDK</button><button class="chip">駅徒歩10分</button><button class="chip">築10年以内</button></div>
         </article>
 
-        <article class="component">
-          <div class="component-head"><span class="cmp-name">CMP-REA-02 物件カード</span><span class="badge">カード</span></div>
-          <div class="thumb" style="height:96px"></div>
-          <p class="title">中目黒 レジデンス 403</p>
-          <div class="row"><span class="muted">賃料</span><strong>¥168,000</strong></div>
-          <div class="row"><span class="muted">面積</span><strong>38.2㎡</strong></div>
+        <article class="component" data-carousel="estate-main">
+          <div class="component-head"><span class="cmp-name">CMP-REA-02 物件写真カルーセル</span><span class="badge">写真</span></div>
+          <div class="carousel-controls">
+            <button class="icon-btn" data-carousel-prev="estate-main"><svg class="icon"><use href="#i-search"></use></svg></button>
+            <button class="icon-btn" data-carousel-next="estate-main"><svg class="icon"><use href="#i-send"></use></svg></button>
+          </div>
+          <div class="carousel-track" id="estate-main">
+            <div class="estate-card"><div class="thumb tall photo p10"></div><div class="card-body"><strong>中目黒 レジデンス 403</strong><div class="row"><span class="muted">1LDK / 38.2㎡</span><strong>¥168,000</strong></div></div></div>
+            <div class="estate-card"><div class="thumb tall photo p11"></div><div class="card-body"><strong>自由が丘 ヒルズ 210</strong><div class="row"><span class="muted">2DK / 44.0㎡</span><strong>¥182,000</strong></div></div></div>
+            <div class="estate-card"><div class="thumb tall photo p12"></div><div class="card-body"><strong>三軒茶屋 ガーデン 505</strong><div class="row"><span class="muted">1LDK / 40.1㎡</span><strong>¥175,000</strong></div></div></div>
+          </div>
         </article>
 
         <article class="component">
-          <div class="component-head"><span class="cmp-name">CMP-REA-03 内見予約フォーム</span><span class="badge">フォーム</span></div>
+          <div class="component-head"><span class="cmp-name">CMP-REA-03 物件ハイライトカード</span><span class="badge">写真</span></div>
+          <div class="estate-card">
+            <div class="thumb tall photo p11"></div>
+            <div class="card-body">
+              <p class="title">中目黒 レジデンス 403</p>
+              <div class="row"><span class="muted">賃料</span><strong>¥168,000</strong></div>
+              <div class="row"><span class="muted">面積</span><strong>38.2㎡</strong></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="component">
+          <div class="component-head"><span class="cmp-name">CMP-REA-04 周辺スポット写真</span><span class="badge">写真</span></div>
+          <div class="photo-grid">
+            <div class="photo-tile"><div class="thumb photo p4"></div><span class="muted">駅前ロータリー</span></div>
+            <div class="photo-tile"><div class="thumb photo p7"></div><span class="muted">スーパー徒歩4分</span></div>
+          </div>
+        </article>
+
+        <article class="component">
+          <div class="component-head"><span class="cmp-name">CMP-REA-05 内見予約フォーム</span><span class="badge">フォーム</span></div>
           <div class="field"><label>希望日時</label><input value="3/25 18:00" /></div>
           <div class="field"><label>連絡方法</label><select><option>電話</option><option>メール</option><option>チャット</option></select></div>
           <button class="btn primary">内見を予約</button>
@@ -929,7 +1359,7 @@
   <div class="sheet" id="cartSheet" aria-hidden="true">
     <div class="overlay" data-close-sheet></div>
     <div class="sheet-panel">
-      <strong>CMP-FOD-04 注文確認ボトムシート</strong>
+      <strong>CMP-FOD-06 注文確認ボトムシート</strong>
       <div class="list-row"><span>鶏だし塩うどん</span><span>¥920</span></div>
       <div class="list-row"><span>炙りサーモンサラダ</span><span>¥780</span></div>
       <div class="row"><span class="muted">合計</span><strong>¥1,700</strong></div>
@@ -940,8 +1370,8 @@
   <div class="modal" id="quickModal" aria-hidden="true">
     <div class="overlay" data-close-modal></div>
     <div class="modal-card">
-      <strong>CMP-ECM-04 クイックビューモーダル</strong>
-      <div class="thumb" style="height:110px"></div>
+      <strong>CMP-ECM-06 クイックビューモーダル</strong>
+      <div class="thumb tall photo p1"></div>
       <p class="title">耐水ノート A6</p>
       <p class="muted">濡れた手でも書ける紙質。会議・現場メモどちらにも対応。</p>
       <div class="btn-row"><button class="btn" data-close-modal>閉じる</button><button class="btn primary">カートに追加</button></div>
@@ -969,7 +1399,7 @@
         const item = btn.closest('.accordion-item');
         item.classList.toggle('open');
         const mark = btn.querySelector('span');
-        mark.textContent = item.classList.contains('open') ? '−' : '＋';
+        if (mark) mark.textContent = item.classList.contains('open') ? '−' : '＋';
       });
     });
 
@@ -987,6 +1417,27 @@
     });
     document.querySelectorAll('[data-close-modal]').forEach((b) => {
       b.addEventListener('click', () => quickModal.classList.remove('open'));
+    });
+
+    const scrollByCard = (el, dir) => {
+      const amount = 292;
+      el.scrollBy({ left: amount * dir, behavior: 'smooth' });
+    };
+
+    document.querySelectorAll('[data-carousel-next]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const id = btn.getAttribute('data-carousel-next');
+        const track = document.getElementById(id);
+        if (track) scrollByCard(track, 1);
+      });
+    });
+
+    document.querySelectorAll('[data-carousel-prev]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const id = btn.getAttribute('data-carousel-prev');
+        const track = document.getElementById(id);
+        if (track) scrollByCard(track, -1);
+      });
     });
   </script>
 </body>
