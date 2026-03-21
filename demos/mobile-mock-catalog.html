@@ -754,6 +754,106 @@
     .photo.p14 { background-image: url('https://images.unsplash.com/photo-1489515217757-5fd1be406fef?auto=format&fit=crop&w=900&q=80'); }
     .photo.p15 { background-image: url('https://images.unsplash.com/photo-1517487881594-2787fef5ebf7?auto=format&fit=crop&w=900&q=80'); }
 
+    .jp-usage-note {
+      padding: 0;
+      display: grid;
+      gap: var(--space-2);
+    }
+
+    .jp-usage-note p,
+    .jp-usage-note ul {
+      margin: 0;
+      font-size: 12px;
+      color: var(--text-sub);
+    }
+
+    .jp-usage-note ul {
+      padding-left: var(--space-4);
+      display: grid;
+      gap: var(--space-1);
+    }
+
+    .jp-typo-cmp {
+      gap: var(--space-2);
+      padding: var(--space-4) 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .jp-typo-cmp:last-child {
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .jp-title,
+    .jp-body,
+    .jp-meta {
+      margin: 0;
+    }
+
+    .jp-title {
+      font-size: 18px;
+      line-height: 1.45;
+      font-weight: 700;
+      letter-spacing: 0;
+    }
+
+    .jp-body {
+      font-size: 14px;
+      line-height: 1.65;
+      color: var(--text);
+    }
+
+    .jp-meta {
+      font-size: 12px;
+      line-height: 1.5;
+      color: var(--text-sub);
+    }
+
+    .jp-cta {
+      justify-self: start;
+      padding: 0 var(--space-4);
+    }
+
+    .font-hk {
+      font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", -apple-system, "Noto Sans JP", sans-serif;
+    }
+
+    .font-hs {
+      font-family: "Hiragino Sans", "Hiragino Kaku Gothic ProN", -apple-system, "Yu Gothic", sans-serif;
+    }
+
+    .font-yu {
+      font-family: "Yu Gothic", "Yu Gothic UI", "Hiragino Sans", "Noto Sans JP", sans-serif;
+    }
+
+    .font-biz {
+      font-family: "BIZ UDPGothic", "Yu Gothic", "Noto Sans JP", sans-serif;
+    }
+
+    .font-noto {
+      font-family: "Noto Sans JP", "Hiragino Sans", "Yu Gothic", sans-serif;
+    }
+
+    .font-round {
+      font-family: "Hiragino Maru Gothic ProN", "Hiragino Sans", "Yu Gothic", "Noto Sans JP", sans-serif;
+    }
+
+    .font-finance {
+      font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic UI", "Noto Sans JP", sans-serif;
+    }
+
+    .font-social {
+      font-family: "Noto Sans JP", "Hiragino Sans", "Hiragino Kaku Gothic ProN", sans-serif;
+    }
+
+    .font-health {
+      font-family: "BIZ UDPGothic", "Hiragino Sans", "Noto Sans JP", sans-serif;
+    }
+
+    .font-commerce {
+      font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic", "Meiryo", sans-serif;
+    }
+
     @media (max-width: 370px) {
       .catalog,
       .component,
@@ -805,6 +905,7 @@
         <a href="#sec-booking"><svg class="icon"><use href="#i-bed"></use></svg>10 予約</a>
         <a href="#sec-support"><svg class="icon"><use href="#i-chat"></use></svg>11 サポート</a>
         <a href="#sec-realestate"><svg class="icon"><use href="#i-home"></use></svg>12 不動産</a>
+        <a href="#sec-jp-typography"><svg class="icon"><use href="#i-bookmark"></use></svg>13 日本語タイポ</a>
       </div>
     </nav>
 
@@ -1351,6 +1452,104 @@
           <div class="field"><label>希望日時</label><input value="3/25 18:00" /></div>
           <div class="field"><label>連絡方法</label><select><option>電話</option><option>メール</option><option>チャット</option></select></div>
           <button class="btn primary">内見を予約</button>
+        </article>
+      </div>
+    </section>
+
+    <section id="sec-jp-typography" class="showcase-section">
+      <div class="section-head">
+        <h3>13. 日本語フォントコンポーネント</h3>
+        <p>日本語アプリで使いやすい書体トーンを、タイトル・本文・メタ情報・CTAのセットで比較できます。</p>
+      </div>
+      <div class="phone">
+        <div class="jp-usage-note">
+          <p>用途メモ: 金融は視認性と数字の締まり重視、ソーシャルはやわらかさ、ヘルスケアは判読性優先で選定。</p>
+          <ul>
+            <li>Finance/B2B: CMP-TYJ-01, 02, 07</li>
+            <li>Social/Community: CMP-TYJ-03, 06, 08</li>
+            <li>Healthcare/Public: CMP-TYJ-04, 09</li>
+            <li>Commerce/Lifestyle: CMP-TYJ-05, 10</li>
+          </ul>
+        </div>
+
+        <article class="component jp-typo-cmp font-hk">
+          <div class="component-head"><span class="cmp-name">CMP-TYJ-01 残高サマリー見出し</span><span class="badge">Hiragino Kaku</span></div>
+          <p class="jp-title">今月の可処分額を即確認</p>
+          <p class="jp-body">固定費と変動費の差分を先に見せることで、次の支出判断を素早く行えます。</p>
+          <p class="jp-meta">meta: FinTechホーム / 数字中心 / 朝の確認導線</p>
+          <button class="btn primary jp-cta">残高を確認</button>
+        </article>
+
+        <article class="component jp-typo-cmp font-hs">
+          <div class="component-head"><span class="cmp-name">CMP-TYJ-02 送金確認バナー</span><span class="badge">Hiragino Sans</span></div>
+          <p class="jp-title">振込前に口座名を再チェック</p>
+          <p class="jp-body">明朝よりも角が立ちすぎないため、金融系でも緊張感を保ちつつ可読性を確保しやすいです。</p>
+          <p class="jp-meta">meta: FinTech送金 / 誤送金防止 / 注意喚起</p>
+          <button class="btn jp-cta">確認して進む</button>
+        </article>
+
+        <article class="component jp-typo-cmp font-yu">
+          <div class="component-head"><span class="cmp-name">CMP-TYJ-03 フィード投稿カード</span><span class="badge">Yu Gothic</span></div>
+          <p class="jp-title">今日の学びを3行でシェア</p>
+          <p class="jp-body">軽めの文字印象で、長文になりすぎないソーシャル投稿カードに向いた空気感です。</p>
+          <p class="jp-meta">meta: Socialフィード / 投稿促進 / 夕方ピーク</p>
+          <button class="btn jp-cta">投稿を作成</button>
+        </article>
+
+        <article class="component jp-typo-cmp font-biz">
+          <div class="component-head"><span class="cmp-name">CMP-TYJ-04 服薬リマインダー</span><span class="badge">BIZ UDPGothic</span></div>
+          <p class="jp-title">夜の薬は21:00に通知します</p>
+          <p class="jp-body">画数の多い日本語でも潰れにくく、高齢者向けの医療UIでも安心して使える視認性です。</p>
+          <p class="jp-meta">meta: Healthcare / 判読性優先 / アクセシブル</p>
+          <button class="btn primary jp-cta">通知を有効化</button>
+        </article>
+
+        <article class="component jp-typo-cmp font-noto">
+          <div class="component-head"><span class="cmp-name">CMP-TYJ-05 商品比較リスト</span><span class="badge">Noto Sans JP</span></div>
+          <p class="jp-title">スペックを横並びで比較</p>
+          <p class="jp-body">字幅の安定感が高く、価格・容量・配送日などのラベル整列が必要なEC画面と相性が良いです。</p>
+          <p class="jp-meta">meta: Commerce / 比較UI / 情報量多め</p>
+          <button class="btn jp-cta">比較表を見る</button>
+        </article>
+
+        <article class="component jp-typo-cmp font-round">
+          <div class="component-head"><span class="cmp-name">CMP-TYJ-06 コミュニティ歓迎カード</span><span class="badge">Rounded Fallback</span></div>
+          <p class="jp-title">はじめまして、今日から一緒に記録しましょう</p>
+          <p class="jp-body">角の取れた丸みで緊張を下げたいオンボーディングや、育児・習慣化アプリの導入面に向きます。</p>
+          <p class="jp-meta">meta: Community / Onboarding / やわらかい雰囲気</p>
+          <button class="btn jp-cta">チュートリアル開始</button>
+        </article>
+
+        <article class="component jp-typo-cmp font-finance">
+          <div class="component-head"><span class="cmp-name">CMP-TYJ-07 取引履歴ヘッダー</span><span class="badge">Hiragino+Yu UI</span></div>
+          <p class="jp-title">入出金の時系列を瞬時に把握</p>
+          <p class="jp-body">数字と和文のバランスが良く、明細テーブルや履歴行が連続するB2B会計画面で崩れにくいです。</p>
+          <p class="jp-meta">meta: Accounting / 明細ビュー / 高密度リスト</p>
+          <button class="btn primary jp-cta">履歴を開く</button>
+        </article>
+
+        <article class="component jp-typo-cmp font-social">
+          <div class="component-head"><span class="cmp-name">CMP-TYJ-08 コメント入力促進</span><span class="badge">Noto+Hiragino</span></div>
+          <p class="jp-title">短く気軽にリアクション</p>
+          <p class="jp-body">本文の読みやすさを維持しつつ重く見えないため、コメント欄やDM導線の心理負担を下げられます。</p>
+          <p class="jp-meta">meta: Social / コメント導線 / 参加率改善</p>
+          <button class="btn jp-cta">コメントを書く</button>
+        </article>
+
+        <article class="component jp-typo-cmp font-health">
+          <div class="component-head"><span class="cmp-name">CMP-TYJ-09 診療予約確認</span><span class="badge">BIZ+Hiragino</span></div>
+          <p class="jp-title">次回の診療は4月2日 10:30</p>
+          <p class="jp-body">誤読を避けたい日時情報に強く、公共サービスや病院予約の確認画面で安心感を出しやすい構成です。</p>
+          <p class="jp-meta">meta: Healthcare / 日時表示 / ミス防止</p>
+          <button class="btn primary jp-cta">予約内容を確認</button>
+        </article>
+
+        <article class="component jp-typo-cmp font-commerce">
+          <div class="component-head"><span class="cmp-name">CMP-TYJ-10 セール告知ヒーロー</span><span class="badge">Hiragino+Noto</span></div>
+          <p class="jp-title">週末限定クーポンを配布中</p>
+          <p class="jp-body">視認性を保ちつつ軽快な印象を作りやすく、ライフスタイル系ECやクーポン配布バナーに適しています。</p>
+          <p class="jp-meta">meta: Commerce / キャンペーン / 回遊促進</p>
+          <button class="btn jp-cta">クーポンを受け取る</button>
         </article>
       </div>
     </section>
