@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>CaddyCo モバイルプロトタイプ</title>
+  <title>CaddyCo モック</title>
   <style>
     :root {
       --space-1: 4px;
@@ -12,91 +12,107 @@
       --space-4: 16px;
       --space-5: 20px;
       --space-6: 24px;
-
       --bg: #ffffff;
       --surface: #ffffff;
-      --text: #20242a;
+      --surface-soft: #f7f8fa;
+      --text: #18202a;
       --muted: #66707c;
-      --line: #e4e8ee;
-      --line-strong: #cfd6df;
-      --soft: #f7f9fb;
-      --accent: #1f2937;
-      --accent-soft: #eef2f6;
-
-      --radius-card: 12px;
+      --line: #e3e7ec;
+      --line-strong: #ced5de;
+      --accent: #1f6b43;
+      --accent-soft: #eef6f1;
+      --shadow-soft: 0 16px 32px -28px rgba(15, 23, 42, 0.28);
+      --radius-card: 16px;
       --radius-control: 12px;
       --radius-pill: 999px;
-
-      --shadow-soft: 0 10px 24px -18px rgba(15, 23, 42, 0.18);
-
       --tap-min: 44px;
     }
 
     * { box-sizing: border-box; }
 
-    body {
+    html, body {
       margin: 0;
       background: var(--bg);
       color: var(--text);
       font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", "Meiryo", sans-serif;
-      min-height: 100vh;
+    }
+
+    body { min-height: 100vh; }
+
+    h1, h2, h3, p { margin: 0; }
+
+    button, input, select, textarea {
+      font: inherit;
+      color: inherit;
     }
 
     .app {
-      max-width: 440px;
-      margin: 0 auto;
+      max-width: 430px;
       min-height: 100dvh;
+      margin: 0 auto;
       background: var(--bg);
       position: relative;
-      display: flex;
-      flex-direction: column;
     }
 
     .app-head {
       padding: var(--space-3) var(--space-4) 0;
+      position: sticky;
+      top: 0;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(10px);
+      z-index: 10;
     }
 
     .masthead {
+      padding-bottom: var(--space-4);
       border-bottom: 1px solid var(--line);
-      padding: 0 0 var(--space-4);
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
       gap: var(--space-3);
     }
 
-    .eyebrow {
+    .brand {
       display: inline-flex;
       align-items: center;
+      gap: var(--space-2);
       min-height: 28px;
       padding: 0 var(--space-2);
       border-radius: var(--radius-pill);
       background: var(--accent-soft);
-      color: var(--accent);
       font-size: 12px;
       font-weight: 700;
+      color: var(--accent);
       margin-bottom: var(--space-2);
+    }
+
+    .brand-mark {
+      width: 20px;
+      height: 20px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      background: var(--accent);
+      color: #fff;
+      font-size: 11px;
     }
 
     .masthead-title {
       font-size: 18px;
-      line-height: 1.4;
-      margin: 0;
-      letter-spacing: 0;
+      line-height: 1.5;
     }
 
     .masthead-meta {
       font-size: 12px;
       line-height: 1.5;
       color: var(--muted);
+      text-align: right;
     }
 
     .screen {
       display: none;
-      flex: 1;
-      overflow: auto;
       padding: var(--space-4) var(--space-4) 104px;
-      animation: fade-in 120ms ease;
+      animation: fade-in 140ms ease;
     }
 
     .screen.active { display: block; }
@@ -106,7 +122,40 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    .section-gap > * + * { margin-top: var(--space-4); }
+    .stack > * + * { margin-top: var(--space-4); }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: var(--space-3);
+      margin-bottom: var(--space-4);
+    }
+
+    .section-title {
+      font-size: 22px;
+      line-height: 1.4;
+    }
+
+    .muted {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .chip {
+      min-height: var(--tap-min);
+      padding: 0 var(--space-3);
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--line);
+      background: var(--surface-soft);
+      display: inline-flex;
+      align-items: center;
+      white-space: nowrap;
+      font-size: 12px;
+      font-weight: 700;
+      color: #405163;
+    }
 
     .card {
       background: var(--surface);
@@ -116,359 +165,439 @@
       box-shadow: var(--shadow-soft);
     }
 
+    .card-subtle {
+      background: var(--surface-soft);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-card);
+      padding: var(--space-4);
+    }
+
+    .hero {
+      display: grid;
+      gap: var(--space-4);
+    }
+
     .hero-title {
       font-size: 30px;
-      line-height: 1.3;
-      margin: 0;
-      letter-spacing: 0;
+      line-height: 1.25;
+      letter-spacing: -0.02em;
     }
 
-    .brand-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: var(--space-2);
-      margin-bottom: var(--space-4);
-    }
-
-    .brand-chip {
-      border: 1px solid var(--line);
-      border-radius: var(--radius-pill);
-      min-height: var(--tap-min);
-      padding: 0 var(--space-3);
-      display: inline-flex;
-      align-items: center;
-      gap: var(--space-2);
-      font-size: 12px;
-      color: #44505d;
-      background: #ffffff;
-    }
-
-    .logo {
-      width: 24px;
-      height: 24px;
-      border-radius: 8px;
-      background: #111827;
-      color: #ffffff;
+    .hero-grid {
       display: grid;
-      place-items: center;
-      font-size: 12px;
-      font-weight: 700;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: var(--space-2);
     }
 
-    h1, h2, h3, p { margin: 0; }
-
-    .title-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: start;
-      gap: var(--space-3);
-      margin-bottom: var(--space-4);
-    }
-
-    .screen-title { font-size: 22px; line-height: 1.4; }
-    .muted { color: var(--muted); font-size: 13px; line-height: 1.6; }
-
-    .chip {
+    .metric {
       border: 1px solid var(--line);
-      border-radius: var(--radius-pill);
-      min-height: var(--tap-min);
-      padding: 0 var(--space-3);
-      display: inline-flex;
-      align-items: center;
+      border-radius: 14px;
+      padding: var(--space-3);
+      background: #fff;
+    }
+
+    .metric strong {
+      display: block;
+      font-size: 20px;
+      margin-bottom: var(--space-1);
+    }
+
+    .metric span {
       font-size: 12px;
+      color: var(--muted);
+    }
+
+    .button-row {
+      display: grid;
+      gap: var(--space-2);
+    }
+
+    .btn {
+      width: 100%;
+      min-height: 48px;
+      border-radius: var(--radius-control);
+      border: 1px solid transparent;
+      background: #fff;
       font-weight: 700;
-      color: #4b5563;
-      white-space: nowrap;
-      background: var(--accent-soft);
+      cursor: pointer;
+      transition: transform 120ms ease, background-color 120ms ease, border-color 120ms ease;
+    }
+
+    .btn:active,
+    .icon-btn:active,
+    .nav-btn:active,
+    .score-option:active,
+    .toggle button:active,
+    .tag:active,
+    .hole-pill:active { transform: scale(0.985); }
+
+    .btn-primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    .btn-secondary {
+      border-color: var(--line-strong);
+      color: #394655;
+    }
+
+    .helper {
+      margin-top: var(--space-2);
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .form-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-3);
     }
 
     .form-group + .form-group { margin-top: var(--space-3); }
-
-    .grid-2 {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: var(--space-2);
-    }
 
     label {
       display: block;
       margin-bottom: var(--space-2);
       font-size: 12px;
-      color: var(--muted);
       font-weight: 700;
-    }
-
-    .helper {
-      margin-top: var(--space-2);
-      font-size: 12px;
-      line-height: 1.5;
       color: var(--muted);
-    }
-
-    input, select, textarea, button {
-      font-family: inherit;
-      font-size: 14px;
     }
 
     input, select, textarea {
       width: 100%;
-      min-height: var(--tap-min);
-      border: 1px solid var(--line-strong);
+      min-height: 44px;
       border-radius: var(--radius-control);
+      border: 1px solid var(--line-strong);
+      background: #fff;
       padding: 0 var(--space-3);
-      color: var(--text);
-      background: #ffffff;
       outline: none;
     }
 
     textarea {
-      padding-top: var(--space-3);
       min-height: 96px;
+      padding-top: var(--space-3);
       resize: vertical;
     }
 
-    .btn {
-      width: 100%;
-      min-height: var(--tap-min);
-      border-radius: var(--radius-control);
-      border: 1px solid transparent;
-      font-weight: 700;
+    .tag-row,
+    .recent-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+    }
+
+    .tag {
+      min-height: 44px;
+      padding: 0 var(--space-3);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-pill);
+      background: #fff;
       cursor: pointer;
-      background: #ffffff;
-      color: var(--text);
-      transition: transform 120ms ease, background-color 120ms ease, border-color 120ms ease;
+      font-size: 12px;
+      font-weight: 700;
+      color: #394655;
     }
 
-    .btn + .btn { margin-top: var(--space-2); }
-    .btn:active,
-    .icon-btn:active,
-    .pill:active,
-    .tab-btn:active,
-    .tweet-actions button:active,
-    .toggle button:active { transform: scale(0.985); }
-
-    .btn-primary {
-      background: var(--accent);
-      border-color: var(--accent);
-      color: #ffffff;
+    .tag.active {
+      border-color: #9ec7ae;
+      background: var(--accent-soft);
+      color: var(--accent);
     }
 
-    .btn-secondary {
-      border-color: var(--line-strong);
-      color: #374151;
-      background: #ffffff;
-    }
-
-    .kpi-grid {
+    .summary-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: var(--space-2);
     }
 
-    .kpi {
+    .summary-tile {
       border: 1px solid var(--line);
-      border-radius: var(--radius-card);
-      background: var(--soft);
+      border-radius: 14px;
       padding: var(--space-3);
+      background: var(--surface-soft);
     }
 
-    .kpi b { display: block; font-size: 18px; margin-bottom: var(--space-1); }
-    .kpi span { font-size: 11px; color: var(--muted); }
-
-    .criteria {
-      border: 1px dashed var(--line-strong);
-      border-radius: var(--radius-card);
-      padding: var(--space-4);
-      background: var(--soft);
-      font-size: 12px;
-      color: #374151;
-      line-height: 1.5;
+    .summary-tile strong {
+      display: block;
+      font-size: 18px;
+      margin-bottom: var(--space-1);
     }
 
-    .criteria b { display: block; margin-bottom: var(--space-1); }
-    .criteria ul {
-      margin: var(--space-2) 0 0;
-      padding-left: 18px;
-    }
-    .criteria li + li { margin-top: var(--space-1); }
-
-    .meter {
-      border: 1px solid var(--line);
-      border-radius: var(--radius-card);
-      background: var(--soft);
-      padding: var(--space-3);
-      margin-bottom: var(--space-3);
+    .summary-tile span {
+      font-size: 11px;
+      color: var(--muted);
     }
 
-    .meter-head {
-      display: flex;
-      justify-content: space-between;
-      font-size: 12px;
-      font-weight: 700;
-      color: #4b5563;
-      margin-bottom: var(--space-2);
+    .round-strip {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: var(--space-3);
+      align-items: center;
+      margin-bottom: var(--space-4);
     }
 
-    .bar {
+    .progress-bar {
       height: 8px;
+      background: #e9edf2;
       border-radius: var(--radius-pill);
-      background: #e5e7eb;
       overflow: hidden;
+      margin-top: var(--space-2);
     }
 
-    .bar > span {
+    .progress-bar span {
       display: block;
       height: 100%;
       width: 0;
-      background: #7b8795;
+      background: var(--accent);
       transition: width 160ms ease;
     }
 
-    .score-card {
-      border: 1px solid var(--line);
-      border-radius: var(--radius-card);
-      background: #ffffff;
-      padding: var(--space-4);
-      text-align: center;
-      margin-bottom: var(--space-3);
+    .hole-rail {
+      display: flex;
+      gap: var(--space-2);
+      overflow-x: auto;
+      padding-bottom: var(--space-1);
+      margin-bottom: var(--space-4);
+      scrollbar-width: none;
     }
 
-    .hole-no {
+    .hole-rail::-webkit-scrollbar { display: none; }
+
+    .hole-pill {
+      min-width: 52px;
+      min-height: 52px;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: #fff;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      gap: 2px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .hole-pill strong {
+      font-size: 15px;
+      color: var(--text);
+    }
+
+    .hole-pill.active {
+      border-color: #9ec7ae;
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+
+    .hole-pill.done strong,
+    .hole-pill.done span { color: var(--accent); }
+
+    .score-shell {
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: var(--space-4);
+      background: #fff;
+    }
+
+    .hole-card {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: var(--space-3);
+      align-items: center;
+      margin-bottom: var(--space-4);
+    }
+
+    .hole-number {
       font-size: 48px;
       line-height: 1;
-      margin: var(--space-2) 0;
+      margin: var(--space-1) 0;
     }
 
-    .controls {
+    .hole-badge {
+      min-width: 84px;
+      min-height: 84px;
+      border-radius: 20px;
       display: grid;
-      grid-template-columns: 52px 1fr 52px;
+      place-items: center;
+      border: 1px solid var(--line);
+      background: var(--surface-soft);
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--muted);
+      text-align: center;
+      padding: var(--space-2);
+    }
+
+    .counter-row {
+      display: grid;
+      grid-template-columns: 56px 1fr 56px;
       gap: var(--space-2);
       margin-bottom: var(--space-3);
     }
 
     .icon-btn, .counter {
-      min-height: 52px;
+      min-height: 56px;
+      border-radius: 16px;
       border: 1px solid var(--line-strong);
-      border-radius: var(--radius-control);
-      background: #ffffff;
+      background: #fff;
     }
 
-    .icon-btn { font-size: 24px; cursor: pointer; }
-    .counter { display: grid; place-items: center; font-size: 28px; font-weight: 700; }
-
-    .pill-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--space-2);
-      margin-bottom: var(--space-3);
-    }
-
-    .pill {
-      min-height: var(--tap-min);
-      border-radius: var(--radius-pill);
-      border: 1px solid var(--line-strong);
-      padding: 0 var(--space-3);
-      background: #ffffff;
-      color: #4b5563;
-      font-size: 12px;
-      font-weight: 700;
+    .icon-btn {
+      font-size: 24px;
       cursor: pointer;
     }
 
-    .pill.active {
-      border-color: #94a3b8;
+    .counter {
+      display: grid;
+      place-items: center;
+      font-size: 30px;
+      font-weight: 700;
+    }
+
+    .score-options {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-2);
+      margin-bottom: var(--space-4);
+    }
+
+    .score-option {
+      min-height: 52px;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: #fff;
+      padding: 0 var(--space-3);
+      cursor: pointer;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: var(--space-1);
+    }
+
+    .score-option strong {
+      font-size: 15px;
+    }
+
+    .score-option span {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .score-option.active {
+      border-color: #9ec7ae;
       background: var(--accent-soft);
-      color: #111827;
     }
 
     .toggle {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: var(--space-2);
-      border: 1px solid var(--line);
-      border-radius: var(--radius-card);
+      gap: var(--space-1);
       padding: var(--space-1);
-      background: var(--soft);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--surface-soft);
     }
 
     .toggle button {
-      min-height: var(--tap-min);
+      min-height: 44px;
       border: 0;
       border-radius: 10px;
       background: transparent;
-      color: #6b7280;
       font-weight: 700;
+      color: var(--muted);
       cursor: pointer;
     }
 
     .toggle button.active {
-      background: #ffffff;
-      color: #111827;
+      background: #fff;
+      color: var(--text);
       box-shadow: var(--shadow-soft);
     }
 
-    .tweet-list {
+    .panel {
+      margin-top: var(--space-4);
+    }
+
+    .panel[hidden] { display: none; }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-2);
+    }
+
+    .stat-card {
       border: 1px solid var(--line);
-      border-radius: var(--radius-card);
-      overflow: hidden;
-      background: #ffffff;
+      border-radius: 14px;
+      padding: var(--space-3);
+      background: var(--surface-soft);
     }
 
-    .tweet {
-      display: grid;
-      grid-template-columns: 40px 1fr;
-      gap: var(--space-3);
-      padding: var(--space-3) var(--space-4);
-      border-bottom: 1px solid var(--line);
-    }
-
-    .tweet:last-child { border-bottom: none; }
-
-    .avatar {
-      width: 40px;
-      height: 40px;
-      border-radius: 999px;
-      border: 1px solid #d1d5db;
-      background: #f3f4f6;
-      display: grid;
-      place-items: center;
-      font-size: 12px;
-      font-weight: 700;
-    }
-
-    .tweet-head {
-      display: flex;
-      align-items: center;
-      gap: var(--space-1);
+    .stat-card strong {
+      display: block;
+      font-size: 20px;
       margin-bottom: var(--space-1);
+    }
+
+    .stat-card span {
       font-size: 12px;
-      color: #6b7280;
+      color: var(--muted);
     }
 
-    .tweet-head strong {
-      color: #111827;
-      font-size: 14px;
+    .insight-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: var(--space-2);
+      align-items: center;
+      padding: var(--space-3) 0;
+      border-top: 1px solid var(--line);
     }
 
-    .tweet-body {
-      font-size: 14px;
-      line-height: 1.5;
+    .insight-row:first-child { border-top: 0; padding-top: 0; }
+
+    .insight-row:last-child { padding-bottom: 0; }
+
+    .share-preview {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: var(--space-4);
+      background: var(--surface-soft);
+    }
+
+    .post-card,
+    .feed-card {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: #fff;
+      padding: var(--space-4);
+    }
+
+    .feed-list > * + * { margin-top: var(--space-3); }
+
+    .post-head,
+    .feed-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: var(--space-2);
       margin-bottom: var(--space-2);
     }
 
-    .tweet-actions {
+    .feed-actions {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: var(--space-1);
+      margin-top: var(--space-3);
     }
 
-    .tweet-actions button {
-      min-height: var(--tap-min);
-      border: 0;
+    .feed-actions button {
+      min-height: 44px;
       border-radius: 10px;
-      background: #ffffff;
-      color: #6b7280;
+      border: 0;
+      background: #fff;
+      color: var(--muted);
       text-align: left;
       padding-left: var(--space-2);
       cursor: pointer;
@@ -476,524 +605,881 @@
       font-weight: 700;
     }
 
-    .history-item {
-      border: 1px solid var(--line);
-      border-radius: var(--radius-card);
-      padding: var(--space-3) var(--space-4);
+    .history-toolbar {
       display: grid;
-      grid-template-columns: 1fr auto;
-      gap: var(--space-2);
-      align-items: center;
-      background: #ffffff;
+      gap: var(--space-3);
     }
 
     .history-list > * + * { margin-top: var(--space-3); }
 
-    .badge {
-      min-height: var(--tap-min);
+    .history-item {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: var(--space-4);
+      background: #fff;
+    }
+
+    .history-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: var(--space-2);
+      margin-bottom: var(--space-3);
+    }
+
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+      margin-top: var(--space-2);
+    }
+
+    .mini-badge {
+      min-height: 28px;
+      padding: 0 var(--space-2);
       border-radius: var(--radius-pill);
-      border: 1px solid var(--line-strong);
+      border: 1px solid var(--line);
+      background: var(--surface-soft);
       display: inline-flex;
       align-items: center;
-      padding: 0 var(--space-3);
-      font-size: 12px;
-      font-weight: 700;
-      color: #374151;
-      background: var(--accent-soft);
+      font-size: 11px;
+      color: var(--muted);
     }
+
+    .criteria {
+      border: 1px dashed var(--line-strong);
+      border-radius: 16px;
+      padding: var(--space-4);
+      background: var(--surface-soft);
+      font-size: 12px;
+      line-height: 1.6;
+      color: #314152;
+    }
+
+    .criteria ul {
+      margin: var(--space-2) 0 0;
+      padding-left: 18px;
+    }
+
+    .criteria li + li { margin-top: var(--space-1); }
 
     .bottom-nav {
       display: none;
-      position: absolute;
-      left: var(--space-4);
-      right: var(--space-4);
+      position: fixed;
+      left: 50%;
       bottom: var(--space-4);
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      background: rgba(255, 255, 255, 0.96);
+      transform: translateX(-50%);
+      width: min(398px, calc(100vw - 32px));
       padding: var(--space-1);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.98);
+      box-shadow: 0 18px 32px -24px rgba(15, 23, 42, 0.24);
       grid-template-columns: repeat(4, 1fr);
       gap: var(--space-1);
-      box-shadow: 0 16px 32px -24px rgba(15, 23, 42, 0.32);
     }
 
     .bottom-nav.show { display: grid; }
 
-    .tab-btn {
+    .nav-btn {
       min-height: 48px;
+      border-radius: 14px;
       border: 0;
-      border-radius: 12px;
       background: transparent;
-      color: #6b7280;
       font-size: 11px;
       font-weight: 700;
+      color: var(--muted);
       cursor: pointer;
-      display: grid;
-      place-items: center;
-      gap: var(--space-1);
     }
 
-    .tab-btn.active {
+    .nav-btn.active {
       background: var(--accent-soft);
       color: var(--accent);
     }
 
-    .stack > * + * {
-      margin-top: var(--space-3);
-    }
-
-    @media (max-width: 480px) {
-      .app-head {
-        padding-top: var(--space-2);
+    @media (max-width: 380px) {
+      .hero-grid,
+      .form-grid-2,
+      .summary-grid,
+      .stats-grid {
+        grid-template-columns: 1fr;
       }
 
-      .hero-title {
-        font-size: 28px;
-      }
-
-      .screen-title {
-        font-size: 20px;
-      }
-
-      .hole-no {
-        font-size: 44px;
+      .hole-card {
+        grid-template-columns: 1fr;
       }
     }
   </style>
 </head>
 <body>
-  <main class="app" aria-label="CaddyCo mobile prototype">
-    <div class="app-head">
+  <main class="app" aria-label="CaddyCo golf score management mock">
+    <header class="app-head">
       <div class="masthead">
         <div>
-          <div class="eyebrow">CaddyCo</div>
-          <p class="masthead-title">ラウンド記録と共有を、白基調の実用UIで一貫させたモバイルモック</p>
+          <div class="brand"><span class="brand-mark">C</span><span>CaddyCo</span></div>
+          <p class="masthead-title">競合の実用パターンを取り込み、記録速度と振り返りを強めたゴルフスコア管理UI</p>
         </div>
-        <p class="masthead-meta">Login → Start → Score → Complete / Share → Feed → History</p>
+        <p class="masthead-meta">login → start round → score → complete/share → feed → history</p>
       </div>
-    </div>
+    </header>
 
     <section class="screen active" data-screen="login">
-      <div class="section-gap">
-        <article class="card">
-          <div class="brand-row">
-            <div class="brand-chip"><span class="logo">C</span><span>CaddyCo</span></div>
-            <div class="brand-chip">ゴルフ記録</div>
+      <div class="stack">
+        <article class="card hero">
+          <div>
+            <p class="chip" style="display:inline-flex;">白基調 / 4ptグリッド / 端末フレームなし</p>
+            <h1 class="hero-title" style="margin-top: var(--space-4);">ラウンド記録を、<br>最短の操作で。</h1>
+            <p class="muted" style="margin-top: var(--space-2);">入力速度、統計の見え方、共有導線、履歴探索を再設計し、競合アプリで定着している操作感に寄せています。</p>
           </div>
-          <h1 class="hero-title">ラウンドを、
-            <br>その場で残す。</h1>
-          <p class="muted" style="margin-top: var(--space-2);">開始、記録、共有、振り返りまでを一つの流れにまとめた、日本語UIのモバイル体験です。</p>
+          <div class="hero-grid">
+            <div class="metric">
+              <strong>3タップ</strong>
+              <span>開始から1番登録まで</span>
+            </div>
+            <div class="metric">
+              <strong>18H</strong>
+              <span>横並びホール遷移</span>
+            </div>
+            <div class="metric">
+              <strong>4指標</strong>
+              <span>GIR / FW / PUTT / パーセーブ</span>
+            </div>
+            <div class="metric">
+              <strong>即共有</strong>
+              <span>X風フィードと履歴へ接続</span>
+            </div>
+          </div>
         </article>
 
         <article class="card">
-          <h2 class="screen-title" style="margin-bottom: var(--space-2);">ログイン</h2>
-          <p class="muted" style="margin-bottom: var(--space-4);">スコア履歴とフィードを同期します。</p>
-          <button class="btn btn-primary" id="googleLoginBtn">Googleでログイン</button>
-          <p class="helper">ボタン高 44px 以上、白背景、端末フレームなしで表示します。</p>
+          <h2 class="section-title" style="margin-bottom: var(--space-2);">ログイン</h2>
+          <p class="muted" style="margin-bottom: var(--space-4);">最近のコース、ラウンド傾向、フレンド投稿をまとめて同期します。</p>
+          <div class="button-row">
+            <button class="btn btn-primary" id="googleLoginBtn">Googleでログイン</button>
+            <button class="btn btn-secondary">メールでログイン</button>
+          </div>
+          <p class="helper">44px以上のタップ領域、16px主軸の余白、静かな白基調で統一。</p>
         </article>
 
-        <article class="card">
-          <div class="kpi-grid">
-            <div class="kpi"><b>11.2</b><span>ハンディ</span></div>
-            <div class="kpi"><b>62%</b><span>FWキープ率</span></div>
-            <div class="kpi"><b>29.8</b><span>平均パット</span></div>
-          </div>
-          <div class="criteria" style="margin-top: var(--space-4);">
-            <b>適用デザイン基準</b>
-            <ul>
-              <li>適用スキル: `design-taste-frontend` / `app-design-system`</li>
-              <li>Spacing tokens: 4pt grid, 8px・16px主軸, 12px・24px補助</li>
-              <li>Component rhythm: カード余白16px / フィールド間12px / 入力・ボタン44px以上 / ナビ48px</li>
-              <li>Compliance: White Base=Pass / No Device Frame=Pass / Calm Motion=Pass / Flow 유지=Pass</li>
-            </ul>
-          </div>
+        <article class="criteria">
+          <strong>競合調査要点</strong>
+          <ul>
+            <li>18Birdies: スコアカードの導線集約、横向き/一覧で情報を一気に見せる設計が強い。</li>
+            <li>Golfshot: ホールごとの進行把握とラウンド中の統計確認を同じ文脈で扱う。</li>
+            <li>TheGrint: 履歴・ハンディ・仲間接続が近く、記録後の継続利用に強い。</li>
+            <li>VPAR: ライブ順位や同伴比較がラウンド中のモチベーションを作る。</li>
+          </ul>
         </article>
       </div>
     </section>
 
     <section class="screen" data-screen="start">
-      <div class="title-row">
+      <div class="section-head">
         <div>
-          <h2 class="screen-title">ラウンド開始</h2>
-          <p class="muted">コース情報を入力して開始します。</p>
+          <h2 class="section-title">ラウンド開始</h2>
+          <p class="muted">最近の設定を再利用し、開始までの入力を短くします。</p>
         </div>
         <span class="chip">開始</span>
       </div>
 
-      <article class="card">
-        <div class="form-group grid-2">
-          <div>
-            <label>コース</label>
-            <select>
-              <option>さくらヒルズGC</option>
-              <option>ベイラインCC</option>
-              <option>グリーンハーバーリンクス</option>
-            </select>
-            <p class="helper">最近選択したコースを優先表示。</p>
+      <div class="stack">
+        <article class="card">
+          <div style="display:flex; justify-content:space-between; gap: var(--space-2); align-items:center; margin-bottom: var(--space-3);">
+            <strong>最近のコース</strong>
+            <span class="muted">再開候補</span>
           </div>
-          <div>
-            <label>ホール数</label>
-            <select>
-              <option>18</option>
-              <option>9</option>
-            </select>
-            <p class="helper">通常ラウンドは 18 ホール。</p>
-          </div>
-        </div>
+          <div class="recent-row" id="recentCourses"></div>
+          <p class="helper">競合で一般的な「前回条件の再利用」を優先導線として配置。</p>
+        </article>
 
-        <div class="form-group grid-2">
-          <div>
-            <label>ティー</label>
-            <select>
-              <option>レギュラー</option>
-              <option>バック</option>
-              <option>フロント</option>
-            </select>
+        <article class="card">
+          <div class="form-group form-grid-2">
+            <div>
+              <label for="courseSelect">コース</label>
+              <select id="courseSelect">
+                <option>さくらヒルズGC</option>
+                <option>ベイラインCC</option>
+                <option>グリーンハーバーリンクス</option>
+                <option>富士リッジCC</option>
+              </select>
+            </div>
+            <div>
+              <label for="holeCount">ホール数</label>
+              <select id="holeCount">
+                <option value="18">18</option>
+                <option value="9">9</option>
+              </select>
+            </div>
           </div>
-          <div>
-            <label>形式</label>
-            <select>
-              <option>ストロークプレー</option>
-              <option>マッチプレー</option>
-            </select>
-            <p class="helper">フィード表示文言にも反映されます。</p>
+          <div class="form-group form-grid-2">
+            <div>
+              <label for="teeSelect">ティー</label>
+              <select id="teeSelect">
+                <option>レギュラー</option>
+                <option>バック</option>
+                <option>フロント</option>
+              </select>
+            </div>
+            <div>
+              <label for="playMode">形式</label>
+              <select id="playMode">
+                <option>ストロークプレー</option>
+                <option>マッチプレー</option>
+                <option>友人ラウンド</option>
+              </select>
+            </div>
           </div>
-        </div>
+          <div class="form-group form-grid-2">
+            <div>
+              <label for="playDate">日付</label>
+              <input id="playDate" type="date" value="2026-03-21" />
+            </div>
+            <div>
+              <label for="playTime">スタート時刻</label>
+              <input id="playTime" type="time" value="08:10" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label>同伴メモ</label>
+            <div class="tag-row">
+              <button class="tag active" type="button">Mai K.</button>
+              <button class="tag active" type="button">Ryo T.</button>
+              <button class="tag" type="button">招待を追加</button>
+            </div>
+          </div>
+          <div class="button-row" style="margin-top: var(--space-4);">
+            <button class="btn btn-primary" id="startRoundBtn">この条件で開始</button>
+          </div>
+        </article>
 
-        <div class="form-group grid-2" style="margin-bottom: var(--space-4);">
-          <div>
-            <label>日付</label>
-            <input type="date" value="2026-03-21" />
+        <article class="card-subtle">
+          <div class="summary-grid">
+            <div class="summary-tile">
+              <strong>+5.8</strong>
+              <span>直近3ラウンド平均</span>
+            </div>
+            <div class="summary-tile">
+              <strong>61%</strong>
+              <span>FWキープ</span>
+            </div>
+            <div class="summary-tile">
+              <strong>31.0</strong>
+              <span>平均パット</span>
+            </div>
           </div>
-          <div>
-            <label>スタート時刻</label>
-            <input type="time" value="08:10" />
-          </div>
-        </div>
-
-        <button class="btn btn-primary" id="startRoundBtn">この条件で開始</button>
-      </article>
+        </article>
+      </div>
     </section>
 
     <section class="screen" data-screen="score">
-      <div class="title-row">
+      <div class="section-head">
         <div>
-          <h2 class="screen-title">スコア入力</h2>
-          <p class="muted">さくらヒルズGC・ストロークプレー</p>
+          <h2 class="section-title">スコア入力</h2>
+          <p class="muted" id="scoreCourseMeta">さくらヒルズGC ・ ストロークプレー</p>
         </div>
         <span class="chip">記録</span>
       </div>
 
-      <article class="card">
-        <div class="meter">
-          <div class="meter-head">
-            <span id="progressText">ホール 1 / 18</span>
-            <span id="runningTotal">合計 E</span>
+      <div class="stack">
+        <article class="card">
+          <div class="round-strip">
+            <div>
+              <strong id="progressText">ホール 1 / 18</strong>
+              <p class="muted" id="runningMeta" style="margin-top: var(--space-1);">合計 E ・ 順位 2/4</p>
+              <div class="progress-bar"><span id="progressFill"></span></div>
+            </div>
+            <span class="chip" id="paceChip">平均 -0.2</span>
           </div>
-          <div class="bar"><span id="progressFill"></span></div>
-        </div>
+          <div class="hole-rail" id="holeRail"></div>
+          <p class="helper">横並びのホール移動と途中復帰をしやすくし、競合の一覧型スコアカードに近づけています。</p>
+        </article>
 
-        <div class="score-card">
-          <p class="muted">現在ホール</p>
-          <div class="hole-no" id="holeNumber">1</div>
-          <p class="muted" id="holeMeta">Par 4 ・ 384y</p>
-        </div>
+        <article class="score-shell">
+          <div class="hole-card">
+            <div>
+              <p class="muted">現在ホール</p>
+              <div class="hole-number" id="holeNumber">1</div>
+              <p class="muted" id="holeMeta">Par 4 ・ 384y ・ 平均 4.6</p>
+            </div>
+            <div class="hole-badge" id="holeResultBadge">PAR想定<br>残り入力</div>
+          </div>
 
-        <div class="controls">
-          <button class="icon-btn" id="minusBtn" aria-label="打数を減らす">−</button>
-          <div class="counter" id="strokeCount">4</div>
-          <button class="icon-btn" id="plusBtn" aria-label="打数を増やす">＋</button>
-        </div>
+          <div class="counter-row">
+            <button class="icon-btn" id="minusBtn" aria-label="打数を減らす">−</button>
+            <div class="counter" id="strokeCount">4</div>
+            <button class="icon-btn" id="plusBtn" aria-label="打数を増やす">＋</button>
+          </div>
 
-        <div class="pill-row" id="quickScoreTags"></div>
-        <p class="helper" style="margin-bottom: var(--space-3);">よく使う打数候補を先に並べ、片手操作でも入力しやすくしています。</p>
+          <div class="score-options" id="scoreOptions"></div>
 
-        <div class="grid-2" style="margin-bottom: var(--space-2);">
-          <button class="btn btn-secondary" id="prevHoleBtn">前のホール</button>
-          <button class="btn btn-primary" id="nextHoleBtn">保存して次へ</button>
-        </div>
-        <button class="btn btn-secondary" id="finishRoundBtn">ここで終了</button>
-      </article>
+          <div class="toggle" id="scoreToggle">
+            <button class="active" data-panel="entry" type="button">入力</button>
+            <button data-panel="stats" type="button">統計</button>
+          </div>
+
+          <div class="panel" id="entryPanel">
+            <div class="tag-row" id="eventTags"></div>
+            <p class="helper">ワンタップ入力を優先し、ホールイベントはトグル化して記録速度を上げています。</p>
+          </div>
+
+          <div class="panel" id="statsPanel" hidden>
+            <div class="stats-grid">
+              <div class="stat-card">
+                <strong id="fairwayValue">67%</strong>
+                <span>FWキープ率</span>
+              </div>
+              <div class="stat-card">
+                <strong id="girValue">44%</strong>
+                <span>GIR</span>
+              </div>
+              <div class="stat-card">
+                <strong id="puttValue">1.8</strong>
+                <span>平均パット</span>
+              </div>
+              <div class="stat-card">
+                <strong id="saveValue">50%</strong>
+                <span>パーセーブ</span>
+              </div>
+            </div>
+            <div class="card-subtle" style="margin-top: var(--space-3);">
+              <div class="insight-row">
+                <div>
+                  <strong>ライブ順位</strong>
+                  <p class="muted">同伴4人中の現在位置</p>
+                </div>
+                <strong id="rankValue">2位</strong>
+              </div>
+              <div class="insight-row">
+                <div>
+                  <strong>過去平均との差</strong>
+                  <p class="muted">このコースの自己平均との差</p>
+                </div>
+                <strong id="courseDelta">-1.2</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="button-row" style="margin-top: var(--space-4);">
+            <button class="btn btn-primary" id="nextHoleBtn">保存して次へ</button>
+            <button class="btn btn-secondary" id="finishRoundBtn">ラウンドを完了</button>
+          </div>
+        </article>
+      </div>
     </section>
 
     <section class="screen" data-screen="complete">
-      <div class="title-row">
+      <div class="section-head">
         <div>
-          <h2 class="screen-title">ラウンド完了</h2>
-          <p class="muted">ひとこと添えてフィードへ投稿できます。</p>
+          <h2 class="section-title">完了 / 共有</h2>
+          <p class="muted">スコア要約と投稿プレビューを同じ画面にまとめます。</p>
         </div>
-        <span class="chip">完了</span>
+        <span class="chip">共有</span>
       </div>
 
-      <article class="card">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: var(--space-3);">
-          <span class="muted">さくらヒルズGC</span>
-          <span class="badge" id="finalScorePill">最終 E</span>
-        </div>
+      <div class="stack">
+        <article class="card">
+          <div class="summary-grid">
+            <div class="summary-tile">
+              <strong id="finalTotal">+6</strong>
+              <span>最終スコア</span>
+            </div>
+            <div class="summary-tile">
+              <strong id="finalPutt">30</strong>
+              <span>総パット</span>
+            </div>
+            <div class="summary-tile">
+              <strong id="finalBest">3</strong>
+              <span>ベストホール</span>
+            </div>
+          </div>
+        </article>
 
-        <label>コメント</label>
-        <textarea placeholder="後半は寄せが安定。次回はパットの再現性を上げたい。"></textarea>
-        <p class="helper">公開前に一言だけ残せる、静かな共有画面にしています。</p>
+        <article class="share-preview">
+          <div class="post-head">
+            <div>
+              <strong>投稿プレビュー</strong>
+              <p class="muted">フィードと外部共有の文面を共通化</p>
+            </div>
+            <span class="chip" id="finalScorePill">+6</span>
+          </div>
+          <p id="postPreviewText" style="line-height: 1.7;">さくらヒルズGCを +6 で終了。後半の寄せが安定して、FWキープも61%を維持。</p>
+        </article>
 
-        <label style="margin-top: var(--space-4);">公開範囲</label>
-        <div class="toggle" id="visibilityToggle">
-          <button class="active" data-vis="friends">フレンド</button>
-          <button data-vis="private">非公開</button>
-        </div>
-
-        <button class="btn btn-primary" id="publishPostBtn" style="margin-top: var(--space-4);">フィードに投稿</button>
-        <button class="btn btn-secondary" id="shareResultBtn">共有リンクをコピー</button>
-      </article>
+        <article class="card">
+          <label for="roundComment">コメント</label>
+          <textarea id="roundComment">後半でテンポを戻せた。次回はパー5の攻め方を改善したい。</textarea>
+          <label style="margin-top: var(--space-4);">公開範囲</label>
+          <div class="toggle" id="visibilityToggle">
+            <button class="active" type="button" data-vis="friends">フレンド</button>
+            <button type="button" data-vis="private">非公開</button>
+          </div>
+          <div class="button-row" style="margin-top: var(--space-4);">
+            <button class="btn btn-primary" id="publishPostBtn">フィードへ投稿</button>
+            <button class="btn btn-secondary" id="shareResultBtn">共有リンクをコピー</button>
+          </div>
+        </article>
+      </div>
     </section>
 
     <section class="screen" data-screen="feed">
-      <div class="title-row">
+      <div class="section-head">
         <div>
-          <h2 class="screen-title">フィード</h2>
-          <p class="muted">Xライクなタイムラインで近況を確認。</p>
+          <h2 class="section-title">フィード</h2>
+          <p class="muted">Xライクな並びで、投稿と次回ラウンドの会話を継続させます。</p>
         </div>
         <span class="chip">SNS</span>
       </div>
 
-      <div class="toggle" id="feedSwitch" style="margin-bottom: var(--space-3);">
-        <button class="active" data-tab="timeline">タイムライン</button>
-        <button data-tab="friends">フレンド</button>
-      </div>
+      <div class="stack">
+        <article class="post-card">
+          <div class="post-head">
+            <div>
+              <strong>今のラウンド結果を投稿</strong>
+              <p class="muted">完了画面の文面をそのまま利用</p>
+            </div>
+            <span class="chip">あなた</span>
+          </div>
+          <p id="composerPreview" style="line-height: 1.7;">さくらヒルズGCを +6 で終了。後半の寄せが安定して、FWキープも61%を維持。</p>
+          <div class="button-row" style="margin-top: var(--space-3);">
+            <button class="btn btn-primary">投稿済み</button>
+          </div>
+        </article>
 
-      <div id="timelinePanel" class="tweet-list">
-        <article class="tweet">
-          <div class="avatar">YOU</div>
-          <div>
-            <div class="tweet-head"><strong>あなた</strong><span>@you</span><span>・今</span></div>
-            <p class="tweet-body">今日のラウンドは +6。後半で寄せが安定。次はパット精度を詰めます。</p>
-            <div class="tweet-actions">
+        <div class="feed-list">
+          <article class="feed-card">
+            <div class="feed-head">
+              <div>
+                <strong>あなた</strong>
+                <p class="muted">@you ・ 今</p>
+              </div>
+              <span class="chip">+6</span>
+            </div>
+            <p style="line-height: 1.7;">さくらヒルズGCを +6 で終了。後半の寄せが安定。次はパー5の2打目をもっと整理する。</p>
+            <div class="feed-actions">
               <button>返信 4</button>
               <button>再投稿 1</button>
-              <button>いいね 14</button>
+              <button>いいね 15</button>
               <button>共有</button>
             </div>
-          </div>
-        </article>
+          </article>
 
-        <article class="tweet">
-          <div class="avatar">MK</div>
-          <div>
-            <div class="tweet-head"><strong>Mai K.</strong><span>@mai_72</span><span>・2時間前</span></div>
-            <p class="tweet-body">18番のバーディーパットが入った。風は強かったけど締めは最高。</p>
-            <div class="tweet-actions">
+          <article class="feed-card">
+            <div class="feed-head">
+              <div>
+                <strong>Mai K.</strong>
+                <p class="muted">@mai_72 ・ 2時間前</p>
+              </div>
+              <span class="chip">ベスト更新</span>
+            </div>
+            <p style="line-height: 1.7;">前半で+1。TheGrintみたいにあとで履歴比較しやすいよう、今日はフェアウェイ率も残しておいた。</p>
+            <div class="feed-actions">
               <button>返信 2</button>
               <button>再投稿 0</button>
-              <button>いいね 9</button>
+              <button>いいね 11</button>
               <button>共有</button>
             </div>
-          </div>
-        </article>
-      </div>
+          </article>
 
-      <div id="friendsPanel" class="tweet-list" style="display:none;">
-        <article class="tweet">
-          <div class="avatar">RT</div>
-          <div>
-            <div class="tweet-head"><strong>Ryo T.</strong><span>@ryo_t</span><span>・HCP 7</span></div>
-            <p class="tweet-body">次の土曜、午前スタートで回れる方いますか？</p>
-            <div class="tweet-actions">
-              <button>返信</button>
-              <button>見る</button>
-              <button>フォロー中</button>
+          <article class="feed-card">
+            <div class="feed-head">
+              <div>
+                <strong>Ryo T.</strong>
+                <p class="muted">@ryo_t ・ 明日</p>
+              </div>
+              <span class="chip">募集</span>
+            </div>
+            <p style="line-height: 1.7;">土曜の午前にベイラインCCで9H回る人を募集。スコア共有はCaddyCoのフィードでまとめます。</p>
+            <div class="feed-actions">
+              <button>返信 1</button>
+              <button>再投稿 0</button>
+              <button>いいね 6</button>
               <button>共有</button>
             </div>
-          </div>
-        </article>
+          </article>
+        </div>
       </div>
     </section>
 
     <section class="screen" data-screen="history">
-      <div class="title-row">
+      <div class="section-head">
         <div>
-          <h2 class="screen-title">履歴</h2>
-          <p class="muted">最近のラウンド結果を一覧で確認。</p>
+          <h2 class="section-title">履歴</h2>
+          <p class="muted">検索、絞り込み、主要指標の比較で過去ラウンドを探しやすくします。</p>
         </div>
         <span class="chip">履歴</span>
       </div>
 
-      <div class="history-list">
-        <article class="history-item">
+      <div class="stack">
+        <article class="card history-toolbar">
           <div>
-            <strong>さくらヒルズGC</strong>
-            <p class="muted">2026-03-21 ・ ストローク ・ 18H</p>
+            <label for="historySearch">履歴検索</label>
+            <input id="historySearch" type="search" placeholder="コース名で検索" />
           </div>
-          <span class="badge">+6</span>
+          <div class="tag-row" id="historyFilters">
+            <button class="tag active" type="button" data-filter="all">すべて</button>
+            <button class="tag" type="button" data-filter="recent">直近30日</button>
+            <button class="tag" type="button" data-filter="best">ベスト更新</button>
+          </div>
         </article>
-        <article class="history-item">
-          <div>
-            <strong>ベイラインCC</strong>
-            <p class="muted">2026-03-14 ・ ストローク ・ 18H</p>
-          </div>
-          <span class="badge">+8</span>
+
+        <div class="history-list" id="historyList"></div>
+
+        <article class="criteria">
+          <strong>競合反映メモ</strong>
+          <ul>
+            <li>18Birdies: 横並びホール遷移、完了後の共有プレビュー、統計への即時切替を反映。</li>
+            <li>Golfshot: ラウンド中の進行バー、ホールごとの平均比較、入力とスタッツの同居を反映。</li>
+            <li>TheGrint: 最近コース再開、履歴検索、ハンディ/傾向につながる履歴カード情報量を反映。</li>
+            <li>VPAR: ライブ順位チップ、同伴比較の文脈、共有後も会話が続くフィード設計を反映。</li>
+          </ul>
         </article>
-        <article class="history-item">
-          <div>
-            <strong>グリーンハーバーリンクス</strong>
-            <p class="muted">2026-03-06 ・ マッチ ・ 18H</p>
-          </div>
-          <span class="badge">+4</span>
+
+        <article class="criteria">
+          <strong>適用基準</strong>
+          <ul>
+            <li>Applied spacing token set: 4px / 8px / 12px / 16px / 24px</li>
+            <li>Applied component spacing values: 外側16px、カード内16px、フォーム間12px、行間8px、ボタン48px</li>
+            <li>Compliance checklist: White Base=Pass / No Device Frame=Pass / 4pt Grid=Pass / Tap 44px+=Pass / Calm UI=Pass</li>
+            <li>Intentional deviation: なし</li>
+          </ul>
         </article>
       </div>
     </section>
 
     <nav class="bottom-nav" id="bottomNav" aria-label="メインナビゲーション">
-      <button class="tab-btn" data-target="start"><span>開始</span></button>
-      <button class="tab-btn" data-target="score"><span>記録</span></button>
-      <button class="tab-btn" data-target="feed"><span>フィード</span></button>
-      <button class="tab-btn" data-target="history"><span>履歴</span></button>
+      <button class="nav-btn" data-target="start">開始</button>
+      <button class="nav-btn" data-target="score">記録</button>
+      <button class="nav-btn" data-target="feed">フィード</button>
+      <button class="nav-btn" data-target="history">履歴</button>
     </nav>
   </main>
 
   <script>
-    const screens = document.querySelectorAll('.screen');
-    const nav = document.getElementById('bottomNav');
-    const navBtns = document.querySelectorAll('.tab-btn');
-
-    const appState = {
-      screen: 'login',
-      hole: 1,
-      strokes: Array(18).fill(null),
-      strokeInput: 4,
-      visibility: 'friends'
-    };
+    const screens = document.querySelectorAll(".screen");
+    const nav = document.getElementById("bottomNav");
+    const navButtons = document.querySelectorAll(".nav-btn");
+    const holeRail = document.getElementById("holeRail");
+    const scoreOptions = document.getElementById("scoreOptions");
+    const eventTags = document.getElementById("eventTags");
+    const recentCoursesWrap = document.getElementById("recentCourses");
+    const historyList = document.getElementById("historyList");
+    const historySearch = document.getElementById("historySearch");
 
     const pars = [4, 5, 3, 4, 4, 5, 3, 4, 4, 4, 5, 3, 4, 4, 5, 3, 4, 4];
     const yards = [384, 522, 176, 401, 365, 547, 187, 403, 391, 411, 533, 162, 429, 372, 518, 181, 397, 405];
+    const courseAverages = [4.6, 5.3, 3.2, 4.7, 4.5, 5.6, 3.3, 4.9, 4.6, 4.8, 5.5, 3.4, 4.9, 4.5, 5.7, 3.1, 4.7, 4.8];
+    const recentCourses = ["さくらヒルズGC", "ベイラインCC", "富士リッジCC"];
+    const historySeed = [
+      { course: "さくらヒルズGC", date: "2026-03-21", mode: "ストローク", holes: "18H", score: "+6", fir: "61%", putts: "30", badge: "直近" },
+      { course: "ベイラインCC", date: "2026-03-14", mode: "ストローク", holes: "18H", score: "+8", fir: "58%", putts: "31", badge: "直近30日" },
+      { course: "富士リッジCC", date: "2026-02-25", mode: "友人ラウンド", holes: "9H", score: "+1", fir: "67%", putts: "15", badge: "ベスト更新" },
+      { course: "グリーンハーバーリンクス", date: "2026-02-03", mode: "マッチ", holes: "18H", score: "+4", fir: "64%", putts: "29", badge: "比較用" }
+    ];
 
-    const totalVsPar = () => appState.strokes.reduce((sum, stroke, i) => {
-      if (stroke == null) return sum;
-      return sum + (stroke - pars[i]);
-    }, 0);
+    const appState = {
+      screen: "login",
+      hole: 1,
+      holeCount: 18,
+      strokeInput: pars[0],
+      strokes: Array(18).fill(null),
+      events: Array.from({ length: 18 }, () => []),
+      visibility: "friends",
+      historyFilter: "all"
+    };
 
-    function renderScoreOptions() {
-      const idx = appState.hole - 1;
-      const par = pars[idx];
-      const candidates = [par - 1, par, par + 1, par + 2].filter(n => n > 0);
-      const wrap = document.getElementById('quickScoreTags');
+    function totalVsPar() {
+      return appState.strokes.slice(0, appState.holeCount).reduce((sum, stroke, index) => {
+        if (stroke == null) return sum;
+        return sum + (stroke - pars[index]);
+      }, 0);
+    }
 
-      wrap.innerHTML = candidates.map(value => {
-        const label = value === par - 1 ? `バーディー ${value}` : `${value}`;
-        const active = appState.strokeInput === value ? 'active' : '';
-        return `<button class="pill ${active}" data-score="${value}">${label}</button>`;
-      }).join('');
+    function totalPuttsEstimate() {
+      return appState.strokes.slice(0, appState.holeCount).reduce((sum, stroke) => {
+        if (stroke == null) return sum;
+        return sum + Math.max(1, Math.min(3, stroke - 2));
+      }, 0);
+    }
 
-      wrap.querySelectorAll('[data-score]').forEach(btn => {
-        btn.addEventListener('click', () => {
-          appState.strokeInput = Number(btn.dataset.score);
+    function girRate() {
+      const played = appState.strokes.filter(Boolean).length || 1;
+      const girCount = appState.strokes.reduce((count, stroke, index) => {
+        if (stroke == null) return count;
+        return count + (stroke <= pars[index] - 1 ? 1 : 0);
+      }, 0);
+      return Math.round((girCount / played) * 100);
+    }
+
+    function firRate() {
+      const played = appState.strokes.filter(Boolean).length || 1;
+      const fwCount = appState.events.reduce((count, holeEvents) => count + (holeEvents.includes("FW") ? 1 : 0), 0);
+      return Math.round((fwCount / played) * 100);
+    }
+
+    function saveRate() {
+      const played = appState.strokes.filter(Boolean).length || 1;
+      const saveCount = appState.strokes.reduce((count, stroke, index) => {
+        if (stroke == null) return count;
+        return count + (stroke <= pars[index] ? 1 : 0);
+      }, 0);
+      return Math.round((saveCount / played) * 100);
+    }
+
+    function scoreText(value) {
+      if (value === 0) return "E";
+      return value > 0 ? `+${value}` : `${value}`;
+    }
+
+    function renderRecentCourses() {
+      recentCoursesWrap.innerHTML = recentCourses.map((course, index) => {
+        const active = index === 0 ? "active" : "";
+        return `<button type="button" class="tag ${active}" data-course="${course}">${course}</button>`;
+      }).join("");
+
+      recentCoursesWrap.querySelectorAll("[data-course]").forEach((button) => {
+        button.addEventListener("click", () => {
+          document.getElementById("courseSelect").value = button.dataset.course;
+          recentCoursesWrap.querySelectorAll(".tag").forEach((tag) => tag.classList.toggle("active", tag === button));
+        });
+      });
+    }
+
+    function renderHoleRail() {
+      holeRail.innerHTML = Array.from({ length: appState.holeCount }, (_, index) => {
+        const hole = index + 1;
+        const active = hole === appState.hole ? "active" : "";
+        const done = appState.strokes[index] != null ? "done" : "";
+        const score = appState.strokes[index] != null ? scoreText(appState.strokes[index] - pars[index]) : "未";
+        return `<button type="button" class="hole-pill ${active} ${done}" data-hole="${hole}"><strong>${hole}</strong><span>${score}</span></button>`;
+      }).join("");
+
+      holeRail.querySelectorAll("[data-hole]").forEach((button) => {
+        button.addEventListener("click", () => {
+          saveCurrentHole();
+          appState.hole = Number(button.dataset.hole);
+          appState.strokeInput = appState.strokes[appState.hole - 1] ?? pars[appState.hole - 1];
           renderScoreScreen();
         });
       });
     }
 
-    function renderScoreScreen() {
-      const idx = appState.hole - 1;
-      const saved = appState.strokes[idx];
-      if (saved != null) appState.strokeInput = saved;
+    function renderScoreOptions() {
+      const index = appState.hole - 1;
+      const par = pars[index];
+      const options = [par - 1, par, par + 1, par + 2];
+      const labels = ["攻め", "標準", "安全", "崩れ"];
+      scoreOptions.innerHTML = options.map((value, idx) => {
+        const active = value === appState.strokeInput ? "active" : "";
+        return `<button type="button" class="score-option ${active}" data-score="${value}"><strong>${value} 打</strong><span>${labels[idx]}</span></button>`;
+      }).join("");
 
-      document.getElementById('holeNumber').textContent = appState.hole;
-      document.getElementById('holeMeta').textContent = `Par ${pars[idx]} ・ ${yards[idx]}y`;
-      document.getElementById('strokeCount').textContent = appState.strokeInput;
-      document.getElementById('progressText').textContent = `ホール ${appState.hole} / 18`;
-
-      const total = totalVsPar();
-      const totalText = total === 0 ? 'E' : (total > 0 ? `+${total}` : `${total}`);
-      document.getElementById('runningTotal').textContent = `合計 ${totalText}`;
-      document.getElementById('progressFill').style.width = `${(appState.hole / 18) * 100}%`;
-
-      renderScoreOptions();
+      scoreOptions.querySelectorAll("[data-score]").forEach((button) => {
+        button.addEventListener("click", () => {
+          appState.strokeInput = Number(button.dataset.score);
+          renderScoreScreen();
+        });
+      });
     }
 
-    function saveHole() {
+    function renderEventTags() {
+      const labels = ["FW", "GIR", "1パット", "OB"];
+      const activeEvents = appState.events[appState.hole - 1];
+      eventTags.innerHTML = labels.map((label) => {
+        const active = activeEvents.includes(label) ? "active" : "";
+        return `<button type="button" class="tag ${active}" data-event="${label}">${label}</button>`;
+      }).join("");
+
+      eventTags.querySelectorAll("[data-event]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const event = button.dataset.event;
+          const current = appState.events[appState.hole - 1];
+          if (current.includes(event)) {
+            appState.events[appState.hole - 1] = current.filter((item) => item !== event);
+          } else {
+            appState.events[appState.hole - 1] = [...current, event];
+          }
+          renderEventTags();
+          renderScoreStats();
+        });
+      });
+    }
+
+    function renderScoreStats() {
+      document.getElementById("fairwayValue").textContent = `${firRate()}%`;
+      document.getElementById("girValue").textContent = `${girRate()}%`;
+      document.getElementById("puttValue").textContent = (totalPuttsEstimate() / Math.max(1, appState.strokes.filter(Boolean).length || 1)).toFixed(1);
+      document.getElementById("saveValue").textContent = `${saveRate()}%`;
+      document.getElementById("rankValue").textContent = totalVsPar() <= 2 ? "1位" : "2位";
+      document.getElementById("courseDelta").textContent = totalVsPar() <= 5 ? "-1.2" : "+0.4";
+    }
+
+    function renderScoreScreen() {
+      const index = appState.hole - 1;
+      const total = totalVsPar();
+      const currentScore = appState.strokeInput - pars[index];
+      const badgeText = currentScore <= 0 ? "パー圏内" : `+${currentScore}`;
+
+      document.getElementById("holeNumber").textContent = appState.hole;
+      document.getElementById("holeMeta").textContent = `Par ${pars[index]} ・ ${yards[index]}y ・ 平均 ${courseAverages[index]}`;
+      document.getElementById("strokeCount").textContent = appState.strokeInput;
+      document.getElementById("progressText").textContent = `ホール ${appState.hole} / ${appState.holeCount}`;
+      document.getElementById("runningMeta").textContent = `合計 ${scoreText(total)} ・ 順位 ${total <= 2 ? "1/4" : "2/4"}`;
+      document.getElementById("paceChip").textContent = total <= 3 ? "平均 -0.2" : "平均 +0.4";
+      document.getElementById("progressFill").style.width = `${(appState.hole / appState.holeCount) * 100}%`;
+      document.getElementById("holeResultBadge").innerHTML = `${badgeText}<br>${appState.events[index].join(" / ") || "残り入力"}`;
+
+      renderHoleRail();
+      renderScoreOptions();
+      renderEventTags();
+      renderScoreStats();
+    }
+
+    function renderHistory() {
+      const keyword = historySearch.value.trim();
+      const list = historySeed.filter((item) => {
+        const filterMatch = appState.historyFilter === "all"
+          || (appState.historyFilter === "recent" && (item.badge === "直近30日" || item.badge === "直近"))
+          || (appState.historyFilter === "best" && item.badge === "ベスト更新");
+        const keywordMatch = keyword === "" || item.course.includes(keyword);
+        return filterMatch && keywordMatch;
+      });
+
+      historyList.innerHTML = list.map((item) => `
+        <article class="history-item">
+          <div class="history-top">
+            <div>
+              <strong>${item.course}</strong>
+              <p class="muted" style="margin-top: var(--space-1);">${item.date} ・ ${item.mode} ・ ${item.holes}</p>
+            </div>
+            <span class="chip">${item.score}</span>
+          </div>
+          <div class="meta-row">
+            <span class="mini-badge">FW ${item.fir}</span>
+            <span class="mini-badge">PUTT ${item.putts}</span>
+            <span class="mini-badge">${item.badge}</span>
+          </div>
+        </article>
+      `).join("");
+    }
+
+    function saveCurrentHole() {
       appState.strokes[appState.hole - 1] = appState.strokeInput;
+    }
+
+    function syncCompleteScreen() {
+      const total = totalVsPar();
+      const preview = `${document.getElementById("courseSelect").value}を ${scoreText(total)} で終了。後半の寄せが安定して、FWキープも${firRate()}%を維持。`;
+      document.getElementById("finalTotal").textContent = scoreText(total);
+      document.getElementById("finalPutt").textContent = `${totalPuttsEstimate()}`;
+      const recorded = appState.strokes.filter((stroke) => stroke != null);
+      document.getElementById("finalBest").textContent = `${recorded.length ? Math.min(...recorded) : 3}`;
+      document.getElementById("finalScorePill").textContent = scoreText(total);
+      document.getElementById("postPreviewText").textContent = preview;
+      document.getElementById("composerPreview").textContent = preview;
+    }
+
+    function showPanel(name) {
+      document.querySelectorAll("#scoreToggle button").forEach((button) => {
+        button.classList.toggle("active", button.dataset.panel === name);
+      });
+      document.getElementById("entryPanel").hidden = name !== "entry";
+      document.getElementById("statsPanel").hidden = name !== "stats";
     }
 
     function showScreen(name) {
       appState.screen = name;
-      screens.forEach(sc => sc.classList.toggle('active', sc.dataset.screen === name));
-      nav.classList.toggle('show', name !== 'login');
-
-      navBtns.forEach(btn => {
-        const active = btn.dataset.target === name || (name === 'complete' && btn.dataset.target === 'score');
-        btn.classList.toggle('active', active);
+      screens.forEach((screen) => {
+        screen.classList.toggle("active", screen.dataset.screen === name);
       });
 
-      if (name === 'score') renderScoreScreen();
-      if (name === 'complete') {
-        const final = totalVsPar();
-        const finalText = final === 0 ? 'E' : (final > 0 ? `+${final}` : `${final}`);
-        document.getElementById('finalScorePill').textContent = `最終 ${finalText}`;
+      nav.classList.toggle("show", name !== "login");
+      navButtons.forEach((button) => {
+        const active = button.dataset.target === name || (name === "complete" && button.dataset.target === "score");
+        button.classList.toggle("active", active);
+      });
+
+      if (name === "score") {
+        document.getElementById("scoreCourseMeta").textContent = `${document.getElementById("courseSelect").value} ・ ${document.getElementById("playMode").value}`;
+        renderScoreScreen();
+      }
+      if (name === "complete") {
+        syncCompleteScreen();
+      }
+      if (name === "history") {
+        renderHistory();
       }
     }
 
-    document.getElementById('googleLoginBtn').addEventListener('click', () => showScreen('start'));
-    document.getElementById('startRoundBtn').addEventListener('click', () => showScreen('score'));
-
-    document.getElementById('minusBtn').addEventListener('click', () => {
+    document.getElementById("googleLoginBtn").addEventListener("click", () => showScreen("start"));
+    document.getElementById("startRoundBtn").addEventListener("click", () => {
+      appState.holeCount = Number(document.getElementById("holeCount").value);
+      appState.hole = 1;
+      appState.strokeInput = pars[0];
+      showScreen("score");
+    });
+    document.getElementById("minusBtn").addEventListener("click", () => {
       appState.strokeInput = Math.max(1, appState.strokeInput - 1);
       renderScoreScreen();
     });
-
-    document.getElementById('plusBtn').addEventListener('click', () => {
+    document.getElementById("plusBtn").addEventListener("click", () => {
       appState.strokeInput = Math.min(12, appState.strokeInput + 1);
       renderScoreScreen();
     });
-
-    document.getElementById('prevHoleBtn').addEventListener('click', () => {
-      saveHole();
-      if (appState.hole > 1) appState.hole -= 1;
-      appState.strokeInput = appState.strokes[appState.hole - 1] ?? pars[appState.hole - 1];
-      renderScoreScreen();
-    });
-
-    document.getElementById('nextHoleBtn').addEventListener('click', () => {
-      saveHole();
-      if (appState.hole < 18) {
+    document.getElementById("nextHoleBtn").addEventListener("click", () => {
+      saveCurrentHole();
+      if (appState.hole < appState.holeCount) {
         appState.hole += 1;
         appState.strokeInput = appState.strokes[appState.hole - 1] ?? pars[appState.hole - 1];
         renderScoreScreen();
       } else {
-        showScreen('complete');
+        showScreen("complete");
       }
     });
+    document.getElementById("finishRoundBtn").addEventListener("click", () => {
+      saveCurrentHole();
+      showScreen("complete");
+    });
+    document.getElementById("publishPostBtn").addEventListener("click", () => showScreen("feed"));
+    document.getElementById("shareResultBtn").addEventListener("click", (event) => {
+      const button = event.currentTarget;
+      const previous = button.textContent;
+      button.textContent = "共有リンクをコピーしました";
+      setTimeout(() => {
+        button.textContent = previous;
+      }, 1200);
+    });
+    document.getElementById("visibilityToggle").addEventListener("click", (event) => {
+      const button = event.target.closest("[data-vis]");
+      if (!button) return;
+      appState.visibility = button.dataset.vis;
+      document.querySelectorAll("#visibilityToggle button").forEach((item) => {
+        item.classList.toggle("active", item === button);
+      });
+    });
+    document.getElementById("scoreToggle").addEventListener("click", (event) => {
+      const button = event.target.closest("[data-panel]");
+      if (!button) return;
+      showPanel(button.dataset.panel);
+    });
+    document.getElementById("historyFilters").addEventListener("click", (event) => {
+      const button = event.target.closest("[data-filter]");
+      if (!button) return;
+      appState.historyFilter = button.dataset.filter;
+      document.querySelectorAll("#historyFilters .tag").forEach((item) => {
+        item.classList.toggle("active", item === button);
+      });
+      renderHistory();
+    });
+    historySearch.addEventListener("input", renderHistory);
 
-    document.getElementById('finishRoundBtn').addEventListener('click', () => {
-      saveHole();
-      showScreen('complete');
+    navButtons.forEach((button) => {
+      button.addEventListener("click", () => showScreen(button.dataset.target));
     });
 
-    document.getElementById('publishPostBtn').addEventListener('click', () => showScreen('feed'));
-
-    document.getElementById('shareResultBtn').addEventListener('click', (e) => {
-      const btn = e.currentTarget;
-      const prev = btn.textContent;
-      btn.textContent = '共有リンクをコピーしました';
-      setTimeout(() => { btn.textContent = prev; }, 1000);
-    });
-
-    document.getElementById('visibilityToggle').addEventListener('click', (e) => {
-      const btn = e.target.closest('button[data-vis]');
-      if (!btn) return;
-      appState.visibility = btn.dataset.vis;
-      document.querySelectorAll('#visibilityToggle button').forEach(b => b.classList.toggle('active', b === btn));
-    });
-
-    document.getElementById('feedSwitch').addEventListener('click', (e) => {
-      const btn = e.target.closest('button[data-tab]');
-      if (!btn) return;
-      document.querySelectorAll('#feedSwitch button').forEach(b => b.classList.toggle('active', b === btn));
-      const tab = btn.dataset.tab;
-      document.getElementById('timelinePanel').style.display = tab === 'timeline' ? 'block' : 'none';
-      document.getElementById('friendsPanel').style.display = tab === 'friends' ? 'block' : 'none';
-    });
-
-    navBtns.forEach(btn => btn.addEventListener('click', () => showScreen(btn.dataset.target)));
-
-    showScreen('login');
+    renderRecentCourses();
+    renderHistory();
+    showPanel("entry");
+    showScreen("login");
   </script>
 </body>
 </html>
