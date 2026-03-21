@@ -125,24 +125,17 @@
     }
 
     .phone {
-      border: 1px solid var(--line);
-      border-radius: 24px;
-      padding: var(--space-4);
-      background: #fff;
-      box-shadow: var(--shadow);
+      border: 0;
+      border-radius: 0;
+      padding: 0;
+      background: transparent;
+      box-shadow: none;
       display: grid;
       gap: var(--space-3);
-      overflow: hidden;
+      overflow: visible;
     }
 
-    .phone-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 12px;
-      color: var(--text-sub);
-      min-height: 20px;
-    }
+    .phone-top { display: none; }
 
     .component {
       border: 1px solid var(--line);
@@ -555,7 +548,6 @@
 
     @media (max-width: 370px) {
       .catalog { padding: 12px; }
-      .phone { padding: 12px; }
       .component { padding: 12px; }
       .big-number { font-size: 24px; }
     }
@@ -592,7 +584,6 @@
         <p>残高・支出・送金導線を短くまとめた、日次確認向けの金融ホーム。</p>
       </div>
       <div class="phone">
-        <div class="phone-top"><span>9:41</span><span>Fin App</span><span>100%</span></div>
 
         <article class="component">
           <div class="component-head"><span class="cmp-name">CMP-FIN-01 残高カード</span><span class="badge">カード</span></div>
@@ -626,7 +617,6 @@
         <p>カテゴリフィルタと店舗比較を主軸にした、注文前の探索UI。</p>
       </div>
       <div class="phone">
-        <div class="phone-top"><span>9:41</span><span>Food Hub</span><span>4G</span></div>
 
         <article class="component">
           <div class="component-head"><span class="cmp-name">CMP-FOD-01 カテゴリフィルタ</span><span class="badge">フィルタ</span></div>
@@ -656,7 +646,6 @@
         <p>検索フォーム、行程タイムライン、搭乗情報のカード化例。</p>
       </div>
       <div class="phone">
-        <div class="phone-top"><span>9:41</span><span>Trip Note</span><span>Wi‑Fi</span></div>
 
         <article class="component">
           <div class="component-head"><span class="cmp-name">CMP-TRV-01 目的地検索フォーム</span><span class="badge">フォーム</span></div>
@@ -688,7 +677,6 @@
         <p>診察管理で使いやすい、タブ切替とFAQ展開の組み合わせ。</p>
       </div>
       <div class="phone">
-        <div class="phone-top"><span>9:41</span><span>Care Link</span><span>5G</span></div>
 
         <article class="component tab-group" data-tab-group>
           <div class="component-head"><span class="cmp-name">CMP-HLT-01 予約タブ</span><span class="badge">タブ</span></div>
@@ -722,7 +710,6 @@
         <p>進捗可視化と今日の運動提案をセットで見せる活動管理画面。</p>
       </div>
       <div class="phone">
-        <div class="phone-top"><span>9:41</span><span>Move Log</span><span>95%</span></div>
 
         <article class="component">
           <div class="component-head"><span class="cmp-name">CMP-FIT-01 今日の進捗リング代替</span><span class="badge">進捗</span></div>
@@ -746,7 +733,6 @@
         <p>ストーリー、投稿、メッセージを同一文脈で切り替える例。</p>
       </div>
       <div class="phone">
-        <div class="phone-top"><span>9:41</span><span>Circle</span><span>LTE</span></div>
 
         <article class="component">
           <div class="component-head"><span class="cmp-name">CMP-SOC-01 ストーリー行</span><span class="badge">横スクロール</span></div>
@@ -776,7 +762,6 @@
         <p>商品カテゴリ、カードグリッド、クイックビュー導線を収録。</p>
       </div>
       <div class="phone">
-        <div class="phone-top"><span>9:41</span><span>Store Grid</span><span>5G</span></div>
 
         <article class="component tab-group" data-tab-group>
           <div class="component-head"><span class="cmp-name">CMP-ECM-01 カテゴリタブ</span><span class="badge">タブ</span></div>
@@ -811,7 +796,6 @@
         <p>講座進捗と単元展開を短時間で確認できる学習UI。</p>
       </div>
       <div class="phone">
-        <div class="phone-top"><span>9:41</span><span>Study Lane</span><span>Wi‑Fi</span></div>
 
         <article class="component">
           <div class="component-head"><span class="cmp-name">CMP-EDU-01 コース進捗カード</span><span class="badge">進捗</span></div>
@@ -841,7 +825,6 @@
         <p>タスク抽出、優先順位、入力導線を集約した業務画面。</p>
       </div>
       <div class="phone">
-        <div class="phone-top"><span>9:41</span><span>Flow Desk</span><span>VPN</span></div>
 
         <article class="component">
           <div class="component-head"><span class="cmp-name">CMP-PDT-01 優先タスク一覧</span><span class="badge">リスト</span></div>
@@ -864,7 +847,6 @@
         <p>日付選択と時間枠比較を中心にした施設予約フロー。</p>
       </div>
       <div class="phone">
-        <div class="phone-top"><span>9:41</span><span>Book Ease</span><span>5G</span></div>
 
         <article class="component">
           <div class="component-head"><span class="cmp-name">CMP-BKG-01 カレンダーブロック</span><span class="badge">カレンダー</span></div>
@@ -895,7 +877,6 @@
         <p>問い合わせ導線とチャットログを合わせた自己解決支援画面。</p>
       </div>
       <div class="phone">
-        <div class="phone-top"><span>9:41</span><span>Help Desk</span><span>LTE</span></div>
 
         <article class="component">
           <div class="component-head"><span class="cmp-name">CMP-SPT-01 問い合わせカテゴリ</span><span class="badge">フィルタ</span></div>
@@ -921,7 +902,6 @@
         <p>条件絞り込み、物件カード、内見予約までの導線を一画面で整理。</p>
       </div>
       <div class="phone">
-        <div class="phone-top"><span>9:41</span><span>Room Scope</span><span>5G</span></div>
 
         <article class="component">
           <div class="component-head"><span class="cmp-name">CMP-REA-01 条件フィルタ行</span><span class="badge">フィルタ</span></div>
